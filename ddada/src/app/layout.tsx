@@ -4,7 +4,7 @@ import localFont from 'next/font/local'
 
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
-import '@/styles/globals.css'
+import '@/app/globals.css'
 
 const pretendard = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
