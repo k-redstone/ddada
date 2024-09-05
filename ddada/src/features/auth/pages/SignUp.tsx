@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
@@ -8,6 +9,11 @@ import {
   SignUpFormData,
   SignUpStepType,
 } from '@/features/auth/types/SignUpType.ts'
+import Progress1 from '@/static/imgs/auth/signup/progress/signup_progress_step1.svg'
+import Progress2 from '@/static/imgs/auth/signup/progress/signup_progress_step2.svg'
+import Progress3 from '@/static/imgs/auth/signup/progress/signup_progress_step3.svg'
+import Progress4 from '@/static/imgs/auth/signup/progress/signup_progress_step4.svg'
+import GoBeforeArrow from '@/static/imgs/auth/signup/signup_goBeforepage_icon.svg'
 
 const signUpSubmit: SubmitHandler<SignUpFormData> = (data) => {
   alert('회원가입 데이타 보내기 성공')
@@ -29,32 +35,53 @@ export default function SignUp() {
     gender: '',
     introduction: '',
   })
-
   const methods = useForm<SignUpFormData>()
   const { handleSubmit } = methods
+  const router = useRouter()
+
+  const handleViewStep = () => {
+    if (viewStep === SignUpStepType.step1) router.push('/login')
+    if (viewStep === SignUpStepType.step2) setViewStep(SignUpStepType.step1)
+    else if (viewStep === SignUpStepType.step3)
+      setViewStep(SignUpStepType.step2)
+    else if (viewStep === SignUpStepType.step4)
+      setViewStep(SignUpStepType.step3)
+  }
 
   return (
-    <div className="flex items-center justify-center mt-[7.4013rem]">
-      <div className="min-w-[544px]">
-        <div className="mb-[70px] text-center">
-          <p className="text-4xl font-bold">따다 회원가입</p>
-          <p>가입하고 간단하게 배드민턴 즐기기</p>
+    <div className="flex items-center justify-center">
+      <div className="relative">
+        <div className=" absolute top-[1.2138rem] left-0">
+          <button type="button" className="flex" onClick={handleViewStep}>
+            <GoBeforeArrow className="m-[0.125rem]" />
+            <p className="text-sm">이전으로 돌아가기</p>
+          </button>
         </div>
-        <div className="bg-white">
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <FormProvider {...methods}>
-            <form
-              onSubmit={handleSubmit(signUpSubmit)}
-              className="grid gap-4 px-10"
-            >
-              <SignUpBranch
-                viewStep={viewStep}
-                changeViewStep={setViewStep}
-                submitFormData={submitFormData}
-                setSubmitFormData={setSubmitFormData}
-              />
-            </form>
-          </FormProvider>
+        <div className="min-w-[544px]  mt-[7.4013rem]">
+          <div className="mb-[70px] text-center">
+            <p className="text-4xl font-bold">따다 회원가입</p>
+            <p className="mb-[1.25rem]">가입하고 간단하게 배드민턴 즐기기</p>
+            {viewStep === SignUpStepType.step1 && <Progress1 />}
+            {viewStep === SignUpStepType.step2 && <Progress2 />}
+            {viewStep === SignUpStepType.step3 && <Progress3 />}
+            {viewStep === SignUpStepType.step4 && <Progress4 />}
+          </div>
+          <div className="bg-white">
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            <FormProvider {...methods}>
+              <form
+                onSubmit={handleSubmit(signUpSubmit)}
+                className="grid gap-4 px-10"
+              >
+                <SignUpBranch
+                  viewStep={viewStep}
+                  changeViewStep={setViewStep}
+                  submitFormData={submitFormData}
+                  setSubmitFormData={setSubmitFormData}
+                />
+              </form>
+            </FormProvider>
+          </div>
         </div>
       </div>
     </div>
