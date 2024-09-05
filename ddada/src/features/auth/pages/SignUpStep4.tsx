@@ -3,24 +3,24 @@ import {
   SignUpStepType,
 } from '@/features/auth/types/SignUpType.ts'
 
-interface SignUpStep3Props {
+interface SignUpStep4Props {
   changeViewStep: (viewStep: SignUpStepType) => void
   submitFormData: SignUpFormData
   setSubmitFormData: (submitFormData: SignUpFormData) => void
 }
 
-export default function SignUpStep3({
+export default function SignUpStep4({
   changeViewStep,
   submitFormData,
   setSubmitFormData,
-}: SignUpStep3Props) {
+}: SignUpStep4Props) {
   console.log(submitFormData.email)
   return (
     <>
-      <p>스탭3</p>
+      <p>스탭4</p>
       <button
         type="button"
-        onClick={() => changeViewStep(SignUpStepType.step4)}
+        onClick={() => changeViewStep(SignUpStepType.step1)}
       >
         test{' '}
       </button>

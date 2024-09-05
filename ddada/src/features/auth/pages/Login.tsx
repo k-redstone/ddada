@@ -79,7 +79,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center  mt-[7.4013rem]">
       <div className="min-w-[544px]">
         <p className="text-4xl font-bold text-center mb-[70px]">
           따다에 가입하세요

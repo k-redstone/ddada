@@ -1,3 +1,11 @@
+import AuthHeader from '@/features/auth/components/Header/index.tsx'
+import SignUp from '@/features/auth/pages/SignUp.tsx'
+
 export default function SignUpPage() {
-  return <p>회원가입</p>
+  return (
+    <main>
+      <AuthHeader />
+      <SignUp />
+    </main>
+  )
 }
