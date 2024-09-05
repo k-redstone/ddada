@@ -41,6 +41,8 @@ export default function SignUpStep2({
   const [authNumber, setAuthNumber] = useState<boolean>(false)
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false)
   const [nickNameCheck, setNickNameCheck] = useState<boolean>(false)
+  const [nickNameAlreadyExist, setNickNameAlreadyExist] =
+    useState<boolean>(false)
   const [phoneNumberCheck, setPhoneNumberCheck] = useState<boolean>(false)
   const [isNextStepEnabled, setIsNextStepEnabled] = useState<boolean>(false)
   useEffect(() => {
@@ -78,6 +80,10 @@ export default function SignUpStep2({
     birthYear,
     trigger,
   ])
+
+  useEffect(() => {
+    setNickNameAlreadyExist(false)
+  }, [nickName])
   useEffect(() => {
     setIsPasswordMatch(password === confirmPassword)
   }, [password, confirmPassword])
@@ -92,8 +98,10 @@ export default function SignUpStep2({
 
   const handleCheckNickName = () => {
     console.log('닉네임 중복체크')
-    // 닉네임 중복체크가 됬다고 가정
-    setNickNameCheck(true)
+    // // 닉네임 중복체크가 됬다고 가정
+    // setNickNameCheck(true)
+    // 만약 중복이 되었다면
+    setNickNameAlreadyExist(true)
   }
 
   const handleCheckPhoneNumber = () => {
@@ -115,7 +123,7 @@ export default function SignUpStep2({
     required: '이메일을 입력해주세요.',
     pattern: {
       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-      message: '이메일 형식이 올바르지 않습니다',
+      message: '이메일을 올바르게 입력해주세요',
     },
   })
 
@@ -175,7 +183,10 @@ export default function SignUpStep2({
       <div className="text-sm">
         <label htmlFor="email">
           <p className="text-[#6B6E78]">이메일</p>
-          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div
+            className={`flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] 
+              ${errors.email ? 'border-[#DC3545]' : ''}`}
+          >
             <input
               type="text"
               id="email"
@@ -186,7 +197,7 @@ export default function SignUpStep2({
             />
           </div>
           {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
+            <p className="text-[#DC3545]">{errors.email.message}</p>
           )}
         </label>
       </div>
@@ -216,7 +227,7 @@ export default function SignUpStep2({
             </button>
           </div>
           {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
+            <p className="text-[#DC3545]">{errors.password.message}</p>
           )}
         </label>
       </div>
@@ -250,7 +261,7 @@ export default function SignUpStep2({
             {/* 비밀번호가 일치하면 체크 아이콘 표시 */}
           </div>
           {errors.confirmPassword && (
-            <p className="text-red-500">{errors.confirmPassword.message}</p>
+            <p className="text-[#DC3545]">{errors.confirmPassword.message}</p>
           )}
         </label>
       </div>
@@ -260,7 +271,11 @@ export default function SignUpStep2({
         <label htmlFor="nickname">
           <p className="text-[#6B6E78]">닉네임</p>
           <div className="flex items-center gap-[0.5rem]">
-            <div className="flex-grow flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            <div
+              className={`flex-grow flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] ${
+                nickNameAlreadyExist && 'border-[#DC3545]'
+              }`}
+            >
               <input
                 type="text"
                 id="nickname"
@@ -287,7 +302,10 @@ export default function SignUpStep2({
             </button>
           </div>
           {errors.nickname && (
-            <p className="text-red-500">{errors.nickname.message}</p>
+            <p className="text-[#DC3545]">{errors.nickname.message}</p>
+          )}
+          {nickNameAlreadyExist && (
+            <p className="text-[#DC3545]">이미 사용중인 닉네임입니다.</p>
           )}
         </label>
       </div>
@@ -384,7 +402,7 @@ export default function SignUpStep2({
             <CalenderIcon />
           </div>
           {errors.birthYear && (
-            <p className="text-red-500">{errors.birthYear.message}</p>
+            <p className="text-[#DC3545]">{errors.birthYear.message}</p>
           )}
         </label>
       </div>
