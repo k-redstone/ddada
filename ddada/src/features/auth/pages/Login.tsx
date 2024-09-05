@@ -90,9 +90,9 @@ export default function Login() {
             className="grid gap-4 px-10"
           >
             <div className="text-sm">
-              <label htmlFor="email">
-                이메일
-                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FEE500]">
+              <label htmlFor="email ">
+                <p className="text-[#6B6E78]">이메일</p>
+                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
                   <input
                     type="text"
                     id="email"
@@ -110,12 +110,12 @@ export default function Login() {
             </div>
             <div className="text-sm">
               <label htmlFor="password">
-                비밀번호
-                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FEE500]">
+                <p className="text-[#6B6E78]">비밀번호</p>
+                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
                   <input
                     type={passwordVisibility ? 'text' : 'password'}
                     id="password"
-                    placeholder="비밀번호를 입력해주세요"
+                    placeholder="비밀번호를 입력해주세요."
                     className="w-full focus:outline-none"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...passwordRegister}
@@ -149,7 +149,7 @@ export default function Login() {
             <div className="text-sm">
               <Link
                 href="reset-password"
-                className="text-gray-700 hover:text-black"
+                className="text-[#B0B0B0] hover:text-black"
               >
                 비밀번호를 잊어버리셨나요?
               </Link>
@@ -157,8 +157,8 @@ export default function Login() {
                 type="submit"
                 className={`h-[3.875rem] w-full mt-3 rounded-xl ${
                   isButtonEnabled && !isSubmitting
-                    ? 'bg-[#FEE500] text-black cursor-pointer'
-                    : 'bg-gray-300 text-gray-700 cursor-not-allowed'
+                    ? 'bg-[#FCA211] text-white cursor-pointer'
+                    : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
                 }`}
                 disabled={!isButtonEnabled || isSubmitting}
               >
@@ -168,7 +168,7 @@ export default function Login() {
             <div className="text-sm">
               <div className="flex justify-center items-center">
                 <div className="grow border-t" />
-                <span className="mx-2">또는</span>
+                <span className="mx-2 text-[#E7E7E7]">또는</span>
                 <div className="grow border-t" />
               </div>
               <button
@@ -181,7 +181,7 @@ export default function Login() {
             </div>
             <p className="text-sm text-center">
               아직 계정이 없으신가요?{' '}
-              <Link href="signup/" className="text-[#FEE500]">
+              <Link href="signup/" className="text-[#FCA211] font-bold">
                 회원가입
               </Link>
             </p>

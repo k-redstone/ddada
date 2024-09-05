@@ -35,7 +35,9 @@ export default function SignUp() {
     gender: '',
     introduction: '',
   })
-  const methods = useForm<SignUpFormData>()
+  const methods = useForm<SignUpFormData>({
+    mode: 'all',
+  })
   const { handleSubmit } = methods
   const router = useRouter()
 
@@ -57,8 +59,8 @@ export default function SignUp() {
             <p className="text-sm">이전으로 돌아가기</p>
           </button>
         </div>
-        <div className="min-w-[544px]  mt-[7.4013rem]">
-          <div className="mb-[70px] text-center">
+        <div className="min-w-[34rem]  mt-[7.4013rem]">
+          <div className="mb-[5.25rem] text-center">
             <p className="text-4xl font-bold">따다 회원가입</p>
             <p className="mb-[1.25rem]">가입하고 간단하게 배드민턴 즐기기</p>
             {viewStep === SignUpStepType.step1 && <Progress1 />}
@@ -71,7 +73,7 @@ export default function SignUp() {
             <FormProvider {...methods}>
               <form
                 onSubmit={handleSubmit(signUpSubmit)}
-                className="grid gap-4 px-10"
+                className="grid gap-4"
               >
                 <SignUpBranch
                   viewStep={viewStep}

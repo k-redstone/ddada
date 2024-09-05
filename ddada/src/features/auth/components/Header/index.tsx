@@ -4,7 +4,7 @@ import Logo from '@/static/imgs/logo.svg'
 
 export default function AuthHeader() {
   return (
-    <div className="flex items-center justify-center border-b py-2.5">
+    <div className="flex items-center justify-center border-b py-2.5 font-bold">
       <Link href="/">
         <Logo />
       </Link>

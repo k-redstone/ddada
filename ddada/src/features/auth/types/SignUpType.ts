@@ -5,8 +5,8 @@ export interface SignUpFormData {
   nickname: string
   phoneNumber: string
   birthYear: string
-  birthMonth: string
-  birthDay: string
+  birthMonth?: string
+  birthDay?: string
   profilePicture?: File
   gender: string
   introduction?: string
