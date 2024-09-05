@@ -112,7 +112,7 @@ export default function SignUpStep2({
       <div className="text-sm">
         <label htmlFor="email">
           <p className="text-[#6B6E78]">이메일</p>
-          <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
               type="text"
               id="email"
@@ -130,7 +130,7 @@ export default function SignUpStep2({
       <div className="text-sm">
         <label htmlFor="password">
           <p className="text-[#6B6E78]">비밀번호</p>
-          <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
               type={passwordVisibility ? 'text' : 'password'}
               id="password"
@@ -155,7 +155,7 @@ export default function SignUpStep2({
       </div>
       <div className="text-sm">
         <label htmlFor="confirmPassword">
-          <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
               type={passwordConfirmVisibility ? 'text' : 'password'}
               id="confirmPassword"
@@ -186,7 +186,8 @@ export default function SignUpStep2({
       <div className="text-sm ">
         <label htmlFor="nickname">
           <p className="text-[#6B6E78]">닉네임</p>
-          <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            {/* <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]"> */}
             <input
               type="text"
               id="nickname"
@@ -203,7 +204,7 @@ export default function SignUpStep2({
         <button
           type="button"
           onClick={() => handleCheckNickName()}
-          className={`h-[3.875rem] px-[1.5rem] py-[0.4375rem] rounded-xl ${
+          className={`px-[1.5rem] py-[1.3125rem] rounded-xl ${
             nickName && !errors.nickname
               ? 'bg-[#FCA211] text-white cursor-pointer'
               : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
@@ -217,11 +218,11 @@ export default function SignUpStep2({
         <label htmlFor="phoneNumber">
           <p className="text-[#6B6E78]">휴대폰번호</p>
           <div className="flex">
-            <select className=" border rounded-xl px-6 py-2 mr-[0.25rem] h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            <select className=" border rounded-xl px-6 py-[1.3125rem] mr-[0.25rem]  focus-within:ring-1 focus-within:ring-[#FCA211]">
               <option>+82</option>
               <option>+81</option>
             </select>
-            <div className="flex w-full items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            <div className="flex w-full items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
               <input
                 type="text"
                 id="phoneNumber"
@@ -239,7 +240,7 @@ export default function SignUpStep2({
         <button
           type="button"
           onClick={() => handleCheckPhoneNumber()}
-          className={`h-[3.875rem] px-[1.5rem] py-[0.4375rem] rounded-xl ${
+          className={`px-[1.5rem] py-[1.3125rem] rounded-xl ${
             phoneNumber && !errors.phoneNumber
               ? 'bg-[#FCA211] text-white cursor-pointer'
               : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
@@ -252,7 +253,7 @@ export default function SignUpStep2({
       <div className="text-sm ">
         <label htmlFor="birthYear">
           <p className="text-[#6B6E78]">생년월일</p>
-          <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
               type="text"
               id="birthYear"

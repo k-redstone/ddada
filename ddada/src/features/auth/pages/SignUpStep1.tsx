@@ -129,7 +129,7 @@ export default function SignUpStep1({
       <button
         type="button"
         onClick={() => changeViewStep(SignUpStepType.step2)}
-        className={`h-[3.875rem] w-full mt-3 rounded-xl ${
+        className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
           isNextStepEnabled
             ? 'bg-[#FCA211] text-white cursor-pointer'
             : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'

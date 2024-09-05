@@ -92,7 +92,7 @@ export default function Login() {
             <div className="text-sm">
               <label htmlFor="email ">
                 <p className="text-[#6B6E78]">이메일</p>
-                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+                <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
                   <input
                     type="text"
                     id="email"
@@ -111,7 +111,7 @@ export default function Login() {
             <div className="text-sm">
               <label htmlFor="password">
                 <p className="text-[#6B6E78]">비밀번호</p>
-                <div className="flex items-center border rounded-xl px-4 py-2 h-[3.875rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+                <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
                   <input
                     type={passwordVisibility ? 'text' : 'password'}
                     id="password"
@@ -155,7 +155,7 @@ export default function Login() {
               </Link>
               <button
                 type="submit"
-                className={`h-[3.875rem] w-full mt-3 rounded-xl ${
+                className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
                   isButtonEnabled && !isSubmitting
                     ? 'bg-[#FCA211] text-white cursor-pointer'
                     : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
@@ -173,10 +173,10 @@ export default function Login() {
               </div>
               <button
                 type="button"
-                className="h-[3.875rem] w-full bg-[#FEE500] text-gray-700 py-2 rounded-xl flex items-center justify-center relative mt-3"
+                className="py-[1.2744rem] w-full bg-[#FEE500] text-[#000000] rounded-xl flex items-center justify-center relative mt-3"
               >
                 <KakaoLogo className="absolute left-[10px]" />
-                카카오 로그인
+                카카오로 로그인
               </button>
             </div>
             <p className="text-sm text-center">
