@@ -138,6 +138,13 @@ export default function SignUpStep1({
       >
         다음단계{' '}
       </button>
+
+      <button
+        type="button"
+        onClick={() => changeViewStep(SignUpStepType.step3)}
+      >
+        테스트용{' '}
+      </button>
     </>
   )
 }

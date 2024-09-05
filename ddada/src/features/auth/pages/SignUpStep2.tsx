@@ -98,10 +98,10 @@ export default function SignUpStep2({
 
   const handleCheckNickName = () => {
     console.log('닉네임 중복체크')
-    // // 닉네임 중복체크가 됬다고 가정
-    // setNickNameCheck(true)
-    // 만약 중복이 되었다면
-    setNickNameAlreadyExist(true)
+    // 닉네임 중복체크가 됬다고 가정
+    setNickNameCheck(true)
+    // // 만약 중복이 되었다면
+    // setNickNameAlreadyExist(true)
   }
 
   const handleCheckPhoneNumber = () => {
