@@ -42,12 +42,7 @@ export default function SignUp() {
   const router = useRouter()
 
   const handleViewStep = () => {
-    if (viewStep === SignUpStepType.step1) router.push('/login')
-    if (viewStep === SignUpStepType.step2) setViewStep(SignUpStepType.step1)
-    else if (viewStep === SignUpStepType.step3)
-      setViewStep(SignUpStepType.step2)
-    else if (viewStep === SignUpStepType.step4)
-      setViewStep(SignUpStepType.step3)
+    router.push('/login')
   }
 
   return (

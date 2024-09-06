@@ -1,7 +1,11 @@
+import { useRouter } from 'next/navigation'
+import { useFormContext } from 'react-hook-form'
+
 import {
   SignUpFormData,
   SignUpStepType,
 } from '@/features/auth/types/SignUpType.ts'
+import SignUpFinishIcon from '@/static/imgs/auth/signup/signup_finished_icon.svg'
 
 interface SignUpStep4Props {
   changeViewStep: (viewStep: SignUpStepType) => void
@@ -14,16 +18,32 @@ export default function SignUpStep4({
   submitFormData,
   setSubmitFormData,
 }: SignUpStep4Props) {
-  console.log(submitFormData.email)
+  const router = useRouter()
+  const { getValues } = useFormContext<SignUpFormData>()
+  const userNickname = getValues('nickname')
+  const handleGoMainPage = () => {
+    router.push('/')
+  }
   return (
-    <>
-      <p>스탭4</p>
+    <div className="mx-[2.0625rem]">
+      <div>
+        <p className="text-4xl font-bold inline">{userNickname}님,</p>
+        <p className="text-4xl inline"> 환영해요!</p>
+        <div className="whitespace-pre-line text-[#6B6E78]">
+          <p>회원가입이 완료되었습니다.</p>
+          <p>이제 3번의 경기를 통해 실력을 측정하고, </p>
+          <p>따다의 다양한 서비스를 즐겨보세요.</p>
+        </div>
+      </div>
+      <SignUpFinishIcon />
       <button
         type="button"
-        onClick={() => changeViewStep(SignUpStepType.step1)}
+        onClick={handleGoMainPage}
+        className="py-[1.1875rem] w-full mt-3 rounded-xl 
+      bg-[#FCA211] text-white cursor-pointer"
       >
-        test{' '}
+        홈으로 이동하기
       </button>
-    </>
+    </div>
   )
 }

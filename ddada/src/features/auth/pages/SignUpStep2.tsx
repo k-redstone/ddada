@@ -1,7 +1,9 @@
 'use client'
 
-import { useFormContext } from 'react-hook-form'
+/* eslint-disable react/jsx-props-no-spreading */
 import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+
 import {
   SignUpFormData,
   SignUpStepType,

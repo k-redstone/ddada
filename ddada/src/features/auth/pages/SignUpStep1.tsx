@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   SignUpFormData,
   SignUpStepType,
 } from '@/features/auth/types/SignUpType.ts'
 import CheckedBox from '@/static/imgs/auth/signup/signup_checkedBox_icon.svg'
-import UnCheckedBox from '@/static/imgs/auth/signup/signup_unCheckedBox_icon.svg'
 import TOSArrow from '@/static/imgs/auth/signup/signup_TOS_arrow.svg'
+import UnCheckedBox from '@/static/imgs/auth/signup/signup_unCheckedBox_icon.svg'
 
 interface SignUpStep1Props {
   changeViewStep: (viewStep: SignUpStepType) => void
@@ -141,7 +141,7 @@ export default function SignUpStep1({
 
       <button
         type="button"
-        onClick={() => changeViewStep(SignUpStepType.step3)}
+        onClick={() => changeViewStep(SignUpStepType.step4)}
       >
         테스트용{' '}
       </button>

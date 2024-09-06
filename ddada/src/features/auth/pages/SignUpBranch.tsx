@@ -1,7 +1,5 @@
 'use client'
 
-import { FieldErrors, UseFormRegister } from 'react-hook-form'
-
 import SignUpStep1 from '@/features/auth/pages/SignUpStep1.tsx'
 import SignUpStep2 from '@/features/auth/pages/SignUpStep2.tsx'
 import SignUpStep3 from '@/features/auth/pages/SignUpStep3.tsx'
