@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import { useBadmintonContext } from '@/features/manager/providers/BadmintonProvider.tsx'
+
 const scoreType = {
   SMASH: '스메시',
   PUSH: '푸시',
@@ -11,28 +13,18 @@ const scoreType = {
   SERVE: '서브',
 }
 
-type TeamInfo = { id: number; nickname: string }
-
 interface ScoreModalProps {
   modalhandler: () => void
-  scorehandler: {
-    pointScored: (
-      userId: number,
-      earnedType: string,
-      missedUser: number[],
-    ) => void
-    getOpponent: (userId: number) => TeamInfo[] | null
-  }
   currentUserId: number
 }
 
 export default function ScoreModal({
   modalhandler,
-  scorehandler,
   currentUserId,
 }: ScoreModalProps) {
   const [earnedType, setEarnedType] = useState<string>('')
   const [missedUser, setMissedUser] = useState<number[]>([])
+  const badmintonInstance = useBadmintonContext()
 
   const handleMissedUser = (userId: number) => {
     setMissedUser((prevMissedUser) => {
@@ -46,7 +38,7 @@ export default function ScoreModal({
   }
 
   const handleStoreScore = () => {
-    scorehandler.pointScored(currentUserId, earnedType, missedUser)
+    badmintonInstance.pointScored(currentUserId, earnedType, missedUser)
     modalhandler()
   }
 
@@ -87,7 +79,7 @@ export default function ScoreModal({
           <div>
             <p>실책 선수</p>
             <div className="flex gap-x-3">
-              {scorehandler.getOpponent(currentUserId)?.map((teamInfo) => (
+              {badmintonInstance.getOpponent(currentUserId)?.map((teamInfo) => (
                 <button
                   type="button"
                   key={teamInfo.id}

@@ -16,6 +16,9 @@ type HistoryType = {
   winner: number | null
 }
 
+/**
+ * 배드민턴 인스턴스
+ */
 class BadmintonScoreboard {
   teams: {
     team1: TeamType[]
@@ -34,9 +37,9 @@ class BadmintonScoreboard {
 
   /**
    * constructor
-   * @param gameId type number
-   * @param gameType singles | doubles
-   * @param teamConfig type teamData
+   * @param {number} gameId
+   * @param {string} gameType singles | doubles
+   * @param {object} teamConfig teamData
    */
 
   constructor(
