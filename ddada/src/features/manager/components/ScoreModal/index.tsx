@@ -2,15 +2,19 @@
 
 import { useState } from 'react'
 
+import Button from '@/features/manager/components/Button/index.tsx'
 import { useBadmintonContext } from '@/features/manager/providers/BadmintonProvider.tsx'
 
 const scoreType = {
   SMASH: '스메시',
-  PUSH: '푸시',
   DROP: '드롭',
   CLEAR: '클리어',
-  HAIRPIN: '헤어핀',
-  SERVE: '서브',
+  PUSH: '푸시',
+  NET: '네트플레이',
+}
+
+const missType = {
+  SERVE: '서브폴트',
 }
 
 interface ScoreModalProps {
@@ -50,55 +54,83 @@ export default function ScoreModal({
         aria-hidden="true"
       />
 
-      <div className="fixed left-1/2 top-1/2 z-40 w-[500px] -translate-x-1/2 -translate-y-1/2 bg-white">
-        <div className="flex flex-col gap-y-5">
+      <div className="fixed left-1/2 top-1/2 z-40 max-w-[919px] px-6 py-4 -translate-x-1/2 -translate-y-1/2 bg-white">
+        <div className="flex flex-col gap-y-3">
           {/* 위에 툴바 */}
-          <div>
-            <button type="button" onClick={() => modalhandler()}>
-              닫기
-            </button>
+          <div className="py-3 border-b-[1px] border-[#E5E5ED]">
+            <p>툴바임</p>
           </div>
-          {/* 점수 타입 */}
-          <div>
-            <p>점수 타입</p>
+
+          {/* 득점 종류 */}
+          <div className="py-1 px-2 flex flex-col gap-y-2">
+            <p className="font-bold">득점 종류</p>
             <div className="flex gap-x-3">
               {Object.entries(scoreType).map(([key, value]) => (
-                <button
-                  type="button"
+                <Button
                   key={key}
-                  className={`w-[50px] h-[40px] border-2 border-black rounded-md ${earnedType === key && `bg-red-300`} `}
+                  size="md"
+                  type="earn"
+                  text={value}
+                  changeStyle={earnedType === key}
                   onClick={() => setEarnedType(key)}
-                >
-                  {value}
-                </button>
+                />
               ))}
             </div>
           </div>
 
-          {/* 실책 선수 */}
-          <div>
-            <p>실책 선수</p>
+          {/* 실점 종류 */}
+          <div className="py-1 px-2 flex flex-col gap-y-2">
+            <p className="font-bold">실점 종류</p>
             <div className="flex gap-x-3">
-              {badmintonInstance.getOpponent(currentUserId)?.map((teamInfo) => (
-                <button
-                  type="button"
-                  key={teamInfo.id}
-                  className={`w-[50px] h-[40px] border-2 border-black rounded-md ${missedUser.includes(teamInfo.id) && `bg-red-300`}`}
-                  onClick={() => handleMissedUser(teamInfo.id)}
-                >
-                  {teamInfo.nickname}
-                </button>
+              {Object.entries(missType).map(([key, value]) => (
+                <Button
+                  key={key}
+                  size="md"
+                  type="miss"
+                  text={value}
+                  changeStyle={earnedType === key}
+                  onClick={() => setEarnedType(key)}
+                />
               ))}
             </div>
           </div>
-          {/* 저장 버튼 */}
-          <div>
+
+          {/* 폴트인원 */}
+          <div
+            className={`py-1 px-2 flex flex-col gap-y-2 rounded-md ${missedUser.length === 0 && `bg-[#F6F6F6]`}`}
+          >
+            <p className="font-bold">폴트인원</p>
+            <div className="flex gap-x-3">
+              {badmintonInstance
+                .getOpponent(currentUserId)
+                ?.map((teamInfo) => (
+                  <Button
+                    key={teamInfo.nickname}
+                    size="lg"
+                    type="fault"
+                    text={teamInfo.nickname}
+                    changeStyle={missedUser.includes(teamInfo.id)}
+                    onClick={() => handleMissedUser(teamInfo.id)}
+                  />
+                ))}
+            </div>
+          </div>
+
+          {/* 닫기 & 저장 */}
+          <div className="flex gap-x-3 text-base">
             <button
+              className="grow rounded-xl border-[1px] py-[10px] border-[#FCA211]"
               type="button"
-              className="border-2 rounded-lg"
+              onClick={() => modalhandler()}
+            >
+              닫기
+            </button>
+            <button
+              className={`grow rounded-xl border-[1px] py-[10px]   ${earnedType === '' && missedUser.length === 0 ? `text-[#6B6E78] bg-[#E5E5ED]` : `text-[#ffffff] bg-[#FCA211]`}`}
+              type="button"
               onClick={() => handleStoreScore()}
             >
-              저장하기
+              저장
             </button>
           </div>
         </div>
