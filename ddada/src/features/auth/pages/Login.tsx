@@ -1,13 +1,21 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { originLogin, socialLogin } from '@/features/auth/api/login/index.ts'
 import PasswordUnVisible from '@/static/imgs/auth/auth_password_unvisible_icon.svg'
 import PasswordVisible from '@/static/imgs/auth/auth_password_visible_icon.svg'
 import KakaoLogo from '@/static/imgs/auth/kakao_logo.svg'
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Kakao: any
+  }
+}
 interface LoginForm {
   email: string
   password: string
@@ -19,12 +27,35 @@ export default function Login() {
   const [emailExists, setEmailExists] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
+  const searchParams = useSearchParams()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>()
 
+  useEffect(() => {
+    if (window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const authCode = searchParams!.get('code')
+    if (authCode) {
+      const res = socialLogin(authCode)
+      // 카카오 로그인 후 그 정보로 소셜로그인 시도
+      // todo 응답 메세지에 따라 처리하기
+      console.log(res)
+    }
+  }, [searchParams])
+
+  const handleKakaoLogin = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URI}&response_type=code`
+  }
   const emailRegister = register('email', {
     required: { value: true, message: '' },
     pattern: {
@@ -72,10 +103,16 @@ export default function Login() {
     }
   }
 
-  const loginSubmit = (data: LoginForm) => {
+  const loginSubmit = async (data: LoginForm) => {
     // todo 백엔드로 axios 요청 보내기
-    console.log(data)
-    setAxiosError(true)
+    const res = await originLogin(data.email, data.password)
+    if (res.status === 200) {
+      sessionStorage.setItem('accessToken', res.data.accessToken)
+      sessionStorage.setItem('refreshToken', res.data.refreshToken)
+      setAxiosError(false)
+    } else {
+      setAxiosError(true)
+    }
   }
 
   return (
@@ -173,6 +210,7 @@ export default function Login() {
               </div>
               <button
                 type="button"
+                onClick={handleKakaoLogin}
                 className="py-[1.2744rem] w-full bg-[#FEE500] text-[#000000] rounded-xl flex items-center justify-center relative mt-3"
               >
                 <KakaoLogo className="absolute left-[10px]" />

@@ -22,19 +22,20 @@ const signUpSubmit: SubmitHandler<SignUpFormData> = (data) => {
 
 export default function SignUp() {
   const [viewStep, setViewStep] = useState<SignUpStepType>(SignUpStepType.step1)
-  const [submitFormData, setSubmitFormData] = useState<SignUpFormData>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    nickname: '',
-    phoneNumber: '',
-    birthYear: '',
-    birthMonth: '',
-    birthDay: '',
-    profilePicture: undefined,
-    gender: '',
-    introduction: '',
-  })
+  // const [submitFormData, setSubmitFormData] = useState<SignUpFormData>({
+  //   email: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   nickname: '',
+  //   phoneNumber: '',
+  //   authNumber: '',
+  //   birthYear: '',
+  //   birthMonth: '',
+  //   birthDay: '',
+  //   profilePicture: undefined,
+  //   gender: '',
+  //   introduction: '',
+  // })
   const methods = useForm<SignUpFormData>({
     mode: 'all',
   })
@@ -73,8 +74,8 @@ export default function SignUp() {
                 <SignUpBranch
                   viewStep={viewStep}
                   changeViewStep={setViewStep}
-                  submitFormData={submitFormData}
-                  setSubmitFormData={setSubmitFormData}
+                  // submitFormData={submitFormData}
+                  // setSubmitFormData={setSubmitFormData}
                 />
               </form>
             </FormProvider>

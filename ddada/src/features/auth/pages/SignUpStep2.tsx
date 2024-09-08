@@ -1,9 +1,15 @@
 'use client'
 
 /* eslint-disable react/jsx-props-no-spreading */
+
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import {
+  checkNicknameDuplicate,
+  requestPhoneAuthCode,
+  verificationPhone,
+} from '@/features/auth/api/signup/index.ts'
 import {
   SignUpFormData,
   SignUpStepType,
@@ -15,20 +21,16 @@ import PassworeMatchChecked from '@/static/imgs/auth/signup/checked_circle_icon.
 
 interface SignUpStep2Props {
   changeViewStep: (viewStep: SignUpStepType) => void
-  submitFormData: SignUpFormData
-  setSubmitFormData: (submitFormData: SignUpFormData) => void
 }
 
-export default function SignUpStep2({
-  changeViewStep,
-  submitFormData,
-  setSubmitFormData,
-}: SignUpStep2Props) {
+export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const {
     register,
     formState: { errors },
     watch,
     trigger,
+    setError,
+    clearErrors,
   } = useFormContext<SignUpFormData>()
   const email = watch('email')
   const password = watch('password')
@@ -36,6 +38,7 @@ export default function SignUpStep2({
   const nickName = watch('nickname')
   const phoneNumber = watch('phoneNumber')
   const birthYear = watch('birthYear')
+  const smsAuthCode = watch('authNumber')
 
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
@@ -47,6 +50,10 @@ export default function SignUpStep2({
     useState<boolean>(false)
   const [phoneNumberCheck, setPhoneNumberCheck] = useState<boolean>(false)
   const [isNextStepEnabled, setIsNextStepEnabled] = useState<boolean>(false)
+  // 인증번호 타이머 관련
+  const [timeLeft, setTimeLeft] = useState<number>(0) // 3분 타이머 (180초)
+  const [isExpired, setIsExpired] = useState<boolean>(false)
+
   useEffect(() => {
     // birthYear 의 validation 체크가 바로바로안되어 강제로 trigger로 갱신
     const checkValidation = async () => {
@@ -90,6 +97,19 @@ export default function SignUpStep2({
     setIsPasswordMatch(password === confirmPassword)
   }, [password, confirmPassword])
 
+  // 타이머 관련
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+
+    if (authNumber && timeLeft > 0) {
+      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
+    } else if (timeLeft === 0) {
+      setIsExpired(true)
+    }
+
+    return () => clearTimeout(timer) // 컴포넌트 언마운트 시 타이머 클리어
+  }, [authNumber, timeLeft, setError])
+
   const handleVisibility = () => {
     setPasswordVisibility(!passwordVisibility)
   }
@@ -98,29 +118,62 @@ export default function SignUpStep2({
     setPasswordConfirmVisibility(!passwordConfirmVisibility)
   }
 
-  const handleCheckNickName = () => {
-    console.log('닉네임 중복체크')
+  const handleCheckNickName = async () => {
     // 닉네임 중복체크가 됬다고 가정
-    setNickNameCheck(true)
-    // // 만약 중복이 되었다면
-    // setNickNameAlreadyExist(true)
+    const duplicateCheck = await checkNicknameDuplicate(nickName)
+    if (duplicateCheck) {
+      setNickNameCheck(true)
+      setNickNameAlreadyExist(false)
+    } else {
+      setNickNameCheck(false)
+      setNickNameAlreadyExist(true)
+    }
   }
 
-  const handleCheckPhoneNumber = () => {
-    console.log('전화번호 인증받기')
-    setAuthNumber(true)
+  // sns 인증번호 받기
+  const handleCheckPhoneNumber = async () => {
+    const sendSNSAuth = await requestPhoneAuthCode(phoneNumber)
+    if (sendSNSAuth) {
+      setAuthNumber(true)
+      setTimeLeft(180)
+      clearErrors('phoneNumber')
+    } else {
+      setError('phoneNumber', {
+        message: '인증번호 발송에 실패했습니다. 다시 시도해주세요.',
+      })
+      setAuthNumber(false)
+    }
   }
 
-  const handleReCheckPhoneNumber = () => {
-    console.log('전화번호 인증 다시받기')
+  // 다시 sns 인증번호 받기
+  const handleReCheckPhoneNumber = async () => {
+    await requestPhoneAuthCode(phoneNumber)
+    setTimeLeft(180)
+    setIsExpired(false)
   }
 
-  const handleSendAuthNumber = () => {
+  // 받은 sns 인증번호로 인증하기
+  const handleSendAuthNumber = async () => {
     console.log('받은 인증번호 보내기')
-    // 인증하기를 눌러서 인증이 됬다고 가정
+    console.log(smsAuthCode)
+    if (isExpired) {
+      setError('authNumber', {
+        message: '인증번호가 만료되었습니다. 다시 시도해주세요.',
+      })
+      return
+    }
+    const verificationPhoneResult = await verificationPhone(
+      phoneNumber,
+      smsAuthCode,
+    )
     setPhoneNumberCheck(true)
+    console.log(verificationPhoneResult)
   }
-
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60)
+    const seconds = time % 60
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+  }
   const emailRegister = register('email', {
     required: '이메일을 입력해주세요.',
     pattern: {
@@ -343,7 +396,11 @@ export default function SignUpStep2({
                 id="authNumber"
                 placeholder="인증번호"
                 className="w-full focus:outline-none"
+                {...register('authNumber')}
               />
+              <div className="text-[#FCA211]">
+                <p>{formatTime(timeLeft)}</p>
+              </div>
             </div>
             <div className="mt-[0.5rem] flex gap-[0.25rem] justify-end">
               <button
@@ -420,6 +477,12 @@ export default function SignUpStep2({
         disabled={!isNextStepEnabled}
       >
         다음단계{' '}
+      </button>
+      <button
+        type="button"
+        onClick={() => changeViewStep(SignUpStepType.step3)}
+      >
+        테스트용{' '}
       </button>
     </>
   )

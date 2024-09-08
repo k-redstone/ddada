@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { signupSubmit } from '@/features/auth/api/signup/index.ts'
 import {
   SignUpFormData,
   SignUpStepType,
@@ -17,21 +18,17 @@ import Logo from '@/static/imgs/logo.svg'
 
 interface SignUpStep3Props {
   changeViewStep: (viewStep: SignUpStepType) => void
-  submitFormData: SignUpFormData
-  setSubmitFormData: (submitFormData: SignUpFormData) => void
 }
 
-export default function SignUpStep3({
-  changeViewStep,
-  submitFormData,
-  setSubmitFormData,
-}: SignUpStep3Props) {
+export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
   const {
     register,
     formState: { errors },
     setValue,
     watch,
     handleSubmit,
+    setError,
+    clearErrors,
   } = useFormContext<SignUpFormData>()
 
   const [profileImage, setProfileImage] = useState<string | undefined>(
@@ -57,6 +54,27 @@ export default function SignUpStep3({
       if (!file) {
         return
       }
+      // 파일 크기 및 형식 검사
+      const validFileTypes = ['image/png', 'image/jpeg', 'image/gif']
+      const maxSizeMB = 2
+
+      if (!validFileTypes.includes(file.type)) {
+        setError('profilePicture', {
+          type: 'manual',
+          message:
+            '지원되지 않는 파일 형식입니다. PNG, JPEG, GIF만 지원됩니다.',
+        })
+        return
+      }
+
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        setError('profilePicture', {
+          type: 'manual',
+          message: '파일 크기가 2MB를 초과합니다.',
+        })
+        return
+      }
+      clearErrors('profilePicture')
       const reader = new FileReader()
       reader.onloadend = () => {
         setProfileImage(reader.result as string)
@@ -83,9 +101,22 @@ export default function SignUpStep3({
     setMaleChecked(false)
   }
 
-  const signUpSubmit = (data: SignUpFormData) => {
+  const signUpFinished = async (data: SignUpFormData) => {
     // todo 백에다가 회원가입 요청 보내기
-    console.log(data)
+    const payload = {
+      nickname: data.nickname,
+      email: data.email,
+      gender: data.gender,
+      profileImage: data.profilePicture,
+      birthYear: data.birthYear,
+      password: data.password,
+      phoneNumber: data.phoneNumber,
+      description: data.introduction,
+    }
+    // todo 리턴값 보고 수정필요
+    const res = await signupSubmit(payload)
+    sessionStorage.setItem('accessToken', res.data.accessToken)
+    sessionStorage.setItem('refreshToken', res.data.refreshToken)
     changeViewStep(SignUpStepType.step4)
   }
   const profilePictureRegister = register('profilePicture', {})
@@ -152,12 +183,14 @@ export default function SignUpStep3({
               </div>
               <div>
                 <p>.png, .jpeg, .gif 파일은 최대 2MB까지 지원합니다.</p>
+                {errors.profilePicture && (
+                  <p className="text-[#DC3545]">
+                    {errors.profilePicture.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
-          {errors.profilePicture && (
-            <p className="text-[#DC3545]">{errors.profilePicture.message}</p>
-          )}
         </div>
       </div>
       <div className="text-sm">
@@ -231,7 +264,7 @@ export default function SignUpStep3({
       </div>
       <button
         type="button"
-        onClick={handleSubmit(signUpSubmit)}
+        onClick={handleSubmit(signUpFinished)}
         className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
           isNextStepEnabled
             ? 'bg-[#FCA211] text-white cursor-pointer'

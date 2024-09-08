@@ -1,23 +1,20 @@
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 
 import {
   SignUpFormData,
-  SignUpStepType,
+  // SignUpStepType,
 } from '@/features/auth/types/SignUpType.ts'
 import SignUpFinishIcon from '@/static/imgs/auth/signup/signup_finished_icon.svg'
 
-interface SignUpStep4Props {
-  changeViewStep: (viewStep: SignUpStepType) => void
-  submitFormData: SignUpFormData
-  setSubmitFormData: (submitFormData: SignUpFormData) => void
-}
+// interface SignUpStep4Props {
+//   changeViewStep: (viewStep: SignUpStepType) => void
+//   submitFormData: SignUpFormData
+//   setSubmitFormData: (submitFormData: SignUpFormData) => void
+// }
 
-export default function SignUpStep4({
-  changeViewStep,
-  submitFormData,
-  setSubmitFormData,
-}: SignUpStep4Props) {
+export default function SignUpStep4() {
   const router = useRouter()
   const { getValues } = useFormContext<SignUpFormData>()
   const userNickname = getValues('nickname')
@@ -36,6 +33,12 @@ export default function SignUpStep4({
         </div>
       </div>
       <SignUpFinishIcon />
+      <Image
+        src="/signup/signup_finished_gif.gif"
+        alt="animated gif"
+        width={500}
+        height={500}
+      />
       <button
         type="button"
         onClick={handleGoMainPage}
