@@ -15,27 +15,12 @@ import Progress3 from '@/static/imgs/auth/signup/progress/signup_progress_step3.
 import Progress4 from '@/static/imgs/auth/signup/progress/signup_progress_step4.svg'
 import GoBeforeArrow from '@/static/imgs/auth/signup/signup_goBeforepage_icon.svg'
 
-const signUpSubmit: SubmitHandler<SignUpFormData> = (data) => {
+const signUpSubmit: SubmitHandler<SignUpFormData> = () => {
   alert('회원가입 데이타 보내기 성공')
-  console.log(data)
 }
 
 export default function SignUp() {
   const [viewStep, setViewStep] = useState<SignUpStepType>(SignUpStepType.step1)
-  // const [submitFormData, setSubmitFormData] = useState<SignUpFormData>({
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: '',
-  //   nickname: '',
-  //   phoneNumber: '',
-  //   authNumber: '',
-  //   birthYear: '',
-  //   birthMonth: '',
-  //   birthDay: '',
-  //   profilePicture: undefined,
-  //   gender: '',
-  //   introduction: '',
-  // })
   const methods = useForm<SignUpFormData>({
     mode: 'all',
   })
@@ -74,8 +59,6 @@ export default function SignUp() {
                 <SignUpBranch
                   viewStep={viewStep}
                   changeViewStep={setViewStep}
-                  // submitFormData={submitFormData}
-                  // setSubmitFormData={setSubmitFormData}
                 />
               </form>
             </FormProvider>

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -28,7 +28,7 @@ export default function Login() {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
   const searchParams = useSearchParams()
-  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -44,28 +44,13 @@ export default function Login() {
   }, [])
 
   useEffect(() => {
-    const fetchSocialLogin = async () => {
-      const authCode = searchParams!.get('code')
-
-      if (authCode) {
-        try {
-          const res = await socialLogin(authCode)
-          console.log(res)
-          if (res.data.result.isRegistered) {
-            sessionStorage.setItem('accessToken', res.data.accessToken)
-            sessionStorage.setItem('refreshToken', res.data.refreshToken)
-            router.push('/')
-          } else {
-            const kakaoEmail = res.data.result.kakaoEmail as string
-            router.push(`/signup?kakaoEmail=${encodeURIComponent(kakaoEmail)}`)
-          }
-        } catch (error) {
-          console.error('소셜 로그인 실패', error)
-        }
-      }
+    const authCode = searchParams!.get('code')
+    if (authCode) {
+      const res = socialLogin(authCode)
+      // 카카오 로그인 후 그 정보로 소셜로그인 시도
+      // todo 응답 메세지에 따라 처리하기
+      console.log(res)
     }
-
-    fetchSocialLogin()
   }, [searchParams])
 
   const handleKakaoLogin = () => {
@@ -119,13 +104,14 @@ export default function Login() {
   }
 
   const loginSubmit = async (data: LoginForm) => {
-    try {
-      const res = await originLogin(data.email, data.password)
+    // todo 백엔드로 axios 요청 보내기
+    const res = await originLogin(data.email, data.password)
+    console.log(res)
+    if (res.status === 200) {
       sessionStorage.setItem('accessToken', res.data.accessToken)
       sessionStorage.setItem('refreshToken', res.data.refreshToken)
       setAxiosError(false)
-      router.push('/')
-    } catch {
+    } else {
       setAxiosError(true)
     }
   }

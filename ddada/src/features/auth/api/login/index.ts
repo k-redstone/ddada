@@ -9,10 +9,19 @@ const originLogin = async (email: string, password: string) => {
   return res
 }
 
-const socialLogin = async (authCode: string) => {
+const socialLogin = async (authcode: string) => {
   const res = await instance.post('/auth/login', {
-    authCode,
+    authcode,
     loginType: 'kakao',
+  })
+  return res
+}
+
+// 로그아웃 함수
+const logout = async (accessToken: string) => {
+  const res = await instance.post('/auth/logout', {
+    accessToken,
+    logoutType: 'kakao',
   })
   return res
 }
@@ -23,4 +32,4 @@ const sendRefreshToken = async (refreshToken: string) => {
   return res
 }
 
-export { sendRefreshToken, socialLogin, originLogin }
+export { sendRefreshToken, socialLogin, originLogin, logout }

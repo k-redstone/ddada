@@ -2,8 +2,10 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { toast, Toaster } from 'react-hot-toast'
 
 import {
   checkNicknameDuplicate,
@@ -31,6 +33,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     trigger,
     setError,
     clearErrors,
+    setValue,
   } = useFormContext<SignUpFormData>()
   const email = watch('email')
   const password = watch('password')
@@ -39,7 +42,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const phoneNumber = watch('phoneNumber')
   const birthYear = watch('birthYear')
   const smsAuthCode = watch('authNumber')
-
+  const searchParams = useSearchParams()
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
     useState<boolean>(false)
@@ -50,12 +53,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     useState<boolean>(false)
   const [phoneNumberCheck, setPhoneNumberCheck] = useState<boolean>(false)
   const [isNextStepEnabled, setIsNextStepEnabled] = useState<boolean>(false)
+  const [kkaoEmailExist, setKakaoEmailExist] = useState<boolean>(false)
+
   // 인증번호 타이머 관련
-  const [timeLeft, setTimeLeft] = useState<number>(0) // 3분 타이머 (180초)
+  const [timeLeft, setTimeLeft] = useState<number>(Infinity)
   const [isExpired, setIsExpired] = useState<boolean>(false)
 
   useEffect(() => {
-    // birthYear 의 validation 체크가 바로바로안되어 강제로 trigger로 갱신
     const checkValidation = async () => {
       await trigger('birthYear')
 
@@ -91,6 +95,14 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   ])
 
   useEffect(() => {
+    const kakaoEmail = searchParams.get('kakaoEmail')
+    if (kakaoEmail) {
+      setValue('email', kakaoEmail)
+      setKakaoEmailExist(true)
+    }
+  }, [])
+
+  useEffect(() => {
     setNickNameAlreadyExist(false)
   }, [nickName])
   useEffect(() => {
@@ -107,7 +119,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       setIsExpired(true)
     }
 
-    return () => clearTimeout(timer) // 컴포넌트 언마운트 시 타이머 클리어
+    return () => clearTimeout(timer)
   }, [authNumber, timeLeft, setError])
 
   const handleVisibility = () => {
@@ -119,7 +131,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   }
 
   const handleCheckNickName = async () => {
-    // 닉네임 중복체크가 됬다고 가정
     const duplicateCheck = await checkNicknameDuplicate(nickName)
     if (duplicateCheck) {
       setNickNameCheck(true)
@@ -148,14 +159,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   // 다시 sns 인증번호 받기
   const handleReCheckPhoneNumber = async () => {
     await requestPhoneAuthCode(phoneNumber)
+    toast.success('인증번호가 재전송되었습니다.')
     setTimeLeft(180)
     setIsExpired(false)
   }
 
   // 받은 sns 인증번호로 인증하기
   const handleSendAuthNumber = async () => {
-    console.log('받은 인증번호 보내기')
-    console.log(smsAuthCode)
     if (isExpired) {
       setError('authNumber', {
         message: '인증번호가 만료되었습니다. 다시 시도해주세요.',
@@ -166,8 +176,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       phoneNumber,
       smsAuthCode,
     )
-    setPhoneNumberCheck(true)
-    console.log(verificationPhoneResult)
+    if (verificationPhoneResult.data.result === '인증에 실패했습니다.') {
+      setError('authNumber', {
+        message: '인증번호가 올바르지 않습니다.',
+      })
+    } else {
+      setPhoneNumberCheck(true)
+    }
   }
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
@@ -227,8 +242,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     },
     pattern: {
       value:
-        /^(19[0-9][0-9]|20[0-2][0-9]|2030)(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/,
-      message: '생년월일 형식을 확인해주세요.',
+        /^(19[0-9]{2}|20[0-2][0-9])-((0[1-9]|1[0-2]))-((0[1-9]|[12][0-9]|3[01]))$/,
+      message: '생년월일 형식을 YYYY-MM-DD로 입력해주세요.',
     },
   })
 
@@ -240,7 +255,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           <p className="text-[#6B6E78]">이메일</p>
           <div
             className={`flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] 
-              ${errors.email ? 'border-[#DC3545]' : ''}`}
+              ${errors.email ? 'border-[#DC3545]' : ''}
+              ${kkaoEmailExist ? 'bg-[#F6F6F6] text-[#6B6E78]' : ''}`}
           >
             <input
               type="text"
@@ -248,6 +264,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               placeholder="이메일을 입력해주세요."
               className="w-full focus:outline-none"
               autoComplete="new-email"
+              disabled={kkaoEmailExist}
               {...emailRegister}
             />
           </div>
@@ -313,7 +330,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
                 <PasswordUnVisible className="cursor-pointer" />
               )}
             </button>
-            {/* 비밀번호가 일치하면 체크 아이콘 표시 */}
           </div>
           {errors.confirmPassword && (
             <p className="text-[#DC3545]">{errors.confirmPassword.message}</p>
@@ -427,7 +443,17 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </div>
           </>
         )}
-
+        {/* todo 최종전에 삭제 */}
+        <button
+          type="button"
+          className="px-[1.5rem] py-[1.3125rem] rounded-xl bg-[#FCA211] text-white cursor-pointer"
+          onClick={() => {
+            setPhoneNumberCheck(true)
+            setAuthNumber(true)
+          }}
+        >
+          돈내기방지용 인증완료 버튼
+        </button>
         {!authNumber && (
           <div className="mt-[0.5rem] flex justify-end">
             <button
@@ -454,7 +480,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             <input
               type="text"
               id="birthYear"
-              placeholder="연도. 월. 일"
+              placeholder="연도-월-일"
               className="w-full focus:outline-none"
               {...birthYearRegister}
             />
@@ -476,14 +502,9 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
         }`}
         disabled={!isNextStepEnabled}
       >
-        다음단계{' '}
+        다음단계
       </button>
-      <button
-        type="button"
-        onClick={() => changeViewStep(SignUpStepType.step3)}
-      >
-        테스트용{' '}
-      </button>
+      <Toaster />
     </>
   )
 }

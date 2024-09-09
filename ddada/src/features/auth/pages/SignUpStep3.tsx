@@ -54,7 +54,6 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       if (!file) {
         return
       }
-      // 파일 크기 및 형식 검사
       const validFileTypes = ['image/png', 'image/jpeg', 'image/gif']
       const maxSizeMB = 2
 
@@ -90,19 +89,18 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
     setDefaultImage(true)
   }
   const handleMaleGender = () => {
-    setValue('gender', 'male')
+    setValue('gender', 'MALE')
     setMaleChecked(true)
     setFemaleChecked(false)
   }
 
   const handleFeMaleGender = () => {
-    setValue('gender', 'female')
+    setValue('gender', 'FEMALE')
     setFemaleChecked(true)
     setMaleChecked(false)
   }
 
   const signUpFinished = async (data: SignUpFormData) => {
-    // todo 백에다가 회원가입 요청 보내기
     const payload = {
       nickname: data.nickname,
       email: data.email,
@@ -113,7 +111,6 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       phoneNumber: data.phoneNumber,
       description: data.introduction,
     }
-    // todo 리턴값 보고 수정필요
     const res = await signupSubmit(payload)
     sessionStorage.setItem('accessToken', res.data.accessToken)
     sessionStorage.setItem('refreshToken', res.data.refreshToken)

@@ -2,17 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 
-import {
-  SignUpFormData,
-  // SignUpStepType,
-} from '@/features/auth/types/SignUpType.ts'
-import SignUpFinishIcon from '@/static/imgs/auth/signup/signup_finished_icon.svg'
-
-// interface SignUpStep4Props {
-//   changeViewStep: (viewStep: SignUpStepType) => void
-//   submitFormData: SignUpFormData
-//   setSubmitFormData: (submitFormData: SignUpFormData) => void
-// }
+import { SignUpFormData } from '@/features/auth/types/SignUpType.ts'
 
 export default function SignUpStep4() {
   const router = useRouter()
@@ -32,7 +22,6 @@ export default function SignUpStep4() {
           <p>따다의 다양한 서비스를 즐겨보세요.</p>
         </div>
       </div>
-      <SignUpFinishIcon />
       <Image
         src="/signup/signup_finished_gif.gif"
         alt="animated gif"

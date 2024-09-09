@@ -17,7 +17,8 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
   const [checkPersonal, setCheckPersonal] = useState(false)
   const [checkMarketing, setCheckMarketing] = useState(false)
   const [isNextStepEnabled, setIsNextStepEnabled] = useState<boolean>(false)
-  // 서비스 이용양관 동의
+
+  // 서비스 이용약관 동의
   const [isTosOpen, setIsTosOpen] = useState(false)
   const [isServiceOpen, setIsServiceOpen] = useState(false)
   const [isPersonalOpen, setIsPersonalOpen] = useState(false)
@@ -76,7 +77,8 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
           onClick={() => setIsTosOpen(!isTosOpen)}
           aria-label="이용약관 보기"
         >
-          <TOSArrow />
+          {!isTosOpen && <TOSArrow />}
+          {isTosOpen && <TOSArrow className="rotate-90" />}
         </button>
       </div>
       {isTosOpen && (
@@ -107,7 +109,8 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
           onClick={() => setIsServiceOpen(!isServiceOpen)}
           aria-label="서비스 이용약관 보기"
         >
-          <TOSArrow />
+          {!isServiceOpen && <TOSArrow />}
+          {isServiceOpen && <TOSArrow className="rotate-90" />}
         </button>
       </div>
       {isServiceOpen && (
@@ -136,7 +139,8 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
           onClick={() => setIsPersonalOpen(!isPersonalOpen)}
           aria-label="개인정보 수집 및 이용 동의 보기"
         >
-          <TOSArrow />
+          {!isPersonalOpen && <TOSArrow />}
+          {isPersonalOpen && <TOSArrow className="rotate-90" />}
         </button>
       </div>
       {isPersonalOpen && (
@@ -170,13 +174,6 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         disabled={!isNextStepEnabled}
       >
         다음단계{' '}
-      </button>
-
-      <button
-        type="button"
-        onClick={() => changeViewStep(SignUpStepType.step3)}
-      >
-        테스트용{' '}
       </button>
     </>
   )

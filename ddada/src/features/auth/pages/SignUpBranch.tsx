@@ -4,23 +4,16 @@ import SignUpStep1 from '@/features/auth/pages/SignUpStep1.tsx'
 import SignUpStep2 from '@/features/auth/pages/SignUpStep2.tsx'
 import SignUpStep3 from '@/features/auth/pages/SignUpStep3.tsx'
 import SignUpStep4 from '@/features/auth/pages/SignUpStep4.tsx'
-import {
-  // SignUpFormData,
-  SignUpStepType,
-} from '@/features/auth/types/SignUpType.ts'
+import { SignUpStepType } from '@/features/auth/types/SignUpType.ts'
 
 interface SignUpBranchProps {
   viewStep: SignUpStepType
   changeViewStep: (viewStep: SignUpStepType) => void
-  // submitFormData: SignUpFormData
-  // setSubmitFormData: (submitFormData: SignUpFormData) => void
 }
 
 export default function SignUpBranch({
   viewStep,
   changeViewStep,
-  // submitFormData,
-  // setSubmitFormData,
 }: SignUpBranchProps) {
   switch (viewStep) {
     case SignUpStepType.step1:
