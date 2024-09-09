@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
 
+import { useUserRole } from '@/hooks/queries/user.ts'
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
@@ -23,6 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  useUserRole()
   return (
     <html lang="kr" className={`${pretendard.variable} font-pretendard`}>
       <body>
