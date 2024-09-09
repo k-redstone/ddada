@@ -54,8 +54,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const [phoneNumberCheck, setPhoneNumberCheck] = useState<boolean>(false)
   const [isNextStepEnabled, setIsNextStepEnabled] = useState<boolean>(false)
   const [kkaoEmailExist, setKakaoEmailExist] = useState<boolean>(false)
-
-  // 인증번호 타이머 관련
   const [timeLeft, setTimeLeft] = useState<number>(Infinity)
   const [isExpired, setIsExpired] = useState<boolean>(false)
 
@@ -75,7 +73,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
         phoneNumberCheck &&
         Object.keys(errors).length === 0
       ) {
-        console.log('다음단계활성화')
         setIsNextStepEnabled(true)
       } else {
         setIsNextStepEnabled(false)
@@ -103,9 +100,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   }, [])
 
   useEffect(() => {
-    setNickNameAlreadyExist(false)
-  }, [nickName])
-  useEffect(() => {
     setIsPasswordMatch(password === confirmPassword)
   }, [password, confirmPassword])
 
@@ -132,7 +126,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
 
   const handleCheckNickName = async () => {
     const duplicateCheck = await checkNicknameDuplicate(nickName)
-    if (duplicateCheck) {
+    if (duplicateCheck.data.result === '사용 가능한 닉네임입니다.') {
       setNickNameCheck(true)
       setNickNameAlreadyExist(false)
     } else {
@@ -345,13 +339,15 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             <div
               className={`flex-grow flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] ${
                 nickNameAlreadyExist && 'border-[#DC3545]'
-              }`}
+              }
+              ${nickNameCheck && 'bg-[#F6F6F6] text-[#6B6E78]'}`}
             >
               <input
                 type="text"
                 id="nickname"
                 placeholder="닉네임을 입력해주세요. (최대 20자)"
                 className="w-full focus:outline-none"
+                disabled={nickNameCheck}
                 {...nicknameRegister}
               />
               {nickName && nickNameCheck && (
@@ -390,12 +386,16 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               <option>+82</option>
               <option>+81</option>
             </select>
-            <div className="flex w-full items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            <div
+              className={`flex w-full items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]
+            ${phoneNumberCheck && 'bg-[#F6F6F6] text-[#6B6E78]'}`}
+            >
               <input
                 type="text"
                 id="phoneNumber"
                 placeholder="숫자만 입력해주세요."
                 className="w-full focus:outline-none"
+                disabled={phoneNumberCheck}
                 {...phoneNumberRegister}
               />
               {phoneNumber && phoneNumberCheck && (

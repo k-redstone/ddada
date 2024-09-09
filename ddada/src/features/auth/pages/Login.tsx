@@ -50,7 +50,6 @@ export default function Login() {
       if (authCode) {
         try {
           const res = await socialLogin(authCode)
-          console.log(res)
           if (res.data.result.isRegistered) {
             sessionStorage.setItem('accessToken', res.data.accessToken)
             sessionStorage.setItem('refreshToken', res.data.refreshToken)

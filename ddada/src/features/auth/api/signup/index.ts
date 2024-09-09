@@ -6,8 +6,7 @@ import { SignUpSubmitType } from '@/features/auth/types/SignUpType.ts'
 // 닉네임 중복확인
 const checkNicknameDuplicate = async (nickname: string) => {
   const res = await instance.get('/member/nickname', { params: { nickname } })
-  if (res.status === 200) return true
-  return false
+  return res
 }
 
 // 휴대폰 인증번호 요청 API
@@ -43,7 +42,6 @@ const signupSubmit = async (payload: SignUpSubmitType) => {
   if (payload.profilePicture) {
     formData.append('profileImagePath', payload.profilePicture)
   }
-  // todo 리턴값 보고 수정필요
   const res = await instance.post('/member/signup', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -41,6 +41,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
   const profilePicture = watch('profilePicture')
   const gender = watch('gender')
   useEffect(() => {
+    clearErrors('profilePicture')
     if (profilePicture && gender && Object.keys(errors).length === 0) {
       setIsNextStepEnabled(true)
     } else {
@@ -101,6 +102,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
   }
 
   const signUpFinished = async (data: SignUpFormData) => {
+    clearErrors('profilePicture')
     const payload = {
       nickname: data.nickname,
       email: data.email,
