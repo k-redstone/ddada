@@ -19,7 +19,7 @@ type HistoryType = {
 /**
  * 배드민턴 인스턴스
  */
-class BadmintonScoreboard {
+class BadmintonScoreboardInstance {
   teams: {
     team1: TeamType[]
     team2: TeamType[]
@@ -43,23 +43,25 @@ class BadmintonScoreboard {
    */
 
   constructor(
-    gameId: number,
-    gameType: string,
-    teamConfig: {
+    gameId?: number,
+    gameType?: string,
+    teamConfig?: {
       team1: TeamType[]
       team2: TeamType[]
     },
   ) {
-    if (!teamConfig) {
-      throw new Error('teamConfig is null')
+    this.teams = {
+      team1: teamConfig?.team1 ?? [],
+      team2: teamConfig?.team2 ?? [],
     }
-    this.teams =
-      gameType === 'doubles'
-        ? teamConfig
-        : {
-            team1: teamConfig.team1,
-            team2: teamConfig.team2,
-          }
+    // this.teams =
+    //   gameType === 'doubles'
+    //     ? teamConfig
+    //     : {
+    //         team1: teamConfig.team1,
+    //         team2: teamConfig.team2,
+    //       }
+
     this.setScores = {
       team1: 0,
       team2: 0,
@@ -82,7 +84,7 @@ class BadmintonScoreboard {
   }
 
   initialize() {
-    const savedData = BadmintonScoreboard.loadFromLocalStorage()
+    const savedData = BadmintonScoreboardInstance.loadFromLocalStorage()
     if (savedData) {
       this.setScores = savedData.setScores
       this.matchScores = savedData.matchScores
@@ -110,18 +112,34 @@ class BadmintonScoreboard {
       ? 'team1'
       : 'team2'
     const opponentTeam = team === 'team1' ? 'team2' : 'team1'
-
+    console.log(player)
     // 득점 반영
-    this.matchScores[team] += 1
+    if (earnedType === 'SERVE') {
+      this.matchScores[opponentTeam] += 1
+    } else if (player === -1) {
+      this.matchScores[opponentTeam] += 1
+    } else {
+      this.matchScores[team] += 1
+    }
     console.log(`유저 ${player} 팀${team} 점수${this.matchScores[team]} `)
     console.log(`득점유형 ${earnedType} 실책 선수 ${missedUser}`)
 
     // 세트 종료 분기처리
     if (
-      this.matchScores[team] >= 3 &&
-      this.matchScores[team] - this.matchScores[opponentTeam] >= 2
+      this.matchScores[team] - this.matchScores[opponentTeam] >= 2 &&
+      this.matchScores[team] >= 3
     ) {
       this.setScores[team] += 1
+      this.checkMatchWinner()
+      if (!this.winner) {
+        this.nextSet()
+      }
+    }
+    if (
+      this.matchScores[opponentTeam] - this.matchScores[team] >= 2 &&
+      this.matchScores[opponentTeam] >= 3
+    ) {
+      this.setScores[opponentTeam] += 1
       this.checkMatchWinner()
       if (!this.winner) {
         this.nextSet()
@@ -146,11 +164,13 @@ class BadmintonScoreboard {
       this.winner = 1 // 팀1 승리
       this.gameresult.setScore = this.setScores
       this.gameresult[`matchScore_${this.currentSet}`] = this.matchScores
+      this.currentSet += 1
       console.log('팀1이 매치에서 승리했습니다.')
     } else if (this.setScores.team2 === 2) {
       this.winner = 2 // 팀2 승리
       this.gameresult.setScore = this.setScores
       this.gameresult[`matchScore_${this.currentSet}`] = this.matchScores
+      this.currentSet += 1
       console.log('팀2가 매치에서 승리했습니다.')
     }
   }
@@ -257,6 +277,7 @@ class BadmintonScoreboard {
       history: this.history, // 히스토리 저장
       currentHistoryIndex: this.currentHistoryIndex, // 현재 인덱스 저장
       gameResult: this.gameresult,
+      teams: this.teams,
     }
 
     localStorage.setItem('badmintonScoreboard', JSON.stringify(data))
@@ -268,4 +289,4 @@ class BadmintonScoreboard {
   }
 }
 
-export default BadmintonScoreboard
+export default BadmintonScoreboardInstance
