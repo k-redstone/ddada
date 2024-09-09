@@ -1,5 +1,5 @@
-import AuthHeader from '@/features/auth/components/Header'
-import SignUp from '@/features/auth/components/SignUp'
+import AuthHeader from '@/features/auth/components/Header/index.tsx'
+import SignUp from '@/features/auth/components/SignUp.tsx'
 
 export default function SignUpPage() {
   return (

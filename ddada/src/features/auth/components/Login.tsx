@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { originLogin, socialLogin } from '@/features/auth/api/login/index.ts'
-import { useUserRole } from '@/hooks/queries/user.ts'
 import PasswordUnVisible from '@/static/imgs/auth/auth_password_unvisible_icon.svg'
 import PasswordVisible from '@/static/imgs/auth/auth_password_visible_icon.svg'
 import KakaoLogo from '@/static/imgs/auth/kakao_logo.svg'
@@ -55,7 +54,6 @@ export default function Login() {
           if (res.data.result.isRegistered) {
             sessionStorage.setItem('accessToken', res.data.accessToken)
             sessionStorage.setItem('refreshToken', res.data.refreshToken)
-            const { data: userRole } = await useUserRole()
 
             router.push('/')
           } else {

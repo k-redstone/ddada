@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
 
-import { useUserRole } from '@/hooks/queries/user.ts'
+// todo reactQuery가 필요한 곳에 'use cleint'와 함께 layout에 적용
+// import { useUserRole } from '@/hooks/queries/user.ts'
+// useUserRole()
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
@@ -24,7 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  useUserRole()
   return (
     <html lang="kr" className={`${pretendard.variable} font-pretendard`}>
       <body>
