@@ -1,9 +1,9 @@
 'use client'
 
-import SignUpStep1 from '@/features/auth/components/SignUpStep1.tsx'
-import SignUpStep2 from '@/features/auth/components/SignUpStep2.tsx'
-import SignUpStep3 from '@/features/auth/components/SignUpStep3.tsx'
-import SignUpStep4 from '@/features/auth/components/SignUpStep4.tsx'
+import SignUpStep1 from '@/features/auth/components/SignUpStep1/index.tsx'
+import SignUpStep2 from '@/features/auth/components/SignUpStep2/index.tsx'
+import SignUpStep3 from '@/features/auth/components/SignUpStep3/index.tsx'
+import SignUpStep4 from '@/features/auth/components/SignUpStep4/index.tsx'
 import { SignUpStepType } from '@/features/auth/types/SignUpType.ts'
 
 interface SignUpBranchProps {

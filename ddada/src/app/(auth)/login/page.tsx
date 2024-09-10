@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 
 import AuthHeader from '@/features/auth/components/Header/index.tsx'
-import Login from '@/features/auth/components/Login.tsx'
+import Login from '@/features/auth/components/Login/index.tsx'
 
 export default function LoginPage() {
   return (

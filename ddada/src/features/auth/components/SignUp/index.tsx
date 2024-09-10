@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
-import SignUpBranch from '@/features/auth/components/SignUpBranch.tsx'
+import SignUpBranch from '@/features/auth/components/SignUpBranch/index.tsx'
 import {
   SignUpFormData,
   SignUpStepType,
