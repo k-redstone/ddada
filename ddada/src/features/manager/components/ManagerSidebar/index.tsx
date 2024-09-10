@@ -5,23 +5,7 @@ import { useState } from 'react'
 
 import MatchCard from '@/features/manager/components/MatchCard/index.tsx'
 import ToggleBtn from '@/static/imgs/manager/ToggleBtn.svg'
-
-const dummy = [
-  {
-    id: 1,
-    courtName: '성동구 금호스포츠센터 10번코트',
-    addr: '가끔너무긴이름의장소들이있는데요이럴경우이럴경우 이럴경우',
-    number: 4,
-    time: new Date('2024-09-10T12:24:00'),
-  },
-  {
-    id: 2,
-    courtName: '대현산체육관 4번코트',
-    addr: '서울특별시 성동구 독서당로63길 44',
-    number: 2,
-    time: new Date('2024-09-13T21:24:00'),
-  },
-]
+import { listDummy } from '@/features/manager/constants/dummyData.ts'
 
 export default function ManagerSidebar() {
   const [clickedCard, setClickedCard] = useState<number>(-1)
@@ -64,7 +48,7 @@ export default function ManagerSidebar() {
             매치완료 ()
           </span>
         </div>
-        {dummy.map((item) => (
+        {listDummy.map((item) => (
           <Link
             href={`/manager/detail/${item.id}`}
             key={item.id}

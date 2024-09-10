@@ -6,29 +6,7 @@ import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.t
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
-
-const dummyData = {
-  team1: [
-    {
-      id: 100,
-      nickname: '박상우',
-    },
-    {
-      id: 101,
-      nickname: '윤경서',
-    },
-  ],
-  team2: [
-    {
-      id: 102,
-      nickname: '정한수',
-    },
-    {
-      id: 103,
-      nickname: '최성철',
-    },
-  ],
-}
+import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 
 export default function BadmintonScoreBoard() {
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
@@ -40,7 +18,7 @@ export default function BadmintonScoreBoard() {
     const initInstance = new BadmintonScoreboardInstance(
       1,
       'doubles',
-      dummyData,
+      objectDummy,
     )
     initInstance.initialize()
     update(initInstance)

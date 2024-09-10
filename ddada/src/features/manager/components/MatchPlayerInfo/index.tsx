@@ -3,28 +3,7 @@ import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 import TangerineFillDot from '@/static/imgs/manager/TangerineFillDot.svg'
 import TangerineLightDot from '@/static/imgs/manager/TangerineLightDot.svg'
 
-const dummyData = {
-  team1: [
-    {
-      id: 100,
-      nickname: '박상우',
-    },
-    {
-      id: 101,
-      nickname: '윤경서',
-    },
-  ],
-  team2: [
-    {
-      id: 102,
-      nickname: '정한수',
-    },
-    {
-      id: 103,
-      nickname: '최성철',
-    },
-  ],
-}
+import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 
 export default function MatchPlayerInfo() {
   return (
@@ -37,7 +16,7 @@ export default function MatchPlayerInfo() {
         <div className="flex flex-col gap-y-3">
           {/* 개별 컴포 */}
 
-          {dummyData.team1.map((item, index) => (
+          {objectDummy.team1.map((item, index) => (
             <div className="flex gap-x-3" key={item.id}>
               <GameUserInfo />
               <div className="flex flex-col gap-y-1 text-sm">
@@ -57,7 +36,7 @@ export default function MatchPlayerInfo() {
 
         {/* B팀 */}
         <div className="flex flex-col gap-y-3">
-          {dummyData.team1.map((item, index) => (
+          {objectDummy.team1.map((item, index) => (
             <div className="flex gap-x-3" key={item.id}>
               <GameUserInfo />
               <div className="flex flex-col gap-y-1 text-sm">
