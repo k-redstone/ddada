@@ -11,7 +11,7 @@ const checkNicknameDuplicate = async (nickname: string) => {
 
 // 휴대폰 인증번호 요청 API
 const requestPhoneAuthCode = async (phoneNumber: string) => {
-  const res = await instance.post('/auth/sms/send', {
+  const res = await instance.post('/auth/sms', {
     phoneNum: phoneNumber,
   })
   if (res.status === 200) return true
@@ -20,8 +20,8 @@ const requestPhoneAuthCode = async (phoneNumber: string) => {
 
 // 휴대폰 인증번호 확인 API
 const verificationPhone = async (phoneNumber: string, snsCode: string) => {
-  const res = await instance.post('/auth/sms/verify', {
-    phoneNum: phoneNumber,
+  const res = await instance.post('/auth/verify_code', {
+    userInfo: phoneNumber,
     certificationCode: snsCode,
   })
   return res
