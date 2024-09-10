@@ -17,10 +17,11 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
     <div
       className={`px-2 py-6 flex gap-x-3 border-[1px] border-[#E7E7E7] box-border ${isClicked && `bg-[#FFFBEA]`}`}
     >
-      <div className="w-16 rounded-lg">
-        <img className="w-full h-full" src="" alt="court_img" />
+      <div className="w-16 rounded-lg border border-black">
+        {/* <img className="w-full h-full" src="" alt="court_img" /> */}
+        <p>이미지들어감</p>
       </div>
-      <div className="flex flex-col gap-y-3 w-full">
+      <div className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-1">
           <p className="flex gap-x-[10px]">
             <span className="font-bold grow">{data.courtName}</span>
@@ -42,16 +43,15 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
           </p>
         </div>
         <div className="text-[#FCA211]">
-          {/* 꽉차면 */}
           {data.number === 4 ? (
             <span className="font-bold text-xs">모집완료</span>
           ) : (
             <div className="flex gap-x-1 ">
-              {Array.from({ length: data.number }).map(() => (
-                <TangerinefillDot key={data.id} />
+              {Array.from({ length: data.number }).map((_, index) => (
+                <TangerinefillDot key={data.id + index} />
               ))}
-              {Array.from({ length: 4 - data.number }).map(() => (
-                <TangerineBlankDot key={data.id} />
+              {Array.from({ length: 4 - data.number }).map((_, index) => (
+                <TangerineBlankDot key={data.id + index} />
               ))}
             </div>
           )}

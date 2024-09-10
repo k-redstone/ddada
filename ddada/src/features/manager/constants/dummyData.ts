@@ -53,6 +53,22 @@ const listDummy = [
     time: new Date('2024-09-13T21:24:00'),
     status: 'play',
   },
+  {
+    id: 4,
+    courtName: '성동구 금호스포츠센터 2번코트',
+    addr: '서울특별시 성동구 금호로 20',
+    number: 1,
+    time: new Date('2024-09-13T21:24:00'),
+    status: 'reserved',
+  },
+  {
+    id: 5,
+    courtName: '성동구 금호스포츠센터 2번코트',
+    addr: '서울특별시 성동구 금호로 20',
+    number: 2,
+    time: new Date('2024-09-13T21:24:00'),
+    status: 'reserved',
+  },
 ]
 
 export { singleDummy, objectDummy, listDummy }

@@ -1,13 +1,22 @@
+'use client'
+
 import MatchCourtInfo from '@/features/manager/components/MatchCourtInfo/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
 import MatchRule from '@/features/manager/components/MatchRule/index.tsx'
-import { singleDummy } from '@/features/manager/constants/dummyData.ts'
+import {
+  singleDummy,
+  listDummy,
+} from '@/features/manager/constants/dummyData.ts'
+import { useParams } from 'next/navigation'
 
 export default function ScoreBoardPage() {
+  const params = useParams() as { gameId: string }
+
+  const dummy = listDummy.find((item) => item.id === parseInt(params.gameId))
   return (
     <div className="bg-[#E7E7E7]">
-      <MatchCourtShortInfo data={singleDummy} />
+      <MatchCourtShortInfo data={dummy} />
       <div className="flex flex-col gap-y-3">
         <MatchPlayerInfo />
         <MatchRule />
