@@ -1,19 +1,17 @@
 'use client'
 
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 
 import ScoreModal from '@/features/manager/components/ScoreModal/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
-import BlueCourtLeft from '@/static/imgs/manager/BlueCourtLeft.svg'
 import BlueCourtRight from '@/static/imgs/manager/BlueCourtRight.svg'
 import RedCourtLeft from '@/static/imgs/manager/RedCourtLeft.svg'
-import RedCourtRight from '@/static/imgs/manager/RedCourtRight.svg'
 
 export default function BadmintonCourt() {
   const [isModalOpen, setModalOpen] = useState(false)
   const [selectTeam, setselectTeam] = useState<string>('')
 
-  const { badmintonInstance, update } = useBadmintonStore((state) => ({
+  const { badmintonInstance } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
   }))
@@ -40,7 +38,6 @@ export default function BadmintonCourt() {
             {badmintonInstance.matchScores?.team1}
           </p>
         </div>
-
         <RedCourtLeft />
       </div>
       <div

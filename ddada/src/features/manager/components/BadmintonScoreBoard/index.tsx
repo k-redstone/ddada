@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
+import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
-import GameUserInfo from '../GameUserInfo'
+
 const dummyData = {
   team1: [
     {
@@ -35,7 +36,6 @@ export default function BadmintonScoreBoard() {
     update: state.update,
   }))
 
-  console.log(badmintonInstance)
   useLayoutEffect(() => {
     const initInstance = new BadmintonScoreboardInstance(
       1,
@@ -54,11 +54,17 @@ export default function BadmintonScoreBoard() {
     )
   }
   return (
-    <div className="p-2 flex flex-col gap-y-6">
+    <div className="p-2 flex flex-col gap-y-6 bg-white">
       <p className="font-bold">게임 진행 중</p>
-      <BadmintonSetScore />
-      <BadmintonTool />
-      <BadmintonCourt />
+      <div className="flex justify-center">
+        <BadmintonSetScore />
+      </div>
+      <div className="flex justify-center">
+        <BadmintonTool />
+      </div>
+      <div className="flex justify-center">
+        <BadmintonCourt />
+      </div>
       <MatchScoreCard
         matchResult={badmintonInstance.gameresult.matchScore_1}
         isVisible={badmintonInstance.currentSet >= 2}
@@ -71,6 +77,15 @@ export default function BadmintonScoreBoard() {
         matchResult={badmintonInstance.gameresult.matchScore_3}
         isVisible={badmintonInstance.currentSet >= 4}
       />
+      {badmintonInstance.winner ? (
+        <div className="bg-[#FCA211] flex justify-center items-center h-[76px] cursor-pointer">
+          <span className="text-white text-xl font-bold ">매치 완료</span>
+        </div>
+      ) : (
+        <div className="bg-[#E5E5ED] flex justify-center items-center h-[76px]">
+          <span className="text-[#6B6E78] text-xl font-bold">매치 완료</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -80,8 +95,6 @@ function BadmintonTool() {
     badmintonInstance: state.badmintonInstance,
     update: state.update,
   }))
-
-  console.log('redo / undo')
   const handleUndo = () => {
     badmintonInstance.undo()
     update(badmintonInstance)
@@ -131,8 +144,6 @@ function MatchScoreCard({
   matchResult?: MatchResult | null
   isVisible: boolean
 }) {
-  // console.log(matchResult)
-
   const winnerTeam = () => {
     if (!isVisible) {
       return false
@@ -163,7 +174,7 @@ function MatchScoreCard({
         <div className="grow">
           <div className="flex gap-x-1 items-center">
             <span className="text-[#6B6E78] text-sm font-bold">팀 A</span>
-            <div className="rounded-full w-2 h-2 bg-[#FFF3C5]"></div>
+            <div className="rounded-full w-2 h-2 bg-[#FFF3C5]" />
           </div>
         </div>
       </div>
@@ -189,7 +200,7 @@ function MatchScoreCard({
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
-            <div className="rounded-full w-2 h-2 bg-[#FCA211]"></div>
+            <div className="rounded-full w-2 h-2 bg-[#FCA211]" />
             <span className="text-[#6B6E78] text-sm font-bold">팀 B</span>
           </div>
         </div>

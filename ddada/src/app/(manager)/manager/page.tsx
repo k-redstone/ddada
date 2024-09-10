@@ -1,7 +1,3 @@
-export default function Manager() {
-  return (
-    <div>
-      <p>main</p>
-    </div>
-  )
+export default function ManagerPage() {
+  return <div className="bg-[#F6F6F6] w-full h-full" />
 }
