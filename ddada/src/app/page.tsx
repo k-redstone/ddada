@@ -1,4 +1,9 @@
+'use client'
+
+import { useUserRole } from '@/hooks/queries/user.ts'
+
 export default function Home() {
+  useUserRole()
   return (
     <main>
       <h1 className="text-black font-black text-2xl">

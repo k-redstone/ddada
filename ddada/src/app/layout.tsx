@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
 
+// todo reactQuery가 필요한 곳에 'use cleint'와 함께 layout에 적용
+// import { useUserRole } from '@/hooks/queries/user.ts'
+// useUserRole()
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
