@@ -1,5 +1,6 @@
 'use client'
 
+import Script from 'next/script'
 import { useState } from 'react'
 
 import { MATCH_INFO } from '@/features/coat-reservation/constants/coat-reservation.ts'
@@ -7,6 +8,12 @@ import ModalCloseIcon from '@/static/imgs/coat-reservation/coat-reservation_moda
 import CheckedIcon from '@/static/imgs/coat-reservation/coat-reservation_payment_checked_icon.svg'
 import UnCheckedIcon from '@/static/imgs/coat-reservation/coat-reservation_paymenty_unchecked_icon.svg'
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    PortOne: any
+  }
+}
 interface PaymentModalProps {
   closeModal: () => void
 }
@@ -19,13 +26,39 @@ export default function PaymentModal({ closeModal }: PaymentModalProps) {
     closeModal()
   }
 
-  const handlePayment = () => {
-    // todo 결제하기로 넘어가기 구현
-    console.log('결제하기')
+  const handlePayment = async () => {
+    // todo 결제하기 로직 추가
+    handlePortOne()
     closeModal()
   }
+
+  const handlePortOne = () => {
+    async function requestPayment() {
+      const response = await window.PortOne.requestPayment({
+        storeId: process.env.NEXT_PUBLIC_STORE_ID,
+        channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
+        paymentId: `payment-${crypto.randomUUID()}`,
+        // orderName에 예약한 장소 이름 넣기
+        orderName: 'test',
+        totalAmount: 1000,
+        currency: 'CURRENCY_KRW',
+        payMethod: 'EASY_PAY',
+        issueName: 'ddada',
+      })
+
+      if (response.code != null) {
+        return console.log(response.message)
+      }
+      // todo 나중에 이 response에 있는걸로 블라블라하기
+      alert('결제 성공')
+      return console.log('결제 성공', response)
+    }
+    requestPayment()
+  }
+
   return (
     <>
+      <Script src="https://cdn.portone.io/v2/browser-sdk.js" />
       <div
         className="fixed left-0 top-0 z-10 h-screen w-screen overflow-hidden"
         onClick={closeModal}
