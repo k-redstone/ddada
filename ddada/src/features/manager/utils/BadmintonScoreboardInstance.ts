@@ -104,26 +104,54 @@ class BadmintonScoreboardInstance {
    * @param earnedType
    * @param missedUser
    */
-  pointScored(player: number, earnedType: string, missedUser: Array<number>) {
+  earnScored(player: number, earnedType: string, missedUser: Array<number>) {
     if (this.winner || !this.teams) return
-
     // 팀 구별
     const team = this.teams.team1?.some((user) => user.id === player)
       ? 'team1'
       : 'team2'
     const opponentTeam = team === 'team1' ? 'team2' : 'team1'
-    console.log(player)
-    // 득점 반영
-    if (earnedType === 'SERVE') {
-      this.matchScores[opponentTeam] += 1
-    } else if (player === -1) {
-      this.matchScores[opponentTeam] += 1
-    } else {
-      this.matchScores[team] += 1
-    }
-    console.log(`유저 ${player} 팀${team} 점수${this.matchScores[team]} `)
-    console.log(`득점유형 ${earnedType} 실책 선수 ${missedUser}`)
 
+    // 득점 반영
+    this.matchScores[team] += 1
+
+    // 세트 종료 분기처리
+    if (
+      this.matchScores[team] - this.matchScores[opponentTeam] >= 2 &&
+      this.matchScores[team] >= 3
+    ) {
+      this.setScores[team] += 1
+      this.checkMatchWinner()
+      if (!this.winner) {
+        this.nextSet()
+      }
+    }
+    if (
+      this.matchScores[opponentTeam] - this.matchScores[team] >= 2 &&
+      this.matchScores[opponentTeam] >= 3
+    ) {
+      this.setScores[opponentTeam] += 1
+      this.checkMatchWinner()
+      if (!this.winner) {
+        this.nextSet()
+      }
+    }
+
+    // 데이터 저장
+    this.saveToHistory(player, earnedType, missedUser)
+    this.saveToLocalStorage()
+  }
+
+  faultScored(player: number, earnedType: string, missedUser: Array<number>) {
+    if (this.winner || !this.teams) return
+
+    // 팀 구별
+    const team = this.teams.team1?.some((user) => user.id === missedUser[0])
+      ? 'team1'
+      : 'team2'
+    const opponentTeam = team === 'team1' ? 'team2' : 'team1'
+    // 득점 반영
+    this.matchScores[opponentTeam] += 1
     // 세트 종료 분기처리
     if (
       this.matchScores[team] - this.matchScores[opponentTeam] >= 2 &&

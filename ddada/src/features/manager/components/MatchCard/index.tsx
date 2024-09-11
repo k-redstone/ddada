@@ -21,7 +21,7 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
         {/* <img className="w-full h-full" src="" alt="court_img" /> */}
         <p>이미지들어감</p>
       </div>
-      <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col gap-y-3  w-full">
         <div className="flex flex-col gap-y-1">
           <p className="flex gap-x-[10px]">
             <span className="font-bold grow">{data.courtName}</span>

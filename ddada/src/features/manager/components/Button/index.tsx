@@ -3,10 +3,18 @@ interface ButtonProps {
   type: 'earn' | 'fault' | 'miss'
   text: string
   changeStyle?: boolean
+  disabled?: boolean
   onClick?: () => void
 }
 
-function Button({ size, text, type, changeStyle, onClick }: ButtonProps) {
+function Button({
+  size,
+  text,
+  type,
+  changeStyle,
+  disabled,
+  onClick,
+}: ButtonProps) {
   const btnSize = {
     md: 'px-4 py-2',
     lg: 'px-6 py-2',
@@ -22,6 +30,7 @@ function Button({ size, text, type, changeStyle, onClick }: ButtonProps) {
       type="button"
       className={`text-sm border-[1px] rounded-[1000px] ${btnSize[size]} ${btnStyle[type]}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

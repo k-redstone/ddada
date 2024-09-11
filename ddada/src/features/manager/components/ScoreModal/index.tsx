@@ -4,19 +4,11 @@ import { useState } from 'react'
 
 import Button from '@/features/manager/components/Button/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+import {
+  EARN_TYPE,
+  MISS_TYPE,
+} from '@/features/manager/constants/scoreConstants.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
-
-const scoreType = {
-  SMASH: '스메시',
-  DROP: '드롭',
-  CLEAR: '클리어',
-  PUSH: '푸시',
-  NET: '네트플레이',
-}
-
-const missType = {
-  SERVE: '서브폴트',
-}
 
 interface ScoreModalProps {
   selectTeam: string
@@ -29,6 +21,7 @@ export default function ScoreModal({
 }: ScoreModalProps) {
   const [earnedUser, setEarnedUser] = useState<number>(-1)
   const [earnedType, setEarnedType] = useState<string>('')
+  const [missedType, setMissedType] = useState<string>('')
   const [missedUser, setMissedUser] = useState<number[]>([])
 
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
@@ -47,13 +40,48 @@ export default function ScoreModal({
     })
   }
 
+  const handleFaultType = (key: string) => {
+    // 이전꺼 초기화
+    setEarnedUser(-1)
+    setEarnedType('')
+    setMissedUser([])
+
+    // 폴트 설정
+    setMissedType(key)
+  }
+
+  const handleEarnType = (key: string) => {
+    // 이전꺼 초기화
+    setMissedType('')
+    setMissedUser([])
+
+    // 득점 설정
+    setEarnedType(key)
+  }
+
   const handleStoreScore = () => {
     if (earnedType === '' && missedUser.length === 0 && earnedUser === -1)
       return
-
-    badmintonInstance.pointScored(earnedUser, earnedType, missedUser)
+    if (missedType === 'SERVE') {
+      badmintonInstance.faultScored(earnedUser, missedType, missedUser)
+    } else {
+      badmintonInstance.earnScored(earnedUser, earnedType, missedUser)
+    }
     update(badmintonInstance)
     modalhandler()
+  }
+
+  const checkCanSave = () => {
+    // earnedType === '' && missedUser.length === 0 && earnedUser === -1
+    if (missedType !== 'SERVE') {
+      if (earnedType !== '' && missedUser.length !== 0 && earnedUser !== -1)
+        return true
+    }
+
+    if (missedType === 'SERVE') {
+      if (missedUser.length !== 0) return true
+    }
+    return false
   }
 
   return (
@@ -86,7 +114,9 @@ export default function ScoreModal({
           </div>
 
           {/* 득점 인원 */}
-          <div className="py-1 px-2 flex flex-col gap-y-2 rounded-md">
+          <div
+            className={`py-1 px-2 flex flex-col gap-y-2 rounded-md  ${missedType !== '' && `bg-[#F6F6F6]`}`}
+          >
             <p className="font-bold">득점인원</p>
             <div className="flex gap-x-3">
               {selectTeam === 'team1'
@@ -98,6 +128,7 @@ export default function ScoreModal({
                       text={`A${index + 1}`}
                       changeStyle={earnedUser === playerInfo.id}
                       onClick={() => setEarnedUser(playerInfo.id)}
+                      disabled={missedType !== ''}
                     />
                   ))
                 : badmintonInstance.teams.team2.map((playerInfo, index) => (
@@ -108,6 +139,7 @@ export default function ScoreModal({
                       text={`B${index + 1}`}
                       changeStyle={earnedUser === playerInfo.id}
                       onClick={() => setEarnedUser(playerInfo.id)}
+                      disabled={missedType !== ''}
                     />
                   ))}
             </div>
@@ -116,14 +148,14 @@ export default function ScoreModal({
           <div className="py-1 px-2 flex flex-col gap-y-2">
             <p className="font-bold">득점 종류</p>
             <div className="flex gap-x-3">
-              {Object.entries(scoreType).map(([key, value]) => (
+              {Object.entries(EARN_TYPE).map(([key, value]) => (
                 <Button
                   key={key}
                   size="md"
                   type="earn"
                   text={value}
                   changeStyle={earnedType === key}
-                  onClick={() => setEarnedType(key)}
+                  onClick={() => handleEarnType(key)}
                 />
               ))}
             </div>
@@ -133,48 +165,81 @@ export default function ScoreModal({
           <div className="py-1 px-2 flex flex-col gap-y-2">
             <p className="font-bold">실점 종류</p>
             <div className="flex gap-x-3">
-              {Object.entries(missType).map(([key, value]) => (
+              {Object.entries(MISS_TYPE).map(([key, value]) => (
                 <Button
                   key={key}
                   size="md"
                   type="miss"
                   text={value}
-                  changeStyle={earnedType === key}
-                  onClick={() => setEarnedType(key)}
+                  changeStyle={missedType === key}
+                  // onClick={() => setEarnedType(key)}
+                  onClick={() => handleFaultType(key)}
                 />
               ))}
             </div>
           </div>
 
           {/* 폴트인원 */}
-          <div
-            className={`py-1 px-2 flex flex-col gap-y-2 rounded-md ${missedUser.length === 0 && `bg-[#F6F6F6]`}`}
-          >
-            <p className="font-bold">폴트인원</p>
-            <div className="flex gap-x-3">
-              {selectTeam === 'team1'
-                ? badmintonInstance.teams.team2.map((playerInfo, index) => (
-                    <Button
-                      key={playerInfo.nickname}
-                      size="lg"
-                      type="fault"
-                      text={`B${index + 1}`}
-                      changeStyle={missedUser.includes(playerInfo.id)}
-                      onClick={() => handleMissedUser(playerInfo.id)}
-                    />
-                  ))
-                : badmintonInstance.teams.team1.map((playerInfo, index) => (
-                    <Button
-                      key={playerInfo.nickname}
-                      size="lg"
-                      type="fault"
-                      text={`A${index + 1}`}
-                      changeStyle={missedUser.includes(playerInfo.id)}
-                      onClick={() => handleMissedUser(playerInfo.id)}
-                    />
-                  ))}
+          {missedType === 'SERVE' ? (
+            // 서브 미스 일때
+            <div className="py-1 px-2 flex flex-col gap-y-2 rounded-md">
+              <p className="font-bold">폴트인원</p>
+              <div className="flex gap-x-3">
+                {selectTeam === 'team1'
+                  ? badmintonInstance.teams.team1.map((playerInfo, index) => (
+                      <Button
+                        key={playerInfo.nickname}
+                        size="lg"
+                        type="fault"
+                        text={`A${index + 1}`}
+                        changeStyle={missedUser.includes(playerInfo.id)}
+                        onClick={() => handleMissedUser(playerInfo.id)}
+                      />
+                    ))
+                  : badmintonInstance.teams.team2.map((playerInfo, index) => (
+                      <Button
+                        key={playerInfo.nickname}
+                        size="lg"
+                        type="fault"
+                        text={`B${index + 1}`}
+                        changeStyle={missedUser.includes(playerInfo.id)}
+                        onClick={() => handleMissedUser(playerInfo.id)}
+                      />
+                    ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div
+              className={`py-1 px-2 flex flex-col gap-y-2 rounded-md ${earnedType === '' && `bg-[#F6F6F6]`}`}
+            >
+              <p className="font-bold">폴트인원</p>
+              <div className="flex gap-x-3">
+                {selectTeam === 'team1'
+                  ? badmintonInstance.teams.team2.map((playerInfo, index) => (
+                      <Button
+                        key={playerInfo.nickname}
+                        size="lg"
+                        type="fault"
+                        text={`B${index + 1}`}
+                        changeStyle={missedUser.includes(playerInfo.id)}
+                        onClick={() => handleMissedUser(playerInfo.id)}
+                        disabled={earnedType === ''}
+                      />
+                    ))
+                  : badmintonInstance.teams.team1.map((playerInfo, index) => (
+                      <Button
+                        key={playerInfo.nickname}
+                        size="lg"
+                        type="fault"
+                        text={`A${index + 1}`}
+                        changeStyle={missedUser.includes(playerInfo.id)}
+                        onClick={() => handleMissedUser(playerInfo.id)}
+                        disabled={earnedType === ''}
+                      />
+                    ))}
+              </div>
+            </div>
+          )}
 
           {/* 닫기 & 저장 */}
           <div className="flex gap-x-3 text-base">
@@ -186,9 +251,10 @@ export default function ScoreModal({
               닫기
             </button>
             <button
-              className={`grow rounded-xl border-[1px] py-[10px]   ${earnedType === '' && missedUser.length === 0 && earnedUser === -1 ? `text-[#6B6E78] bg-[#E5E5ED]` : `text-[#ffffff] bg-[#FCA211]`}`}
+              className={`grow rounded-xl border-[1px] py-[10px]   ${checkCanSave() ? `text-[#ffffff] bg-[#FCA211] ` : `text-[#6B6E78] bg-[#E5E5ED]`}`}
               type="button"
               onClick={() => handleStoreScore()}
+              disabled={!checkCanSave()}
             >
               저장
             </button>
