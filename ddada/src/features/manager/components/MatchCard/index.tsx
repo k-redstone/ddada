@@ -47,11 +47,11 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
             <span className="font-bold text-xs">모집완료</span>
           ) : (
             <div className="flex gap-x-1 ">
-              {Array.from({ length: data.number }).map((_, index) => (
-                <TangerinefillDot key={data.id + index} />
+              {Array.from({ length: data.number }).map(() => (
+                <TangerinefillDot key={data.id} />
               ))}
-              {Array.from({ length: 4 - data.number }).map((_, index) => (
-                <TangerineBlankDot key={data.id + index} />
+              {Array.from({ length: 4 - data.number }).map(() => (
+                <TangerineBlankDot key={data.id} />
               ))}
             </div>
           )}

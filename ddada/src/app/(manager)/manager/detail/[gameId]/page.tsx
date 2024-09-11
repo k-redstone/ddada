@@ -17,6 +17,14 @@ export default function ScoreBoardPage() {
   const dummy = listDummy.find(
     (item) => item.id === parseInt(params.gameId, 10),
   )
+
+  if (!dummy) {
+    return (
+      <div>
+        <p>임시</p>
+      </div>
+    )
+  }
   return (
     <div className="bg-[#E7E7E7]">
       <MatchCourtShortInfo data={dummy} />
