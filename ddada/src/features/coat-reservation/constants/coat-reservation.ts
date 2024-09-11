@@ -32,3 +32,5 @@ export const MATCH_INFO = {
   competition: ['친선', '경쟁'],
   matchType: ['혼합복식', '남자복식', '여자복식'],
 }
+
+export const KR_DAY_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토']
