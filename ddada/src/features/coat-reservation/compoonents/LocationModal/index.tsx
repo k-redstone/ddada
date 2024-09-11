@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { locationName } from '@/features/coat-reservation/constants/location.ts'
+import { LOCATION_NAME } from '@/features/coat-reservation/constants/coat-reservation.ts'
 import ModalCloseIcon from '@/static/imgs/coat-reservation/coat-reservation_modalclose_icon.svg'
 
 interface LocationModalProps {
@@ -75,7 +75,7 @@ export default function LocationModal({
             className={`${
               selectedRegion.includes('전체')
                 ? 'bg-[#FCA211] text-white'
-                : 'bg-[#F9F9F9] text-[#6B6E78]'
+                : 'text-[#6B6E78]'
             } border rounded-xl px-4 py-2`}
           >
             전체
@@ -84,7 +84,7 @@ export default function LocationModal({
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold">특별시</h3>
           <div>
-            {locationName.특별시.map((region) => (
+            {LOCATION_NAME.특별시.map((region) => (
               <button
                 type="button"
                 key={region}
@@ -92,7 +92,7 @@ export default function LocationModal({
                 className={`${
                   selectedRegion.includes(region)
                     ? 'bg-[#FCA211] text-white'
-                    : 'bg-[#F9F9F9] text-[#6B6E78]'
+                    : 'text-[#6B6E78] border-[#E5E5ED]'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -103,7 +103,7 @@ export default function LocationModal({
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold">도</h3>
           <div className="flex gap-3">
-            {locationName.도.map((region) => (
+            {LOCATION_NAME.도.map((region) => (
               <button
                 type="button"
                 key={region}
@@ -111,7 +111,7 @@ export default function LocationModal({
                 className={`${
                   selectedRegion.includes(region)
                     ? 'bg-[#FCA211] text-white'
-                    : 'bg-[#F9F9F9] text-[#6B6E78]'
+                    : 'text-[#6B6E78] border-[#E5E5ED]'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -122,7 +122,7 @@ export default function LocationModal({
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold">광역시</h3>
           <div className="flex gap-3">
-            {locationName.광역시.map((region) => (
+            {LOCATION_NAME.광역시.map((region) => (
               <button
                 type="button"
                 key={region}
@@ -130,7 +130,7 @@ export default function LocationModal({
                 className={`${
                   selectedRegion.includes(region)
                     ? 'bg-[#FCA211] text-white'
-                    : 'bg-[#F9F9F9] text-[#6B6E78]'
+                    : 'text-[#6B6E78] border-[#E5E5ED]'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -141,7 +141,7 @@ export default function LocationModal({
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold">특별자치도</h3>
           <div className="flex gap-3">
-            {locationName.특별자치도.map((region) => (
+            {LOCATION_NAME.특별자치도.map((region) => (
               <button
                 type="button"
                 key={region}
@@ -149,7 +149,7 @@ export default function LocationModal({
                 className={`${
                   selectedRegion.includes(region)
                     ? 'bg-[#FCA211] text-white'
-                    : 'bg-[#F9F9F9] text-[#6B6E78]'
+                    : 'text-[#6B6E78] border-[#E5E5ED]'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -160,7 +160,7 @@ export default function LocationModal({
         <div className="flex flex-col gap-3">
           <h3 className="text-lg font-bold">특별자치시</h3>
           <div>
-            {locationName.특별자치시.map((region) => (
+            {LOCATION_NAME.특별자치시.map((region) => (
               <button
                 type="button"
                 key={region}
@@ -168,7 +168,7 @@ export default function LocationModal({
                 className={`${
                   selectedRegion.includes(region)
                     ? 'bg-[#FCA211] text-white'
-                    : 'bg-[#F9F9F9] text-[#6B6E78]'
+                    : 'text-[#6B6E78] border-[#E5E5ED]'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -180,14 +180,14 @@ export default function LocationModal({
           <button
             type="button"
             onClick={handleClearSelectedRegion}
-            className="text-[#6B6E78] border rounded px-4 py-2"
+            className="text-[#6B6E78] border rounded px-4 py-2 border border-[#E5E5ED]"
           >
             초기화
           </button>
           <button
             type="button"
             onClick={handleSaveSelectedRegion}
-            className="text-white bg-[#FCA211] rounded px-4 py-2"
+            className="text-white bg-[#FCA211] rounded px-4 py-2 grow"
           >
             적용
           </button>

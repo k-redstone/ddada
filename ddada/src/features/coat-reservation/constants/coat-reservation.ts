@@ -19,11 +19,16 @@ export const locationNum = {
   sejong: 18,
 }
 
-export const locationName = {
+export const LOCATION_NAME = {
   전체: ['전체'],
   특별시: ['서울'],
   도: ['경기', '충북', '충남', '전남', '경북', '경남'],
   광역시: ['부산', '인천', '대구', '대전', '광주', '울산'],
   특별자치도: ['강원', '전북', '제주'],
   특별자치시: ['세종'],
+}
+
+export const MATCH_INFO = {
+  competition: ['친선', '경쟁'],
+  matchType: ['혼합복식', '남자복식', '여자복식'],
 }
