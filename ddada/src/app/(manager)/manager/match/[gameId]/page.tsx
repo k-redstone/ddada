@@ -1,17 +1,20 @@
 'use client'
-import BadmintonScoreBoard from '@/features/manager/components/BadmintonScoreBoard/index.tsx'
-import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo'
-import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
+
 import { useParams } from 'next/navigation'
 
+import BadmintonScoreBoard from '@/features/manager/components/BadmintonScoreBoard/index.tsx'
+import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
+import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
 import {
-  singleDummy,
   listDummy,
+  // singleDummy,
 } from '@/features/manager/constants/dummyData.ts'
 
 export default function ScoreBoardPage() {
   const params = useParams() as { gameId: string }
-  const dummy = listDummy.find((item) => item.id === parseInt(params.gameId))
+  const dummy = listDummy.find(
+    (item) => item.id === parseInt(params.gameId, 10),
+  )
 
   return (
     <div className="bg-[#E7E7E7]">

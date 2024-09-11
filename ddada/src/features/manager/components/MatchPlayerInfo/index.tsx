@@ -1,9 +1,8 @@
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 import TangerineFillDot from '@/static/imgs/manager/TangerineFillDot.svg'
 import TangerineLightDot from '@/static/imgs/manager/TangerineLightDot.svg'
-
-import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 
 export default function MatchPlayerInfo() {
   return (

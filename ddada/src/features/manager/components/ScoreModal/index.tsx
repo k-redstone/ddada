@@ -3,8 +3,8 @@
 import { useState } from 'react'
 
 import Button from '@/features/manager/components/Button/index.tsx'
+import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
-import GameUserInfo from '../GameUserInfo'
 
 const scoreType = {
   SMASH: '스메시',
@@ -75,12 +75,12 @@ export default function ScoreModal({
             {selectTeam === 'team1' ? (
               <div className="flex gap-x-1 items-center">
                 <span className="text-[#6B6E78] text-sm font-bold"> 팀 A</span>
-                <div className="rounded-full w-2 h-2 bg-[#FFF3C5]"></div>
+                <div className="rounded-full w-2 h-2 bg-[#FFF3C5]" />
               </div>
             ) : (
               <div className="flex gap-x-1 items-center">
                 <span className="text-[#6B6E78] text-sm font-bold"> 팀 B</span>
-                <div className="rounded-full w-2 h-2 bg-[#FCA211]"></div>
+                <div className="rounded-full w-2 h-2 bg-[#FCA211]" />
               </div>
             )}
           </div>

@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import MatchCard from '@/features/manager/components/MatchCard/index.tsx'
-import ToggleBtn from '@/static/imgs/manager/ToggleBtn.svg'
-import { listDummy } from '@/features/manager/constants/dummyData.ts'
 import {
-  CATEGORY_TPYE,
   CATEGORY_TO_PAGE,
+  CATEGORY_TPYE,
 } from '@/features/manager/constants/constManager.ts'
+import { listDummy } from '@/features/manager/constants/dummyData.ts'
+import ToggleBtn from '@/static/imgs/manager/ToggleBtn.svg'
 
 export default function ManagerSidebar() {
   const [clickedCard, setClickedCard] = useState<number>(-1)

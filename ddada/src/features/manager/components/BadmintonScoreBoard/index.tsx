@@ -4,9 +4,9 @@ import { useLayoutEffect } from 'react'
 
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
-import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 
 export default function BadmintonScoreBoard() {
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
