@@ -3,24 +3,22 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
-import LocationModal from '@/features/coat-reservation/compoonents/LocationModal/index.tsx'
-import Pagination from '@/features/coat-reservation/compoonents/Pagination/index.tsx'
-import PaymentModal from '@/features/coat-reservation/compoonents/PaymentModal/index.tsx'
-import LocationIcon from '@/static/imgs/coat-reservation/coat-reservation_location_icon.svg'
-import LocationDetailIcon from '@/static/imgs/coat-reservation/coat-reservation_location_under_icon.svg'
-import ReservationLogo from '@/static/imgs/coat-reservation/coat-reservation_reservation_logo.svg'
-import ShowerIcon from '@/static/imgs/coat-reservation/coat-reservation_shower_icon.svg'
-import ToiletIcon from '@/static/imgs/coat-reservation/coat-reservation_toilet_icon.svg'
-import WifiIcon from '@/static/imgs/coat-reservation/coat-reservation_toilet_icon.svg'
-import ParkingIcon from '@/static/imgs/coat-reservation/cost-reservation_parking-lot_icon.svg'
-import SearchIcon from '@/static/imgs/coat-reservation/cost-reservation_search_icon.svg'
+import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
+import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
+import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
+import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
+import LocationDetailIcon from '@/static/imgs/court-reservation/court-reservation_location_under_icon.svg'
+import ParkingIcon from '@/static/imgs/court-reservation/court-reservation_parking-lot_icon.svg'
+import ReservationLogo from '@/static/imgs/court-reservation/court-reservation_reservation_logo.svg'
+import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search_icon.svg'
+import ShowerIcon from '@/static/imgs/court-reservation/court-reservation_shower_icon.svg'
+import ToiletIcon from '@/static/imgs/court-reservation/court-reservation_toilet_icon.svg'
+import WifiIcon from '@/static/imgs/court-reservation/court-reservation_toilet_icon.svg'
 
 export default function CoatReservation() {
   // 시작 날짜
-  const todate = dayjs().format('YYYY-MM-DD')
-  // 시작 요일
-  const today = dayjs().get('day')
-  const [selectedDate, setSelectedDate] = useState(todate)
+  const today = dayjs().format('YYYY-MM-DD')
+  const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
   const [filterCoat, setFilterCoat] = useState('')
   const [locationModalOpen, setLocationModalOpen] = useState(false)
@@ -49,6 +47,10 @@ export default function CoatReservation() {
   }
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value)
+  }
+
+  const handleSelectedDate = (date: string) => {
+    setSelectedDate(date)
   }
 
   return (
@@ -99,7 +101,7 @@ export default function CoatReservation() {
           <PaymentModal closeModal={handlePaymentModalOff} />
         )}
         <div>
-          <Pagination today={today} todate={todate} />
+          <Pagination changeSelectedDate={handleSelectedDate} />
         </div>
 
         <button

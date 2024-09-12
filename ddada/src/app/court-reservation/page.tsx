@@ -1,4 +1,4 @@
-import CoatReservation from '@/features/coat-reservation/compoonents/CoatReservation/index.tsx'
+import CoatReservation from '@/features/court-reservation/components/CourtReservation/index.tsx'
 
 export default function coatReservationPage() {
   return (

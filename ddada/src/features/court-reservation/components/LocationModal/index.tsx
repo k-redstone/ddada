@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import { LOCATION_NAME } from '@/features/coat-reservation/constants/coat-reservation.ts'
-import ModalCloseIcon from '@/static/imgs/coat-reservation/coat-reservation_modalclose_icon.svg'
+import { LOCATION_NAME } from '@/features/court-reservation/constants/court-reservation.ts'
+import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
 
 interface LocationModalProps {
   chooseLocation: string[]

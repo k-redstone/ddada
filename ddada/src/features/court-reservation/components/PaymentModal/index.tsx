@@ -3,10 +3,10 @@
 import Script from 'next/script'
 import { useState } from 'react'
 
-import { MATCH_INFO } from '@/features/coat-reservation/constants/coat-reservation.ts'
-import ModalCloseIcon from '@/static/imgs/coat-reservation/coat-reservation_modalclose_icon.svg'
-import CheckedIcon from '@/static/imgs/coat-reservation/coat-reservation_payment_checked_icon.svg'
-import UnCheckedIcon from '@/static/imgs/coat-reservation/coat-reservation_paymenty_unchecked_icon.svg'
+import { MATCH_INFO } from '@/features/court-reservation/constants/court-reservation.ts'
+import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
+import CheckedIcon from '@/static/imgs/court-reservation/court-reservation_payment_checked_icon.svg'
+import UnCheckedIcon from '@/static/imgs/court-reservation/court-reservation_paymenty_unchecked_icon.svg'
 
 declare global {
   interface Window {
