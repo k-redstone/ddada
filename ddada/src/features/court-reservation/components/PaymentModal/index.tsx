@@ -79,7 +79,7 @@ export default function PaymentModal({
         aria-hidden="true"
       />
       {/* height 수정 필요 */}
-      <div className="flex flex-col gap-6 fixed top-10 left-1/3 z-20 w-[35rem] h-[43.75rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
+      <div className="flex flex-col gap-6 fixed top-10 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">예약 및 결제 </h2>
           <button

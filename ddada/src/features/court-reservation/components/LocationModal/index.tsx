@@ -45,8 +45,10 @@ export default function LocationModal({
   }
 
   const handleSaveSelectedRegion = () => {
+    if (selectedRegion.length === 0) {
+      setSelectedRegion(['전체'])
+    }
     handleLoactions(selectedRegion)
-    console.log(selectedRegion)
     closeModal()
   }
   return (
@@ -57,7 +59,7 @@ export default function LocationModal({
         aria-hidden="true"
       />
       {/* height 수정 필요 */}
-      <div className="flex flex-col gap-6 fixed top-10 left-1/3 z-20 w-[35rem] h-[45.625rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
+      <div className="flex flex-col text-xs gap-6 fixed top-10 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-bold">지역 선택</h2>
           <button

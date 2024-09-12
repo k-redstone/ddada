@@ -1,9 +1,9 @@
-import CoatReservation from '@/features/court-reservation/components/CourtReservation/index.tsx'
+import CourtReservation from '@/features/court-reservation/components/CourtReservation/index.tsx'
 
-export default function coatReservationPage() {
+export default function courtReservationPage() {
   return (
     <div>
-      <CoatReservation />
+      <CourtReservation />
     </div>
   )
 }

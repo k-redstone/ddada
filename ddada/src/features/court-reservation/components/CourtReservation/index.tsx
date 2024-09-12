@@ -65,10 +65,10 @@ export default function CoatReservation() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-[752px] px-2">
+      <div className=" px-2">
         <div className="flex flex-col gap-3 py-4">
-          <div className="w-full">
-            <ReservationLogo className="w-full" />
+          <div className="flex justify-center">
+            <ReservationLogo />
           </div>
 
           <div className="flex gap-x-2 text-[#6B6E78] text-xs">
