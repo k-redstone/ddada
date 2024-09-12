@@ -2,8 +2,8 @@
 
 import { useParams } from 'next/navigation'
 
+import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
-import MatchCourtInfo from '@/features/manager/components/MatchCourtInfo/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
 import {
@@ -38,7 +38,13 @@ export default function ScoreBoardPage() {
           <MatchRule.InvalidityRule />
           <MatchRule.FaultRule />
         </MatchRule>
-        <MatchCourtInfo />
+        <MatchCourtInfo>
+          <MatchCourtInfo.Title />
+          <MatchCourtInfo.CourtImage />
+          <MatchCourtInfo.Number />
+          <MatchCourtInfo.Website />
+          <MatchCourtInfo.Detail />
+        </MatchCourtInfo>
 
         {true ? (
           <div>

@@ -1,5 +1,6 @@
 'use client'
 
+import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
 import RefundPolicyInfo from '@/features/reservationDetail/components/RefundPolicyInfo/index.tsx'
 
@@ -13,8 +14,13 @@ export default function MatchReservationDetailPage() {
         <div className="flex flex-col gap-y-3">
           <p>userInfo</p>
           <p>matchinfo</p>
-          <p>courtinfo</p>
-          {/* <MatchRule /> */}
+          <MatchCourtInfo>
+            <MatchCourtInfo.TitleWithUnderline />
+            <MatchCourtInfo.Amenities />
+            <MatchCourtInfo.Number />
+            <MatchCourtInfo.Website />
+            <MatchCourtInfo.Detail />
+          </MatchCourtInfo>
           <MatchRule>
             <MatchRule.TitleWithUnderline />
             <MatchRule.TossRule />
