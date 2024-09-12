@@ -1,9 +1,11 @@
-import MatchRule from '@/features/manager/components/MatchRule/index.tsx'
+'use client'
+
+import MatchRule from '@/components/MatchRule/index.tsx'
 import RefundPolicyInfo from '@/features/reservationDetail/components/RefundPolicyInfo/index.tsx'
 
 export default function MatchReservationDetailPage() {
   return (
-    <div className=" max-w-[46rem] flex flex-col ">
+    <div className=" max-w-[46rem] flex flex-col">
       <div>
         <img src="" alt="임시" />
       </div>
@@ -12,7 +14,15 @@ export default function MatchReservationDetailPage() {
           <p>userInfo</p>
           <p>matchinfo</p>
           <p>courtinfo</p>
-          <MatchRule />
+          {/* <MatchRule /> */}
+          <MatchRule>
+            <MatchRule.TitleWithUnderline />
+            <MatchRule.TossRule />
+            <MatchRule.ScoreRule />
+            <MatchRule.DoubleRule />
+            <MatchRule.InvalidityRule />
+            <MatchRule.FaultRule />
+          </MatchRule>
           <RefundPolicyInfo />
         </div>
         <div>

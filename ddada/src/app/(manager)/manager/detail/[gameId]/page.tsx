@@ -2,10 +2,10 @@
 
 import { useParams } from 'next/navigation'
 
+import MatchRule from '@/components/MatchRule/index.tsx'
 import MatchCourtInfo from '@/features/manager/components/MatchCourtInfo/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
-import MatchRule from '@/features/manager/components/MatchRule/index.tsx'
 import {
   listDummy,
   // singleDummy,
@@ -30,7 +30,14 @@ export default function ScoreBoardPage() {
       <MatchCourtShortInfo data={dummy} />
       <div className="flex flex-col gap-y-3">
         <MatchPlayerInfo />
-        <MatchRule />
+        <MatchRule>
+          <MatchRule.TitleWithUnderline />
+          <MatchRule.TossRule />
+          <MatchRule.ScoreRule />
+          <MatchRule.DoubleRule />
+          <MatchRule.InvalidityRule />
+          <MatchRule.FaultRule />
+        </MatchRule>
         <MatchCourtInfo />
 
         {true ? (
