@@ -1,9 +1,13 @@
 'use client'
 
+import dayjs from 'dayjs'
 import Script from 'next/script'
 import { useState } from 'react'
 
-import { MATCH_INFO } from '@/features/court-reservation/constants/court-reservation.ts'
+import {
+  KR_DAY_OF_WEEK,
+  MATCH_INFO,
+} from '@/features/court-reservation/constants/court-reservation.ts'
 import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
 import CheckedIcon from '@/static/imgs/court-reservation/court-reservation_payment_checked_icon.svg'
 import UnCheckedIcon from '@/static/imgs/court-reservation/court-reservation_paymenty_unchecked_icon.svg'
@@ -16,9 +20,19 @@ declare global {
 }
 interface PaymentModalProps {
   closeModal: () => void
+  courtName: string
+  reservationDay: string
+  reservationTime: string
 }
 
-export default function PaymentModal({ closeModal }: PaymentModalProps) {
+export default function PaymentModal({
+  closeModal,
+  courtName,
+  reservationDay,
+  reservationTime,
+}: PaymentModalProps) {
+  const day = dayjs(reservationDay).format('MM.DD')
+  const DAY_OF_WEEK = KR_DAY_OF_WEEK[dayjs(reservationDay).day()]
   const [competitionType, setCompetitionType] = useState('친선')
   const [matchType, setMatchType] = useState('혼합복식')
 
@@ -65,7 +79,7 @@ export default function PaymentModal({ closeModal }: PaymentModalProps) {
         aria-hidden="true"
       />
       {/* height 수정 필요 */}
-      <div className="flex flex-col gap-6 fixed top-0 left-1/3 z-20 w-[35rem] h-[43.75rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
+      <div className="flex flex-col gap-6 fixed top-10 left-1/3 z-20 w-[35rem] h-[43.75rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">예약 및 결제 </h2>
           <button
@@ -78,8 +92,10 @@ export default function PaymentModal({ closeModal }: PaymentModalProps) {
         </div>
         <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl border text-lg font-bold">
           {/* todo 나중에 정보 추가 props로 받을 예정 */}
-          <p>코트에 대한 이름</p>
-          <p>날짜(요일) 시간</p>
+          <p>{courtName}</p>
+          <p>
+            {day}({DAY_OF_WEEK}) {reservationTime}
+          </p>
         </div>
         <div>
           <hr />

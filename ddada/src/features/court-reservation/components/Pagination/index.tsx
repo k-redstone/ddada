@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { KR_DAY_OF_WEEK } from '@/features/court-reservation/constants/court-reservation.ts'
 import NextDateIcon from '@/static/imgs/court-reservation/court-reservation_pagination_next_icon.svg'
 import PrevDateIcon from '@/static/imgs/court-reservation/court-reservation_pagination_prev_icon.svg'
+import SelectedLine from '@/static/imgs/court-reservation/court-reservation_selected_line.svg'
+import UnSelectedLine from '@/static/imgs/court-reservation/court-reservation_unselected_line.svg'
 
 interface PaginationProps {
   changeSelectedDate: (date: string) => void
@@ -11,12 +13,10 @@ interface PaginationProps {
 
 export default function Pagination({ changeSelectedDate }: PaginationProps) {
   const today = dayjs()
-  const nextWeekStartDay = today.add(1, 'week') // 다음 주의 시작 날짜
+  const nextWeekStartDay = today.add(1, 'week')
+  const [selectedDay, setSelectedDay] = useState(today.format('YYYY-MM-DD'))
 
-  console.log(today.startOf('week')) // 오늘 요일
-  // console.log(nextWeek)
   // 백에서 오는 데이터 형식 "2024-09-10"
-  // 일요일 0 ~ 토요일 6
 
   const getWeekDays = (dayStart: dayjs.Dayjs) => {
     const weekDays = []
@@ -25,63 +25,62 @@ export default function Pagination({ changeSelectedDate }: PaginationProps) {
     }
     return weekDays
   }
-  const test = getWeekDays(today)
-  const test2 = getWeekDays(nextWeekStartDay)
 
   const [currentWeek, setCurrentWeek] = useState(getWeekDays(today))
 
   const handleClickPrev = () => {
+    if (currentWeek[0].format('YYYY-MM-DD') === today.format('YYYY-MM-DD'))
+      return
+    const prevWeekLastDay = currentWeek[6]
+      .subtract(1, 'week')
+      .format('YYYY-MM-DD')
     const prevWeek = currentWeek[0].subtract(1, 'week')
     setCurrentWeek(getWeekDays(prevWeek))
+    setSelectedDay(prevWeekLastDay)
+    changeSelectedDate(prevWeekLastDay)
   }
 
   const handleClickNext = () => {
+    if (
+      currentWeek[0].format('YYYY-MM-DD') ===
+      nextWeekStartDay.format('YYYY-MM-DD')
+    )
+      return
     const nextWeek = currentWeek[0].add(1, 'week')
     setCurrentWeek(getWeekDays(nextWeek))
+    setSelectedDay(nextWeek.format('YYYY-MM-DD'))
+    changeSelectedDate(nextWeek.format('YYYY-MM-DD'))
   }
 
   return (
-    <div className="flex gap-1 items-center">
+    <div className="flex gap-1 justify-center items-center">
       <button type="button" onClick={handleClickPrev} aria-label="이전 주">
         <PrevDateIcon />
       </button>
-
-      <div className="flex gap-1">
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
-        <div className="flex flex-col border px-6 py-4 gap-[10px]">
-          <p>09.07</p>
-          <hr />
-          <p>일요일</p>
-        </div>
+      <div className="flex flex-grow gap-1">
+        {currentWeek.map((day) => (
+          <button
+            type="button"
+            key={day.format('YYYY-MM-DD')}
+            className={`
+              flex-grow
+              ${selectedDay === day.format('YYYY-MM-DD') ? 'bg-[#FCA211] text-white font-bold' : 'text-[#6B6E78]'}`}
+            onClick={() => {
+              setSelectedDay(day.format('YYYY-MM-DD'))
+              changeSelectedDate(day.format('YYYY-MM-DD'))
+            }}
+          >
+            <div className="flex flex-col border px-6 py-4 gap-[10px]">
+              <p>{day.format('MM.DD')}</p>
+              {selectedDay === day.format('YYYY-MM-DD') ? (
+                <SelectedLine />
+              ) : (
+                <UnSelectedLine />
+              )}
+              <p className="text-xs">{KR_DAY_OF_WEEK[day.day()]}요일</p>
+            </div>
+          </button>
+        ))}
       </div>
       <button type="button" onClick={handleClickNext} aria-label="다음 주">
         <NextDateIcon />

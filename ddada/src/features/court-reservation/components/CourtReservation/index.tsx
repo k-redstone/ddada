@@ -1,32 +1,47 @@
 'use client'
 
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
-import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
+import { DUMMY_COURTS } from '@/features/court-reservation/constants/court-reservation.ts'
+import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
 import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
+import LocationDetailColorIcon from '@/static/imgs/court-reservation/court-reservation_location_under_color_icon.svg'
 import LocationDetailIcon from '@/static/imgs/court-reservation/court-reservation_location_under_icon.svg'
-import ParkingIcon from '@/static/imgs/court-reservation/court-reservation_parking-lot_icon.svg'
 import ReservationLogo from '@/static/imgs/court-reservation/court-reservation_reservation_logo.svg'
 import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search_icon.svg'
-import ShowerIcon from '@/static/imgs/court-reservation/court-reservation_shower_icon.svg'
-import ToiletIcon from '@/static/imgs/court-reservation/court-reservation_toilet_icon.svg'
-import WifiIcon from '@/static/imgs/court-reservation/court-reservation_toilet_icon.svg'
 
 export default function CoatReservation() {
-  // 시작 날짜
   const today = dayjs().format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
   const [filterCoat, setFilterCoat] = useState('')
   const [locationModalOpen, setLocationModalOpen] = useState(false)
-  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string[]>(['전체'])
+  const [selectedRegionNum, setSelectedRegionNum] = useState<number>(0)
+  // // pagination에서 선택한 날짜
+  // useEffect(() => {
+  //   console.log(selectedDate)
+  // }, [selectedDate])
+
+  useEffect(() => {
+    if (selectedRegion.length === 1) {
+      if (selectedRegion[0] === '전체') {
+        setSelectedRegionNum(0)
+      } else {
+        setSelectedRegionNum(1)
+      }
+    } else {
+      setSelectedRegionNum(selectedRegion.length)
+    }
+  }, [selectedRegion])
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    // todo 검색 api 호출
     setFilterCoat(search)
   }
   const handleSelectedRegion = (regions: string[]) => {
@@ -39,12 +54,7 @@ export default function CoatReservation() {
   const handleLocationModal = () => {
     setLocationModalOpen(true)
   }
-  const handlePaymentModal = () => {
-    setPaymentModalOpen(true)
-  }
-  const handlePaymentModalOff = () => {
-    setPaymentModalOpen(false)
-  }
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value)
   }
@@ -55,9 +65,12 @@ export default function CoatReservation() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-[926px]">
+      <div className="w-[752px] px-2">
         <div className="flex flex-col gap-3 py-4">
-          <ReservationLogo />
+          <div className="w-full">
+            <ReservationLogo className="w-full" />
+          </div>
+
           <div className="flex gap-x-2 text-[#6B6E78] text-xs">
             <div className="flex items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
               <form id="search" onSubmit={handleClickSearch}>
@@ -67,7 +80,7 @@ export default function CoatReservation() {
                   onChange={handleSearch}
                   placeholder="지역, 체육관 명으로 검색"
                   // todo width 수           정
-                  className="w-[7.1875rem] placeholder-[#6B6E78]"
+                  className="w-[7.1875rem] placeholder-[#6B6E78] focus:outline-none focus:border-none"
                 />
               </form>
               <button
@@ -80,12 +93,22 @@ export default function CoatReservation() {
             </div>
             <button
               type="button"
-              className="flex items-center border rounded-[62.5rem] gap-x-2 px-4"
+              className={`flex items-center border rounded-[62.5rem] gap-x-2 px-4
+                ${selectedRegionNum > 0 ? 'text-[#FCA211] border-[#FCA211] bg-[#FFFBEA]' : 'text-[#6B6E78]'}
+              `}
               onClick={handleLocationModal}
             >
-              <LocationIcon />
-              <p>지역</p>
-              <LocationDetailIcon />
+              {selectedRegionNum > 0 ? <LocationColorIcon /> : <LocationIcon />}
+              {selectedRegionNum > 0 ? (
+                <p>지역 +{selectedRegionNum}</p>
+              ) : (
+                <p>지역</p>
+              )}
+              {selectedRegionNum > 0 ? (
+                <LocationDetailColorIcon />
+              ) : (
+                <LocationDetailIcon />
+              )}
             </button>
           </div>
         </div>
@@ -97,22 +120,14 @@ export default function CoatReservation() {
             handleLoactions={handleSelectedRegion}
           />
         )}
-        {paymentModalOpen && (
-          <PaymentModal closeModal={handlePaymentModalOff} />
-        )}
+
         <div>
           <Pagination changeSelectedDate={handleSelectedDate} />
         </div>
 
-        <button
-          type="button"
-          className="text-white px-4 py-2 bg-[#FCA211] rounded-xl"
-          onClick={handlePaymentModal}
-        >
-          매치 생성하기
-        </button>
-
-        <div>여기에 코트 리스트쫙</div>
+        <div>
+          <Courts courtList={DUMMY_COURTS} selectedDate={selectedDate} />
+        </div>
       </div>
     </div>
   )
