@@ -179,7 +179,7 @@ export default function Login() {
                     <button
                       type="button"
                       onClick={handleVisibility}
-                      className="ml-2"
+                      className="ml-2 w-6 h-6"
                     >
                       {passwordVisibility ? (
                         <PasswordVisible className="cursor-pointer" />

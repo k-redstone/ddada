@@ -2,6 +2,7 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
+import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -234,11 +235,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
-    pattern: {
-      value:
-        /^(19[0-9]{2}|20[0-2][0-9])-((0[1-9]|1[0-2]))-((0[1-9]|[12][0-9]|3[01]))$/,
-      message: '생년월일 형식을 YYYY-MM-DD로 입력해주세요.',
-    },
   })
 
   return (
@@ -284,7 +280,11 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             {password && isPasswordMatch && (
               <PassworeMatchChecked className="flex-none" />
             )}
-            <button type="button" onClick={handleVisibility} className="ml-2">
+            <button
+              type="button"
+              onClick={handleVisibility}
+              className="ml-2 w-6 h-6"
+            >
               {passwordVisibility ? (
                 <PasswordVisible className="cursor-pointer" />
               ) : (
@@ -316,7 +316,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             <button
               type="button"
               onClick={handleConfirmVisibility}
-              className="ml-2"
+              className="ml-2 w-6 h-6"
             >
               {passwordConfirmVisibility ? (
                 <PasswordVisible className="cursor-pointer" />
@@ -478,13 +478,12 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           <p className="text-[#6B6E78]">생년월일</p>
           <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
-              type="text"
+              type="date"
               id="birthYear"
               placeholder="연도-월-일"
               className="w-full focus:outline-none"
               {...birthYearRegister}
             />
-            <CalenderIcon />
           </div>
           {errors.birthYear && (
             <p className="text-[#DC3545]">{errors.birthYear.message}</p>
