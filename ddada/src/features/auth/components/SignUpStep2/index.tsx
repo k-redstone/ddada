@@ -5,7 +5,7 @@
 import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { set, useFormContext } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 
 import {
@@ -31,7 +31,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     register,
     formState: { errors },
     watch,
-    trigger,
     setError,
     clearErrors,
     setValue,
@@ -44,6 +43,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const birthYear = watch('birthYear')
   const smsAuthCode = watch('authNumber')
   const searchParams = useSearchParams()
+  const [emailExists, setEmailExists] = useState<boolean>(false)
+  const [passwordExists, setPasswordExists] = useState<boolean>(false)
+  const [passwordConfirmExists, setPasswordConfirmExists] =
+    useState<boolean>(false)
+  const [nickNameExists, setNickNameExists] = useState<boolean>(false)
+  const [phoneNumberExists, setPhoneNumberExists] = useState<boolean>(false)
+  const [birthYearExists, setBirthYearExists] = useState<boolean>(false)
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
     useState<boolean>(false)
@@ -59,37 +65,25 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const [isExpired, setIsExpired] = useState<boolean>(false)
 
   useEffect(() => {
-    const checkValidation = async () => {
-      await trigger('birthYear')
-
-      if (
-        email &&
-        password &&
-        confirmPassword &&
-        nickName &&
-        phoneNumber &&
-        birthYear &&
-        isPasswordMatch &&
-        nickNameCheck &&
-        phoneNumberCheck &&
-        Object.keys(errors).length === 0
-      ) {
-        setIsNextStepEnabled(true)
-      } else {
-        setIsNextStepEnabled(false)
-      }
+    if (
+      emailExists &&
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      birthYearExists
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
     }
-
-    checkValidation()
   }, [
-    errors,
-    email,
-    password,
-    confirmPassword,
-    nickName,
-    phoneNumber,
-    birthYear,
-    trigger,
+    emailExists,
+    passwordExists,
+    passwordConfirmExists,
+    nickNameExists,
+    phoneNumberExists,
+    birthYearExists,
   ])
 
   useEffect(() => {
@@ -101,7 +95,15 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   }, [])
 
   useEffect(() => {
-    setIsPasswordMatch(password === confirmPassword)
+    if (password === confirmPassword) {
+      setIsPasswordMatch(password === confirmPassword)
+      setPasswordExists(true)
+      setPasswordConfirmExists(true)
+    } else {
+      setIsPasswordMatch(false)
+      setPasswordExists(false)
+      setPasswordConfirmExists(false)
+    }
   }, [password, confirmPassword])
 
   // 타이머 관련
@@ -125,11 +127,56 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     setPasswordConfirmVisibility(!passwordConfirmVisibility)
   }
 
+  const handleEmailExists = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if (event.target.value.length > 0 && emailRegex.test(event.target.value)) {
+      setEmailExists(true)
+    } else {
+      setEmailExists(false)
+    }
+    if (
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      birthYearExists &&
+      event.target.value.length > 0
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
+    }
+  }
+
+  const handleBirthYearExists = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event.target.value.length > 0) {
+      setBirthYearExists(true)
+    } else {
+      setBirthYearExists(false)
+    }
+    if (
+      emailExists &&
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      event.target.value.length > 0
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
+    }
+  }
+
   const handleCheckNickName = async () => {
     const duplicateCheck = await checkNicknameDuplicate(nickName)
     if (duplicateCheck.data.message === '사용 가능한 닉네임입니다.') {
       setNickNameCheck(true)
       setNickNameAlreadyExist(false)
+      // checkValidation()
+      setNickNameExists(true)
     } else {
       setNickNameCheck(false)
       setNickNameAlreadyExist(true)
@@ -177,6 +224,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       })
     } else {
       setPhoneNumberCheck(true)
+      // checkValidation()
+      setPhoneNumberExists(true)
     }
   }
   const formatTime = (time: number) => {
@@ -256,6 +305,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               autoComplete="new-email"
               disabled={kkaoEmailExist}
               {...emailRegister}
+              onChange={handleEmailExists}
             />
           </div>
           {errors.email && (
@@ -450,6 +500,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           onClick={() => {
             setPhoneNumberCheck(true)
             setAuthNumber(true)
+            setPhoneNumberExists(true)
           }}
         >
           돈내기방지용 인증완료 버튼
@@ -483,6 +534,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               placeholder="연도-월-일"
               className="w-full focus:outline-none"
               {...birthYearRegister}
+              onChange={handleBirthYearExists}
             />
           </div>
           {errors.birthYear && (
