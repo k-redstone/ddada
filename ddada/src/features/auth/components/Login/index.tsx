@@ -112,7 +112,7 @@ export default function Login() {
     } else {
       setEmailExists(false)
     }
-    if (passwordVisibility && event.target.value.length > 0) {
+    if (passwordExists && event.target.value.length > 0) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
