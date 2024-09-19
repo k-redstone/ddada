@@ -52,8 +52,8 @@ export default function Login() {
         try {
           const res = await socialLogin(authCode)
           if (res.data.result.isRegistered) {
-            sessionStorage.setItem('accessToken', res.data.accessToken)
-            sessionStorage.setItem('refreshToken', res.data.refreshToken)
+            sessionStorage.setItem('accessToken', res.data.result.accessToken)
+            sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
 
             router.push('/')
           } else {
@@ -122,8 +122,8 @@ export default function Login() {
   const loginSubmit = async (data: LoginForm) => {
     try {
       const res = await originLogin(data.email, data.password)
-      sessionStorage.setItem('accessToken', res.data.accessToken)
-      sessionStorage.setItem('refreshToken', res.data.refreshToken)
+      sessionStorage.setItem('accessToken', res.data.result.accessToken)
+      sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
       setAxiosError(false)
       router.push('/')
     } catch {
@@ -133,8 +133,8 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center  mt-[7.4013rem]">
-      <div className="min-w-[544px]">
-        <p className="text-4xl font-bold text-center mb-[70px]">
+      <div className="min-w-[34rem]">
+        <p className="text-4xl font-bold text-center mb-[4.375rem]">
           따다에 가입하세요
         </p>
         <div className="bg-white">
@@ -143,7 +143,7 @@ export default function Login() {
             className="grid gap-4 px-10"
           >
             <div className="text-sm">
-              <label htmlFor="email ">
+              <label htmlFor="email">
                 <p className="text-[#6B6E78]">이메일</p>
                 <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
                   <input
@@ -151,6 +151,7 @@ export default function Login() {
                     id="email"
                     placeholder="이메일을 입력해주세요."
                     className="w-full focus:outline-none"
+                    autoComplete="new-email"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...emailRegister}
                     onChange={handleLoginVisibility}
@@ -170,6 +171,7 @@ export default function Login() {
                     id="password"
                     placeholder="비밀번호를 입력해주세요."
                     className="w-full focus:outline-none"
+                    autoComplete="new-password"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...passwordRegister}
                     onChange={handlePasswordExists}
@@ -229,7 +231,7 @@ export default function Login() {
                 onClick={handleKakaoLogin}
                 className="py-[1.2744rem] w-full bg-[#FEE500] text-[#000000] rounded-xl flex items-center justify-center relative mt-3"
               >
-                <KakaoLogo className="absolute left-[10px]" />
+                <KakaoLogo className="absolute left-[0.625rem]" />
                 카카오로 로그인
               </button>
             </div>
