@@ -16,7 +16,7 @@ export default function ManagerSidebar() {
   const [clickedCategory, setClickedCategory] = useState<number>(1)
 
   return (
-    <div className="flex flex-col gap-y-[10px]">
+    <div className="flex flex-col gap-y-[.625rem]">
       <div className="p-2">
         <input
           className="border placeholder-[#6B6E78] px-6 py-5 w-full text-black border-[#E5E5ED] rounded-xl h-16 "

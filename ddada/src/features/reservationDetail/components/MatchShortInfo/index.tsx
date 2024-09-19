@@ -23,10 +23,10 @@ export default function MatchShortInfo() {
       <div className="flex flex-col gap-y-2">
         <h2 className="font-bold">매치타입</h2>
         <div className="flex gap-x-1">
-          <div className="bg-[#FCA211] text-white py-1 px-2 rounded-[1000px]">
+          <div className="bg-[#FCA211] text-white py-1 px-2 rounded-[62.5rem]">
             <span>남자복식</span>
           </div>
-          <div className="bg-[#DC3545] text-white py-1 px-2 rounded-[1000px]">
+          <div className="bg-[#DC3545] text-white py-1 px-2 rounded-[62.5rem]">
             <span>경쟁전</span>
           </div>
         </div>
