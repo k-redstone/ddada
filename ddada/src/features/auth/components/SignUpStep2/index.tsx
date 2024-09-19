@@ -18,7 +18,6 @@ import {
 } from '@/features/auth/types/SignUpType.ts'
 import PasswordUnVisible from '@/static/imgs/auth/auth_password_unvisible_icon.svg'
 import PasswordVisible from '@/static/imgs/auth/auth_password_visible_icon.svg'
-import CalenderIcon from '@/static/imgs/auth/signup/calender_icon.svg'
 import PassworeMatchChecked from '@/static/imgs/auth/signup/checked_circle_icon.svg'
 
 interface SignUpStep2Props {
@@ -30,19 +29,23 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     register,
     formState: { errors },
     watch,
-    trigger,
     setError,
     clearErrors,
     setValue,
   } = useFormContext<SignUpFormData>()
-  const email = watch('email')
   const password = watch('password')
   const confirmPassword = watch('confirmPassword')
   const nickName = watch('nickname')
   const phoneNumber = watch('phoneNumber')
-  const birthYear = watch('birthYear')
   const smsAuthCode = watch('authNumber')
   const searchParams = useSearchParams()
+  const [emailExists, setEmailExists] = useState<boolean>(false)
+  const [passwordExists, setPasswordExists] = useState<boolean>(false)
+  const [passwordConfirmExists, setPasswordConfirmExists] =
+    useState<boolean>(false)
+  const [nickNameExists, setNickNameExists] = useState<boolean>(false)
+  const [phoneNumberExists, setPhoneNumberExists] = useState<boolean>(false)
+  const [birthYearExists, setBirthYearExists] = useState<boolean>(false)
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
     useState<boolean>(false)
@@ -58,37 +61,25 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const [isExpired, setIsExpired] = useState<boolean>(false)
 
   useEffect(() => {
-    const checkValidation = async () => {
-      await trigger('birthYear')
-
-      if (
-        email &&
-        password &&
-        confirmPassword &&
-        nickName &&
-        phoneNumber &&
-        birthYear &&
-        isPasswordMatch &&
-        nickNameCheck &&
-        phoneNumberCheck &&
-        Object.keys(errors).length === 0
-      ) {
-        setIsNextStepEnabled(true)
-      } else {
-        setIsNextStepEnabled(false)
-      }
+    if (
+      emailExists &&
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      birthYearExists
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
     }
-
-    checkValidation()
   }, [
-    errors,
-    email,
-    password,
-    confirmPassword,
-    nickName,
-    phoneNumber,
-    birthYear,
-    trigger,
+    emailExists,
+    passwordExists,
+    passwordConfirmExists,
+    nickNameExists,
+    phoneNumberExists,
+    birthYearExists,
   ])
 
   useEffect(() => {
@@ -100,7 +91,15 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   }, [])
 
   useEffect(() => {
-    setIsPasswordMatch(password === confirmPassword)
+    if (password === confirmPassword) {
+      setIsPasswordMatch(password === confirmPassword)
+      setPasswordExists(true)
+      setPasswordConfirmExists(true)
+    } else {
+      setIsPasswordMatch(false)
+      setPasswordExists(false)
+      setPasswordConfirmExists(false)
+    }
   }, [password, confirmPassword])
 
   // 타이머 관련
@@ -124,11 +123,56 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     setPasswordConfirmVisibility(!passwordConfirmVisibility)
   }
 
+  const handleEmailExists = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if (event.target.value.length > 0 && emailRegex.test(event.target.value)) {
+      setEmailExists(true)
+    } else {
+      setEmailExists(false)
+    }
+    if (
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      birthYearExists &&
+      event.target.value.length > 0
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
+    }
+  }
+
+  const handleBirthYearExists = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event.target.value.length > 0) {
+      setBirthYearExists(true)
+    } else {
+      setBirthYearExists(false)
+    }
+    if (
+      emailExists &&
+      passwordExists &&
+      passwordConfirmExists &&
+      nickNameExists &&
+      phoneNumberExists &&
+      event.target.value.length > 0
+    ) {
+      setIsNextStepEnabled(true)
+    } else {
+      setIsNextStepEnabled(false)
+    }
+  }
+
   const handleCheckNickName = async () => {
     const duplicateCheck = await checkNicknameDuplicate(nickName)
     if (duplicateCheck.data.message === '사용 가능한 닉네임입니다.') {
       setNickNameCheck(true)
       setNickNameAlreadyExist(false)
+      // checkValidation()
+      setNickNameExists(true)
     } else {
       setNickNameCheck(false)
       setNickNameAlreadyExist(true)
@@ -176,6 +220,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       })
     } else {
       setPhoneNumberCheck(true)
+      // checkValidation()
+      setPhoneNumberExists(true)
     }
   }
   const formatTime = (time: number) => {
@@ -234,11 +280,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
-    pattern: {
-      value:
-        /^(19[0-9]{2}|20[0-2][0-9])-((0[1-9]|1[0-2]))-((0[1-9]|[12][0-9]|3[01]))$/,
-      message: '생년월일 형식을 YYYY-MM-DD로 입력해주세요.',
-    },
   })
 
   return (
@@ -260,6 +301,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               autoComplete="new-email"
               disabled={kkaoEmailExist}
               {...emailRegister}
+              onChange={handleEmailExists}
             />
           </div>
           {errors.email && (
@@ -284,7 +326,11 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             {password && isPasswordMatch && (
               <PassworeMatchChecked className="flex-none" />
             )}
-            <button type="button" onClick={handleVisibility} className="ml-2">
+            <button
+              type="button"
+              onClick={handleVisibility}
+              className="ml-2 w-6 h-6"
+            >
               {passwordVisibility ? (
                 <PasswordVisible className="cursor-pointer" />
               ) : (
@@ -316,7 +362,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             <button
               type="button"
               onClick={handleConfirmVisibility}
-              className="ml-2"
+              className="ml-2 w-6 h-6"
             >
               {passwordConfirmVisibility ? (
                 <PasswordVisible className="cursor-pointer" />
@@ -450,6 +496,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           onClick={() => {
             setPhoneNumberCheck(true)
             setAuthNumber(true)
+            setPhoneNumberExists(true)
           }}
         >
           돈내기방지용 인증완료 버튼
@@ -478,13 +525,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           <p className="text-[#6B6E78]">생년월일</p>
           <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
             <input
-              type="text"
+              type="date"
               id="birthYear"
               placeholder="연도-월-일"
               className="w-full focus:outline-none"
               {...birthYearRegister}
+              onChange={handleBirthYearExists}
             />
-            <CalenderIcon />
           </div>
           {errors.birthYear && (
             <p className="text-[#DC3545]">{errors.birthYear.message}</p>

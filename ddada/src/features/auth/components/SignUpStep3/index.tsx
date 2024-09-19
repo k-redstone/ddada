@@ -142,7 +142,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
         </label>
         <div>
           <div className="flex gap-[1.5rem]">
-            <div className="flex justify-center items-center rounded-full bg-[#F6F6F6] h-[150px] w-[150px] overflow-hidden">
+            <div className="flex justify-center items-center rounded-full bg-[#F6F6F6] h-[9.375rem] w-[9.375rem] overflow-hidden">
               {defaultImage ? (
                 <Logo />
               ) : (
@@ -154,7 +154,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
               )}
             </div>
 
-            <div className="grid gap-4 mb-[58px]">
+            <div className="grid gap-4 mb-[3.625rem]">
               <div className="flex gap-4">
                 <button
                   type="button"
