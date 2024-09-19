@@ -2,10 +2,9 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
-import axios from 'axios'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { set, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { toast, Toaster } from 'react-hot-toast'
 
 import {
@@ -19,7 +18,6 @@ import {
 } from '@/features/auth/types/SignUpType.ts'
 import PasswordUnVisible from '@/static/imgs/auth/auth_password_unvisible_icon.svg'
 import PasswordVisible from '@/static/imgs/auth/auth_password_visible_icon.svg'
-import CalenderIcon from '@/static/imgs/auth/signup/calender_icon.svg'
 import PassworeMatchChecked from '@/static/imgs/auth/signup/checked_circle_icon.svg'
 
 interface SignUpStep2Props {
@@ -35,12 +33,10 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     clearErrors,
     setValue,
   } = useFormContext<SignUpFormData>()
-  const email = watch('email')
   const password = watch('password')
   const confirmPassword = watch('confirmPassword')
   const nickName = watch('nickname')
   const phoneNumber = watch('phoneNumber')
-  const birthYear = watch('birthYear')
   const smsAuthCode = watch('authNumber')
   const searchParams = useSearchParams()
   const [emailExists, setEmailExists] = useState<boolean>(false)
