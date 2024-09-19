@@ -1,12 +1,15 @@
 'use client'
 
+import { useInfiniteQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
+import { useObserver } from '@/features/court-reservation/components/useObserver/index.tsx'
 import { DUMMY_COURTS } from '@/features/court-reservation/constants/court-reservation.ts'
+import { getMatchList } from '@/features/match-reservation/api/match/index.ts'
 import MatchCards from '@/features/match-reservation/components/MatchesCards/index.tsx'
 import MatchToggle from '@/features/match-reservation/components/MatchToggle/index.tsx'
 import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
@@ -21,7 +24,9 @@ import BadmintonIcon from '@/static/imgs/match-reservation/match-reservation_bad
 import ReservationLogo from '@/static/imgs/match-reservation/match-reservation_reservation_logo.svg'
 
 export default function MatchReservation() {
+  const bottom = useRef(null)
   const today = dayjs().format('YYYY-MM-DD')
+  // const [scrollY, setScrollY] = useState(0)
   const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
   const [filterCoat, setFilterCoat] = useState('')
@@ -58,6 +63,81 @@ export default function MatchReservation() {
     }
     // todo 검색 api 호출
   }, [selectedMatchType])
+
+  const { data, fetchNextPage, status } = useInfiniteQuery({
+    // todo 수정 필요
+    queryKey: [
+      'courtList',
+      selectedMatchRankType,
+      selectedMatchType,
+      filterCoat,
+      selectedRegion,
+    ],
+    queryFn: ({ pageParam = 0 }) => {
+      //  todo 수정 필요
+      if (selectedRegion && selectedRegion[0] === '전체') {
+        if (selectedMatchType && selectedMatchType[0] === '전체') {
+          return getMatchList(
+            pageParam,
+            10,
+            selectedMatchRankType,
+            '',
+            '',
+            filterCoat,
+            '',
+          )
+        }
+        return getMatchList(
+          pageParam,
+          10,
+          selectedMatchRankType,
+          selectedMatchType.join(','),
+          '',
+          filterCoat,
+          '',
+        )
+      }
+
+      if (selectedMatchType && selectedMatchType[0] === '전체') {
+        return getMatchList(
+          pageParam,
+          10,
+          selectedMatchRankType,
+          '',
+          '',
+          filterCoat,
+          selectedRegion.join(','),
+        )
+      }
+      return getMatchList(
+        pageParam,
+        10,
+        selectedMatchRankType,
+        selectedMatchType.join(','),
+        '',
+        filterCoat,
+        selectedRegion.join(','),
+      )
+    },
+    getNextPageParam: (lastPage) => {
+      const page = lastPage.data.result.page.number
+      if (lastPage.data.result.page.totalPages === page) return false
+      return page + 1
+    },
+    initialPageParam: 0,
+  })
+
+  // console.log(data)
+
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
+    if (entry.isIntersecting) {
+      fetchNextPage()
+    }
+  }
+  useObserver({
+    target: bottom,
+    onIntersect,
+  })
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -209,6 +289,7 @@ export default function MatchReservation() {
         <div>
           <Courts courtList={DUMMY_COURTS} selectedDate={selectedDate} />
         </div> */}
+      <div ref={bottom} />
     </div>
   )
 }

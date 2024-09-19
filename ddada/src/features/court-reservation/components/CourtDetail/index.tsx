@@ -65,10 +65,13 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
                 onClick={() => handleSelectedTime(time)}
                 className={`border px-2 py-1
                       rounded-[62.5rem]
-                  ${court.reservations[selectedDate].includes(time) ? 'text-[#E5E5ED]' : ''}
+                  ${court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-[#E5E5ED]' : ''}
                   ${selectedTime === time ? 'bg-[#FCA211] text-white' : ''}
                   `}
-                disabled={court.reservations[selectedDate].includes(time)}
+                disabled={
+                  court.reservations[selectedDate] &&
+                  court.reservations[selectedDate].includes(time)
+                }
               >
                 {time}
               </button>
@@ -96,6 +99,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
       </div>
       {paymentModalOpen && (
         <PaymentModal
+          courtId={court.id}
           closeModal={handlePaymentModalOff}
           courtName={court.name}
           reservationDay={selectedDate}

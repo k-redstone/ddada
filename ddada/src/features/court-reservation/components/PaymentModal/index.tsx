@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import Script from 'next/script'
 import { useState } from 'react'
 
+import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
 import {
   KR_DAY_OF_WEEK,
   MATCH_INFO,
@@ -19,6 +20,7 @@ declare global {
   }
 }
 interface PaymentModalProps {
+  courtId: number
   closeModal: () => void
   courtName: string
   reservationDay: string
@@ -26,21 +28,50 @@ interface PaymentModalProps {
 }
 
 export default function PaymentModal({
+  courtId,
   closeModal,
   courtName,
   reservationDay,
   reservationTime,
 }: PaymentModalProps) {
   const day = dayjs(reservationDay).format('MM.DD')
+  const date = dayjs(reservationDay).format('YYYY-MM-DD')
   const DAY_OF_WEEK = KR_DAY_OF_WEEK[dayjs(reservationDay).day()]
   const [competitionType, setCompetitionType] = useState('친선')
   const [matchType, setMatchType] = useState('혼합복식')
+
+  const matchReservation = async () => {
+    let RankType = ''
+    let MatchType = ''
+    if (competitionType === '경쟁') {
+      RankType = 'RANK'
+    } else {
+      RankType = 'NORMAL'
+    }
+    if (matchType === '혼합복식') {
+      MatchType = 'MIXED_DOUBLE'
+    } else if (matchType === '남자복식') {
+      MatchType = 'MALE_DOUBLE'
+    } else if (matchType === '여자복식') {
+      MatchType = 'FEMALE_DOUBLE'
+    }
+    const data = {
+      courtId,
+      rankType: RankType,
+      matchType: MatchType,
+      date,
+      time: reservationTime,
+    }
+    const res = await postMatchReservation(data)
+    console.log(res)
+  }
 
   const handleCloseModal = () => {
     closeModal()
   }
 
   const handlePayment = async () => {
+    // todo 로그인 확인 로직 추가
     // todo 결제하기 로직 추가
     handlePortOne()
     closeModal()
@@ -64,7 +95,9 @@ export default function PaymentModal({
         return console.log(response.message)
       }
       // todo 나중에 이 response에 있는걸로 블라블라하기
-      alert('결제 성공')
+      // todo 마이페이지로 보내버리기
+      matchReservation()
+
       return console.log('결제 성공', response)
     }
     requestPayment()

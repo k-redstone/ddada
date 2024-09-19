@@ -1,11 +1,14 @@
 'use client'
 
+import { useInfiniteQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { getCourtList } from '@/features/court-reservation/api/court/index.ts'
 import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
+import { useObserver } from '@/features/court-reservation/components/useObserver/index.tsx'
 import { DUMMY_COURTS } from '@/features/court-reservation/constants/court-reservation.ts'
 import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
 import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
@@ -15,6 +18,8 @@ import ReservationLogo from '@/static/imgs/court-reservation/court-reservation_r
 import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search_icon.svg'
 
 export default function CoatReservation() {
+  const bottom = useRef(null)
+
   const today = dayjs().format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
@@ -26,7 +31,13 @@ export default function CoatReservation() {
   // useEffect(() => {
   //   console.log(selectedDate)
   // }, [selectedDate])
-
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await getCourtList(0, 10, '족발', '')
+  //     // console.log(res.data)
+  //   }
+  //   fetchData()
+  // }, [])
   useEffect(() => {
     if (selectedRegion.length === 1) {
       if (selectedRegion[0] === '전체') {
@@ -38,6 +49,35 @@ export default function CoatReservation() {
       setSelectedRegionNum(selectedRegion.length)
     }
   }, [selectedRegion])
+
+  const { data, fetchNextPage, status } = useInfiniteQuery({
+    queryKey: ['courtList', filterCoat, selectedRegion],
+    queryFn: ({ pageParam = 0 }) => {
+      if (selectedRegion && selectedRegion[0] === '전체') {
+        return getCourtList(pageParam, 10, filterCoat)
+      }
+      return getCourtList(pageParam, 10, filterCoat, selectedRegion.join(','))
+    },
+    getNextPageParam: (lastPage) => {
+      const page = lastPage.data.result.page.number
+      if (lastPage.data.result.page.totalPages === page + 1) return false
+      return page + 1
+    },
+    initialPageParam: 0,
+  })
+  // console.log(data?.pages.map((page) => page.data.result.content))
+
+  // console.log(data)
+
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
+    if (entry.isIntersecting) {
+      fetchNextPage()
+    }
+  }
+  useObserver({
+    target: bottom,
+    onIntersect,
+  })
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -126,8 +166,22 @@ export default function CoatReservation() {
         </div>
 
         <div>
-          <Courts courtList={DUMMY_COURTS} selectedDate={selectedDate} />
+          {/* {status === 'success' && (
+            <Courts
+              courtList={data.pages.map((page) => page.data.result.content)}
+            />
+          )} */}
+          {data?.pages.map((page) => (
+            <Courts
+              courtList={page.data.result.content}
+              selectedDate={selectedDate}
+              key={page.data.result.page.number}
+            />
+          ))}
+          {/* <Courts courtList={DUMMY_COURTS} selectedDate={selectedDate} /> */}
+          {status === 'pending' && <div>로딩중...</div>}
         </div>
+        <div ref={bottom} />
       </div>
     </div>
   )
