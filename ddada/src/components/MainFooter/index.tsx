@@ -40,7 +40,7 @@ export default function MainFooter() {
             </button>
           </div>
         </div>
-        <div className="text-sm">Copyright © SSAFY. All rights reserved.</div>
+        <div className="text-sm">Copyright © SSAFY. All rights reserved.</div>
         <div className="flex flex-col text-xs">
           <div>서울특별시 강남구 테헤란로 212 | 대표자 박상우 </div>
           <div>
