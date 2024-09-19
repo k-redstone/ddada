@@ -15,7 +15,7 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
 
   return (
     <div
-      className={`px-2 py-6 flex gap-x-3 border-[1px] border-[#E7E7E7] box-border ${isClicked && `bg-[#FFFBEA]`}`}
+      className={`px-2 py-6 flex gap-x-3 border border-[#E7E7E7] box-border ${isClicked && `bg-[#FFFBEA]`}`}
     >
       <div className="w-16 rounded-lg border border-black">
         {/* <img className="w-full h-full" src="" alt="court_img" /> */}
@@ -23,7 +23,7 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
       </div>
       <div className="flex flex-col gap-y-3  w-full">
         <div className="flex flex-col gap-y-1">
-          <p className="flex gap-x-[10px]">
+          <p className="flex gap-x-[.625rem]">
             <span className="font-bold grow">{data.courtName}</span>
             <span className="text-sm">
               {diffDate === 0 ? (

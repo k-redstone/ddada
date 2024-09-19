@@ -72,7 +72,7 @@ export default function MatchApply() {
       {/* 신청버튼 */}
       <button
         type="button"
-        className="bg-[#FCA211] rounded-[4px] py-2 px-1 box-border"
+        className="bg-[#FCA211] rounded-[.25rem] py-2 px-1 box-border"
       >
         <span className="text-xs text-white">매치 신청하기</span>
       </button>

@@ -54,12 +54,12 @@ export default function ScoreBoardPage() {
                 인원을 확인하고 매치를 시작해주세요.
               </span>
             </div>
-            <div className="bg-[#FCA211] flex justify-center items-center h-[76px] cursor-pointer">
+            <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
               <span className="text-white text-xl font-bold ">매치 시작</span>
             </div>
           </div>
         ) : (
-          <div className="bg-[#E5E5ED] flex justify-center items-center h-[76px]">
+          <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">
             <span className="text-[#6B6E78] text-xl font-bold">
               매치 대기중
             </span>

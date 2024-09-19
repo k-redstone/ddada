@@ -39,7 +39,7 @@ function TitleWithUnderline() {
 
 function CourtImage() {
   return (
-    <div className="flex flex-col gap-y-2 h-[200px] border border-black">
+    <div className="flex flex-col gap-y-2 h-[12.5rem] border border-black">
       <p>이미지 들어감</p>
     </div>
   )
@@ -88,7 +88,7 @@ function Amenities() {
   return (
     <div className="flex flex-col gap-y-2">
       <h2 className="font-bold">편의시설</h2>
-      <div className="flex gap-x-[10px]">
+      <div className="flex gap-x-[0.625rem]">
         <ParkingIcon />
         <ShowerIcon />
         <ToiletIcon />
@@ -141,7 +141,7 @@ CourtInfo.Amenities = Amenities
 //       </div>
 
 //       {/* 이미지 */}
-//       <div className="flex flex-col gap-y-2 h-[200px] border border-black">
+//       <div className="flex flex-col gap-y-2 h-[12.5rem] border border-black">
 //         <p>이미지 들어감</p>
 //       </div>
 
