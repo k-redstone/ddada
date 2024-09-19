@@ -1,3 +1,4 @@
+import MainFooter from '@/components/MainFooter/index.tsx'
 import MainHeader from '@/components/MainHeader/index.tsx'
 
 export default function MatchReservationDetailLayout({
@@ -9,6 +10,7 @@ export default function MatchReservationDetailLayout({
     <div className="flex flex-col">
       <MainHeader />
       <div className="flex justify-center">{children}</div>
+      <MainFooter />
     </div>
   )
 }
