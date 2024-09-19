@@ -7,7 +7,7 @@ import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import {
   EARN_TYPE,
   MISS_TYPE,
-} from '@/features/manager/constants/scoreConstants.ts'
+} from '@/features/manager/constants/matchConstants.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 
 interface ScoreModalProps {
