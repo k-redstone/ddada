@@ -8,14 +8,14 @@ import {
 type PlayerType = {
   id: number
   nickname: string
-  gender: 'MALE' | 'FEMALE'
+  gender: Gender
   rating: number
 }
 
 type TeamType = {
   id: number
-  player1: PlayerType | null
-  player2: PlayerType | null
+  player1: PlayerType
+  player2: PlayerType
 }
 
 type CourtType = {
@@ -25,17 +25,17 @@ type CourtType = {
   status: string
   image: string
   facilities: string[]
-  contact_number: string
+  contactNumber: string
   description: string
   reservations: Record<string, string[]>
 }
 
 type SetType = {
   id: number
-  set_number: number
-  set_winner_team_number: number
-  team1_score: number
-  team2_score: number
+  setNumber: number
+  setWinnerTeamNumber: number
+  team1Score: number
+  team2Score: number
 }
 
 type ManagerType = {
@@ -48,40 +48,40 @@ type MatchDetailType = {
   court: CourtType
   team1: TeamType
   team2: TeamType
-  winner_team_number: 1 | 2
-  manager: ManagerType
-  team1_set_score: number
-  team2_set_score: number
+  winnerTeamNumber: 1 | 2 | null
+  manager?: ManagerType
+  team1SetScore: number | null
+  team2SetScore: number | null
   status: MatchStatusType
-  rank_type: 'RANK' | 'NORMAL'
-  match_type: MatchType
+  rankType: 'RANK' | 'NORMAL'
+  matchType: MatchType
   date: string
   time: string
-  sets: SetType[]
+  sets?: SetType[]
 }
 
 type PlayerScoreType = {
-  score_number: number // 스코어 순번
-  earned_member: 11 | 12 | 21 | 22 | null
-  missed_member1: 11 | 12 | 21 | 22 | null
-  missed_member2: 11 | 12 | 21 | 22 | null
-  earned_type: EarnType | null // 득점 유형
-  missed_type: MissType | null // 실점 유형
+  scoreNumber: number // 스코어 순번
+  earnedPlayer: 11 | 12 | 21 | 22 | null
+  missedPlayer1: 11 | 12 | 21 | 22 | null
+  missedPlayer2: 11 | 12 | 21 | 22 | null
+  earnedType: EarnType | null // 득점 유형
+  missedType: MissType | null // 실점 유형
 }
 
 type SetResultType = {
-  set_number: number // 세트 번호
-  set_winner_team_number: 1 | 2 // 해당 세트에서 이긴 팀
-  team1_score: number // 팀1의 해당 세트 점수
-  team2_score: number // 팀2의 해당 세트 점수
+  setNumber: number // 세트 번호
+  setWinnerTeamNumber: 1 | 2 | null // 해당 세트에서 이긴 팀
+  team1Score: number // 팀1의 해당 세트 점수
+  team2Score: number // 팀2의 해당 세트 점수
   scores: PlayerScoreType[] // 해당 세트에서의 모든 스코어 기록
 }
 
 type MatchReusltStoreType = {
   id: number
-  winner_team_number: 1 | 2
-  team1_set_score: number
-  team2_set_score: number
+  winnerTeamNumber: 1 | 2
+  team1SetScore: number
+  team2SetScore: number
   sets: SetResultType[]
 }
 
@@ -89,5 +89,6 @@ type MatchStatusType = keyof typeof MATCH_STATUS
 type MatchType = keyof typeof MATCH_TYPE
 type EarnType = keyof typeof EARN_TYPE
 type MissType = keyof typeof MISS_TYPE
+type Gender = 'MALE' | 'FEMALE'
 
-export type { MatchDetailType, MatchReusltStoreType }
+export type { SetResultType, TeamType, MatchDetailType, MatchReusltStoreType }

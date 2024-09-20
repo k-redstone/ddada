@@ -1,237 +1,316 @@
 'use client'
 
-type TeamType = {
-  id: number
-  nickname: string
-}
-type ScoreType = {
-  team1: number
-  team2: number
-}
+import {
+  SetResultType,
+  TeamType,
+} from '@/features/manager/types/MatchDataType.ts'
+
+type TeamKey = 'team1' | 'team2'
+
 type HistoryType = {
-  setScores: ScoreType
-  matchScores: ScoreType
+  player?: number
+  earnedType?: string
+  missedUser?: Array<number>
+  missedType?: string
+
+  team1SetScore: number
+  team2SetScore: number
+  team1MatchScore: number
+  team2MatchScore: number
   currentSet: number
   scoreNumber: number
-  winner: number | null
+  winnerTeamNumber: number | null
 }
 
 /**
  * 배드민턴 인스턴스
  */
+
 class BadmintonScoreboardInstance {
+  id: number
+  winnerTeamNumber: number | null
+  team1SetScore: number
+  team2SetScore: number
+  sets: SetResultType[]
   teams: {
-    team1: TeamType[]
-    team2: TeamType[]
-  }
-  gameresult: {
-    [key: `matchScore_${number}`]: ScoreType | null
-    setScore: ScoreType | null
+    team1: TeamType
+    team2: TeamType
   }
   history: HistoryType[]
-  setScores: ScoreType
-  matchScores: ScoreType
   currentHistoryIndex: number
   currentSet: number
-  winner: number | null
 
   /**
    * constructor
    * @param {number} gameId
-   * @param {string} gameType singles | doubles
-   * @param {object} teamConfig teamData
+   * @param {object} team1 teamData
+   * @param {object} team2 teamData
    */
 
-  constructor(
-    gameId?: number,
-    gameType?: string,
-    teamConfig?: {
-      team1: TeamType[]
-      team2: TeamType[]
-    },
-  ) {
-    this.teams = {
-      team1: teamConfig?.team1 ?? [],
-      team2: teamConfig?.team2 ?? [],
-    }
-    // this.teams =
-    //   gameType === 'doubles'
-    //     ? teamConfig
-    //     : {
-    //         team1: teamConfig.team1,
-    //         team2: teamConfig.team2,
-    //       }
+  constructor(gameId: number, team1: TeamType, team2: TeamType) {
+    this.id = gameId
 
-    this.setScores = {
-      team1: 0,
-      team2: 0,
+    this.teams = {
+      team1,
+      team2,
     }
-    this.matchScores = {
-      team1: 0,
-      team2: 0,
-    }
-    this.gameresult = {
-      matchScore_1: null,
-      matchScore_2: null,
-      matchScore_3: null,
-      setScore: null,
-    }
+
+    this.team1SetScore = 0
+    this.team2SetScore = 0
+    this.sets = []
+
+    this.sets.push({
+      setNumber: 1,
+      setWinnerTeamNumber: null,
+      team1Score: 0,
+      team2Score: 0,
+      scores: [],
+    })
+    this.sets.push({
+      setNumber: 2,
+      setWinnerTeamNumber: null,
+      team1Score: 0,
+      team2Score: 0,
+      scores: [],
+    })
+    this.sets.push({
+      setNumber: 3,
+      setWinnerTeamNumber: null,
+      team1Score: 0,
+      team2Score: 0,
+      scores: [],
+    })
 
     this.history = [] // 상태 히스토리를 저장하는 배열
     this.currentHistoryIndex = -1 // 현재 히스토리의 위치
-    this.winner = null
+    this.winnerTeamNumber = null
     this.currentSet = 1
   }
 
+  /**
+   * 인스턴스 초기화 함수
+   * @param player userId
+   * @param earnedType
+   * @param missedUser
+   */
   initialize() {
     const savedData = BadmintonScoreboardInstance.loadFromLocalStorage()
     if (savedData) {
-      this.setScores = savedData.setScores
-      this.matchScores = savedData.matchScores
+      this.team1SetScore = savedData.team1SetScore
+      this.team2SetScore = savedData.team2SetScore
+      this.winnerTeamNumber = savedData.winnerTeamNumber
       this.currentSet = savedData.currentSet
-      this.winner = savedData.winner
       this.history = savedData.history || []
       this.currentHistoryIndex = savedData.currentHistoryIndex || -1
-      this.gameresult = savedData.gameResult
+      this.sets = savedData.sets
     } else {
       this.saveToHistory()
     }
   }
 
   /**
-   * pointScored
+   * earnScored 득점반영 함수
    * @param player userId
    * @param earnedType
    * @param missedUser
    */
   earnScored(player: number, earnedType: string, missedUser: Array<number>) {
-    if (this.winner || !this.teams) return
-    // 팀 구별
-    const team = this.teams.team1?.some((user) => user.id === player)
-      ? 'team1'
-      : 'team2'
-    const opponentTeam = team === 'team1' ? 'team2' : 'team1'
+    if (this.winnerTeamNumber || !this.teams) return
 
-    // 득점 반영
-    this.matchScores[team] += 1
+    // player기준 팀 이름을 가져옴
+    const playerTeam = this.getPlayerTeam(player)
 
-    // 세트 종료 분기처리
-    if (
-      this.matchScores[team] - this.matchScores[opponentTeam] >= 2 &&
-      this.matchScores[team] >= 3
-    ) {
-      this.setScores[team] += 1
-      this.checkMatchWinner()
-      if (!this.winner) {
-        this.nextSet()
-      }
+    // player기준 상대팀 이름을 가져옴
+    const opponentTeam = playerTeam === 'team1' ? 'team2' : 'team1'
+
+    if (playerTeam === 'Unknown Team') {
+      return
     }
-    if (
-      this.matchScores[opponentTeam] - this.matchScores[team] >= 2 &&
-      this.matchScores[opponentTeam] >= 3
-    ) {
-      this.setScores[opponentTeam] += 1
-      this.checkMatchWinner()
-      if (!this.winner) {
-        this.nextSet()
-      }
-    }
+
+    const scoreKey: 'team1Score' | 'team2Score' = `${playerTeam}Score` as const
+    const opponentScoreKey: 'team1Score' | 'team2Score' =
+      `${opponentTeam}Score` as const
+
+    // 점수 상승
+    this.sets[this.currentSet - 1][scoreKey] += 1
 
     // 데이터 저장
     this.saveToHistory(player, earnedType, missedUser)
+
+    // 현재 세트 종료 확인
+    const isSetEnd = this.checkSetEnd(
+      playerTeam,
+      opponentTeam,
+      scoreKey,
+      opponentScoreKey,
+    )
+    if (isSetEnd) {
+      const isGameEnd = this.checkGameWinner()
+      if (!isGameEnd) {
+        this.nextSet()
+        this.currentSet += 1
+
+        this.saveToHistory()
+      }
+    }
     this.saveToLocalStorage()
   }
 
-  faultScored(player: number, earnedType: string, missedUser: Array<number>) {
-    if (this.winner || !this.teams) return
+  /**
+   * faultScored 폴트반영 함수
+   * @param player userId
+   * @param earnedType
+   * @param missedUser
+   */
+  faultScored(player: number, missedType: string) {
+    if (this.winnerTeamNumber || !this.teams) return
 
-    // 팀 구별
-    const team = this.teams.team1?.some((user) => user.id === missedUser[0])
-      ? 'team1'
-      : 'team2'
-    const opponentTeam = team === 'team1' ? 'team2' : 'team1'
-    // 득점 반영
-    this.matchScores[opponentTeam] += 1
-    // 세트 종료 분기처리
-    if (
-      this.matchScores[team] - this.matchScores[opponentTeam] >= 2 &&
-      this.matchScores[team] >= 3
-    ) {
-      this.setScores[team] += 1
-      this.checkMatchWinner()
-      if (!this.winner) {
-        this.nextSet()
-      }
+    // player기준 팀 이름을 가져옴
+    const playerTeam = this.getPlayerTeam(player)
+
+    // player기준 상대팀 이름을 가져옴
+    const opponentTeam = playerTeam === 'team1' ? 'team2' : 'team1'
+
+    if (playerTeam === 'Unknown Team') {
+      return
     }
-    if (
-      this.matchScores[opponentTeam] - this.matchScores[team] >= 2 &&
-      this.matchScores[opponentTeam] >= 3
-    ) {
-      this.setScores[opponentTeam] += 1
-      this.checkMatchWinner()
-      if (!this.winner) {
-        this.nextSet()
-      }
-    }
+
+    const scoreKey: 'team1Score' | 'team2Score' = `${playerTeam}Score` as const
+    const opponentScoreKey: 'team1Score' | 'team2Score' =
+      `${opponentTeam}Score` as const
+
+    // 점수 상승
+    this.sets[this.currentSet - 1][opponentScoreKey] += 1
 
     // 데이터 저장
-    this.saveToHistory(player, earnedType, missedUser)
+    this.saveToHistory(player, missedType)
+
+    // 현재 세트 종료 확인
+    const isSetEnd = this.checkSetEnd(
+      playerTeam,
+      opponentTeam,
+      scoreKey,
+      opponentScoreKey,
+    )
+    if (isSetEnd) {
+      const isGameEnd = this.checkGameWinner()
+      if (!isGameEnd) {
+        this.nextSet()
+        this.currentSet += 1
+
+        this.saveToHistory()
+      }
+    }
     this.saveToLocalStorage()
   }
 
+  /**
+   * 현재 진행중인 세트가 끝났는지 확인
+   */
+  checkSetEnd(
+    teamName: 'team1' | 'team2',
+    opponentTeam: 'team1' | 'team2',
+    scoreKey: 'team1Score' | 'team2Score',
+    opponentScoreKey: 'team1Score' | 'team2Score',
+  ) {
+    const teamScore = this.sets[this.currentSet - 1][scoreKey]
+    const opponentScore = this.sets[this.currentSet - 1][opponentScoreKey]
+    const scoreDifference = Math.abs(teamScore - opponentScore)
+
+    // 세트 종료 분기처리
+    if (scoreDifference >= 2 && Math.max(teamScore, opponentScore) >= 3) {
+      const winningTeam = teamScore > opponentScore ? teamName : opponentTeam
+      const winSetScoreKey: 'team1SetScore' | 'team2SetScore' =
+        `${winningTeam}SetScore` as const
+      this[winSetScoreKey] += 1
+      this.sets[this.currentSet - 1].setWinnerTeamNumber =
+        winningTeam === 'team1' ? 1 : 2
+      return true
+      // this.checkGameWinner()
+      // if (!this.winnerTeamNumber) {
+      //   this.nextSet()
+      // }
+    }
+    return false
+  }
+
+  /**
+   * 게임이 끝났는지 확인 후 로컬스토리지 초기화
+   */
   finishMatch() {
-    // 게임이 끝났는지 확인
-    if (this.winner) {
+    if (this.winnerTeamNumber) {
       localStorage.removeItem('badmintonScoreboard')
     }
     throw new Error('asdf')
   }
 
-  checkMatchWinner() {
-    if (this.setScores.team1 === 2) {
-      this.winner = 1 // 팀1 승리
-      this.gameresult.setScore = this.setScores
-      this.gameresult[`matchScore_${this.currentSet}`] = this.matchScores
+  /**
+   * 경기의 승자를 반영
+   */
+  checkGameWinner() {
+    if (this.team1SetScore === 2) {
+      this.storeSetResult()
+
+      this.winnerTeamNumber = 1 // 팀1 승리
       this.currentSet += 1
-      console.log('팀1이 매치에서 승리했습니다.')
-    } else if (this.setScores.team2 === 2) {
-      this.winner = 2 // 팀2 승리
-      this.gameresult.setScore = this.setScores
-      this.gameresult[`matchScore_${this.currentSet}`] = this.matchScores
-      this.currentSet += 1
-      console.log('팀2가 매치에서 승리했습니다.')
+      return true
     }
+    if (this.team2SetScore === 2) {
+      this.storeSetResult()
+
+      this.winnerTeamNumber = 2 // 팀2 승리
+      this.currentSet += 1
+      return true
+    }
+    return false
   }
 
+  /**
+   * 다음세트로 진행시 초기화 함수
+   */
   nextSet() {
-    if (!this.winner) {
-      this.gameresult[`matchScore_${this.currentSet}`] = this.matchScores
-      this.currentSet += 1
-      this.matchScores = { team1: 0, team2: 0 }
-      console.log(`세트 ${this.currentSet} 시작`)
-      // 세트 진행 후 승자 체크
+    if (!this.winnerTeamNumber) {
+      this.storeSetResult()
+
       if (this.currentSet > 3) {
-        console.log('경기가 세트 최대 수를 초과했습니다.')
+        alert('경기가 세트 최대 수를 초과했습니다.')
       }
     }
   }
 
   /**
-   * 현재 스코어 반환
+   * 다음 세트를 시작하기 전 this.sets를 반영
    */
-  getScore() {
-    return { setScores: this.setScores, matchScores: this.matchScores }
+
+  storeSetResult() {
+    const filteredHistoryData = this.history
+      .filter((data) => data.scoreNumber !== -1)
+      .filter((data) => data.currentSet === this.currentSet)
+
+    const convertData = filteredHistoryData.map((data, index) => {
+      if (!data.missedUser) {
+        data.missedUser = []
+      }
+      return {
+        scoreNumber: index + 1,
+        earnedPlayer: this.getMemberNumber(data.player),
+        missedPlayer1: this.getMemberNumber(data.missedUser[0]) || null,
+        missedPlayer2: this.getMemberNumber(data.missedUser[1]) || null,
+        earnedType: data.earnedType || null,
+        missedType: data.missedType || null,
+      }
+    })
+    this.sets[this.currentSet - 1].scores = convertData
   }
 
-  /**
-   * 상대팀 선수 반환
-   */
-  getOpponent(player: number) {
-    if (this.winner || !this.teams) return null
-    const team = this.teams.team1?.some((user) => user.id === player)
-      ? 'team2'
-      : 'team1'
-    return this.teams[team]
+  getMemberNumber(
+    playerId: number | undefined | null,
+  ): 11 | 12 | 21 | 22 | null {
+    if (playerId === this.teams.team1.player1.id) return 11
+    if (playerId === this.teams.team1.player2.id) return 12
+    if (playerId === this.teams.team2.player1.id) return 21
+    if (playerId === this.teams.team2.player2.id) return 22
+    return null // 매칭되지 않으면 null
   }
 
   /**
@@ -259,15 +338,20 @@ class BadmintonScoreboardInstance {
    * state 적용
    */
   applyState(state: {
-    setScores: ScoreType
-    matchScores: ScoreType
+    team1SetScore: number
+    team2SetScore: number
+    team1MatchScore: number
+    team2MatchScore: number
+    winnerTeamNumber: number | null
     currentSet: number
-    winner: number | null
   }) {
-    this.setScores = { ...state.setScores }
-    this.matchScores = { ...state.matchScores }
     this.currentSet = state.currentSet
-    this.winner = state.winner
+    this.team1SetScore = state.team1SetScore
+    this.team2SetScore = state.team2SetScore
+
+    this.sets[this.currentSet - 1].team1Score = state.team1MatchScore
+    this.sets[this.currentSet - 1].team2Score = state.team2MatchScore
+    this.winnerTeamNumber = state.winnerTeamNumber
 
     this.saveToLocalStorage()
   }
@@ -276,17 +360,21 @@ class BadmintonScoreboardInstance {
     player?: number,
     earnedType?: string,
     missedUser?: Array<number>,
+    missedType?: string,
   ) {
     // 현재 상태를 히스토리에 저장하고, 인덱스 갱신
     const currentState = {
       player,
       earnedType,
       missedUser,
+      missedType,
       scoreNumber: this.currentHistoryIndex,
       currentSet: this.currentSet,
-      setScores: { ...this.setScores },
-      matchScores: { ...this.matchScores },
-      winner: this.winner,
+      team1SetScore: this.team1SetScore,
+      team2SetScore: this.team2SetScore,
+      team1MatchScore: this.sets[this.currentSet - 1].team1Score,
+      team2MatchScore: this.sets[this.currentSet - 1].team2Score,
+      winnerTeamNumber: this.winnerTeamNumber,
     }
     // 현재 인덱스보다 이후의 히스토리가 존재할 경우 삭제 (되돌리기 후 새로 입력된 경우)
     if (this.currentHistoryIndex < this.history.length - 1) {
@@ -296,21 +384,49 @@ class BadmintonScoreboardInstance {
     this.currentHistoryIndex += 1
   }
 
+  /**
+   * 인스턴스를 로컬스토리지에 저장
+   */
   saveToLocalStorage() {
-    const data = {
-      currentSet: this.currentSet,
-      setScores: this.setScores,
-      matchScores: this.matchScores,
-      winner: this.winner,
-      history: this.history, // 히스토리 저장
-      currentHistoryIndex: this.currentHistoryIndex, // 현재 인덱스 저장
-      gameResult: this.gameresult,
-      teams: this.teams,
-    }
-
-    localStorage.setItem('badmintonScoreboard', JSON.stringify(data))
+    localStorage.setItem('badmintonScoreboard', JSON.stringify(this))
   }
 
+  /**
+   * 현재 진행중인 세트를 반환
+   */
+  getCurrentSet() {
+    return this.currentSet
+  }
+
+  /**
+   * 현재 team1의 매치스코어 반환
+   */
+  getCurMatchScoreTeam1() {
+    if (this.currentSet >= 4) return 0
+    return this.sets[this.getCurrentSet() - 1].team1Score
+  }
+
+  /**
+   * 현재 team2의 매치스코어 반환
+   */
+  getCurMatchScoreTeam2() {
+    if (this.currentSet >= 4) return 0
+    return this.sets[this.getCurrentSet() - 1].team2Score
+  }
+
+  getPlayerTeam(player: number) {
+    return (
+      (['team1', 'team2'] as TeamKey[]).find((team) =>
+        [this.teams[team].player1.id, this.teams[team].player2.id].includes(
+          player,
+        ),
+      ) || 'Unknown Team'
+    )
+  }
+
+  /**
+   * 로컬스토리지에 저장된 데이터를 반환
+   */
   static loadFromLocalStorage() {
     const savedData = localStorage.getItem(`badmintonScoreboard`)
     return savedData ? JSON.parse(savedData) : null

@@ -4,7 +4,7 @@ import { useLayoutEffect } from 'react'
 
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import { objectDummy } from '@/features/manager/constants/dummyData.ts'
+import { REALDATADUMMY } from '@/features/manager/constants/dummyData.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
 
@@ -17,8 +17,8 @@ export default function BadmintonScoreBoard() {
   useLayoutEffect(() => {
     const initInstance = new BadmintonScoreboardInstance(
       1,
-      'doubles',
-      objectDummy,
+      REALDATADUMMY.team1,
+      REALDATADUMMY.team2,
     )
     initInstance.initialize()
     update(initInstance)
@@ -44,18 +44,27 @@ export default function BadmintonScoreBoard() {
         <BadmintonCourt />
       </div>
       <MatchScoreCard
-        matchResult={badmintonInstance.gameresult.matchScore_1}
+        matchResult={{
+          team1: badmintonInstance.sets[0].team1Score,
+          team2: badmintonInstance.sets[0].team2Score,
+        }}
         isVisible={badmintonInstance.currentSet >= 2}
       />
       <MatchScoreCard
-        matchResult={badmintonInstance.gameresult.matchScore_2}
+        matchResult={{
+          team1: badmintonInstance.sets[1].team1Score,
+          team2: badmintonInstance.sets[1].team2Score,
+        }}
         isVisible={badmintonInstance.currentSet >= 3}
       />
       <MatchScoreCard
-        matchResult={badmintonInstance.gameresult.matchScore_3}
+        matchResult={{
+          team1: badmintonInstance.sets[2].team1Score,
+          team2: badmintonInstance.sets[2].team2Score,
+        }}
         isVisible={badmintonInstance.currentSet >= 4}
       />
-      {badmintonInstance.winner ? (
+      {badmintonInstance.winnerTeamNumber ? (
         <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
           <span className="text-white text-xl font-bold ">매치 완료</span>
         </div>
@@ -103,8 +112,7 @@ function BadmintonSetScore() {
   return (
     <div className="w-[12.5rem] border border-[#FCA211] px-6 py-2 rounded-[62.5rem] flex justify-center items-center">
       <p className="text-[#FCA211] text-4xl font-bold ">
-        {badmintonInstance.setScores?.team1} :{' '}
-        {badmintonInstance.setScores?.team2}{' '}
+        {badmintonInstance.team1SetScore} : {badmintonInstance.team2SetScore}{' '}
       </p>
     </div>
   )

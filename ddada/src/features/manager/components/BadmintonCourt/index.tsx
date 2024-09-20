@@ -17,7 +17,7 @@ export default function BadmintonCourt() {
   }))
 
   const handleScore = (team: string) => {
-    if (badmintonInstance.winner) return
+    if (badmintonInstance.winnerTeamNumber) return
     setselectTeam(team)
     setModalOpen(true)
   }
@@ -35,7 +35,7 @@ export default function BadmintonCourt() {
         <div className="text-[#FCA211] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="text-4xl">팀 A</p>
           <p className="font-bold text-6xl">
-            {badmintonInstance.matchScores?.team1}
+            {badmintonInstance.getCurMatchScoreTeam1()}
           </p>
         </div>
         <RedCourtLeft />
@@ -48,7 +48,7 @@ export default function BadmintonCourt() {
         <div className="text-[#ffffff] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="text-4xl">팀 B</p>
           <p className="font-bold text-6xl">
-            {badmintonInstance.matchScores?.team2}
+            {badmintonInstance.getCurMatchScoreTeam2()}
           </p>
         </div>
         <BlueCourtRight />
