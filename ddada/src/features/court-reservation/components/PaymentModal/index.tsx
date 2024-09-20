@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
 import {
@@ -100,12 +101,14 @@ export default function PaymentModal({
       })
 
       if (response.code != null) {
-        return console.log(response.message)
+        toast.error('예약 실패')
+        return console.log('예약 실패')
       }
       // todo 나중에 이 response에 있는걸로 블라블라하기
       // todo 마이페이지로 보내버리기
       matchReservation()
-      return console.log('결제 성공')
+      toast.success('예약 성공')
+      return console.log('예약 성공')
     }
     requestPayment()
   }

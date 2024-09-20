@@ -96,7 +96,12 @@ export default function CoatReservation() {
       <div className=" px-2">
         <div className="flex flex-col gap-3 py-4">
           <div className="flex justify-center">
-            <Image src={ReservationLogo} alt="reservation logo" height={200} />
+            <Image
+              src={ReservationLogo}
+              alt="reservation logo"
+              height={200}
+              priority
+            />
           </div>
 
           <div className="flex gap-x-2 text-[#6B6E78] text-xs">

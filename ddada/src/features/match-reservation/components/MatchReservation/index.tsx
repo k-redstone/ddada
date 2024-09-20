@@ -187,7 +187,12 @@ export default function MatchReservation() {
             <ReservationLogo className="w-full" />
           </div> */}
         <div className="flex justify-center">
-          <Image src={ReservationLogo} alt="reservation logo" height={200} />
+          <Image
+            src={ReservationLogo}
+            alt="reservation logo"
+            height={200}
+            priority
+          />
         </div>
         <div className="flex justify-center">
           <div className="flex text-[#6B6E78] text-xs items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
