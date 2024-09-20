@@ -28,7 +28,7 @@ export default function MainFooter() {
           aria-hidden="true"
         />
       )}
-      <div className="flex flex-col w-full gap-3 px-8 py-4 text-[#6B6E78]">
+      <div className="flex flex-col w-full gap-3 px-8 py-4 text-[#6B6E78] bg-[#F6F6F6] ">
         <div className="flex justify-between">
           <div className="font-bold">DDADA - 배드민턴 매치 플랫폼</div>
           <div className="flex gap-[0.625rem] text-xs underline underline-offset-2">

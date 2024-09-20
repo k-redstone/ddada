@@ -26,7 +26,7 @@ export default function MainHeader() {
           홈
         </Link>
         <Link
-          href="/match-reservation/detail/1"
+          href="/match-reservation"
           className={`${currentNav === 2 && 'text-[#FCA211]'}`}
           onClick={() => setCurrentNav(2)}
         >

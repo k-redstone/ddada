@@ -114,8 +114,8 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       description: data.introduction,
     }
     const res = await signupSubmit(payload)
-    sessionStorage.setItem('accessToken', res.data.accessToken)
-    sessionStorage.setItem('refreshToken', res.data.refreshToken)
+    sessionStorage.setItem('accessToken', res.data.result.accessToken)
+    sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
     changeViewStep(SignUpStepType.step4)
   }
   const profilePictureRegister = register('profilePicture', {})
