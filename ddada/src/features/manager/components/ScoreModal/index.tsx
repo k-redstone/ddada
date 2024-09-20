@@ -92,10 +92,10 @@ export default function ScoreModal({
         aria-hidden="true"
       />
 
-      <div className="fixed left-1/2 top-1/2 z-40 max-w-[919px] px-6 py-4 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl">
+      <div className="fixed left-1/2 top-1/2 z-40 max-w-[57.4375rem] px-6 py-4 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl">
         <div className="flex flex-col gap-y-3">
           {/* 위에 툴바 */}
-          <div className="py-3 border-b-[1px] border-[#E5E5ED] flex gap-x-3">
+          <div className="py-3 border-b border-[#E5E5ED] flex gap-x-3">
             <div className="flex gap-x-3">
               <GameUserInfo />
               <GameUserInfo />
@@ -244,14 +244,14 @@ export default function ScoreModal({
           {/* 닫기 & 저장 */}
           <div className="flex gap-x-3 text-base">
             <button
-              className="grow rounded-xl border-[1px] py-[10px] border-[#FCA211]"
+              className="grow rounded-xl border py-[.625rem] border-[#FCA211]"
               type="button"
               onClick={() => modalhandler()}
             >
               닫기
             </button>
             <button
-              className={`grow rounded-xl border-[1px] py-[10px]   ${checkCanSave() ? `text-[#ffffff] bg-[#FCA211] ` : `text-[#6B6E78] bg-[#E5E5ED]`}`}
+              className={`grow rounded-xl border py-[.625rem]   ${checkCanSave() ? `text-[#ffffff] bg-[#FCA211] ` : `text-[#6B6E78] bg-[#E5E5ED]`}`}
               type="button"
               onClick={() => handleStoreScore()}
               disabled={!checkCanSave()}

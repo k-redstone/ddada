@@ -56,11 +56,11 @@ export default function BadmintonScoreBoard() {
         isVisible={badmintonInstance.currentSet >= 4}
       />
       {badmintonInstance.winner ? (
-        <div className="bg-[#FCA211] flex justify-center items-center h-[76px] cursor-pointer">
+        <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
           <span className="text-white text-xl font-bold ">매치 완료</span>
         </div>
       ) : (
-        <div className="bg-[#E5E5ED] flex justify-center items-center h-[76px]">
+        <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">
           <span className="text-[#6B6E78] text-xl font-bold">매치 완료</span>
         </div>
       )}
@@ -101,7 +101,7 @@ function BadmintonSetScore() {
   }))
 
   return (
-    <div className="w-[200px] border-[1px] border-[#FCA211] px-6 py-2 rounded-[1000px] flex justify-center items-center">
+    <div className="w-[12.5rem] border border-[#FCA211] px-6 py-2 rounded-[62.5rem] flex justify-center items-center">
       <p className="text-[#FCA211] text-4xl font-bold ">
         {badmintonInstance.setScores?.team1} :{' '}
         {badmintonInstance.setScores?.team2}{' '}
@@ -141,7 +141,7 @@ function MatchScoreCard({
 
   return (
     <div
-      className={`flex gap-x-2 px-6 py-5 border-[#E5E5ED] bg-  border-[1px] rounded-xl justify-between ${!isVisible && `bg-[#E5E5ED]`}`}
+      className={`flex gap-x-2 px-6 py-5 border-[#E5E5ED] bg-  border rounded-xl justify-between ${!isVisible && `bg-[#E5E5ED]`}`}
     >
       {/* A팀 */}
       <div className="flex gap-x-3 items-center">

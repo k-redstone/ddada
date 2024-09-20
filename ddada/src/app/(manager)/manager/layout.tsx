@@ -7,7 +7,7 @@ export default function ManagerLayout({
 }>) {
   return (
     <div className="flex h-full">
-      <div className="max-w-[354px] grow">
+      <div className="max-w-[22.125rem] grow">
         <ManagerSidebar />
       </div>
       <div className="flex-1">{children}</div>
