@@ -1,6 +1,7 @@
 'use client'
 
 import dayjs from 'dayjs'
+import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useState } from 'react'
 
@@ -34,6 +35,8 @@ export default function PaymentModal({
   reservationDay,
   reservationTime,
 }: PaymentModalProps) {
+  const router = useRouter()
+  const pathName = usePathname()
   const day = dayjs(reservationDay).format('MM.DD')
   const date = dayjs(reservationDay).format('YYYY-MM-DD')
   const DAY_OF_WEEK = KR_DAY_OF_WEEK[dayjs(reservationDay).day()]
@@ -60,7 +63,7 @@ export default function PaymentModal({
       rankType: RankType,
       matchType: MatchType,
       date,
-      time: reservationTime,
+      time: `${reservationTime}`,
     }
     const res = await postMatchReservation(data)
     console.log(res)
@@ -71,10 +74,15 @@ export default function PaymentModal({
   }
 
   const handlePayment = async () => {
-    // todo 로그인 확인 로직 추가
-    // todo 결제하기 로직 추가
-    handlePortOne()
-    closeModal()
+    const accessToken = sessionStorage.getItem('accessToken')
+    if (!accessToken) {
+      router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
+    } else {
+      // todo 로그인 확인 로직 추가
+      // todo 결제하기 로직 추가
+      handlePortOne()
+      closeModal()
+    }
   }
 
   const handlePortOne = () => {
@@ -97,8 +105,7 @@ export default function PaymentModal({
       // todo 나중에 이 response에 있는걸로 블라블라하기
       // todo 마이페이지로 보내버리기
       matchReservation()
-
-      return console.log('결제 성공', response)
+      return console.log('결제 성공')
     }
     requestPayment()
   }
@@ -127,7 +134,7 @@ export default function PaymentModal({
           {/* todo 나중에 정보 추가 props로 받을 예정 */}
           <p>{courtName}</p>
           <p>
-            {day}({DAY_OF_WEEK}) {reservationTime}
+            {day}({DAY_OF_WEEK}) {reservationTime.slice(0, 5)}
           </p>
         </div>
         <div>
@@ -182,6 +189,7 @@ export default function PaymentModal({
                   {type}
                 </button>
               ))}
+              <p className="text-[#6B6E78]">단식은 추후 지원 예정입니다.</p>
             </div>
           </div>
         </div>

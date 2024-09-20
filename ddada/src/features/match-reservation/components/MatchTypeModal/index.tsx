@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
 import AllMatch from '@/static/imgs/match-reservation/match-reservation_all_match.svg'
-import MixedMatch from '@/static/imgs/match-reservation/match-reservation_mixed_match.svg'
+import CheckedIcon from '@/static/imgs/match-reservation/match-reservation_checked_icon.svg'
 import FemaleMatch from '@/static/imgs/match-reservation/match-reservation_female_double_match.svg'
 import MaleMatch from '@/static/imgs/match-reservation/match-reservation_male_double_match.svg'
-import CheckedIcon from '@/static/imgs/match-reservation/match-reservation_checked_icon.svg'
+import MixedMatch from '@/static/imgs/match-reservation/match-reservation_mixed_match.svg'
 
 interface MatchTypeModalProps {
   closeModal: () => void
@@ -107,11 +107,11 @@ export default function MatchTypeModal({
             <button
               type="button"
               className="flex flex-col gap-1"
-              onClick={() => handleSelectedMatchType('혼합복식')}
+              onClick={() => handleSelectedMatchType('MIXED_DOUBLE')}
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('혼합복식') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('MIXED_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
               `}
               >
                 <MixedMatch />
@@ -123,7 +123,7 @@ export default function MatchTypeModal({
                     혼성간 팀을 이뤄 경기합니다.
                   </p>
                 </div>
-                {selectedMatchType.includes('혼합복식') && <CheckedIcon />}
+                {selectedMatchType.includes('MIXED_DOUBLE') && <CheckedIcon />}
               </div>
             </button>
           </div>
@@ -131,11 +131,11 @@ export default function MatchTypeModal({
             <button
               type="button"
               className="flex flex-col gap-1"
-              onClick={() => handleSelectedMatchType('남성복식')}
+              onClick={() => handleSelectedMatchType('MALE_DOUBLE')}
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('남성복식') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('MALE_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
               `}
               >
                 <MaleMatch />
@@ -147,17 +147,17 @@ export default function MatchTypeModal({
                     남성 동성간 팀이 되어 경기합니다.
                   </p>
                 </div>
-                {selectedMatchType.includes('남성복식') && <CheckedIcon />}
+                {selectedMatchType.includes('MALE_DOUBLE') && <CheckedIcon />}
               </div>
             </button>
             <button
               type="button"
               className="flex flex-col gap-1"
-              onClick={() => handleSelectedMatchType('여성복식')}
+              onClick={() => handleSelectedMatchType('FEMALE_DOUBLE')}
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('여성복식') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('FEMALE_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
               `}
               >
                 <FemaleMatch />
@@ -169,7 +169,7 @@ export default function MatchTypeModal({
                     여성 동성간 팀이 되어 경기합니다.
                   </p>
                 </div>
-                {selectedMatchType.includes('여성복식') && <CheckedIcon />}
+                {selectedMatchType.includes('FEMALE_DOUBLE') && <CheckedIcon />}
               </div>
             </button>
           </div>

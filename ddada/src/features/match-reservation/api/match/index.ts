@@ -3,21 +3,21 @@ import { publicAPI } from '@/api/axios.ts'
 const getMatchList = async (
   page: number,
   size: number,
-  rank_type: string,
-  match_types?: string,
+  rankType: string,
+  matchTypes?: string,
   statues?: string,
   keyword?: string,
   regions?: string,
 ) => {
   const params: {
-    keyword?: string
-    regions?: string
-    rank_type: string
-    match_types?: string
-    statues?: string
     page: number
     size: number
-  } = { rank_type, page, size }
+    rankType: string
+    matchTypes?: string
+    statues?: string
+    keyword?: string
+    regions?: string
+  } = { page, size, rankType }
 
   if (keyword) {
     params.keyword = keyword
@@ -25,14 +25,14 @@ const getMatchList = async (
   if (regions) {
     params.regions = regions
   }
-  if (match_types) {
-    params.match_types = match_types
+  if (matchTypes) {
+    params.matchTypes = matchTypes
   }
   if (statues) {
     params.statues = statues
   }
 
-  const res = await publicAPI.get('/courts/search', {
+  const res = await publicAPI.get('/matches', {
     params,
   })
   return res

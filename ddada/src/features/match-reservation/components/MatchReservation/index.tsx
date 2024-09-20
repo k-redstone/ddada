@@ -2,18 +2,18 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
-import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
 import { useObserver } from '@/features/court-reservation/components/useObserver/index.tsx'
-import { DUMMY_COURTS } from '@/features/court-reservation/constants/court-reservation.ts'
 import { getMatchList } from '@/features/match-reservation/api/match/index.ts'
-import MatchCards from '@/features/match-reservation/components/MatchesCards/index.tsx'
+import Matches from '@/features/match-reservation/components/Matches/index.tsx'
 import MatchToggle from '@/features/match-reservation/components/MatchToggle/index.tsx'
-import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
+// import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import MatchTypeModal from '@/features/match-reservation/components/MatchTypeModal/index.tsx'
+import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
 import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
 import LocationDetailColorIcon from '@/static/imgs/court-reservation/court-reservation_location_under_color_icon.svg'
@@ -21,7 +21,7 @@ import LocationDetailIcon from '@/static/imgs/court-reservation/court-reservatio
 import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search_icon.svg'
 import BadmintonColorIcon from '@/static/imgs/match-reservation/match-reservation_badminton_color_icon.svg'
 import BadmintonIcon from '@/static/imgs/match-reservation/match-reservation_badminton_icon.svg'
-import ReservationLogo from '@/static/imgs/match-reservation/match-reservation_reservation_logo.svg'
+import ReservationLogo from '@/static/imgs/match-reservation/match-reservation_MAIN.png'
 
 export default function MatchReservation() {
   const bottom = useRef(null)
@@ -37,7 +37,8 @@ export default function MatchReservation() {
   const [selectedMatchType, setSelectedMatchType] = useState<string[]>(['전체'])
   const [selectedMatchTypeNum, setSelectedMatchTypeNum] = useState<number>(0)
   const [selectedMatchRankType, setSelectedMatchRankType] =
-    useState<string>('친선')
+    useState<string>('NORMAL')
+
   useEffect(() => {
     if (selectedRegion.length === 1) {
       if (selectedRegion[0] === '전체') {
@@ -67,7 +68,7 @@ export default function MatchReservation() {
   const { data, fetchNextPage, status } = useInfiniteQuery({
     // todo 수정 필요
     queryKey: [
-      'courtList',
+      'matchList',
       selectedMatchRankType,
       selectedMatchType,
       filterCoat,
@@ -75,6 +76,7 @@ export default function MatchReservation() {
     ],
     queryFn: ({ pageParam = 0 }) => {
       //  todo 수정 필요
+      // console.log(selectedRegion, selectedMatchType, selectedMatchRankType)
       if (selectedRegion && selectedRegion[0] === '전체') {
         if (selectedMatchType && selectedMatchType[0] === '전체') {
           return getMatchList(
@@ -121,13 +123,19 @@ export default function MatchReservation() {
     },
     getNextPageParam: (lastPage) => {
       const page = lastPage.data.result.page.number
-      if (lastPage.data.result.page.totalPages === page) return false
+      const { totalPages } = lastPage.data.result.page
+      if (totalPages === page + 1 || totalPages === 0) return false
       return page + 1
     },
     initialPageParam: 0,
   })
 
-  // console.log(data)
+  const matchesEmpty = data?.pages.every(
+    (page) =>
+      page.data.result.content.filter(
+        (match: MatchType) => match.date === selectedDate,
+      ).length === 0,
+  )
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting) {
@@ -179,7 +187,7 @@ export default function MatchReservation() {
             <ReservationLogo className="w-full" />
           </div> */}
         <div className="flex justify-center">
-          <ReservationLogo />
+          <Image src={ReservationLogo} alt="reservation logo" height={200} />
         </div>
         <div className="flex justify-center">
           <div className="flex text-[#6B6E78] text-xs items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
@@ -263,7 +271,23 @@ export default function MatchReservation() {
         <div>
           <Pagination changeSelectedDate={setSelectedDate} />
         </div>
-        <MatchCards />
+        {status === 'pending' && <div>로딩중...</div>}
+        {matchesEmpty ? (
+          <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-[#6B6E78]">
+            <div className="text-sm font-bold">
+              해당 일자에 매치가 없어요 :(
+            </div>
+            <div className="text-xs">다른 일자를 확인해보세요</div>
+          </div>
+        ) : (
+          data?.pages.map((page) => (
+            <Matches
+              matchList={page.data.result.content}
+              selectedDate={selectedDate}
+              key={page.data.result.page.number}
+            />
+          ))
+        )}
       </div>
 
       {locationModalOpen && (

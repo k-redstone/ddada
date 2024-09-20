@@ -2,6 +2,7 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
 import { getCourtList } from '@/features/court-reservation/api/court/index.ts'
@@ -9,12 +10,11 @@ import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
 import { useObserver } from '@/features/court-reservation/components/useObserver/index.tsx'
-import { DUMMY_COURTS } from '@/features/court-reservation/constants/court-reservation.ts'
 import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
 import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
 import LocationDetailColorIcon from '@/static/imgs/court-reservation/court-reservation_location_under_color_icon.svg'
 import LocationDetailIcon from '@/static/imgs/court-reservation/court-reservation_location_under_icon.svg'
-import ReservationLogo from '@/static/imgs/court-reservation/court-reservation_reservation_logo.svg'
+import ReservationLogo from '@/static/imgs/court-reservation/court-reservation_MAIN.png'
 import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search_icon.svg'
 
 export default function CoatReservation() {
@@ -27,17 +27,7 @@ export default function CoatReservation() {
   const [locationModalOpen, setLocationModalOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string[]>(['전체'])
   const [selectedRegionNum, setSelectedRegionNum] = useState<number>(0)
-  // // pagination에서 선택한 날짜
-  // useEffect(() => {
-  //   console.log(selectedDate)
-  // }, [selectedDate])
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await getCourtList(0, 10, '족발', '')
-  //     // console.log(res.data)
-  //   }
-  //   fetchData()
-  // }, [])
+
   useEffect(() => {
     if (selectedRegion.length === 1) {
       if (selectedRegion[0] === '전체') {
@@ -50,7 +40,7 @@ export default function CoatReservation() {
     }
   }, [selectedRegion])
 
-  const { data, fetchNextPage, status } = useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ['courtList', filterCoat, selectedRegion],
     queryFn: ({ pageParam = 0 }) => {
       if (selectedRegion && selectedRegion[0] === '전체') {
@@ -60,14 +50,12 @@ export default function CoatReservation() {
     },
     getNextPageParam: (lastPage) => {
       const page = lastPage.data.result.page.number
-      if (lastPage.data.result.page.totalPages === page + 1) return false
+      const { totalPages } = lastPage.data.result.page
+      if (totalPages === page + 1 || totalPages === 0) return false
       return page + 1
     },
     initialPageParam: 0,
   })
-  // console.log(data?.pages.map((page) => page.data.result.content))
-
-  // console.log(data)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting) {
@@ -108,7 +96,7 @@ export default function CoatReservation() {
       <div className=" px-2">
         <div className="flex flex-col gap-3 py-4">
           <div className="flex justify-center">
-            <ReservationLogo />
+            <Image src={ReservationLogo} alt="reservation logo" height={200} />
           </div>
 
           <div className="flex gap-x-2 text-[#6B6E78] text-xs">
@@ -171,15 +159,22 @@ export default function CoatReservation() {
               courtList={data.pages.map((page) => page.data.result.content)}
             />
           )} */}
-          {data?.pages.map((page) => (
-            <Courts
-              courtList={page.data.result.content}
-              selectedDate={selectedDate}
-              key={page.data.result.page.number}
-            />
-          ))}
-          {/* <Courts courtList={DUMMY_COURTS} selectedDate={selectedDate} /> */}
-          {status === 'pending' && <div>로딩중...</div>}
+          {data?.pages[0].data.result.content[0] ? (
+            data?.pages.map((page) => (
+              <Courts
+                courtList={page.data.result.content}
+                selectedDate={selectedDate}
+                key={page.data.result.page.number}
+              />
+            ))
+          ) : (
+            <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-[#6B6E78]">
+              <div className="text-sm font-bold">
+                해당 일자에 예약 가능한 코트가 없어요 :({' '}
+              </div>
+              <div className="text-xs">다른 일자를 확인해보세요</div>
+            </div>
+          )}
         </div>
         <div ref={bottom} />
       </div>

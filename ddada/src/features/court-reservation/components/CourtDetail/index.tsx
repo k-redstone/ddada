@@ -32,6 +32,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
+
   return (
     <div
       key={court.id}
@@ -73,7 +74,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
                   court.reservations[selectedDate].includes(time)
                 }
               >
-                {time}
+                {time.slice(0, 5)}
               </button>
             ))}
           </div>
