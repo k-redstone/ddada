@@ -32,7 +32,10 @@ export default function ScoreModal({
 
   const getTeamPlayers = (team: 'team1' | 'team2') => {
     const teamData = badmintonInstance.teams[team]
-    return [teamData.player1, teamData.player2]
+    if (teamData) {
+      return [teamData.player1, teamData.player2]
+    }
+    return []
   }
 
   const handleMissedUser = (userId: number) => {

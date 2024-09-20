@@ -27,14 +27,14 @@ type HistoryType = {
  */
 
 class BadmintonScoreboardInstance {
-  id: number
+  id?: number
   winnerTeamNumber: number | null
   team1SetScore: number
   team2SetScore: number
   sets: SetResultType[]
   teams: {
-    team1: TeamType
-    team2: TeamType
+    team1?: TeamType
+    team2?: TeamType
   }
   history: HistoryType[]
   currentHistoryIndex: number
@@ -47,7 +47,7 @@ class BadmintonScoreboardInstance {
    * @param {object} team2 teamData
    */
 
-  constructor(gameId: number, team1: TeamType, team2: TeamType) {
+  constructor(gameId?: number, team1?: TeamType, team2?: TeamType) {
     this.id = gameId
 
     this.teams = {
@@ -306,6 +306,13 @@ class BadmintonScoreboardInstance {
   getMemberNumber(
     playerId: number | undefined | null,
   ): 11 | 12 | 21 | 22 | null {
+    if (!this.teams.team1) {
+      return null
+    }
+    if (!this.teams.team2) {
+      return null
+    }
+
     if (playerId === this.teams.team1.player1.id) return 11
     if (playerId === this.teams.team1.player2.id) return 12
     if (playerId === this.teams.team2.player1.id) return 21
@@ -415,11 +422,17 @@ class BadmintonScoreboardInstance {
   }
 
   getPlayerTeam(player: number) {
+    if (!this.teams.team1 || !this.teams.team2) {
+      return 'Unknown Team'
+    }
+
     return (
-      (['team1', 'team2'] as TeamKey[]).find((team) =>
-        [this.teams[team].player1.id, this.teams[team].player2.id].includes(
-          player,
-        ),
+      (['team1', 'team2'] as TeamKey[]).find(
+        (team) =>
+          this.teams[team] &&
+          [this.teams[team].player1.id, this.teams[team].player2.id].includes(
+            player,
+          ),
       ) || 'Unknown Team'
     )
   }
