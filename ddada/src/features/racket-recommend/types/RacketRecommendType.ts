@@ -9,4 +9,5 @@ export enum ProgressStepType {
 export type RacketRecommendBranchProps = {
   progressStep?: ProgressStepType
   changeProgress: (arg: ProgressStepType) => void
+  changeMoveNext: (arg: boolean) => void
 }
