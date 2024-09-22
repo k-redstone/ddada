@@ -1,6 +1,9 @@
 import MainStep from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/MainStep.tsx'
 import Step1 from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/Step1.tsx'
 import Step2 from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/Step2.tsx'
+import Step3 from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/Step3.tsx'
+import Step4 from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/Step4.tsx'
+import Step5 from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/Step5.tsx'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,
@@ -10,6 +13,7 @@ export default function RacketRecommendBranch({
   progressStep,
   changeProgress,
   changeMoveNext,
+  changeStep,
 }: RacketRecommendBranchProps) {
   switch (progressStep) {
     case ProgressStepType.main:
@@ -17,6 +21,7 @@ export default function RacketRecommendBranch({
         <MainStep
           changeProgress={changeProgress}
           changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
         />
       )
     case ProgressStepType.step1:
@@ -24,6 +29,7 @@ export default function RacketRecommendBranch({
         <Step1
           changeProgress={changeProgress}
           changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
         />
       )
     case ProgressStepType.step2:
@@ -31,6 +37,31 @@ export default function RacketRecommendBranch({
         <Step2
           changeProgress={changeProgress}
           changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
+        />
+      )
+    case ProgressStepType.step3:
+      return (
+        <Step3
+          changeProgress={changeProgress}
+          changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
+        />
+      )
+    case ProgressStepType.step4:
+      return (
+        <Step4
+          changeProgress={changeProgress}
+          changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
+        />
+      )
+    case ProgressStepType.step5:
+      return (
+        <Step5
+          changeProgress={changeProgress}
+          changeMoveNext={changeMoveNext}
+          changeStep={changeStep}
         />
       )
     // case ProgressStepType.step4:
