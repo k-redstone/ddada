@@ -1,6 +1,5 @@
 import Image from 'next/image'
 
-import Computers from '@/static/imgs/landing/landing-page-computers.png'
 import IntroductionMessage from '@/static/imgs/landing/landing-page-information_message.png'
 import ManagerImage from '@/static/imgs/landing/landing-page-manager.png'
 import LandingPageMainLogo from '@/static/imgs/landing/landing-page_JOIN.png'
@@ -10,7 +9,8 @@ import FreeRegister from '@/static/imgs/landing/landing-page_real_time_reservati
 import EasyCount from '@/static/imgs/landing/landing-page_easy_count.png'
 import RealTimeRegister from '@/static/imgs/landing/landing-page_free_register.png'
 import ManagerIcon from '@/static/imgs/landing/landing-page_manager_icon.svg'
-
+import Computer from '@/static/imgs/landing/landing-page-computres.png'
+import BadmintonRacket from '@/static/imgs/landing/landing-page_badminton_raket.svg'
 export default function Landing() {
   return (
     <div className="w-full">
@@ -20,6 +20,7 @@ export default function Landing() {
           alt="landing page main logo"
           className="absolute z-10 w-full"
           fill
+          style={{ objectFit: 'cover' }}
         />
         <div className="z-40 flex flex-col gap-6">
           <div className="text-white flex flex-col justify-center items-center gap-[0.625rem]">
@@ -33,20 +34,29 @@ export default function Landing() {
           </div>
           <div className="flex justify-center">
             <Link href={'/login'}>
-              <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA]">
+              <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
                 지금 가입하기
               </div>
             </Link>
           </div>
         </div>
       </div>
-      <div className="w-full">
-        <Image
-          src={Computers}
-          alt="computers"
-          height={500}
-          className="w-full"
-        />
+      <div className="flex flex-col px-8 py-[4.5rem] gap-[4.5rem] justify-center items-center">
+        <div className="text-5xl font-bold flex flex-col justify-center items-center gap-3">
+          <div className="flex flex-col justify-center items-center">
+            <p>매치 신청부터 </p>
+            <p>
+              요약, 분석까지<span className="text-[#FCA211]">.</span>
+            </p>
+          </div>
+          <div className="text-base font-normal flex flex-col justify-center items-center">
+            <p>DDADA를 즐겨주시는 여러분의</p>
+            <p>매치데이터를 기반으로 분석을 해드려요</p>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <Image src={Computer} alt="computers" width={800} height={352} />
+        </div>
       </div>
       <div className="w-full">
         <Image
@@ -66,7 +76,7 @@ export default function Landing() {
         </div>
         <div className="flex justify-center">
           <Link href={'/login'}>
-            <div className="text-[#FCA211] text-xl py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA]">
+            <div className="text-[#FCA211] text-xl py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
               체육관 제휴맺기
             </div>
           </Link>
@@ -85,15 +95,16 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <div className="h-[750px] w-full overflow-hidden relative">
-        <Image src={Rank} alt="rank" className="object-contain" />
+      <div className="h-[750px]  w-full overflow-hidden relative">
+        <Image src={Rank} alt="rank" style={{ objectFit: 'cover' }} />
       </div>
-      <div className="object-cover h-[500px] w-full relative flex justify-left items-center px-[12.5rem] py-[4.5rem]">
+
+      <div className="h-[500px] w-full relative flex justify-left items-center px-[12.5rem] py-[4.5rem]">
         <Image
           src={ManagerImage}
           alt="manager"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
         />
 
         <div className="z-40 flex flex-col gap-6">
@@ -109,7 +120,7 @@ export default function Landing() {
           </div>
           <div className="flex justify-left">
             <Link href={'/login'}>
-              <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA]">
+              <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
                 매니저 신청하기
               </div>
             </Link>
@@ -117,10 +128,10 @@ export default function Landing() {
         </div>
       </div>
       <div className="flex flex-col py-[4.5rem] px-8 gap-[4.5rem] justify-center items-center">
-        <div>배드민턴채 </div>
-        <div>
+        <BadmintonRacket />
+        <div className="flex flex-col gap-3 justify-center items-center">
           <p className="text-5xl font-bold">
-            취향에 맞는 라켓은 모두, DDADA{' '}
+            취향에 맞는 라켓은 모두, DDADA
             <span
               className="
           text-[#FCA211]"
@@ -133,7 +144,48 @@ export default function Landing() {
             추천받아보세요
           </p>
         </div>
-        <div>무게</div>
+        <div className="w-full flex flex-col gap-6">
+          <div className="flex gap-[72px] justify-center">
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">무게</p>
+                <p className="text-4xl text-[#6B6E78]">가벼움</p>
+              </div>
+            </div>
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">스타일</p>
+                <p className="text-4xl text-[#6B6E78]">공격적</p>
+              </div>
+            </div>
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">재질</p>
+                <p className="text-4xl text-[#6B6E78]">카본</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-[72px] justify-center">
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">가격</p>
+                <p className="text-4xl text-[#6B6E78]">10만원대</p>
+              </div>
+            </div>
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">탄성</p>
+                <p className="text-4xl text-[#6B6E78]">유연</p>
+              </div>
+            </div>
+            <div className="flex-1 px-12 py-6 shadow-xl rounded-xl">
+              <div className="flex flex-col gap-6 justify-center items-center">
+                <p className="text-3xl font-bold">색감</p>
+                <p className="text-4xl text-[#6B6E78]">유채색</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
