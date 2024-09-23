@@ -9,6 +9,15 @@ const nextConfig = {
 
     return config
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ddada-image.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/**', // 모든 경로 허용
+      },
+    ],
+  },
 }
 
 export default nextConfig

@@ -1,4 +1,4 @@
-import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import { objectDummy } from '@/features/manager/constants/dummyData.ts'
 import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 import TangerineFillDot from '@/static/imgs/manager/TangerineFillDot.svg'
@@ -17,7 +17,7 @@ export default function MatchPlayerInfo() {
 
           {objectDummy.team1.map((item, index) => (
             <div className="flex gap-x-3" key={item.id}>
-              <GameUserInfo />
+              {/* <GameUserInfo /> */}
               <div className="flex flex-col gap-y-1 text-sm">
                 <p className="flex gap-x-1 items-center">
                   <span className="font-bold">[A{index + 1}] 나는혹석</span>
@@ -37,7 +37,7 @@ export default function MatchPlayerInfo() {
         <div className="flex flex-col gap-y-3">
           {objectDummy.team1.map((item, index) => (
             <div className="flex gap-x-3" key={item.id}>
-              <GameUserInfo />
+              {/* <GameUserInfo /> */}
               <div className="flex flex-col gap-y-1 text-sm">
                 <p className="flex gap-x-1 items-center">
                   <span className="font-bold">[B{index + 1}] 나는혹석</span>

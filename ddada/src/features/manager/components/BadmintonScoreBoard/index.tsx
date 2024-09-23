@@ -3,7 +3,7 @@
 import { useLayoutEffect } from 'react'
 
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
-import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import { REALDATADUMMY } from '@/features/manager/constants/dummyData.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
@@ -154,8 +154,8 @@ function MatchScoreCard({
       {/* A팀 */}
       <div className="flex gap-x-3 items-center">
         <div className="flex gap-x-3">
-          <GameUserInfo />
-          <GameUserInfo />
+          {/* <GameUserInfo /> */}
+          {/* <GameUserInfo /> */}
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
@@ -181,8 +181,8 @@ function MatchScoreCard({
       {/* B팀 */}
       <div className="flex gap-x-3 items-center flex-row-reverse">
         <div className="flex gap-x-3">
-          <GameUserInfo />
-          <GameUserInfo />
+          {/* <GameUserInfo /> */}
+          {/* <GameUserInfo /> */}
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">

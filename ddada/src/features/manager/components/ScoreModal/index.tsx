@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import Button from '@/features/manager/components/Button/index.tsx'
-import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import {
   EARN_TYPE,
   MISS_TYPE,
@@ -114,8 +114,8 @@ export default function ScoreModal({
           {/* 위에 툴바 */}
           <div className="py-3 border-b border-[#E5E5ED] flex gap-x-3">
             <div className="flex gap-x-3">
-              <GameUserInfo />
-              <GameUserInfo />
+              {/* <GameUserInfo /> */}
+              {/* <GameUserInfo /> */}
             </div>
             {selectTeam === 'team1' ? (
               <div className="flex gap-x-1 items-center">

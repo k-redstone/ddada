@@ -10,6 +10,7 @@ type PlayerType = {
   nickname: string
   gender: Gender
   rating: number
+  image: string
 }
 
 type TeamType = {
