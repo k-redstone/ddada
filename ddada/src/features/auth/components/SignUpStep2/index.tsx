@@ -171,7 +171,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     if (duplicateCheck.data.message === '사용 가능한 닉네임입니다.') {
       setNickNameCheck(true)
       setNickNameAlreadyExist(false)
-      // checkValidation()
       setNickNameExists(true)
     } else {
       setNickNameCheck(false)
@@ -220,7 +219,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       })
     } else {
       setPhoneNumberCheck(true)
-      // checkValidation()
       setPhoneNumberExists(true)
     }
   }

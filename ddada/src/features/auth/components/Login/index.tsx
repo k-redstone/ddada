@@ -24,8 +24,6 @@ interface LoginForm {
 export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordExists, setPasswordExists] = useState<boolean>(false)
-  // const [emailExists, setEmailExists] = useState<boolean>(false)
-  // const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/'
@@ -103,34 +101,6 @@ export default function Login() {
     setPasswordVisibility(!passwordVisibility)
   }
 
-  // const handlePasswordExists = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.value.length > 0) {
-  //     setPasswordExists(true)
-  //   } else {
-  //     setPasswordExists(false)
-  //   }
-  //   if (emailExists && event.target.value.length > 0) {
-  //     setIsButtonEnabled(true)
-  //   } else {
-  //     setIsButtonEnabled(false)
-  //   }
-  // }
-
-  // const handleLoginVisibility = (
-  //   event: React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   if (event.target.value.length > 0) {
-  //     setEmailExists(true)
-  //   } else {
-  //     setEmailExists(false)
-  //   }
-  //   if (passwordExists && event.target.value.length > 0) {
-  //     setIsButtonEnabled(true)
-  //   } else {
-  //     setIsButtonEnabled(false)
-  //   }
-  // }
-
   const loginSubmit = async (data: LoginForm) => {
     try {
       const res = await originLogin(data.email, data.password)
@@ -170,7 +140,6 @@ export default function Login() {
                     autoComplete="new-email"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...emailRegister}
-                    // onChange={handleLoginVisibility}
                   />
                 </div>
                 {errors.email && (
@@ -190,7 +159,6 @@ export default function Login() {
                     autoComplete="new-password"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...passwordRegister}
-                    // onChange={handlePasswordExists}
                   />
 
                   {passwordExists && (

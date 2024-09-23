@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast'
 
 import MainFooter from '@/components/MainFooter/index.tsx'
 import MainHeader from '@/components/MainHeader/index.tsx'
-
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
