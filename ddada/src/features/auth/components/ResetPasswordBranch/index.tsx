@@ -7,7 +7,7 @@ import { ResetPasswordStepType } from '@/features/auth/types/ResetPasswordType.t
 
 export default function ResetPasswordBranch() {
   const [viewStep, setViewStep] = useState<ResetPasswordStepType>(
-    ResetPasswordStepType.step2,
+    ResetPasswordStepType.step1,
   )
   const [email, setEmail] = useState<string>('')
 
