@@ -19,7 +19,7 @@ type TeamType = {
   player2: PlayerType
 }
 
-type CourtType = {
+export type CourtType = {
   id: number
   name: string
   address: string
@@ -28,6 +28,7 @@ type CourtType = {
   facilities: string[]
   contactNumber: string
   description: string
+  url: string
   reservations: Record<string, string[]>
 }
 

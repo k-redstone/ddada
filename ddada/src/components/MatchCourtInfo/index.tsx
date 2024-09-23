@@ -1,17 +1,27 @@
 'use client'
 
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 import ParkingIcon from '@/static/imgs/matchReservation/ParkingIcon.svg'
 import ShowerIcon from '@/static/imgs/matchReservation/ShowerIcon.svg'
 import ToiletIcon from '@/static/imgs/matchReservation/ToiletIcon.svg'
 import WifiIcon from '@/static/imgs/matchReservation/WifiIcon.svg'
+import { CourtType } from '@/features/manager/types/MatchDataType'
+interface CourtInfoProps {
+  courtData: CourtType
+  children: React.ReactNode
+}
 
-const CourtInfoContext = createContext(null)
+const CourtInfoContext = createContext<CourtType | null>(null)
 
-export default function CourtInfo({ children }: { children: React.ReactNode }) {
+const useCourtInfoContext = () => {
+  const context = useContext(CourtInfoContext)
+  return context
+}
+
+export default function CourtInfo({ courtData, children }: CourtInfoProps) {
   return (
-    <CourtInfoContext.Provider value={null}>
+    <CourtInfoContext.Provider value={courtData}>
       <div className="flex flex-col gap-y-6 p-2 text-sm bg-white">
         {children}
       </div>
@@ -61,12 +71,13 @@ function Location() {
 }
 
 function Number() {
+  const courtData = useCourtInfoContext()
   return (
     <div className="flex flex-col gap-y-2">
       <h2 className="font-bold">전화번호</h2>
       <ul>
         <li className="list-inside list-disc pl-2">
-          <span>02-2204-7680</span>{' '}
+          <span>{courtData?.contactNumber}</span>{' '}
           <span className="text-[#FCA211]">번호복사</span>
         </li>
       </ul>
@@ -75,11 +86,13 @@ function Number() {
 }
 
 function Website() {
+  const courtData = useCourtInfoContext()
+
   return (
     <div className="flex flex-col gap-y-2">
       <h2 className="font-bold">웹사이트</h2>
       <ul>
-        <li className="list-inside list-disc pl-2">https://ddada.io</li>
+        <li className="list-inside list-disc pl-2">{courtData?.url}</li>
       </ul>
     </div>
   )
@@ -99,12 +112,14 @@ function Amenities() {
 }
 
 function Detail() {
+  const courtData = useCourtInfoContext()
+
   return (
     <div className="flex flex-col gap-y-2">
       <h2 className="font-bold">특이사항</h2>
       <ul>
         <li className="list-inside list-disc pl-2">
-          주 소: 서울특별시 성동구 금호로 20 금호스포츠센터
+          주 소: {courtData?.address}
         </li>
         <li className="list-inside list-disc pl-2">
           운영시간
@@ -117,7 +132,8 @@ function Detail() {
           </ul>
         </li>
         <li className="list-inside list-disc pl-2">
-          안내전화 : 02-2204-7675(FAX : 02-2254-7675)
+          안내전화 : {courtData?.contactNumber}(FAX : {courtData?.contactNumber}
+          )
         </li>
       </ul>
     </div>

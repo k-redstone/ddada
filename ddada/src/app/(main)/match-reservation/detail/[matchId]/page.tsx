@@ -38,8 +38,14 @@ export default function MatchReservationDetailPage({
       <div className="flex gap-x-1">
         <div className="flex flex-col gap-y-3 flex-1">
           <MatchPlayerInfo team1Data={data.team1} team2Data={data.team2} />
-          <MatchShortInfo />
-          <MatchCourtInfo>
+          <MatchShortInfo
+            courtData={data.court}
+            date={data.date}
+            time={data.time}
+            matchType={data.matchType as string}
+            matchRankType={data.rankType}
+          />
+          <MatchCourtInfo courtData={data.court}>
             <MatchCourtInfo.TitleWithUnderline />
             <MatchCourtInfo.Amenities />
             <MatchCourtInfo.Number />
