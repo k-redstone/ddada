@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Toaster } from 'react-hot-toast'
 
-import MainFooter from '@/components/MainFooter/index.tsx'
-import MainHeader from '@/components/MainHeader/index.tsx'
+// import MainFooter from '@/components/MainFooter/index.tsx'
+// import MainHeader from '@/components/MainHeader/index.tsx'
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
@@ -30,11 +30,11 @@ export default function RootLayout({
     <html lang="kr" className={`${pretendard.variable} font-pretendard`}>
       <body>
         <ReactQueryProviders>
-          <div className="flex flex-col h-screen">
-            <MainHeader />
-            <div className="flex justify-center flex-1">{children}</div>
+          <div>
+            {/* <MainHeader /> */}
+            <div>{children}</div>
             <Toaster />
-            <MainFooter />
+            {/* <MainFooter /> */}
           </div>
         </ReactQueryProviders>
       </body>

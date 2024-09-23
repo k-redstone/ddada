@@ -120,9 +120,10 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center  mt-[7.4013rem]">
       <div className="min-w-[34rem]">
-        <p className="text-4xl font-bold text-center mb-[4.375rem]">
-          따다에 가입하세요
-        </p>
+        <div className="text-4xl font-bold text-center mb-[4.375rem] text-[#2D2541]">
+          <p>따다에 가입하고</p>
+          <p>배드민턴을 즐겨보세요</p>
+        </div>
         <div className="bg-white">
           <form
             onSubmit={handleSubmit(loginSubmit)}
