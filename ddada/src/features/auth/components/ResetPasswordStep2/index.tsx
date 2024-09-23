@@ -1,9 +1,6 @@
 'use client'
 
-/* eslint-disable react/jsx-props-no-spreading */
-
 import { useEffect, useRef, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
 import {
@@ -17,10 +14,6 @@ interface ResetPasswordStep2Props {
   email: string
 }
 
-interface VerificationCodeForm {
-  code: string[]
-}
-
 const authEmailReSend = async (email: string, resetTimer: () => void) => {
   const res = await sendAuthEmail(email)
   toast.success('인증번호를 재전송했습니다.')
@@ -32,44 +25,14 @@ export default function ResetPasswordStep2({
   changeViewStep,
   email,
 }: ResetPasswordStep2Props) {
+  const [authCode, setAuthCode] = useState<string[]>(['', '', '', '', '', ''])
   const [authCodeCheck, setAuthCodeCheck] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [timeLeft, setTimeLeft] = useState<number>(180) // 3분 = 180초
   const [isExpired, setIsExpired] = useState<boolean>(false)
 
-  const { handleSubmit, control, setValue, watch, reset } =
-    useForm<VerificationCodeForm>({
-      defaultValues: {
-        code: ['', '', '', '', '', ''],
-      },
-      mode: 'onChange',
-    })
-
-  const codeFields = watch('code')
+  // Input references for focusing
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
-
-  // 인증 코드 제출 함수
-  const onSubmit = (data: VerificationCodeForm) => {
-    if (isExpired) {
-      setErrorMessage('만료된 인증번호입니다.')
-      reset({ code: ['', '', '', '', '', ''] })
-      setAuthCodeCheck(false)
-      return
-    }
-
-    const verificationCode = data.code.join('')
-    checkAuthCode(email, verificationCode).then((res) => {
-      if (res.data.code === '200') {
-        console.log(res)
-        // todo : 비밀번호 변경 페이지로 이동
-        changeViewStep(ResetPasswordStepType.step3)
-      } else {
-        setErrorMessage('잘못된 인증번호입니다.')
-        reset({ code: ['', '', '', '', '', ''] })
-        setAuthCodeCheck(false)
-      }
-    })
-  }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -81,11 +44,11 @@ export default function ResetPasswordStep2({
       inputRefs.current[index + 1]?.focus()
     }
 
-    if (value.length === 1 || value === '') {
-      setValue(`code.${index}`, value)
-    }
+    const updatedCode = [...authCode]
+    updatedCode[index] = value
+    setAuthCode(updatedCode)
 
-    if (codeFields.join('').length === 6) {
+    if (updatedCode.join('').length === 6) {
       setAuthCodeCheck(true)
     } else {
       setAuthCodeCheck(false)
@@ -96,9 +59,32 @@ export default function ResetPasswordStep2({
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number,
   ) => {
-    if (e.key === 'Backspace' && codeFields[index] === '' && index > 0) {
+    if (e.key === 'Backspace' && authCode[index] === '' && index > 0) {
       inputRefs.current[index - 1]?.focus()
     }
+  }
+
+  // 인증 코드 제출 함수
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (isExpired) {
+      setErrorMessage('만료된 인증번호입니다.')
+      setAuthCode(['', '', '', '', '', ''])
+      setAuthCodeCheck(false)
+      return
+    }
+
+    const verificationCode = authCode.join('')
+    checkAuthCode(email, verificationCode).then((res) => {
+      if (res.data.code === '200') {
+        changeViewStep(ResetPasswordStepType.step3)
+      } else {
+        setErrorMessage('잘못된 인증번호입니다.')
+        setAuthCode(['', '', '', '', '', ''])
+        setAuthCodeCheck(false)
+      }
+    })
   }
 
   // 타이머 설정 및 관리
@@ -110,6 +96,7 @@ export default function ResetPasswordStep2({
     } else if (timeLeft === 0) {
       setIsExpired(true)
       setAuthCodeCheck(false)
+      setErrorMessage('만료된 인증번호입니다.')
     }
 
     return () => clearTimeout(timer)
@@ -145,32 +132,26 @@ export default function ResetPasswordStep2({
         </p>
       </div>
       <div className="bg-white max-w-[34rem]">
-        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 px-10">
+        <form onSubmit={handleSubmit} className="grid gap-4 px-10">
           <div className="text-sm">
             <p className="text-[#FCA211] mb-4 text-center font-bold">
               {formatTime(timeLeft)}
             </p>
             <div className="flex gap-1 h-[100px]">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <Controller
-                  key={`${email + index}`}
-                  name={`code.${index}`}
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="text"
-                      maxLength={1}
-                      ref={(el) => {
-                        inputRefs.current[index] = el
-                      }}
-                      onChange={(e) => handleInputChange(e, index)}
-                      onKeyDown={(e) => handleKeyDown(e, index)}
-                      value={field.value || ''}
-                      className={`w-full border text-center text-5xl font-bold rounded-xl focus:outline-none focus:border-[#FCA211]
-                        ${field.value ? 'border-[#FCA211]' : 'border-[#E5E5ED]'}`}
-                    />
-                  )}
+              {authCode.map((value, index) => (
+                <input
+                  key={`authCode-${email + index}`}
+                  id={`authCode-${index}`}
+                  type="text"
+                  maxLength={1}
+                  ref={(el) => {
+                    inputRefs.current[index] = el
+                  }}
+                  value={value}
+                  onChange={(e) => handleInputChange(e, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  className={`w-full border text-center text-5xl font-bold rounded-xl focus:outline-none focus:border-[#FCA211]
+                    ${value ? 'border-[#FCA211]' : 'border-[#E5E5ED]'}`}
                 />
               ))}
             </div>
