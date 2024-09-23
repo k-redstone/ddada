@@ -113,6 +113,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       phoneNumber: data.phoneNumber,
       description: data.introduction,
     }
+
     const res = await signupSubmit(payload)
     sessionStorage.setItem('accessToken', res.data.result.accessToken)
     sessionStorage.setItem('refreshToken', res.data.result.refreshToken)

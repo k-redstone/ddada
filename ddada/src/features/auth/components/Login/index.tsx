@@ -24,8 +24,6 @@ interface LoginForm {
 export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [passwordExists, setPasswordExists] = useState<boolean>(false)
-  const [emailExists, setEmailExists] = useState<boolean>(false)
-  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/'
@@ -34,9 +32,10 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginForm>()
-
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<LoginForm>({
+    mode: 'onChange',
+  })
   useEffect(() => {
     if (window.Kakao) {
       if (!window.Kakao.isInitialized()) {
@@ -89,38 +88,17 @@ export default function Login() {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
+    validate: (value) => {
+      if (value.length > 0) {
+        setPasswordExists(true)
+        return true
+      }
+      return false
+    },
   })
 
   const handleVisibility = () => {
     setPasswordVisibility(!passwordVisibility)
-  }
-
-  const handlePasswordExists = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length > 0) {
-      setPasswordExists(true)
-    } else {
-      setPasswordExists(false)
-    }
-    if (emailExists && event.target.value.length > 0) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
-    }
-  }
-
-  const handleLoginVisibility = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (event.target.value.length > 0) {
-      setEmailExists(true)
-    } else {
-      setEmailExists(false)
-    }
-    if (passwordExists && event.target.value.length > 0) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
-    }
   }
 
   const loginSubmit = async (data: LoginForm) => {
@@ -162,7 +140,6 @@ export default function Login() {
                     autoComplete="new-email"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...emailRegister}
-                    onChange={handleLoginVisibility}
                   />
                 </div>
                 {errors.email && (
@@ -182,7 +159,6 @@ export default function Login() {
                     autoComplete="new-password"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...passwordRegister}
-                    onChange={handlePasswordExists}
                   />
 
                   {passwordExists && (
@@ -219,11 +195,11 @@ export default function Login() {
               <button
                 type="submit"
                 className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
-                  isButtonEnabled && !isSubmitting
+                  isValid && !isSubmitting
                     ? 'bg-[#FCA211] text-white cursor-pointer'
                     : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
                 }`}
-                disabled={!isButtonEnabled || isSubmitting}
+                disabled={!isValid || isSubmitting}
               >
                 로그인
               </button>

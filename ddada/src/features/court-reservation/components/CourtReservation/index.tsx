@@ -54,6 +54,8 @@ export default function CoatReservation() {
       if (totalPages === page + 1 || totalPages === 0) return false
       return page + 1
     },
+    staleTime: 1000 * 60 * 1,
+    retry: 1,
     initialPageParam: 0,
   })
 
@@ -69,7 +71,6 @@ export default function CoatReservation() {
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // todo 검색 api 호출
     setFilterCoat(search)
   }
   const handleSelectedRegion = (regions: string[]) => {
@@ -112,7 +113,6 @@ export default function CoatReservation() {
                   id="search"
                   onChange={handleSearch}
                   placeholder="지역, 체육관 명으로 검색"
-                  // todo width 수           정
                   className="w-[7.1875rem] placeholder-[#6B6E78] focus:outline-none focus:border-none"
                 />
               </form>

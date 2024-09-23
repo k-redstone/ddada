@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
+import { Toaster } from 'react-hot-toast'
 
-// todo reactQuery가 필요한 곳에 'use cleint'와 함께 layout에 적용
-// import { useUserRole } from '@/hooks/queries/user.ts'
-// useUserRole()
+import MainFooter from '@/components/MainFooter/index.tsx'
+import MainHeader from '@/components/MainHeader/index.tsx'
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
 
 import '@/app/globals.css'
@@ -29,7 +29,14 @@ export default function RootLayout({
   return (
     <html lang="kr" className={`${pretendard.variable} font-pretendard`}>
       <body>
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+        <ReactQueryProviders>
+          <div className="flex flex-col h-screen">
+            <MainHeader />
+            <div className="flex justify-center flex-1">{children}</div>
+            <Toaster />
+            <MainFooter />
+          </div>
+        </ReactQueryProviders>
       </body>
     </html>
   )
