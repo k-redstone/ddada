@@ -42,8 +42,10 @@ export default function SignUp() {
         </div>
         <div className="min-w-[34rem]  mt-[7.4013rem]">
           <div className="mb-[5.25rem] text-center">
-            <p className="text-4xl font-bold">따다 회원가입</p>
-            <p className="mb-[1.25rem]">가입하고 간단하게 배드민턴 즐기기</p>
+            <p className="text-4xl font-bold text-[#2D2541]">따다 회원가입</p>
+            <p className="mb-[1.25rem] text-[#6B6E78]">
+              가입하고 간단하게 배드민턴 즐기기
+            </p>
             {viewStep === SignUpStepType.step1 && <Progress1 />}
             {viewStep === SignUpStepType.step2 && <Progress2 />}
             {viewStep === SignUpStepType.step3 && <Progress3 />}

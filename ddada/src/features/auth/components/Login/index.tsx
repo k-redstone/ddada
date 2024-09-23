@@ -120,7 +120,7 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center  mt-[7.4013rem]">
       <div className="min-w-[34rem]">
-        <p className="text-4xl font-bold text-center mb-[4.375rem]">
+        <p className="text-4xl font-bold text-center mb-[4.375rem] text-[#2D2541]">
           따다에 가입하세요
         </p>
         <div className="bg-white">
