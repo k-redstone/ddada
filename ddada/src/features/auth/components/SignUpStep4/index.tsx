@@ -1,15 +1,20 @@
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 
 import { SignUpFormData } from '@/features/auth/types/SignUpType.ts'
 
 export default function SignUpStep4() {
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect')
   const router = useRouter()
   const { getValues } = useFormContext<SignUpFormData>()
   const userNickname = getValues('nickname')
   const handleGoMainPage = () => {
-    router.push('/')
+    if (redirect) router.push(redirect)
+    else {
+      router.push('/')
+    }
   }
   return (
     <div className="mx-[2.0625rem]">

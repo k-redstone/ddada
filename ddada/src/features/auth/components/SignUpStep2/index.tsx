@@ -5,7 +5,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { toast, Toaster } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 import {
   checkNicknameDuplicate,
@@ -551,7 +551,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       >
         다음단계
       </button>
-      <Toaster />
     </>
   )
 }

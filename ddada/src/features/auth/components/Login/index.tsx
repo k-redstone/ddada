@@ -28,6 +28,7 @@ export default function Login() {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
   const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') || '/'
   const router = useRouter()
 
   const {
@@ -54,8 +55,11 @@ export default function Login() {
           if (res.data.result.isRegistered) {
             sessionStorage.setItem('accessToken', res.data.result.accessToken)
             sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
-
-            router.push('/')
+            if (redirect) {
+              router.push(redirect)
+            } else {
+              router.push('/')
+            }
           } else {
             const kakaoEmail = res.data.result.kakaoEmail as string
             router.push(`/signup?kakaoEmail=${encodeURIComponent(kakaoEmail)}`)
@@ -125,7 +129,11 @@ export default function Login() {
       sessionStorage.setItem('accessToken', res.data.result.accessToken)
       sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
       setAxiosError(false)
-      router.push('/')
+      if (redirect) {
+        router.push(redirect)
+      } else {
+        router.push('/')
+      }
     } catch {
       setAxiosError(true)
     }
@@ -237,7 +245,10 @@ export default function Login() {
             </div>
             <p className="text-sm text-center">
               아직 계정이 없으신가요?{' '}
-              <Link href="signup/" className="text-[#FCA211] font-bold">
+              <Link
+                href={`/signup?redirect=${encodeURIComponent(redirect)}`}
+                className="text-[#FCA211] font-bold"
+              >
                 회원가입
               </Link>
             </p>

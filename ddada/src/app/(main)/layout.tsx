@@ -1,3 +1,6 @@
+import { Toaster } from 'react-hot-toast'
+
+import MainFooter from '@/components/MainFooter/index.tsx'
 import MainHeader from '@/components/MainHeader/index.tsx'
 
 export default function MatchReservationDetailLayout({
@@ -6,9 +9,11 @@ export default function MatchReservationDetailLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <MainHeader />
-      <div className="flex justify-center">{children}</div>
+      <div className="flex justify-center flex-1">{children}</div>
+      <Toaster />
+      <MainFooter />
     </div>
   )
 }
