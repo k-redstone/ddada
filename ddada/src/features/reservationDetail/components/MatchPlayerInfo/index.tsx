@@ -1,18 +1,14 @@
 'use client'
 
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import { TeamType } from '@/features/manager/types/MatchDataType.ts'
 import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 
-interface MatchPlayerInfoProps {
-  team1Data: TeamType
-  team2Data: TeamType
-}
+export default function MatchPlayerInfo() {
+  const matchDetailData = useMatchDetailContext()
+  const team1Data = matchDetailData?.team1
+  const team2Data = matchDetailData?.team2
 
-export default function MatchPlayerInfo({
-  team1Data,
-  team2Data,
-}: MatchPlayerInfoProps) {
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
       <div className="flex ">

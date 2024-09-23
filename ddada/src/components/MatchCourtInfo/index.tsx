@@ -6,9 +6,10 @@ import ParkingIcon from '@/static/imgs/matchReservation/ParkingIcon.svg'
 import ShowerIcon from '@/static/imgs/matchReservation/ShowerIcon.svg'
 import ToiletIcon from '@/static/imgs/matchReservation/ToiletIcon.svg'
 import WifiIcon from '@/static/imgs/matchReservation/WifiIcon.svg'
-import { CourtType } from '@/features/manager/types/MatchDataType'
+import { CourtType } from '@/features/manager/types/MatchDataType.ts'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+
 interface CourtInfoProps {
-  courtData: CourtType
   children: React.ReactNode
 }
 
@@ -19,7 +20,9 @@ const useCourtInfoContext = () => {
   return context
 }
 
-export default function CourtInfo({ courtData, children }: CourtInfoProps) {
+export default function CourtInfo({ children }: CourtInfoProps) {
+  const matchDetailData = useMatchDetailContext()
+  const courtData = matchDetailData.court
   return (
     <CourtInfoContext.Provider value={courtData}>
       <div className="flex flex-col gap-y-6 p-2 text-sm bg-white">

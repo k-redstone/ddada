@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
 import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
@@ -9,6 +8,7 @@ import MatchApply from '@/features/reservationDetail/components/MatchApply/index
 import MatchPlayerInfo from '@/features/reservationDetail/components/MatchPlayerInfo/index.tsx'
 import MatchShortInfo from '@/features/reservationDetail/components/MatchShortInfo/index.tsx'
 import RefundPolicyInfo from '@/features/reservationDetail/components/RefundPolicyInfo/index.tsx'
+import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
 
 export default function MatchReservationDetailPage({
   params,
@@ -31,41 +31,37 @@ export default function MatchReservationDetailPage({
     )
   }
   return (
-    <div className=" max-w-[46rem] flex flex-col">
-      <div className="h-[12.5rem]">
-        <p>이미지임</p>
-      </div>
-      <div className="flex gap-x-1">
-        <div className="flex flex-col gap-y-3 flex-1">
-          <MatchPlayerInfo team1Data={data.team1} team2Data={data.team2} />
-          <MatchShortInfo
-            courtData={data.court}
-            date={data.date}
-            time={data.time}
-            matchType={data.matchType as string}
-            matchRankType={data.rankType}
-          />
-          <MatchCourtInfo courtData={data.court}>
-            <MatchCourtInfo.TitleWithUnderline />
-            <MatchCourtInfo.Amenities />
-            <MatchCourtInfo.Number />
-            <MatchCourtInfo.Website />
-            <MatchCourtInfo.Detail />
-          </MatchCourtInfo>
-          <MatchRule>
-            <MatchRule.TitleWithUnderline />
-            <MatchRule.TossRule />
-            <MatchRule.ScoreRule />
-            <MatchRule.DoubleRule />
-            <MatchRule.InvalidityRule />
-            <MatchRule.FaultRule />
-          </MatchRule>
-          <RefundPolicyInfo />
+    <MatchReservationDetailProvider matchDetailData={data}>
+      <div className=" max-w-[46rem] flex flex-col">
+        <div className="h-[12.5rem]">
+          <p>이미지임</p>
         </div>
-        <div className="flex-1">
-          <MatchApply />
+        <div className="flex gap-x-1">
+          <div className="flex flex-col gap-y-3 flex-1">
+            <MatchPlayerInfo />
+            <MatchShortInfo />
+            <MatchCourtInfo>
+              <MatchCourtInfo.TitleWithUnderline />
+              <MatchCourtInfo.Amenities />
+              <MatchCourtInfo.Number />
+              <MatchCourtInfo.Website />
+              <MatchCourtInfo.Detail />
+            </MatchCourtInfo>
+            <MatchRule>
+              <MatchRule.TitleWithUnderline />
+              <MatchRule.TossRule />
+              <MatchRule.ScoreRule />
+              <MatchRule.DoubleRule />
+              <MatchRule.InvalidityRule />
+              <MatchRule.FaultRule />
+            </MatchRule>
+            <RefundPolicyInfo />
+          </div>
+          <div className="flex-1">
+            <MatchApply />
+          </div>
         </div>
       </div>
-    </div>
+    </MatchReservationDetailProvider>
   )
 }

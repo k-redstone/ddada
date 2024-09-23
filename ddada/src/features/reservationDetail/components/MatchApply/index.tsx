@@ -1,4 +1,12 @@
+import { useUserRole, useFetchUserProfile } from '@/hooks/queries/user'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import { WEEKDAYS } from '@/constants/day'
+
 export default function MatchApply() {
+  const { data: userRole } = useUserRole()
+  const { data: userProfile } = useFetchUserProfile()
+  const matchDetailData = useMatchDetailContext()
+
   return (
     <div className="flex flex-col gap-y-4 py-6 px-3">
       {/* 설명 */}
@@ -46,9 +54,21 @@ export default function MatchApply() {
       {/* 예약정보 */}
       <div className="pb-3 flex flex-col gap-y-1  border-b border-[#E5E5ED] text-xs text-[#6B6E78]">
         <h2 className="text-sm font-bold text-black">예약정보</h2>
-        <p className="text-sm">성동구 금호스포츠센터 10번코트</p>
-        <p>서울특별시 성동구 금호로 20</p>
-        <p>2024.09.08(일) 10:00-11:00(1시간)</p>
+        <p className="text-sm">{matchDetailData.court.name}</p>
+        <p>{matchDetailData.court.address}</p>
+        <p>
+          {' '}
+          {matchDetailData.date}(
+          {WEEKDAYS[new Date(matchDetailData.date).getDay()]}){' '}
+          {new Date(
+            `${matchDetailData.date}T${matchDetailData.time}`,
+          ).getHours()}
+          :00-
+          {new Date(
+            `${matchDetailData.date}T${matchDetailData.time}`,
+          ).getHours() + 1}
+          :00(1시간){' '}
+        </p>
       </div>
 
       {/* 결제금액 */}
