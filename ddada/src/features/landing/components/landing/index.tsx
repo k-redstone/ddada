@@ -1,16 +1,17 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
+import Computer from '@/static/imgs/landing/landing-page-computres.png'
 import IntroductionMessage from '@/static/imgs/landing/landing-page-information_message.png'
 import ManagerImage from '@/static/imgs/landing/landing-page-manager.png'
-import LandingPageMainLogo from '@/static/imgs/landing/landing-page_JOIN.png'
-import Rank from '@/static/imgs/landing/landing-page_rank.png'
-import Link from 'next/link'
-import FreeRegister from '@/static/imgs/landing/landing-page_real_time_reservation.png'
+import BadmintonRacket from '@/static/imgs/landing/landing-page_badminton_raket.svg'
 import EasyCount from '@/static/imgs/landing/landing-page_easy_count.png'
 import RealTimeRegister from '@/static/imgs/landing/landing-page_free_register.png'
+import LandingPageMainLogo from '@/static/imgs/landing/landing-page_JOIN.png'
 import ManagerIcon from '@/static/imgs/landing/landing-page_manager_icon.svg'
-import Computer from '@/static/imgs/landing/landing-page-computres.png'
-import BadmintonRacket from '@/static/imgs/landing/landing-page_badminton_raket.svg'
+import Rank from '@/static/imgs/landing/landing-page_rank_cut.png'
+import FreeRegister from '@/static/imgs/landing/landing-page_real_time_reservation.png'
+
 export default function Landing() {
   return (
     <div className="w-full">
@@ -21,6 +22,7 @@ export default function Landing() {
           className="absolute z-10 w-full"
           fill
           style={{ objectFit: 'cover' }}
+          priority
         />
         <div className="z-40 flex flex-col gap-6">
           <div className="text-white flex flex-col justify-center items-center gap-[0.625rem]">
@@ -33,7 +35,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="flex justify-center">
-            <Link href={'/login'}>
+            <Link href="/login">
               <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
                 지금 가입하기
               </div>
@@ -55,7 +57,13 @@ export default function Landing() {
           </div>
         </div>
         <div className="flex justify-center">
-          <Image src={Computer} alt="computers" width={800} height={352} />
+          <Image
+            src={Computer}
+            alt="computers"
+            width={800}
+            height={352}
+            priority
+          />
         </div>
       </div>
       <div className="w-full">
@@ -64,6 +72,7 @@ export default function Landing() {
           alt="introduction message"
           height={500}
           className="w-full"
+          priority
         />
       </div>
       <div className="flex flex-col px-8 py-[4.5rem] gap-[4.5rem] justify-center items-center">
@@ -75,7 +84,7 @@ export default function Landing() {
           </p>
         </div>
         <div className="flex justify-center">
-          <Link href={'/login'}>
+          <Link href="/login">
             <div className="text-[#FCA211] text-xl py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
               체육관 제휴맺기
             </div>
@@ -84,19 +93,19 @@ export default function Landing() {
         <div>
           <div className="flex gap-[4.5rem]">
             <div className="h-[400px] w-[400px]">
-              <Image src={FreeRegister} alt="free register" />
+              <Image src={FreeRegister} alt="free register" priority />
             </div>
             <div className="h-[400px] w-[400px]">
-              <Image src={EasyCount} alt="easy count" />
+              <Image src={EasyCount} alt="easy count" priority />
             </div>
             <div className="h-[400px] w-[400px]">
-              <Image src={RealTimeRegister} alt="real time register" />
+              <Image src={RealTimeRegister} alt="real time register" priority />
             </div>
           </div>
         </div>
       </div>
-      <div className="h-[750px]  w-full overflow-hidden relative">
-        <Image src={Rank} alt="rank" style={{ objectFit: 'cover' }} />
+      <div className="w-full overflow-hidden relative">
+        <Image src={Rank} alt="rank" style={{ objectFit: 'cover' }} priority />
       </div>
 
       <div className="h-[500px] w-full relative flex justify-left items-center px-[12.5rem] py-[4.5rem]">
@@ -105,6 +114,7 @@ export default function Landing() {
           alt="manager"
           fill
           style={{ objectFit: 'cover' }}
+          priority
         />
 
         <div className="z-40 flex flex-col gap-6">
@@ -119,7 +129,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="flex justify-left">
-            <Link href={'/login'}>
+            <Link href="/login">
               <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
                 매니저 신청하기
               </div>
@@ -127,7 +137,7 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col py-[4.5rem] px-8 gap-[4.5rem] justify-center items-center">
+      <div className="flex flex-col py-[4.5rem] px-24 gap-[4.5rem] justify-center items-center">
         <BadmintonRacket />
         <div className="flex flex-col gap-3 justify-center items-center">
           <p className="text-5xl font-bold">
