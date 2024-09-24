@@ -87,6 +87,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     if (kakaoEmail) {
       setValue('email', kakaoEmail)
       setKakaoEmailExist(true)
+      setEmailExists(true)
+      sessionStorage.setItem('loginType', 'kakao')
     }
   }, [])
 

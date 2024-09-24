@@ -1,12 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { logOut } from '@/api/user/index.ts'
 import Logo from '@/static/imgs/logo.svg'
 import CalendarIcon from '@/static/imgs/main/CalendarIcon.svg'
 
 export default function MainHeader() {
+  const [accessToken, setAccessToken] = useState<string | null>(null)
+  const [loginType, setLoginType] = useState<string | null>(null)
+
+  useEffect(() => {
+    setAccessToken(sessionStorage.getItem('accessToken'))
+    setLoginType(sessionStorage.getItem('loginType'))
+  }, [])
+
+  const handleLogout = async () => {
+    if (loginType === 'kakao') {
+      await logOut()
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&logout_redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI}`
+    } else {
+      await logOut()
+      window.location.href = '/'
+    }
+  }
+
   const [currentNav, setCurrentNav] = useState<number>(-1)
   return (
     <div className="px-4 flex gap-x-[0.625rem] py-[0.625rem]">
@@ -59,12 +78,22 @@ export default function MainHeader() {
             <span />내 일정 확인하기
           </p>
         </Link>
-        <Link
-          className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
-          href="/login"
-        >
-          로그인
-        </Link>
+        {accessToken ? (
+          <button
+            type="button"
+            className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
+            onClick={handleLogout}
+          >
+            로그아웃
+          </button>
+        ) : (
+          <Link
+            className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
+            href="/login"
+          >
+            로그인
+          </Link>
+        )}
       </div>
     </div>
   )

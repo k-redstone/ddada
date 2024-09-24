@@ -73,6 +73,7 @@ export default function Login() {
   }, [searchParams])
 
   const handleKakaoLogin = () => {
+    sessionStorage.setItem('loginType', 'kakao')
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGIN_REDIRECT_URI}&response_type=code`
   }
   const emailRegister = register('email', {
@@ -106,6 +107,7 @@ export default function Login() {
       const res = await originLogin(data.email, data.password)
       sessionStorage.setItem('accessToken', res.data.result.accessToken)
       sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
+      sessionStorage.setItem('loginType', 'custom')
       setAxiosError(false)
       if (redirect) {
         router.push(redirect)
