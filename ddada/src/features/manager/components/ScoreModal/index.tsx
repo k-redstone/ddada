@@ -3,11 +3,11 @@
 import { useState } from 'react'
 
 import Button from '@/features/manager/components/Button/index.tsx'
-import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import {
   EARN_TYPE,
   MISS_TYPE,
-} from '@/features/manager/constants/scoreConstants.ts'
+} from '@/features/manager/constants/matchConstants.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 
 interface ScoreModalProps {
@@ -23,11 +23,20 @@ export default function ScoreModal({
   const [earnedType, setEarnedType] = useState<string>('')
   const [missedType, setMissedType] = useState<string>('')
   const [missedUser, setMissedUser] = useState<number[]>([])
+  const [faultUser, setFaultUser] = useState<number>(-1)
 
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
   }))
+
+  const getTeamPlayers = (team: 'team1' | 'team2') => {
+    const teamData = badmintonInstance.teams[team]
+    if (teamData) {
+      return [teamData.player1, teamData.player2]
+    }
+    return []
+  }
 
   const handleMissedUser = (userId: number) => {
     setMissedUser((prevMissedUser) => {
@@ -54,32 +63,40 @@ export default function ScoreModal({
     // 이전꺼 초기화
     setMissedType('')
     setMissedUser([])
+    setFaultUser(-1)
 
     // 득점 설정
     setEarnedType(key)
   }
 
   const handleStoreScore = () => {
-    if (earnedType === '' && missedUser.length === 0 && earnedUser === -1)
-      return
     if (missedType === 'SERVE') {
-      badmintonInstance.faultScored(earnedUser, missedType, missedUser)
+      handleStoreFaultScore()
     } else {
-      badmintonInstance.earnScored(earnedUser, earnedType, missedUser)
+      handleStoreEarnScore()
     }
+
     update(badmintonInstance)
     modalhandler()
   }
+  const handleStoreEarnScore = () => {
+    if (earnedType === '' && missedUser.length === 0 && earnedUser === -1)
+      return
+    badmintonInstance.earnScored(earnedUser, earnedType, missedUser)
+  }
+  const handleStoreFaultScore = () => {
+    if (faultUser === -1) return
+    badmintonInstance.faultScored(faultUser, missedType)
+  }
 
   const checkCanSave = () => {
-    // earnedType === '' && missedUser.length === 0 && earnedUser === -1
     if (missedType !== 'SERVE') {
       if (earnedType !== '' && missedUser.length !== 0 && earnedUser !== -1)
         return true
     }
 
     if (missedType === 'SERVE') {
-      if (missedUser.length !== 0) return true
+      if (faultUser !== -1) return true
     }
     return false
   }
@@ -97,8 +114,8 @@ export default function ScoreModal({
           {/* 위에 툴바 */}
           <div className="py-3 border-b border-[#E5E5ED] flex gap-x-3">
             <div className="flex gap-x-3">
-              <GameUserInfo />
-              <GameUserInfo />
+              {/* <GameUserInfo /> */}
+              {/* <GameUserInfo /> */}
             </div>
             {selectTeam === 'team1' ? (
               <div className="flex gap-x-1 items-center">
@@ -120,7 +137,7 @@ export default function ScoreModal({
             <p className="font-bold">득점인원</p>
             <div className="flex gap-x-3">
               {selectTeam === 'team1'
-                ? badmintonInstance.teams.team1.map((playerInfo, index) => (
+                ? getTeamPlayers('team1').map((playerInfo, index) => (
                     <Button
                       key={playerInfo.nickname}
                       size="lg"
@@ -131,7 +148,7 @@ export default function ScoreModal({
                       disabled={missedType !== ''}
                     />
                   ))
-                : badmintonInstance.teams.team2.map((playerInfo, index) => (
+                : getTeamPlayers('team2').map((playerInfo, index) => (
                     <Button
                       key={playerInfo.nickname}
                       size="lg"
@@ -186,24 +203,24 @@ export default function ScoreModal({
               <p className="font-bold">폴트인원</p>
               <div className="flex gap-x-3">
                 {selectTeam === 'team1'
-                  ? badmintonInstance.teams.team1.map((playerInfo, index) => (
+                  ? getTeamPlayers('team1').map((playerInfo, index) => (
                       <Button
                         key={playerInfo.nickname}
                         size="lg"
                         type="fault"
                         text={`A${index + 1}`}
-                        changeStyle={missedUser.includes(playerInfo.id)}
-                        onClick={() => handleMissedUser(playerInfo.id)}
+                        changeStyle={faultUser === playerInfo.id}
+                        onClick={() => setFaultUser(playerInfo.id)}
                       />
                     ))
-                  : badmintonInstance.teams.team2.map((playerInfo, index) => (
+                  : getTeamPlayers('team2').map((playerInfo, index) => (
                       <Button
                         key={playerInfo.nickname}
                         size="lg"
                         type="fault"
                         text={`B${index + 1}`}
-                        changeStyle={missedUser.includes(playerInfo.id)}
-                        onClick={() => handleMissedUser(playerInfo.id)}
+                        changeStyle={faultUser === playerInfo.id}
+                        onClick={() => setFaultUser(playerInfo.id)}
                       />
                     ))}
               </div>
@@ -215,7 +232,7 @@ export default function ScoreModal({
               <p className="font-bold">폴트인원</p>
               <div className="flex gap-x-3">
                 {selectTeam === 'team1'
-                  ? badmintonInstance.teams.team2.map((playerInfo, index) => (
+                  ? getTeamPlayers('team2').map((playerInfo, index) => (
                       <Button
                         key={playerInfo.nickname}
                         size="lg"
@@ -226,7 +243,7 @@ export default function ScoreModal({
                         disabled={earnedType === ''}
                       />
                     ))
-                  : badmintonInstance.teams.team1.map((playerInfo, index) => (
+                  : getTeamPlayers('team1').map((playerInfo, index) => (
                       <Button
                         key={playerInfo.nickname}
                         size="lg"

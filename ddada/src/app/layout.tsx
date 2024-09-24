@@ -29,11 +29,10 @@ export default function RootLayout({
       <body>
         <ReactQueryProviders>
           <div>
-            {/* <MainHeader /> */}
             <div>{children}</div>
             <Toaster />
-            {/* <MainFooter /> */}
           </div>
+          <div id="portal" />
         </ReactQueryProviders>
       </body>
     </html>
