@@ -7,6 +7,7 @@ const loginUserRole = async () => {
   return userRole
 }
 
+// todo 로그아웃 http 메서드 변경 예정
 const logOut = async () => {
   const accessToken = sessionStorage.getItem('accessToken')
   if (!accessToken) return null

@@ -29,10 +29,8 @@ export default function RootLayout({
       <body>
         <ReactQueryProviders>
           <div>
-            {/* <MainHeader /> */}
             <div>{children}</div>
             <Toaster />
-            {/* <MainFooter /> */}
           </div>
         </ReactQueryProviders>
       </body>

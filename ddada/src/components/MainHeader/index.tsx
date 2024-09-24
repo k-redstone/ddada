@@ -67,7 +67,7 @@ export default function MainHeader() {
         </Link>
         {accessToken && (
           <Link
-            href="/mypage"
+            href="/mypage/mymatch"
             className={`${currentNav === 5 && 'text-[#FCA211]'}`}
             onClick={() => setCurrentNav(5)}
           >
