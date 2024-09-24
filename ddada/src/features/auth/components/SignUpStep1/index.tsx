@@ -48,7 +48,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
       >
         {allCheck && <CheckedBox />}
         {!allCheck && <UnCheckedBox />}
-        <p className="ml-2.5">전체 동의</p>
+        <p className="ml-2.5 text-[#262626]">전체 동의</p>
       </button>
 
       <div className="grow border-t" />

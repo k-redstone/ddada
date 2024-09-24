@@ -16,8 +16,6 @@ export default function Pagination({ changeSelectedDate }: PaginationProps) {
   const nextWeekStartDay = today.add(1, 'week')
   const [selectedDay, setSelectedDay] = useState(today.format('YYYY-MM-DD'))
 
-  // 백에서 오는 데이터 형식 "2024-09-10"
-
   const getWeekDays = (dayStart: dayjs.Dayjs) => {
     const weekDays = []
     for (let i = 0; i < 7; i += 1) {
@@ -53,7 +51,7 @@ export default function Pagination({ changeSelectedDate }: PaginationProps) {
   }
 
   return (
-    <div className="flex gap-1 justify-center items-center">
+    <div className="flex gap-1 justify-center items-center w-[47.6875rem]">
       <button type="button" onClick={handleClickPrev} aria-label="이전 주">
         <PrevDateIcon />
       </button>

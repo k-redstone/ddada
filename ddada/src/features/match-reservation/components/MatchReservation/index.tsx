@@ -11,7 +11,6 @@ import { useObserver } from '@/features/court-reservation/components/useObserver
 import { getMatchList } from '@/features/match-reservation/api/match/index.ts'
 import Matches from '@/features/match-reservation/components/Matches/index.tsx'
 import MatchToggle from '@/features/match-reservation/components/MatchToggle/index.tsx'
-// import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import MatchTypeModal from '@/features/match-reservation/components/MatchTypeModal/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
@@ -26,7 +25,6 @@ import ReservationLogo from '@/static/imgs/match-reservation/match-reservation_M
 export default function MatchReservation() {
   const bottom = useRef(null)
   const today = dayjs().format('YYYY-MM-DD')
-  // const [scrollY, setScrollY] = useState(0)
   const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
   const [filterCoat, setFilterCoat] = useState('')
@@ -49,7 +47,6 @@ export default function MatchReservation() {
     } else {
       setSelectedRegionNum(selectedRegion.length)
     }
-    // todo 검색 api 호출
   }, [selectedRegion])
 
   useEffect(() => {
@@ -62,11 +59,9 @@ export default function MatchReservation() {
     } else {
       setSelectedMatchTypeNum(selectedMatchType.length)
     }
-    // todo 검색 api 호출
   }, [selectedMatchType])
 
   const { data, fetchNextPage, status } = useInfiniteQuery({
-    // todo 수정 필요
     queryKey: [
       'matchList',
       selectedMatchRankType,
@@ -75,8 +70,6 @@ export default function MatchReservation() {
       selectedRegion,
     ],
     queryFn: ({ pageParam = 0 }) => {
-      //  todo 수정 필요
-      // console.log(selectedRegion, selectedMatchType, selectedMatchRankType)
       if (selectedRegion && selectedRegion[0] === '전체') {
         if (selectedMatchType && selectedMatchType[0] === '전체') {
           return getMatchList(
@@ -121,6 +114,8 @@ export default function MatchReservation() {
         selectedRegion.join(','),
       )
     },
+    staleTime: 1000 * 60 * 1,
+    retry: 1,
     getNextPageParam: (lastPage) => {
       const page = lastPage.data.result.page.number
       const { totalPages } = lastPage.data.result.page
@@ -149,7 +144,6 @@ export default function MatchReservation() {
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // todo 검색 api 호출
     setFilterCoat(search)
   }
   const handleSelectedRegion = (regions: string[]) => {
@@ -183,9 +177,6 @@ export default function MatchReservation() {
   return (
     <div className="flex justify-center items-center px-2  gap-2">
       <div className="flex flex-col gap-3 py-4">
-        {/* <div className="w-full">
-            <ReservationLogo className="w-full" />
-          </div> */}
         <div className="flex justify-center">
           <Image
             src={ReservationLogo}
@@ -209,7 +200,6 @@ export default function MatchReservation() {
                 id="search"
                 onChange={handleSearch}
                 placeholder="지역, 체육관 명으로 검색"
-                // todo width 수           정
                 className="w-[7.1875rem] placeholder-[#6B6E78] focus:outline-none focus:border-none"
               />
             </form>

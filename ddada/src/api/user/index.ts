@@ -18,4 +18,16 @@ const fetchUserProfile = async (): Promise<UserProfile | null> => {
   return res.data.result
 }
 
-export { loginUserRole, fetchUserProfile }
+const logOut = async () => {
+  const accessToken = sessionStorage.getItem('accessToken')
+  if (!accessToken) return null
+  await privateAPI.post('/auth/logout', {
+    accessToken,
+  })
+  sessionStorage.removeItem('accessToken')
+  sessionStorage.removeItem('refreshToken')
+  sessionStorage.removeItem('loginType')
+  return null
+}
+
+export { loginUserRole, logOut, fetchUserProfile }
