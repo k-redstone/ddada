@@ -65,6 +65,15 @@ export default function MainHeader() {
         >
           라켓 추천 • 검색
         </Link>
+        {accessToken && (
+          <Link
+            href="/mypage"
+            className={`${currentNav === 5 && 'text-[#FCA211]'}`}
+            onClick={() => setCurrentNav(5)}
+          >
+            마이페이지
+          </Link>
+        )}
       </div>
 
       {/* 오른쪽 */}
