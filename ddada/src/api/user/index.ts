@@ -7,4 +7,16 @@ const loginUserRole = async () => {
   return userRole
 }
 
-export { loginUserRole }
+const logOut = async () => {
+  const accessToken = sessionStorage.getItem('accessToken')
+  if (!accessToken) return null
+  await privateAPI.post('/auth/logout', {
+    accessToken,
+  })
+  sessionStorage.removeItem('accessToken')
+  sessionStorage.removeItem('refreshToken')
+  sessionStorage.removeItem('loginType')
+  return null
+}
+
+export { loginUserRole, logOut }
