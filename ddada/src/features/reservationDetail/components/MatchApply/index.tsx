@@ -1,23 +1,22 @@
-import { useUserRole, useFetchUserProfile } from '@/hooks/queries/user'
-import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
-import { WEEKDAYS } from '@/constants/day'
-import { TeamSelectBtn } from '../TeamSelectBtn/index.tsx'
-import { useState } from 'react'
+/* eslint no-nested-ternary: "off" */
 
-import { createPortal } from 'react-dom'
-import MatchCancelModal from '../MatchCancelModal/index.tsx'
 import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
 
+import { WEEKDAYS } from '@/constants/day/index.ts'
+import {
+  addJudgeToMatch,
+  // deleteJudgeToMatch,
+} from '@/features/manager/api/managerAPI.tsx'
 import {
   addUserToMatch,
   deleteUserToMatch,
 } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
-
-import {
-  addJudgeToMatch,
-  deleteJudgeToMatch,
-} from '@/features/manager/api/managerAPI.tsx'
-
+import MatchCancelModal from '@/features/reservationDetail/components/MatchCancelModal/index.tsx'
+import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import { useFetchUserProfile, useUserRole } from '@/hooks/queries/user.ts'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {
@@ -30,7 +29,7 @@ export default function MatchApply() {
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
 
-  if (!isUserRole) {
+  if (!isUserRole || !isUserProfile) {
     return (
       <div>
         <p>now loading</p>
@@ -38,24 +37,18 @@ export default function MatchApply() {
     )
   }
 
-  const isJoinTeamA = [
+  const isJoinTeamA = !![
     matchDetailData.team1.player1,
     matchDetailData.team1.player2,
   ].find((player) => player?.nickname === userProfile?.nickname)
-    ? true
-    : false
-  const isJoinTeamB = [
+  const isJoinTeamB = !![
     matchDetailData.team2.player1,
     matchDetailData.team2.player2,
   ].find((player) => player?.nickname === userProfile?.nickname)
-    ? true
-    : false
 
-  const isJoinManager = [matchDetailData.manager].find(
+  const isJoinManager = !![matchDetailData.manager].find(
     (player) => player?.nickname === userProfile?.nickname,
   )
-    ? true
-    : false
 
   const handleMatchJoin = async () => {
     try {
@@ -71,11 +64,11 @@ export default function MatchApply() {
   const handleMatchCancel = async () => {
     try {
       console.log('asdf')
-      let clickedTeam = 1
+      let playerTeam = 1
       if (isJoinTeamB) {
-        clickedTeam = 2
+        playerTeam = 2
       }
-      await deleteUserToMatch(matchDetailData.id, clickedTeam)
+      await deleteUserToMatch(matchDetailData.id, playerTeam)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
@@ -162,7 +155,7 @@ export default function MatchApply() {
               </button>
             ) : (
               <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled={true}>
+                <TeamSelectBtn isDisabled>
                   <span className="font-bold">A팀</span>
                   <span>
                     (
@@ -207,7 +200,7 @@ export default function MatchApply() {
               </button>
             ) : (
               <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled={true}>
+                <TeamSelectBtn isDisabled>
                   <span className="font-bold">B팀</span>
                   <span>
                     (
@@ -245,7 +238,7 @@ export default function MatchApply() {
               </button>
             ) : (
               <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled={true}>
+                <TeamSelectBtn isDisabled>
                   <span className="font-bold">매니저</span>
                   <span>
                     (

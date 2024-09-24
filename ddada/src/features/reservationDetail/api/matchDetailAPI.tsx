@@ -1,4 +1,4 @@
-import { publicAPI, privateAPI } from '@/api/axios.ts'
+import { privateAPI, publicAPI } from '@/api/axios.ts'
 import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 
 export async function fetchMatchDetail(

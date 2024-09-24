@@ -1,5 +1,7 @@
 'use client'
+
 import { createContext, useContext } from 'react'
+
 import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 
 interface MatchContextProps {
@@ -20,10 +22,10 @@ export const useMatchDetailContext = () => {
 }
 
 // Context Provider 생성
-export const MatchReservationDetailProvider = ({
+export function MatchReservationDetailProvider({
   matchDetailData,
   children,
-}: MatchContextProps) => {
+}: MatchContextProps) {
   return (
     <MatchContext.Provider value={matchDetailData}>
       {children}

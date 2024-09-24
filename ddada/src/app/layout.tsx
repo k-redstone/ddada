@@ -32,7 +32,7 @@ export default function RootLayout({
             <div>{children}</div>
             <Toaster />
           </div>
-          <div id="portal"></div>
+          <div id="portal" />
         </ReactQueryProviders>
       </body>
     </html>

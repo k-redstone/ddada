@@ -1,5 +1,5 @@
-import { WEEKDAYS } from '@/constants/day'
-import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton'
+import { WEEKDAYS } from '@/constants/day/index.ts'
+import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 
 export default function MatchShortInfo() {

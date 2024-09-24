@@ -1,4 +1,4 @@
-import CommonModal from '@/components/CommonModal'
+import CommonModal from '@/components/CommonModal/index.tsx'
 
 interface MatchCancelModalProps {
   handleMatchCancel: () => void

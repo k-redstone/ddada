@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { loginUserRole, fetchUserProfile } from '@/api/user/index.ts'
+import { fetchUserProfile, loginUserRole } from '@/api/user/index.ts'
 
 export function useUserRole() {
   return useQuery({

@@ -6,7 +6,7 @@ interface TeamSelectBtnProps {
   children: React.ReactNode
 }
 
-export function TeamSelectBtn({
+export default function TeamSelectBtn({
   isDisabled,
   isClicked,
   isJoined,

@@ -1,8 +1,8 @@
 'use client'
 
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 
 export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()

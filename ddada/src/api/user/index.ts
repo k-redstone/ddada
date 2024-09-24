@@ -1,5 +1,5 @@
 import { privateAPI } from '@/api/axios.ts'
-import { UserProfile, UserRole } from '@/types/user'
+import { UserProfile, UserRole } from '@/types/user/index.ts'
 
 // todo 수정필요
 const loginUserRole = async (): Promise<UserRole | null> => {
