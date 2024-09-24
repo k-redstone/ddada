@@ -89,6 +89,7 @@ const REALDATADUMMY: MatchDetailType = {
       '2024-09-13': ['10:00', '12:00'],
       '2024-09-14': ['12:00', '14:00'],
     },
+    url: 'string',
   },
   team1: {
     id: 20,
