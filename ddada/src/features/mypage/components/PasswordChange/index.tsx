@@ -62,6 +62,11 @@ export default function PasswordChange() {
       value: 8,
       message: '비밀번호는 8자 이상으로 입력해주세요.',
     },
+    pattern: {
+      value:
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/,
+      message: '한 개 이상의 숫자/영어/특수문자를 포함해야 합니다.',
+    },
   })
 
   const newPasswordRegister = register('newPassword', {
@@ -89,7 +94,7 @@ export default function PasswordChange() {
 
   const sendResetPassword = async () => {
     if (currentPassword === newPassword) {
-      setPasswordError('이전에 사용한 비밀번호는 사용할 수 없습니다.')
+      setPasswordError('현재 비밀번호와 새 비밀번호가 같습니다.')
       return
     }
     try {
