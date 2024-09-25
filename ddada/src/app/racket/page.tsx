@@ -1,10 +1,10 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 import MainBackgroundImg from '@/static/imgs/racketRecommned/MainBackgroundImg.png'
 import TimerIcon from '@/static/imgs/racketRecommned/TimerIcon.svg'
-import Link from 'next/link'
 
 export default function RacketPage() {
   return (
@@ -30,7 +30,7 @@ export default function RacketPage() {
           </div>
           <Link
             className="border border-[#FCA211] text-[#FCA211] px-4 py-2 text-center rounded"
-            href={'/racket/recommend'}
+            href="/racket/recommend"
           >
             시작
           </Link>

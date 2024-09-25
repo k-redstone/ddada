@@ -1,11 +1,13 @@
 'use client'
 
-import ProgressBar from '@/features/racket-recommend/components/ProgressBar/index.tsx'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ProgressStepType } from '@/features/racket-recommend/types/RacketRecommendType'
-import ResultLoading from '@/features/racket-recommend/components/RacketRecommendBranch/RecommendStep/ResultLoading'
-import RacketRecommendBranch from '@/features/racket-recommend/components/RacketRecommendBranch'
+import { useState } from 'react'
+
+import ProgressBar from '@/features/racketRecommend/components/ProgressBar/index.tsx'
+import RacketRecommendBranch from '@/features/racketRecommend/components/RacketRecommendBranch/index.tsx'
+import ResultLoading from '@/features/racketRecommend/components/RacketRecommendBranch/RecommendStep/ResultLoading.tsx'
+import { ProgressStepType } from '@/features/racketRecommend/types/RacketRecommendType.ts'
+
 export default function RecommendPage() {
   const router = useRouter()
   const [recommendStep, setRecommendStep] = useState<ProgressStepType>(
@@ -51,7 +53,9 @@ export default function RecommendPage() {
   return (
     <div className="flex justify-center h-[calc(100vh-5.125rem)] py-2">
       <div className="grow flex flex-col gap-y-[5.25rem] max-w-[34rem]">
-        <div onClick={() => router.back()}>이전으로 돌아가기</div>
+        <button type="button" onClick={() => router.back()}>
+          이전으로 돌아가기
+        </button>
 
         <div className="flex flex-col gap-y-2 px-6">
           <ProgressBar step={step} />

@@ -1,17 +1,16 @@
 'use client'
 
+import Image from 'next/image'
+
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,
-} from '@/features/racket-recommend/types/RacketRecommendType.ts'
-
+} from '@/features/racketRecommend/types/RacketRecommendType.ts'
+import NoneImg from '@/static/imgs/racketRecommned/NoneImg.png'
+import SinuousImg from '@/static/imgs/racketRecommned/SinuousImg.png'
 import SolidImg from '@/static/imgs/racketRecommned/SolidImg.png'
 import SuitableImg from '@/static/imgs/racketRecommned/SuitableImg.png'
-import SinuousImg from '@/static/imgs/racketRecommned/SinuousImg.png'
-import NoneImg from '@/static/imgs/racketRecommned/NoneImg.png'
-import Image from 'next/image'
-
-import useRacketRecommendStore from '@/features/racket-recommend/stores/useRacketRecommendStore'
 
 export default function Step5({
   changeProgress,
@@ -35,7 +34,7 @@ export default function Step5({
           onClick={() => handleSelectNext('solid')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6] "
         >
-          <Image src={SolidImg} alt="SolidImg"></Image>
+          <Image src={SolidImg} alt="SolidImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">견고한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -48,7 +47,7 @@ export default function Step5({
           onClick={() => handleSelectNext('suitable')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={SuitableImg} alt="SuitableImg"></Image>
+          <Image src={SuitableImg} alt="SuitableImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">적당한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -61,7 +60,7 @@ export default function Step5({
           onClick={() => handleSelectNext('sinuous')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={SinuousImg} alt="SinuousImg"></Image>
+          <Image src={SinuousImg} alt="SinuousImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">유연한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -74,7 +73,7 @@ export default function Step5({
           onClick={() => handleSelectNext('none')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={NoneImg} alt="NoneImg"></Image>
+          <Image src={NoneImg} alt="NoneImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">상관없음</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">

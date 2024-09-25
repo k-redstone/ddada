@@ -1,16 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,
-} from '@/features/racket-recommend/types/RacketRecommendType.ts'
-
+} from '@/features/racketRecommend/types/RacketRecommendType.ts'
 import HeavyWeightImg from '@/static/imgs/racketRecommned/HeavyWeightImg.png'
 import LightWeightImg from '@/static/imgs/racketRecommned/LightWeightImg.png'
 import NoneImg from '@/static/imgs/racketRecommned/NoneImg.png'
-import Image from 'next/image'
-
-import useRacketRecommendStore from '@/features/racket-recommend/stores/useRacketRecommendStore'
 
 export default function Step3({
   changeProgress,
@@ -34,7 +33,7 @@ export default function Step3({
           onClick={() => handleSelectNext('heavy')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={HeavyWeightImg} alt="HeavyWeightImg"></Image>
+          <Image src={HeavyWeightImg} alt="HeavyWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">무거운</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -47,7 +46,7 @@ export default function Step3({
           onClick={() => handleSelectNext('light')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={LightWeightImg} alt="LightWeightImg"></Image>
+          <Image src={LightWeightImg} alt="LightWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">가벼운</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -60,7 +59,7 @@ export default function Step3({
           onClick={() => handleSelectNext('none')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={NoneImg} alt="NoneWeightImg"></Image>
+          <Image src={NoneImg} alt="NoneWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">상관없음</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">

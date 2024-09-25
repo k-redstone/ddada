@@ -1,22 +1,10 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import {
-  ProgressStepType,
-  RacketRecommendBranchProps,
-} from '@/features/racket-recommend/types/RacketRecommendType.ts'
-
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
+import { RacketRecommendBranchProps } from '@/features/racketRecommend/types/RacketRecommendType.ts'
 import SearchIcon from '@/static/imgs/racketRecommned/SearchIcon.svg'
 
-import { useState } from 'react'
-
-import useRacketRecommendStore from '@/features/racket-recommend/stores/useRacketRecommendStore'
-
-export default function Step4({
-  changeProgress,
-  changeMoveNext,
-}: RacketRecommendBranchProps) {
-  const [step, setStep] = useState<number>(1)
+export default function Step1({ changeMoveNext }: RacketRecommendBranchProps) {
   const { setPreference } = useRacketRecommendStore()
 
   const handleSelectNext = () => {

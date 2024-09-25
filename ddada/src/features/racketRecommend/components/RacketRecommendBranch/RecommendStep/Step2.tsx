@@ -1,16 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,
-} from '@/features/racket-recommend/types/RacketRecommendType.ts'
-
+} from '@/features/racketRecommend/types/RacketRecommendType.ts'
+import AllrounderStyleImg from '@/static/imgs/racketRecommned/AllrounderStyleImg.png'
 import AttackStyleImg from '@/static/imgs/racketRecommned/AttackStyleImg.png'
 import DefenseStyleImg from '@/static/imgs/racketRecommned/DefenseStyleImg.png'
-import AllrounderStyleImg from '@/static/imgs/racketRecommned/AllrounderStyleImg.png'
-import Image from 'next/image'
-
-import useRacketRecommendStore from '@/features/racket-recommend/stores/useRacketRecommendStore'
 
 export default function Step1({
   changeProgress,
@@ -36,7 +35,7 @@ export default function Step1({
           onClick={() => handleSelectNext('attack')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={AttackStyleImg} alt="AttackStyleImg"></Image>
+          <Image src={AttackStyleImg} alt="AttackStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">공격적인 스타일</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -50,7 +49,7 @@ export default function Step1({
           onClick={() => handleSelectNext('defense')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={DefenseStyleImg} alt="DefenseStyleImg"></Image>
+          <Image src={DefenseStyleImg} alt="DefenseStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">수비적인 스타일</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -64,7 +63,7 @@ export default function Step1({
           onClick={() => handleSelectNext('allround')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
         >
-          <Image src={AllrounderStyleImg} alt="AllrounderStyleImg"></Image>
+          <Image src={AllrounderStyleImg} alt="AllrounderStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">올라운더</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">

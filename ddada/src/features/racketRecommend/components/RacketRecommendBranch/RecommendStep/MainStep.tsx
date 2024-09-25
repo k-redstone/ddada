@@ -3,7 +3,7 @@ import Image from 'next/image'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,
-} from '@/features/racket-recommend/types/RacketRecommendType.ts'
+} from '@/features/racketRecommend/types/RacketRecommendType.ts'
 import MainBackgroundImg from '@/static/imgs/racketRecommned/MainBackgroundImg.png'
 import TimerIcon from '@/static/imgs/racketRecommned/TimerIcon.svg'
 
