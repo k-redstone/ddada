@@ -17,8 +17,6 @@ const patchDeleteUser = async () => {
   return null
 }
 
-// todo api 수정될 예정
-
 const putProfileEdit = async (data: ProfileEditType) => {
   const formData = new FormData()
   if (data.nickname) {
@@ -29,7 +27,6 @@ const putProfileEdit = async (data: ProfileEditType) => {
   }
   if (data.profilePicture) {
     formData.append('profileImagePath', data.profilePicture)
-    // console.log('test')
   }
   formData.append('deleteImage', data.deleteImage ? 'true' : 'false')
   const res = await privateAPI.put('/player/profile', formData, {

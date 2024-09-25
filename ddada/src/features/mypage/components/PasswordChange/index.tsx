@@ -5,7 +5,7 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
 import { patchPasswordChange } from '@/features/mypage/api/mypage/index.ts'
@@ -24,7 +24,6 @@ export default function PasswordChange() {
     register,
     handleSubmit,
     watch,
-    setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<ResetPasswordForm>({
     mode: 'onChange',
@@ -90,6 +89,8 @@ export default function PasswordChange() {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
+    validate: (value) =>
+      value === watch('newPassword') || '비밀번호가 일치하지 않아요.',
   })
 
   const sendResetPassword = async () => {

@@ -8,19 +8,17 @@ const sendAuthEmail = async (email: string) => {
 }
 
 const checkAuthCode = async (email: string, authCode: string) => {
-  const res = await publicAPI.get('/auth/verify_code', {
-    params: {
-      userInfo: email,
-      certificationCode: authCode,
-    },
+  const res = await publicAPI.post('/auth/verify_code', {
+    userInfo: email,
+    certificationCode: authCode,
   })
   return res
 }
 
-const resetPassword = async (email: string, password: string) => {
-  const res = await publicAPI.post('/auth/reset_password', {
+const resetPassword = async (email: string, newPassword: string) => {
+  const res = await publicAPI.patch('/player/password', {
     email,
-    password,
+    newPassword,
   })
   return res
 }
