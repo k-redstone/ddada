@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 
-import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
 import {
   ProgressStepType,
   RacketRecommendBranchProps,

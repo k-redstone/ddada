@@ -1,6 +1,7 @@
 import CommonModal from '@/components/CommonModal/index.tsx'
 import RacketDetailCard from '@/features/racketRecommend/components/RacketDetailCard/index.tsx'
-import { racketDummy } from '@/features/racketRecommend/dummy/index.ts'
+import { racketDummyList } from '@/features/racketRecommend/dummy/index.ts'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
 import useSelectRacketStore from '@/features/racketRecommend/stores/useSelectRacketStore.ts'
 import { RacketDetailType } from '@/features/racketRecommend/types/RacketRecommendType.ts'
 import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
@@ -15,12 +16,14 @@ export default function RacketSearchModal({
 }: MatchCancelModalProps) {
   const { selectedRacketList, updateIsNone, addSelectedRacketList } =
     useSelectRacketStore()
+  const { setCanMoveNext } = useRacketRecommendStore()
 
   const handleSelectRacket = (data: RacketDetailType) => {
     if (selectedRacketList.find((item) => item.id === data.id)) {
       return alert('이미 추가한 라켓입니다')
     }
     updateIsNone(false)
+    setCanMoveNext(true)
     addSelectedRacketList(data)
     return handleModalClose()
   }
@@ -49,7 +52,17 @@ export default function RacketSearchModal({
           <SearchIcon className="cursor-pointer" />
         </form>
         <div className="max-h-[31.25rem] flex flex-col gap-y-6 overflow-y-scroll pr-2">
-          <div
+          {racketDummyList.map((item) => (
+            <div
+              key={item.id}
+              aria-hidden="true"
+              onClick={() => handleSelectRacket(item)}
+            >
+              <RacketDetailCard data={item} />
+            </div>
+          ))}
+
+          {/* <div
             aria-hidden="true"
             onClick={() => handleSelectRacket(racketDummy)}
           >
@@ -60,13 +73,7 @@ export default function RacketSearchModal({
             onClick={() => handleSelectRacket(racketDummy)}
           >
             <RacketDetailCard data={racketDummy} />
-          </div>
-          <div
-            aria-hidden="true"
-            onClick={() => handleSelectRacket(racketDummy)}
-          >
-            <RacketDetailCard data={racketDummy} />
-          </div>
+          </div> */}
         </div>
       </div>
     </CommonModal>

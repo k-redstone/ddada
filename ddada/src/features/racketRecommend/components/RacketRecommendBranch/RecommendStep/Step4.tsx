@@ -1,6 +1,6 @@
 'use client'
 
-import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.tsx'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
 import { RacketRecommendBranchProps } from '@/features/racketRecommend/types/RacketRecommendType.ts'
 import SearchIcon from '@/static/imgs/racketRecommned/SearchIcon.svg'
 

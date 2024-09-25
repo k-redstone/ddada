@@ -12,7 +12,7 @@ import {
 export default function RacketRecommendBranch({
   progressStep,
   changeProgress,
-  changeMoveNext,
+  // changeMoveNext,
   changeStep,
 }: RacketRecommendBranchProps) {
   switch (progressStep) {
@@ -20,23 +20,23 @@ export default function RacketRecommendBranch({
       return (
         <MainStep
           changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
+          // changeMoveNext={changeMoveNext}
           changeStep={changeStep}
         />
       )
     case ProgressStepType.step1:
       return (
         <Step1
-          changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
+        // changeProgress={changeProgress}
+        // changeMoveNext={changeMoveNext}
+        // changeStep={changeStep}
         />
       )
     case ProgressStepType.step2:
       return (
         <Step2
           changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
+          // changeMoveNext={changeMoveNext}
           changeStep={changeStep}
         />
       )
@@ -44,7 +44,7 @@ export default function RacketRecommendBranch({
       return (
         <Step3
           changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
+          // changeMoveNext={changeMoveNext}
           changeStep={changeStep}
         />
       )
@@ -52,7 +52,7 @@ export default function RacketRecommendBranch({
       return (
         <Step4
           changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
+          // changeMoveNext={changeMoveNext}
           changeStep={changeStep}
         />
       )
@@ -60,7 +60,7 @@ export default function RacketRecommendBranch({
       return (
         <Step5
           changeProgress={changeProgress}
-          changeMoveNext={changeMoveNext}
+          // changeMoveNext={changeMoveNext}
           changeStep={changeStep}
         />
       )

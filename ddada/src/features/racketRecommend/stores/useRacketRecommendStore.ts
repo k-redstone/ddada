@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 interface RacketRecommendStoreProps {
+  canMoveNext: boolean
   userPreference: {
     racket: string | null
     balance: string | null
@@ -8,6 +9,8 @@ interface RacketRecommendStoreProps {
     price: string | null
     shaft: string | null
   }
+
+  setCanMoveNext: (value: boolean) => void
   setPreference: (
     key: keyof RacketRecommendStoreProps['userPreference'],
     value: string,
@@ -15,6 +18,8 @@ interface RacketRecommendStoreProps {
 }
 
 const useRacketRecommendStore = create<RacketRecommendStoreProps>()((set) => ({
+  canMoveNext: false,
+
   userPreference: {
     racket: null,
     balance: null,
@@ -22,6 +27,10 @@ const useRacketRecommendStore = create<RacketRecommendStoreProps>()((set) => ({
     price: null,
     shaft: null,
   },
+  setCanMoveNext: (value) =>
+    set(() => ({
+      canMoveNext: value,
+    })),
   setPreference: (key, value) =>
     set((state) => ({
       userPreference: {

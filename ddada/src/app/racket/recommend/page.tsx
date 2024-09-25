@@ -6,15 +6,16 @@ import { useState } from 'react'
 import ProgressBar from '@/features/racketRecommend/components/ProgressBar/index.tsx'
 import RacketRecommendBranch from '@/features/racketRecommend/components/RacketRecommendBranch/index.tsx'
 import ResultLoading from '@/features/racketRecommend/components/RacketRecommendBranch/RecommendStep/ResultLoading.tsx'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
 import { ProgressStepType } from '@/features/racketRecommend/types/RacketRecommendType.ts'
 
 export default function RecommendPage() {
   const router = useRouter()
+  const { canMoveNext, setCanMoveNext } = useRacketRecommendStore()
   const [recommendStep, setRecommendStep] = useState<ProgressStepType>(
     ProgressStepType.step1,
   )
   const [step, setStep] = useState<number>(1)
-  const [canMoveNext, setCanMoveNext] = useState<boolean>(false)
 
   const handleMoveNext = () => {
     setStep(step + 1)
@@ -64,7 +65,7 @@ export default function RecommendPage() {
           <RacketRecommendBranch
             progressStep={recommendStep}
             changeProgress={setRecommendStep}
-            changeMoveNext={setCanMoveNext}
+            // changeMoveNext={setCanMoveNext}
             changeStep={setStep}
           />
         </div>
