@@ -2,9 +2,10 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
 import { patchPasswordChange } from '@/features/mypage/api/mypage/index.ts'
@@ -23,6 +24,7 @@ export default function PasswordChange() {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<ResetPasswordForm>({
     mode: 'onChange',
@@ -34,6 +36,7 @@ export default function PasswordChange() {
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
     useState<boolean>(false)
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false)
+  const [passwordError, setPasswordError] = useState<string>('')
   const currentPassword = watch('currentPassword')
   const newPassword = watch('newPassword')
   const confirmPassword = watch('confirmPassword')
@@ -68,7 +71,7 @@ export default function PasswordChange() {
     },
     pattern: {
       value:
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/,
       message: '한 개 이상의 숫자/영어/특수문자를 포함해야 합니다.',
     },
     minLength: {
@@ -82,22 +85,32 @@ export default function PasswordChange() {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
-    validate: (value) =>
-      value === watch('newPassword') || '비밀번호가 일치하지 않아요.',
   })
 
   const sendResetPassword = async () => {
+    if (currentPassword === newPassword) {
+      setPasswordError('이전에 사용한 비밀번호는 사용할 수 없습니다.')
+      return
+    }
     try {
-      const res = await patchPasswordChange({
+      await patchPasswordChange({
         currentPassword,
         newPassword,
       })
-      console.log(res)
+      toast.success('비밀번호가 초기화되었습니다.')
+      router.push('/mypage/profile-edit')
     } catch (error) {
-      console.log()
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data.message === '비밀번호가 일치하지 않습니다.') {
+          setPasswordError('현재 비밀번호가 틀렸습니다.')
+        } else if (
+          error.response?.data.message ===
+          '이전에 사용한 비밀번호는 사용할 수 없습니다.'
+        ) {
+          setPasswordError('이전에 사용한 비밀번호는 사용할 수 없습니다.')
+        }
+      }
     }
-    // toast.success('비밀번호가 초기화되었습니다.')
-    // router.push('/mypage/profile-edit')
   }
   return (
     <div className="flex flex-col justify-center items-center gap-12 h-full">
@@ -226,6 +239,7 @@ export default function PasswordChange() {
               </label>
             </div>
           </div>
+          {passwordError && <p className="text-danger">{passwordError}</p>}
           <button
             type="submit"
             className={`py-[1.1875rem] w-full mt-3 rounded-xl ${

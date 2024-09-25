@@ -249,8 +249,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
-    validate: (value) =>
-      value === watch('password') || '비밀번호가 일치하지 않아요.',
   })
 
   const nicknameRegister = register('nickname', {
