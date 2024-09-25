@@ -104,6 +104,7 @@ export default function PaymentModal({
       }
       // todo 나중에 이 response에 있는걸로 블라블라하기
       // todo 마이페이지로 보내버리기
+      router.push('/mypage/mymatch')
       matchReservation()
       toast.success('예약 성공')
       return console.log('예약 성공')

@@ -61,7 +61,7 @@ export default function MatchReservation() {
     }
   }, [selectedMatchType])
 
-  const { data, fetchNextPage, status } = useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: [
       'matchList',
       selectedMatchRankType,
@@ -266,7 +266,6 @@ export default function MatchReservation() {
         <div>
           <Pagination changeSelectedDate={setSelectedDate} />
         </div>
-        {status === 'pending' && <div>로딩중...</div>}
         {matchesEmpty ? (
           <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-[#6B6E78]">
             <div className="text-sm font-bold">

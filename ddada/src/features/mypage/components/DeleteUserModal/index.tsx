@@ -31,7 +31,6 @@ export default function DeleteUserModal({
           onClick={handleCloseModal}
           aria-hidden="true"
         />
-        <div>회원탈퇴</div>
       </div>
       <div className="flex flex-col gap-6 fixed top-1/4 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg p-6">
         <div className="flex justify-between items-center">
@@ -39,7 +38,7 @@ export default function DeleteUserModal({
           <button
             type="button"
             onClick={handleCloseModal}
-            aria-label="예약 및 결제 닫기"
+            aria-label="회원 탈퇴 모달 닫기"
           >
             <ModalCloseIcon />
           </button>

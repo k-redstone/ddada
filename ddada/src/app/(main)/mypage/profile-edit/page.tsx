@@ -1,43 +1,45 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
+import { checkNicknameDuplicate } from '@/features/auth/api/signup/index.ts'
 import {
   getProfile,
   putProfileEdit,
 } from '@/features/mypage/api/mypage/index.ts'
+import { ProfileEditType } from '@/features/mypage/types/ProfileEditType.ts'
 import UpLoadImage from '@/static/imgs/auth/signup/imageUpload_icon.svg'
 import Logo from '@/static/imgs/logo.svg'
 import ProfileEditLogo from '@/static/imgs/mypage/mypage-profile-edit.png'
 
-interface ProfileEditType {
-  profilePicture: File | null
-  email: string
-  nickname: string
-  phoneNumber: string
-  introduction: string
-}
-
 export default function ProfileEdit() {
+  const queryClient = useQueryClient()
   const { data } = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
     enabled: false,
   })
 
+  useEffect(() => {
+    if (data.description) {
+      setIntroduction(data.description)
+      setIntroductionLength(data.description.length)
+    }
+  }, [data])
+  console.log(data)
   const [payload, setPayload] = useState<ProfileEditType>({
     profilePicture: null,
-    email: '',
     nickname: '',
-    phoneNumber: '',
     introduction: '',
+    deleteImage: false,
   })
   const [profileImage, setProfileImage] = useState<string | undefined>(
-    undefined,
+    data.profilePreSignedUrl,
   )
-  const [defaultImage, setDefaultImage] = useState<boolean>(true)
+  const [defaultImage, setDefaultImage] = useState<boolean>(false)
   const [imageError, setImageError] = useState<string>('')
   const [nickName, setNickName] = useState<string>(data.nickname)
   const [nicknameError, setNicknameError] = useState<string>('')
@@ -76,6 +78,7 @@ export default function ProfileEdit() {
         setPayload({
           ...payload,
           profilePicture: file,
+          deleteImage: false,
         })
       }
       reader.readAsDataURL(file)
@@ -84,22 +87,52 @@ export default function ProfileEdit() {
 
   const handleImageDelete = () => {
     setProfileImage(undefined)
+    setPayload({
+      ...payload,
+      deleteImage: true,
+    })
     setDefaultImage(true)
   }
 
   const handleNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value
-    if (inputValue.length > 21) {
+    if (inputValue.length > 20) {
       setNicknameError('닉네임은 20자 이하로 입력해주세요.')
       return
     }
-    setNickName(inputValue)
-    setNickNameLength(event.target.value.length)
-    setNicknameError('')
-    setPayload({
-      ...payload,
-      nickname: event.target.value,
-    })
+    if (inputValue.length < 2) {
+      setNicknameError('닉네임은 2글자 이상으로 입력해주세요.')
+      setNickName(inputValue)
+      setNickNameLength(event.target.value.length)
+    } else {
+      setNickName(inputValue)
+      setNickNameLength(event.target.value.length)
+      setNicknameError('')
+      setPayload({
+        ...payload,
+        nickname: event.target.value,
+      })
+    }
+  }
+  // queryKey를 무효화해 layout의 프로필정보를 다시 불러옴
+  const sendProfileEdit = async () => {
+    const res = await putProfileEdit(payload)
+    queryClient.invalidateQueries({ queryKey: ['profile'] })
+    toast.success('프로필이 수정되었습니다.')
+    console.log(res)
+  }
+
+  const handleCheckNickName = async () => {
+    if (data.nickname !== nickName) {
+      const duplicateCheck = await checkNicknameDuplicate(nickName)
+      if (duplicateCheck.data.message === '사용 가능한 닉네임입니다.') {
+        sendProfileEdit()
+      } else {
+        setNicknameError('이미 사용중인 닉네임입니다.')
+      }
+    } else {
+      sendProfileEdit()
+    }
   }
 
   const handleIntroduction = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,11 +148,6 @@ export default function ProfileEdit() {
     })
   }
 
-  // todo api 수정될예정
-  const sendProfileEdit = async () => {
-    const res = await putProfileEdit(payload)
-    console.log(res)
-  }
   return (
     <div className="flex flex-col gap-6">
       <Image src={ProfileEditLogo} alt="mypage-profile-edit" />
@@ -127,8 +155,11 @@ export default function ProfileEdit() {
         <p className="text-xl font-bold">내 프로필</p>
         <button
           type="button"
-          onClick={sendProfileEdit}
-          className="bg-[#FCA211] text-[#FFFBEA] py-2 px-3 rounded"
+          onClick={handleCheckNickName}
+          className={` py-2 px-3 rounded
+            ${!nicknameError ? 'cursor-pointer bg-[#FCA211] text-[#FFFBEA]' : 'cursor-not-allowed bg-[#E5E5ED] text-[#6B6E78]'}
+            `}
+          disabled={!!nicknameError}
         >
           변경사항 저장
         </button>
@@ -171,15 +202,13 @@ export default function ProfileEdit() {
                     <p>이미지 변경</p>
                   </div>
                 </button>
-                {profileImage && (
-                  <button
-                    type="button"
-                    className="text-[#DC3545] rounded-[0.75rem] border border-[#DC3545] px-[1.5rem] py-[0.75rem]"
-                    onClick={handleImageDelete}
-                  >
-                    삭제
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="text-[#DC3545] rounded-[0.75rem] border border-[#DC3545] px-[1.5rem] py-[0.75rem]"
+                  onClick={handleImageDelete}
+                >
+                  삭제
+                </button>
               </div>
               <div>
                 <p className="text-[#6B6E78] text-sm">
@@ -194,8 +223,7 @@ export default function ProfileEdit() {
       <div className="flex justify-between items-center">
         <p className="w-[7.5rem] font-bold">이메일</p>
         <div className="px-6 py-3 text-[#6B6E78] bg-[#F6F6F6] flex-grow rounded-xl border">
-          {/* todo api로 받은 이메일 값 */}
-          jth12109@gmail.com
+          {data.email}
         </div>
       </div>
 
@@ -219,8 +247,7 @@ export default function ProfileEdit() {
       <div className="flex justify-between items-center">
         <p className="w-[7.5rem] font-bold">휴대폰 번호</p>
         <div className="px-6 py-3 text-[#6B6E78] bg-[#F6F6F6] flex-grow rounded-xl border">
-          {/* todo api로 받은 휴대폰 값 */}
-          010-1234-5678
+          {data.phoneNumber}
         </div>
       </div>
       <div className="flex justify-between items-center">

@@ -4,9 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+// import Image from 'next/image'
 import { logOut } from '@/api/user/index.ts'
 import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import DeleteUserModal from '@/features/mypage/components/DeleteUserModal/index.tsx'
+import RankTier from '@/features/mypage/components/RankTier/index.tsx'
+import Logo from '@/static/imgs/logo.svg'
 import FemaleIcon from '@/static/imgs/mypage/mypage-female-icon.svg'
 import MaleIcon from '@/static/imgs/mypage/mypage-male-icon.svg'
 
@@ -62,15 +65,21 @@ export default function Layout({
 
   if (isSuccess) {
     const { gender, nickname, profilePreSignedUrl } = data
-    console.log(gender, nickname, profilePreSignedUrl)
     return (
       <>
         <div className="flex justify-center h-full">
           <div className="flex flex-col p-6 gap-4 text-[#6B6E78] font-bold w-[20.625rem]">
             <div className="flex flex-col py-6 gap justify-center items-center">
-              <div className="w-[80px] h-[80px] justify-center items-center rounded-full bg-[#000000]">
-                {/* todo back에서 받은 이미지 경로로 설정해주기 */}
-                이미지
+              <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden">
+                {profilePreSignedUrl ? (
+                  <img
+                    src={profilePreSignedUrl}
+                    alt="profile"
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <Logo />
+                )}
               </div>
               <div className="flex gap-1">
                 <p>{nickname}</p>
@@ -78,7 +87,10 @@ export default function Layout({
                   {gender === 'MALE' ? <MaleIcon /> : <FemaleIcon />}
                 </div>
               </div>
-              <p>랭크</p>
+              <p>{data.rating}</p>
+              {/* 나중에 number로 바꿔준대 지금은 걍 숫자 넣음 todo */}
+              <RankTier rating={4001} />
+              {/* 나중에 승률 내가 계산해야할듯? */}
               <p className="text-sm">승패</p>
               <p className="text-sm">승률</p>
             </div>
@@ -127,7 +139,7 @@ export default function Layout({
               </button>
             </div>
           </div>
-          <div className="p-6">{children}</div>
+          <div className="p-6 w-[36.25rem]">{children}</div>
         </div>
         {deleteUserModal && (
           <DeleteUserModal

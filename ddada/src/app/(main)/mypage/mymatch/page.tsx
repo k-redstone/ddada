@@ -1,3 +1,5 @@
+import MatchList from '@/features/mypage/components/MatchList/index.tsx'
+
 export default function MyMatch() {
-  return <div>테스트</div>
+  return <MatchList />
 }

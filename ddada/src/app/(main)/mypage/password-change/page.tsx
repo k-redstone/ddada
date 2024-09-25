@@ -1,3 +1,5 @@
-export default function PasswordChange() {
-  return <div>비밀번호변경</div>
+import PasswordChange from '@/features/mypage/components/PasswordChange/index.tsx'
+
+export default function changePassword() {
+  return <PasswordChange />
 }

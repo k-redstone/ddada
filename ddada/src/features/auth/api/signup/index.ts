@@ -35,7 +35,7 @@ const signupSubmit = async (payload: SignUpSubmitType) => {
   formData.append('gender', payload.gender)
   formData.append('birth', payload.birthYear)
   formData.append('password', payload.password)
-  formData.append('phoneNumber', payload.phoneNumber)
+  formData.append('number', payload.phoneNumber)
   if (payload.introduction) {
     formData.append('description', payload.introduction)
   }
