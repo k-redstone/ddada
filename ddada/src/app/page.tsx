@@ -1,14 +1,21 @@
 'use client'
 
+import MainFooter from '@/components/MainFooter/index.tsx'
+import MainHeader from '@/components/MainHeader/index.tsx'
+import Landing from '@/features/landing/components/landing/index.tsx'
 import { useUserRole } from '@/hooks/queries/user.ts'
 
 export default function Home() {
   useUserRole()
   return (
     <main>
-      <h1 className="text-black font-black text-2xl">
-        세상에 이런 폰트가 나오다니 천재인듯
-      </h1>
+      <div className="flex flex-col h-screen">
+        <MainHeader />
+        <div className="flex justify-center flex-1">
+          <Landing />
+        </div>
+        <MainFooter />
+      </div>
     </main>
   )
 }

@@ -28,7 +28,7 @@ function Button({
   return (
     <button
       type="button"
-      className={`text-sm border- rounded-[62.5rem] ${btnSize[size]} ${btnStyle[type]}`}
+      className={`text-sm border rounded-[62.5rem] ${btnSize[size]} ${btnStyle[type]}`}
       onClick={onClick}
       disabled={disabled}
     >

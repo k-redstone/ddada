@@ -79,8 +79,6 @@ export default function PaymentModal({
     if (!accessToken) {
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
-      // todo 로그인 확인 로직 추가
-      // todo 결제하기 로직 추가
       handlePortOne()
       closeModal()
     }
@@ -134,7 +132,6 @@ export default function PaymentModal({
           </button>
         </div>
         <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl border text-lg font-bold">
-          {/* todo 나중에 정보 추가 props로 받을 예정 */}
           <p>{courtName}</p>
           <p>
             {day}({DAY_OF_WEEK}) {reservationTime.slice(0, 5)}
@@ -204,7 +201,6 @@ export default function PaymentModal({
 
           <div className="flex justify-between">
             <p>매치 가격</p>
-            {/* todo 여기에 받은 결제값넣기 */}
             <p>5,000원</p>
           </div>
           <div className="flex justify-between">
