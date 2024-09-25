@@ -48,10 +48,10 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
           ) : (
             <div className="flex gap-x-1 ">
               {Array.from({ length: data.number }).map(() => (
-                <TangerinefillDot key={data.id} />
+                <TangerinefillDot key={data.id + Math.random()} />
               ))}
               {Array.from({ length: 4 - data.number }).map(() => (
-                <TangerineBlankDot key={data.id} />
+                <TangerineBlankDot key={data.id + Math.random()} />
               ))}
             </div>
           )}

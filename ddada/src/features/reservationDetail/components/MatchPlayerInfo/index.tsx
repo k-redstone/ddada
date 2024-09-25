@@ -1,8 +1,14 @@
+'use client'
+
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import { objectDummy } from '@/features/manager/constants/dummyData.ts'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 
 export default function MatchPlayerInfo() {
+  const matchDetailData = useMatchDetailContext()
+  const team1Data = matchDetailData?.team1
+  const team2Data = matchDetailData?.team2
+
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
       <div className="flex ">
@@ -21,14 +27,30 @@ export default function MatchPlayerInfo() {
       <div className="flex justify-between items-center">
         {/* A팀 */}
         <div className="flex flex-col gap-y-6">
-          {/* 개별 컴포 */}
-
-          {objectDummy.team1.map((item, index) => (
-            <div className="flex gap-x-3" key={item.id}>
-              <GameUserInfo />
+          {/* player A1 */}
+          <div className="flex gap-x-3">
+            <GameUserInfo src={team1Data.player1.image} />
+            <div className="flex flex-col gap-y-1">
+              <p className="flex gap-x-1 items-center">
+                <span className="font-bold text-[#6B6E78]">
+                  [A1] {team1Data.player1.nickname}
+                </span>
+              </p>
+              <p className="flex gap-x-1 items-center">
+                <BronzeIcon />
+                <span>아마추어</span>
+              </p>
+            </div>
+          </div>
+          {/* player A2 */}
+          {team1Data.player2 ? (
+            <div className="flex gap-x-3">
+              <GameUserInfo src={team1Data.player2.image} />
               <div className="flex flex-col gap-y-1">
                 <p className="flex gap-x-1 items-center">
-                  <span className="font-bold">[A{index + 1}] 나는혹석</span>
+                  <span className="font-bold">
+                    [A2] {team1Data.player2.nickname}
+                  </span>
                 </p>
                 <p className="flex gap-x-1 items-center">
                   <BronzeIcon />
@@ -36,25 +58,57 @@ export default function MatchPlayerInfo() {
                 </p>
               </div>
             </div>
-          ))}
+          ) : (
+            <p className="text-sm text-[#6B6E78] font-bold text-center">
+              매칭중...
+            </p>
+          )}
         </div>
 
         {/* B팀 */}
         <div className="flex flex-col gap-y-6">
-          {objectDummy.team1.map((item, index) => (
-            <div className="flex gap-x-3" key={item.id}>
+          {/* player B1 */}
+          {team2Data.player1 ? (
+            <div className="flex gap-x-3">
+              <GameUserInfo src={team2Data.player1.image} />
               <div className="flex flex-col gap-y-1">
-                <p className="flex gap-x-1 items-center flex-row-reverse">
-                  <span className="font-bold">[B{index + 1}] 나는혹석</span>
+                <p className="flex gap-x-1 items-center">
+                  <span className="font-bold">
+                    [A2] {team2Data.player1.nickname}
+                  </span>
                 </p>
-                <p className="flex gap-x-1 items-center flex-row-reverse">
-                  <span>프로페셔널 III</span>
+                <p className="flex gap-x-1 items-center">
                   <BronzeIcon />
+                  <span>아마추어</span>
                 </p>
               </div>
-              <GameUserInfo />
             </div>
-          ))}
+          ) : (
+            <p className="text-sm text-[#6B6E78] font-bold text-center">
+              매칭중...
+            </p>
+          )}
+          {/* player B2 */}
+          {team2Data.player2 ? (
+            <div className="flex gap-x-3">
+              <GameUserInfo src={team2Data.player2.image} />
+              <div className="flex flex-col gap-y-1">
+                <p className="flex gap-x-1 items-center">
+                  <span className="font-bold">
+                    [A2] {team2Data.player2.nickname}
+                  </span>
+                </p>
+                <p className="flex gap-x-1 items-center">
+                  <BronzeIcon />
+                  <span>아마추어</span>
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-[#6B6E78] font-bold text-center">
+              매칭중...
+            </p>
+          )}
         </div>
       </div>
     </div>

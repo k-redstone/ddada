@@ -9,7 +9,7 @@ export default function MatchTypeButton({
 }: MatchTypeButtonProps) {
   return (
     <div
-      className={`rounded-[1000px] px-2 py-1 text-xs text-white
+      className={`rounded-full px-2 py-1 text-xs text-white
     ${matchType ? 'bg-[#FCA211]' : ''}
     ${matchRankType && (matchRankType === 'RANK' ? 'bg-[#DC3545]' : 'bg-[#0D6EFD]')}
     `}
