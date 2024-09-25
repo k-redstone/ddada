@@ -27,7 +27,7 @@ const config: Config = {
         'base-50': '#F6F6F6',
         'base-100': '#E7E7E7',
         'base-200': '#D1D1D1',
-        
+
         primary: '#0D6EFD',
         success: '#22BB33',
         danger: '#DC3545',
@@ -38,8 +38,6 @@ const config: Config = {
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
       },
-
-
     },
   },
   plugins: [],

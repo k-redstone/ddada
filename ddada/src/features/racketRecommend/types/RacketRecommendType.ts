@@ -14,3 +14,12 @@ export type RacketRecommendBranchProps = {
   changeMoveNext: (arg: boolean) => void
   changeStep: (arg: number) => void
 }
+
+export type RacketDetailType = {
+  id: number
+  name: string
+  weight: string
+  material: string
+  image: string
+  made: string
+}
