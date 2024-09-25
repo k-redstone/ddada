@@ -91,7 +91,6 @@ export default function CoatReservation() {
   const handleSelectedDate = (date: string) => {
     setSelectedDate(date)
   }
-
   return (
     <div className="flex justify-center items-center">
       <div className=" px-2">

@@ -29,7 +29,6 @@ export default function ProfileEdit() {
       setIntroductionLength(data.description.length)
     }
   }, [data])
-  console.log(data)
   const [payload, setPayload] = useState<ProfileEditType>({
     profilePicture: null,
     nickname: '',
@@ -46,7 +45,6 @@ export default function ProfileEdit() {
   const [nickNameLength, setNickNameLength] = useState<number>(
     data.nickname.length,
   )
-  // todo api로 받은 한줄 소개값넣기
   const [introduction, setIntroduction] = useState<string>('')
   const [introductionLength, setIntroductionLength] = useState<number>(0)
 
@@ -116,10 +114,9 @@ export default function ProfileEdit() {
   }
   // queryKey를 무효화해 layout의 프로필정보를 다시 불러옴
   const sendProfileEdit = async () => {
-    const res = await putProfileEdit(payload)
+    await putProfileEdit(payload)
     queryClient.invalidateQueries({ queryKey: ['profile'] })
     toast.success('프로필이 수정되었습니다.')
-    console.log(res)
   }
 
   const handleCheckNickName = async () => {

@@ -42,4 +42,15 @@ const patchPasswordChange = async (data: PasswordChangeType) => {
   return res.data.result
 }
 
-export { getProfile, patchDeleteUser, putProfileEdit, patchPasswordChange }
+const getMyMatchList = async () => {
+  const res = await privateAPI.get('/player/matches')
+  return res.data.result
+}
+
+export {
+  getProfile,
+  patchDeleteUser,
+  putProfileEdit,
+  patchPasswordChange,
+  getMyMatchList,
+}

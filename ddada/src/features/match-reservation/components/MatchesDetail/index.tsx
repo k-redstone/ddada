@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
 import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import MatchBar from '@/static/imgs/match-reservation/match-reservation_match_bar_icon.svg'
