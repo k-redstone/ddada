@@ -29,7 +29,7 @@ export default function RacketPage() {
             <span className="text-[#FCA211] text-sm">2분</span>
           </div>
           <Link
-            className="border border-[#FCA211] text-[#FCA211] px-4 py-2 text-center rounded"
+            className="border border-theme text-theme px-4 py-2 text-center rounded hover:text-white hover:bg-theme"
             href="/racket/recommend"
           >
             시작
