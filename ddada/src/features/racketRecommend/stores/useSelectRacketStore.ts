@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { RacketDetailType } from '@/features/racketRecommend/types/RacketRecommendType.ts'
 
-interface RacketRecommendStoreProps {
+interface SelectRacketStoreProps {
   isSelectNone: boolean
   selectedRacketList: RacketDetailType[]
   updateIsNone: (value: boolean) => void
@@ -10,7 +10,7 @@ interface RacketRecommendStoreProps {
   deleteSelectedRacketList: (value: number) => void
 }
 
-const useSelectRacketStore = create<RacketRecommendStoreProps>()((set) => ({
+const useSelectRacketStore = create<SelectRacketStoreProps>()((set) => ({
   isSelectNone: false,
   selectedRacketList: [],
 

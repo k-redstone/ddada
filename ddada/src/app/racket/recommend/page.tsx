@@ -7,11 +7,14 @@ import ProgressBar from '@/features/racketRecommend/components/ProgressBar/index
 import RacketRecommendBranch from '@/features/racketRecommend/components/RacketRecommendBranch/index.tsx'
 import ResultLoading from '@/features/racketRecommend/components/RacketRecommendBranch/RecommendStep/ResultLoading.tsx'
 import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import useSelectRacketStore from '@/features/racketRecommend/stores/useSelectRacketStore.ts'
 import { ProgressStepType } from '@/features/racketRecommend/types/RacketRecommendType.ts'
+import BackIcon from '@/static/imgs/racketRecommned/BackIcon.svg'
 
 export default function RecommendPage() {
   const router = useRouter()
   const { canMoveNext, setCanMoveNext } = useRacketRecommendStore()
+  const { updateIsNone } = useSelectRacketStore()
   const [recommendStep, setRecommendStep] = useState<ProgressStepType>(
     ProgressStepType.step1,
   )
@@ -44,6 +47,13 @@ export default function RecommendPage() {
     setRecommendStep(nextStep)
     setCanMoveNext(false)
   }
+
+  const handleMoveBack = () => {
+    updateIsNone(false)
+    setCanMoveNext(false)
+    router.back()
+  }
+
   if (recommendStep === ProgressStepType.loading) {
     return (
       <div className="flex justify-center h-[calc(100vh-5.125rem)]">
@@ -54,9 +64,14 @@ export default function RecommendPage() {
   return (
     <div className="flex justify-center  min-h-[calc(100vh-5.125rem)] py-2">
       <div className="grow flex flex-col gap-y-[5.25rem] max-w-[34rem]">
-        <button type="button" onClick={() => router.back()}>
-          이전으로 돌아가기
-        </button>
+        <div className="flex">
+          <button type="button" onClick={() => handleMoveBack()}>
+            <p className="flex gap-x-2 items-center text-sm  text-disabled-dark">
+              <BackIcon />
+              <span>이전으로 돌아가기</span>
+            </p>
+          </button>
+        </div>
 
         <div className="flex flex-col gap-y-2 px-6">
           <ProgressBar step={step} />
