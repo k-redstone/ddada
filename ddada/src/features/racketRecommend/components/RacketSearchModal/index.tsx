@@ -16,7 +16,7 @@ export default function RacketSearchModal({
 }: MatchCancelModalProps) {
   const { selectedRacketList, updateIsNone, addSelectedRacketList } =
     useSelectRacketStore()
-  const { setCanMoveNext } = useRacketRecommendStore()
+  const { setCanMoveNext, setPreference } = useRacketRecommendStore()
 
   const handleSelectRacket = (data: RacketDetailType) => {
     if (selectedRacketList.find((item) => item.id === data.id)) {
@@ -25,6 +25,12 @@ export default function RacketSearchModal({
     updateIsNone(false)
     setCanMoveNext(true)
     addSelectedRacketList(data)
+    setPreference(
+      'racket',
+      [...selectedRacketList, data].map((item) => {
+        return item.id
+      }),
+    )
     return handleModalClose()
   }
 

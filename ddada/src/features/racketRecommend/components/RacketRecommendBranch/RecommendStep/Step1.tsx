@@ -11,14 +11,14 @@ import useModal from '@/hooks/useModal/index.tsx'
 import SearchIcon from '@/static/imgs/racketRecommned/SearchIcon.svg'
 
 export default function Step1() {
-  const { setPreference } = useRacketRecommendStore()
   const {
     isSelectNone,
     selectedRacketList,
     updateIsNone,
     deleteSelectedRacketList,
   } = useSelectRacketStore()
-  const { setCanMoveNext } = useRacketRecommendStore()
+  const { userPreference, setPreference, setCanMoveNext } =
+    useRacketRecommendStore()
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
 
@@ -38,6 +38,14 @@ export default function Step1() {
     if (selectedRacketList.length - 1 === 0) {
       setCanMoveNext(false)
     }
+    setPreference(
+      'racket',
+      selectedRacketList
+        .filter((item) => item.id !== racketId)
+        .map((item) => {
+          return item.id
+        }),
+    )
   }
 
   return (

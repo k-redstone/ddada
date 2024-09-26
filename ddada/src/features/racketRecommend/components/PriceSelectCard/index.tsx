@@ -1,4 +1,4 @@
-import CheckedIcon from '@/static/imgs/racketRecommned/checkedIcon.svg'
+import CheckedIcon from '@/static/imgs/racketRecommned/CheckedIcon.svg'
 import UnCheckedIcon from '@/static/imgs/racketRecommned/UnCheckedIcon.svg'
 
 interface PriceSelectCardProps {
