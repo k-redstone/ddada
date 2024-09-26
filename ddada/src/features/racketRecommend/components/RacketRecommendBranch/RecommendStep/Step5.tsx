@@ -31,7 +31,7 @@ export default function Step5({
         {/* 4개의 탄성 */}
         {/* 견고한 */}
         <div
-          onClick={() => handleSelectNext('solid')}
+          onClick={() => handleSelectNext('stiff')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
@@ -47,7 +47,7 @@ export default function Step5({
         </div>
         {/* 적당한 */}
         <div
-          onClick={() => handleSelectNext('suitable')}
+          onClick={() => handleSelectNext('medium')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
@@ -63,7 +63,7 @@ export default function Step5({
         </div>
         {/* 유연함 */}
         <div
-          onClick={() => handleSelectNext('sinuous')}
+          onClick={() => handleSelectNext('flexible')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
@@ -79,7 +79,7 @@ export default function Step5({
         </div>
         {/* 상관없음 */}
         <div
-          onClick={() => handleSelectNext('none')}
+          onClick={() => handleSelectNext('')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >

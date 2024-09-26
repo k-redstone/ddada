@@ -58,7 +58,7 @@ export default function Step3({
         </div>
         {/* 상관없음 */}
         <div
-          onClick={() => handleSelectNext('none')}
+          onClick={() => handleSelectNext('')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >

@@ -42,7 +42,7 @@ export default function Step4() {
       return setSelectedPrice([])
     }
     setCanMoveNext(true)
-    setPreference('price', [0])
+    setPreference('price', [])
     return setSelectedPrice([0])
   }
 

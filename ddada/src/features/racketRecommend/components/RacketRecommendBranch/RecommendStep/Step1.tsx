@@ -17,8 +17,7 @@ export default function Step1() {
     updateIsNone,
     deleteSelectedRacketList,
   } = useSelectRacketStore()
-  const { userPreference, setPreference, setCanMoveNext } =
-    useRacketRecommendStore()
+  const { setPreference, setCanMoveNext } = useRacketRecommendStore()
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
 
@@ -30,7 +29,7 @@ export default function Step1() {
     }
     updateIsNone(true)
     setCanMoveNext(true)
-    setPreference('racket', 'none')
+    setPreference('racket', [])
   }
 
   const handleDeleteRacket = async (racketId: number) => {

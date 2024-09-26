@@ -3,11 +3,11 @@ import { create } from 'zustand'
 interface RacketRecommendStoreProps {
   canMoveNext: boolean
   userPreference: {
-    racket: string | null
-    balance: string | null
-    weight: string | null
+    racket: number[]
     price: number[]
-    shaft: string | null
+    balance: string
+    weight: string
+    shaft: string
   }
 
   setCanMoveNext: (value: boolean) => void
@@ -21,11 +21,11 @@ const useRacketRecommendStore = create<RacketRecommendStoreProps>()((set) => ({
   canMoveNext: false,
 
   userPreference: {
-    racket: null,
-    balance: null,
-    weight: null,
+    racket: [],
     price: [],
-    shaft: null,
+    balance: '',
+    weight: '',
+    shaft: '',
   },
   setCanMoveNext: (value) =>
     set(() => ({
