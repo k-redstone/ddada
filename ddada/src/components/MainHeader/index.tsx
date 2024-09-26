@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { logOut } from '@/api/user/index.ts'
@@ -10,6 +11,12 @@ import CalendarIcon from '@/static/imgs/main/CalendarIcon.svg'
 export default function MainHeader() {
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [loginType, setLoginType] = useState<string | null>(null)
+  const pathname = usePathname()
+  const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
+
+  useEffect(() => {
+    setCurrentPath(pathname.split('/')[1])
+  }, [pathname])
 
   useEffect(() => {
     setAccessToken(sessionStorage.getItem('accessToken'))
@@ -26,7 +33,6 @@ export default function MainHeader() {
     }
   }
 
-  const [currentNav, setCurrentNav] = useState<number>(1)
   return (
     <div className="px-4 flex gap-x-[0.625rem] py-[0.625rem]">
       {/* logo */}
@@ -37,39 +43,31 @@ export default function MainHeader() {
 
       {/* 가운데 링크들 */}
       <div className="flex gap-x-12 items-center justify-center text-[#6B6E78] grow">
-        <Link
-          href="/"
-          className={`${currentNav === 1 && 'text-[#FCA211]'}`}
-          onClick={() => setCurrentNav(1)}
-        >
+        <Link href="/" className={`${currentPath === '' && 'text-[#FCA211]'}`}>
           홈
         </Link>
         <Link
           href="/match-reservation"
-          className={`${currentNav === 2 && 'text-[#FCA211]'}`}
-          onClick={() => setCurrentNav(2)}
+          className={`${currentPath === 'match-reservation' && 'text-[#FCA211]'}`}
         >
           매치 예약
         </Link>
         <Link
           href="/court-reservation"
-          className={`${currentNav === 3 && 'text-[#FCA211]'}`}
-          onClick={() => setCurrentNav(3)}
+          className={`${currentPath === 'court-reservation' && 'text-[#FCA211]'}`}
         >
           장소 예약
         </Link>
         <Link
           href="/"
-          className={`${currentNav === 4 && 'text-[#FCA211]'}`}
-          onClick={() => setCurrentNav(4)}
+          className={`${currentPath === '/racket-recommend' && 'text-[#FCA211]'}`}
         >
           라켓 추천 • 검색
         </Link>
         {accessToken && (
           <Link
             href="/mypage/mymatch"
-            className={`${currentNav === 5 && 'text-[#FCA211]'}`}
-            onClick={() => setCurrentNav(5)}
+            className={`${currentPath === 'mypage' && 'text-[#FCA211]'}`}
           >
             마이페이지
           </Link>

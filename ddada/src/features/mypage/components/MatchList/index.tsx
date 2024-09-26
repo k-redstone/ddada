@@ -30,18 +30,27 @@ export default function MatchList() {
         ) : (
           <div className="flex flex-col justify-center items-center text-sm  text-disabled-dark gap-1">
             <div className="flex flex-col justify-center items-center font-bold">
-              <p>매치가 없어요 :(</p>
+              <p>예약된 결과가 없어요 :(</p>
               <p>
-                <Link href="/match-reservation">매치를 예약해볼까요? </Link>
+                <Link href="/match-reservation">예약해볼까요? </Link>
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => router.push('/match-reservation')}
-              className="bg-[#FCA211] text-theme-light py-1 px-3 rounded-xl"
-            >
-              매치 잡기
-            </button>
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => router.push('/match-reservation')}
+                className="border border-[#FCA211] text-[#FCA211] py-1 px-3 rounded-xl hover:bg-[#FCA211] hover:text-white transition-colors duration-200"
+              >
+                매치 예약
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push('/court-reservation')}
+                className="border border-[#FCA211] text-[#FCA211] py-1 px-3 rounded-xl hover:bg-[#FCA211] hover:text-white transition-colors duration-200"
+              >
+                장소 예약
+              </button>
+            </div>
           </div>
         )}
       </div>

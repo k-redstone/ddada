@@ -34,10 +34,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   }
 
   return (
-    <div
-      key={court.id}
-      className="flex border-b h-[12.5rem] w-[46rem] gap-[0.625rem] py-2"
-    >
+    <div key={court.id} className="flex border-b w-[46rem] gap-[0.625rem] py-2">
       <div>
         <img
           src={court.image}

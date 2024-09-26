@@ -24,6 +24,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
   const [team] = match.MyTeamAndNumber.split(' ')
   const dayOfWeek = dayjs(match.matchDate).format('dd')
   const handleMatchCancel = async () => {
+    console.log(team, match.matchId)
     try {
       let playerTeam = 1
       if (team === 'B팀') {
