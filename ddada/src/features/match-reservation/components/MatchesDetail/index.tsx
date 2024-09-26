@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
-import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
+// import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import MatchBar from '@/static/imgs/match-reservation/match-reservation_match_bar_icon.svg'
 import MasterIcon from '@/static/imgs/rank/Master.svg'
@@ -40,10 +40,9 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
                 <p className="text-base font-bold">{matchCourt}</p>
                 <p className="text-sm text-[#6B6E78]">{matchAddress}</p>
               </div>
-
               <div className="flex gap-1">
-                <MatchTypeButton matchType={matchType} />
-                <MatchTypeButton matchRankType={matchRankType} />
+                <MatchTypeTag matchType={matchType} />
+                <MatchTypeTag matchRankType={matchRankType} />
               </div>
             </div>
             <div className="flex align-center gap-6 text-center flex-grow">

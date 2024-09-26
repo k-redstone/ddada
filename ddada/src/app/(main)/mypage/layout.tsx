@@ -1,10 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-// import Image from 'next/image'
 import { logOut } from '@/api/user/index.ts'
 import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import DeleteUserModal from '@/features/mypage/components/DeleteUserModal/index.tsx'
@@ -72,10 +72,16 @@ export default function Layout({
             <div className="flex flex-col py-6 gap justify-center items-center">
               <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden">
                 {profilePreSignedUrl ? (
-                  <img
+                  // <img
+                  //   src={profilePreSignedUrl}
+                  //   alt="profile"
+                  //   className="w-full h-full"
+                  // />
+                  <Image
                     src={profilePreSignedUrl}
                     alt="profile"
-                    className="w-full h-full"
+                    width={80}
+                    height={80}
                   />
                 ) : (
                   <Logo />

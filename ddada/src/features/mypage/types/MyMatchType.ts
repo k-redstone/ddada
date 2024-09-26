@@ -17,8 +17,8 @@ export type RankType = 'NORMAL' | 'RANK'
 export type MyMatchDetailsType = {
   MyTeamAndNumber: string
   avgRating: number
-  courtAddress: string
-  courtName: string
+  gymAddress: string
+  gymName: string
   matchDate: string
   matchId: number
   matchStatus: MatchStatus
