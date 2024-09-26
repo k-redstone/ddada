@@ -18,54 +18,18 @@ export default function RacketRecommendBranch({
   switch (progressStep) {
     case ProgressStepType.main:
       return (
-        <MainStep
-          changeProgress={changeProgress}
-          // changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
-        />
+        <MainStep changeProgress={changeProgress} changeStep={changeStep} />
       )
     case ProgressStepType.step1:
-      return (
-        <Step1
-        // changeProgress={changeProgress}
-        // changeMoveNext={changeMoveNext}
-        // changeStep={changeStep}
-        />
-      )
+      return <Step1 />
     case ProgressStepType.step2:
-      return (
-        <Step2
-          changeProgress={changeProgress}
-          // changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
-        />
-      )
+      return <Step2 changeProgress={changeProgress} changeStep={changeStep} />
     case ProgressStepType.step3:
-      return (
-        <Step3
-          changeProgress={changeProgress}
-          // changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
-        />
-      )
+      return <Step3 changeProgress={changeProgress} changeStep={changeStep} />
     case ProgressStepType.step4:
-      return (
-        <Step4
-          changeProgress={changeProgress}
-          // changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
-        />
-      )
+      return <Step4 />
     case ProgressStepType.step5:
-      return (
-        <Step5
-          changeProgress={changeProgress}
-          // changeMoveNext={changeMoveNext}
-          changeStep={changeStep}
-        />
-      )
-    // case ProgressStepType.step4:
-    //   return <Step3 />
+      return <Step5 changeProgress={changeProgress} changeStep={changeStep} />
 
     default:
       return <div>잘못된 접근입니다.</div>
