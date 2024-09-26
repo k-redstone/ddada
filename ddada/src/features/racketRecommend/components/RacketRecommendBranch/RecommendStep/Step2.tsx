@@ -34,6 +34,7 @@ export default function Step1({
         <div
           onClick={() => handleSelectNext('attack')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={AttackStyleImg} alt="AttackStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -48,6 +49,7 @@ export default function Step1({
         <div
           onClick={() => handleSelectNext('defense')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={DefenseStyleImg} alt="DefenseStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -62,6 +64,7 @@ export default function Step1({
         <div
           onClick={() => handleSelectNext('allround')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={AllrounderStyleImg} alt="AllrounderStyleImg" />
           <div className="flex flex-col gap-y-1 items-center">

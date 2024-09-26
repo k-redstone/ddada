@@ -32,6 +32,7 @@ export default function Step3({
         <div
           onClick={() => handleSelectNext('heavy')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={HeavyWeightImg} alt="HeavyWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -45,6 +46,7 @@ export default function Step3({
         <div
           onClick={() => handleSelectNext('light')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={LightWeightImg} alt="LightWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -58,6 +60,7 @@ export default function Step3({
         <div
           onClick={() => handleSelectNext('none')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={NoneImg} alt="NoneWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">

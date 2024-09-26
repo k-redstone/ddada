@@ -27,12 +27,13 @@ export default function Step5({
   return (
     <div className="flex flex-col gap-y-[5.25rem] w-[34rem] ">
       <p className="text-xl text-center">선호하는 라켓의 탄성을 골라주세요</p>
-      <div className="flex gap-x-3 justify-between ">
+      <div className="grid grid-cols-2 gap-x-3 justify-between ">
         {/* 4개의 탄성 */}
         {/* 견고한 */}
         <div
           onClick={() => handleSelectNext('solid')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6] "
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={SolidImg} alt="SolidImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -46,6 +47,7 @@ export default function Step5({
         <div
           onClick={() => handleSelectNext('suitable')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={SuitableImg} alt="SuitableImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -59,6 +61,7 @@ export default function Step5({
         <div
           onClick={() => handleSelectNext('sinuous')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={SinuousImg} alt="SinuousImg" />
           <div className="flex flex-col gap-y-1 items-center">
@@ -72,6 +75,7 @@ export default function Step5({
         <div
           onClick={() => handleSelectNext('none')}
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          aria-hidden="true"
         >
           <Image src={NoneImg} alt="NoneImg" />
           <div className="flex flex-col gap-y-1 items-center">
