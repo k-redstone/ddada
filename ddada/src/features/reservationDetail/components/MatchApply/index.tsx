@@ -56,6 +56,7 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      queryClient.removeQueries({ queryKey: ['matchList'] })
     } catch {
       console.error('asdf')
     }
@@ -72,6 +73,7 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      queryClient.removeQueries({ queryKey: ['matchList'] })
     } catch {
       console.error('asdf')
     }

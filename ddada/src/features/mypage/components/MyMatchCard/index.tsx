@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
+import { toast } from 'react-hot-toast'
 
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
 import MatchStatusTag from '@/features/mypage/components/MatchStatusTag/index.tsx'
@@ -32,6 +33,11 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
       }
       await deleteUserToMatch(match.matchId, playerTeam)
       queryClient.invalidateQueries({ queryKey: ['myMatchList'] })
+      queryClient.invalidateQueries({
+        queryKey: ['matchDetail', `${match.matchId}`],
+      })
+      queryClient.removeQueries({ queryKey: ['matchList'] })
+      toast.success('매치가 취소되었습니다.')
     } catch {
       console.error('매치 취소 실패')
     }
@@ -77,7 +83,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
           </div>
         </div>
         <div className="flex gap-1 justify-center items-center text-xs">
-          {match.matchStatus === ('CREATED' || 'RESERVED') && (
+          {match.matchStatus === ('CREATED' || 'RESERVED') ? (
             <div>
               <button
                 type="button"
@@ -87,12 +93,13 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
                 <p>취소</p>
               </button>
             </div>
+          ) : (
+            <Link href={`/match-reservation/detail/${match.matchId}`}>
+              <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-[#FCA211] text-theme-light rounded">
+                상세
+              </div>
+            </Link>
           )}
-          <Link href={`/match-reservation/detail/${match.matchId}`}>
-            <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-[#FCA211] text-theme-light rounded">
-              상세
-            </div>
-          </Link>
         </div>
       </div>
     </>

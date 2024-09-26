@@ -26,7 +26,7 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
   const mmr = '프로페셔널 2'
   const AteamNum = match.team1PlayerCount
   const BteamNum = match.team2PlayerCount
-  console.log(match)
+  console.log(match.playersGender)
   return (
     <Link href={`/match-reservation/detail/${match.id}`}>
       <div className="flex w-[47.6875rem] rounded-[0.75rem] border flex-col py-2 px-4 gap-2 hover:bg-[#F6F6F6]">
