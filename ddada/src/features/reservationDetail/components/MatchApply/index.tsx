@@ -1,13 +1,15 @@
 /* eslint no-nested-ternary: "off" */
 
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
+import { toast } from 'react-hot-toast'
 
 import { WEEKDAYS } from '@/constants/day/index.ts'
 import {
   addJudgeToMatch,
-  // deleteJudgeToMatch,
+  deleteJudgeToMatch,
+  fetchManagerPk,
 } from '@/features/manager/api/managerAPI.tsx'
 import {
   addUserToMatch,
@@ -16,20 +18,27 @@ import {
 import MatchCancelModal from '@/features/reservationDetail/components/MatchCancelModal/index.tsx'
 import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
-import { useFetchUserProfile, useUserRole } from '@/hooks/queries/user.ts'
+import { useFetchUserPk, useUserRole } from '@/hooks/queries/user.ts'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {
   const queryClient = useQueryClient()
   const { data: userRole, isSuccess: isUserRole } = useUserRole()
-  const { data: userProfile, isSuccess: isUserProfile } = useFetchUserProfile()
+  const { data: playerPk } = useFetchUserPk()
+
+  const { data: managerPk } = useQuery({
+    queryKey: ['managerPk'],
+    queryFn: fetchManagerPk,
+    retry: 1,
+  })
+
   const matchDetailData = useMatchDetailContext()
   const [clickedTeam, setClickedTeam] = useState<number>(-1)
 
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
 
-  if (!isUserRole || !isUserProfile) {
+  if (!isUserRole) {
     return (
       <div>
         <p>now loading</p>
@@ -40,30 +49,36 @@ export default function MatchApply() {
   const isJoinTeamA = !![
     matchDetailData.team1.player1,
     matchDetailData.team1.player2,
-  ].find((player) => player?.nickname === userProfile?.nickname)
+  ].find((player) => player?.id === playerPk?.playerId)
   const isJoinTeamB = !![
     matchDetailData.team2.player1,
     matchDetailData.team2.player2,
-  ].find((player) => player?.nickname === userProfile?.nickname)
+  ].find((player) => player?.id === playerPk?.playerId)
 
   const isJoinManager = !![matchDetailData.manager].find(
-    (player) => player?.nickname === userProfile?.nickname,
+    (player) => player?.id === managerPk?.id,
   )
 
   const handleMatchJoin = async () => {
+    if (clickedTeam === -1) {
+      return
+    }
+    if (isJoinTeamA || isJoinTeamB) {
+      return
+    }
     try {
       await addUserToMatch(matchDetailData.id, clickedTeam)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      toast.success('매치 예약에 성공했습니다.')
     } catch {
-      console.error('asdf')
+      toast.error('매치 예약 중 오류가 발생했습니다.')
     }
-    console.log('asdf')
   }
+
   const handleMatchCancel = async () => {
     try {
-      console.log('asdf')
       let playerTeam = 1
       if (isJoinTeamB) {
         playerTeam = 2
@@ -72,25 +87,38 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      toast.success('매치 예약 취소에 성공했습니다.')
     } catch {
-      console.error('asdf')
+      toast.error('매치 예약 취소 중 오류가 발생했습니다.')
     }
-    console.log('asdHJGHGHf')
   }
 
   const handleMatchJudgeJoin = async () => {
+    if (clickedTeam !== 3) {
+      return
+    }
     try {
       await addJudgeToMatch(matchDetailData.id)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      toast.success('매치 심판 신청에 성공했습니다.')
     } catch {
-      console.error('asdf')
+      toast.error('매치 심판 신청 중 오류가 발생했습니다.')
     }
-    console.log('asdf')
   }
 
-  const handleMatchJudgeCancel = async () => {}
+  const handleMatchJudgeCancel = async () => {
+    try {
+      await deleteJudgeToMatch(matchDetailData.id)
+      queryClient.invalidateQueries({
+        queryKey: ['matchDetail', `${matchDetailData.id}`],
+      })
+      toast.success('매치 심판 취소에 성공했습니다.')
+    } catch {
+      toast.error('매치 심판 취소 중 오류가 발생했습니다.')
+    }
+  }
 
   return (
     <>
@@ -222,19 +250,43 @@ export default function MatchApply() {
                 type="button"
                 className="flex-1"
                 onClick={() => setClickedTeam(3)}
+                disabled={isJoinManager}
               >
-                <TeamSelectBtn isDisabled={false} isClicked={clickedTeam === 3}>
-                  <span className="font-bold">매니저</span>
-                  <span>
-                    (
-                    {
-                      [matchDetailData.manager].filter(
-                        (player) => player !== null,
-                      ).length
-                    }
-                    /1)
-                  </span>
-                </TeamSelectBtn>
+                {isJoinManager ? (
+                  <TeamSelectBtn
+                    isDisabled={false}
+                    isClicked={clickedTeam === 3}
+                    isJoined={isJoinManager}
+                  >
+                    <span className="font-bold">매니저</span>
+                    <span>
+                      (
+                      {
+                        [matchDetailData.manager].filter(
+                          (player) => player !== null,
+                        ).length
+                      }
+                      /1)
+                    </span>
+                  </TeamSelectBtn>
+                ) : (
+                  <TeamSelectBtn
+                    isDisabled={isJoinManager}
+                    isClicked={clickedTeam === 3}
+                    isJoined={isJoinManager}
+                  >
+                    <span className="font-bold">매니저</span>
+                    <span>
+                      (
+                      {
+                        [matchDetailData.manager].filter(
+                          (player) => player !== null,
+                        ).length
+                      }
+                      /1)
+                    </span>
+                  </TeamSelectBtn>
+                )}
               </button>
             ) : (
               <button type="button" className="flex-1" disabled>
