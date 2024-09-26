@@ -52,7 +52,7 @@ export default function RecommendPage() {
     )
   }
   return (
-    <div className="flex justify-center h-[calc(100vh-5.125rem)] py-2">
+    <div className="flex justify-center  min-h-[calc(100vh-5.125rem)] py-2">
       <div className="grow flex flex-col gap-y-[5.25rem] max-w-[34rem]">
         <button type="button" onClick={() => router.back()}>
           이전으로 돌아가기
