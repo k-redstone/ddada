@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import { WEEKDAYS } from '@/constants/day/index.ts'
 import {
   addJudgeToMatch,
@@ -28,6 +28,9 @@ export default function MatchApply() {
 
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
+
+  const { invalidateMatchReservationList, invalidateReservationList } =
+    useInvalidateMatchReservations()
 
   if (!isUserRole || !isUserProfile) {
     return (
@@ -56,7 +59,8 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
-      queryClient.removeQueries({ queryKey: ['matchList'] })
+
+      invalidateMatchReservationList()
     } catch {
       console.error('asdf')
     }
@@ -73,7 +77,7 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
-      queryClient.removeQueries({ queryKey: ['matchList'] })
+      invalidateReservationList()
     } catch {
       console.error('asdf')
     }

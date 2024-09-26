@@ -1,12 +1,11 @@
 'use client'
 
-import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
 import {
   KR_DAY_OF_WEEK,
@@ -44,7 +43,8 @@ export default function PaymentModal({
   const DAY_OF_WEEK = KR_DAY_OF_WEEK[dayjs(reservationDay).day()]
   const [competitionType, setCompetitionType] = useState('친선')
   const [matchType, setMatchType] = useState('혼합복식')
-  const queryClient = useQueryClient()
+
+  const { invalidateReservationList } = useInvalidateMatchReservations()
 
   const matchReservation = async () => {
     let RankType = ''
@@ -106,7 +106,7 @@ export default function PaymentModal({
       }
       // todo 나중에 이 response에 있는걸로 블라블라하기
       // todo 마이페이지로 보내버리기
-      queryClient.invalidateQueries({ queryKey: ['myMatchList'] })
+      invalidateReservationList()
       router.push('/mypage/mymatch')
       matchReservation()
       toast.success('예약 성공')

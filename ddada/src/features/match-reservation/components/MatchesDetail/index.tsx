@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
+import MatchPlayerGenderIcon from '@/features/match-reservation/components/MatchPlayerGenderIcon/index.tsx'
 // import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import MatchBar from '@/static/imgs/match-reservation/match-reservation_match_bar_icon.svg'
@@ -26,6 +27,7 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
   const mmr = '프로페셔널 2'
   const AteamNum = match.team1PlayerCount
   const BteamNum = match.team2PlayerCount
+  console.log(match.matchType)
   console.log(match.playersGender)
   return (
     <Link href={`/match-reservation/detail/${match.id}`}>
@@ -46,15 +48,22 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
           </div>
           <div className="flex align-center gap-6 text-center flex-grow">
             <div className="flex flex-col justify-center gap-[0.625rem]">
-              <p className="text-xl font-bold">{AteamNum}</p>
-              <p className="text-xs">A팀(명)</p>
+              <MatchPlayerGenderIcon
+                matchType={matchType}
+                playersGender={match.playersGender.slice(0, 2)}
+              />
+              <p className="text-xs">A팀</p>
             </div>
             <div className="flex flex-col justify-center">
               <MatchBar />
             </div>
             <div className="flex flex-col justify-center gap-[0.625rem]">
-              <p className="text-xl font-bold">{BteamNum}</p>
-              <p className="text-xs">B팀(명)</p>
+              {/* <p className="text-xl font-bold">{BteamNum}</p> */}
+              <MatchPlayerGenderIcon
+                matchType={matchType}
+                playersGender={match.playersGender.slice(0, 2)}
+              />
+              <p className="text-xs">B팀</p>
             </div>
           </div>
           <div className="flex justify-end w-[6.25rem]">

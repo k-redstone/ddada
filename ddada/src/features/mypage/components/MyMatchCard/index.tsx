@@ -4,7 +4,7 @@ import 'dayjs/locale/ko'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { toast } from 'react-hot-toast'
-
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
 import MatchStatusTag from '@/features/mypage/components/MatchStatusTag/index.tsx'
 import { MyMatchDetailsType } from '@/features/mypage/types/MyMatchType.ts'
@@ -21,6 +21,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
   const queryClient = useQueryClient()
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
+  const { invalidateReservationList } = useInvalidateMatchReservations()
 
   const [team] = match.MyTeamAndNumber.split(' ')
   const dayOfWeek = dayjs(match.matchDate).format('dd')
@@ -32,11 +33,12 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
         playerTeam = 2
       }
       await deleteUserToMatch(match.matchId, playerTeam)
-      queryClient.invalidateQueries({ queryKey: ['myMatchList'] })
+
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${match.matchId}`],
       })
-      queryClient.removeQueries({ queryKey: ['matchList'] })
+      invalidateReservationList()
+
       toast.success('매치가 취소되었습니다.')
     } catch {
       console.error('매치 취소 실패')
