@@ -39,10 +39,10 @@ export default function RankTier({ rating }: RankTierProps) {
   return (
     <div
       className={`border-2 rounded-full flex items-center justify-center py-1 px-3 gap-2
-    ${tier === '루키' && 'border-[#000000] text-[#000000] bg-[#000000] bg-opacity-20'}
+    ${tier === '루키' && 'border-black text-black bg-black bg-opacity-20'}
     ${tier === '아마추어' && 'border-[#963D0A] text-[#963D0A] bg-[#963D0A] bg-opacity-20'}
     ${tier === '세미프로' && 'border-[#6D6D6D] text-[#6D6D6D] bg-[#F6F6F6]'}
-    ${tier === '프로페셔널' && 'border-[#FCA211] text-[#FCA211] bg-[#FFFBEA]'}
+    ${tier === '프로페셔널' && 'border-theme text-theme bg-theme-light'}
     ${tier === '마스터' && 'border-[#9180D4] text-[#9180D4] bg-[#F1F2FC]'}
     `}
     >

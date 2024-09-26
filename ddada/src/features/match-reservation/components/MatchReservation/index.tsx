@@ -186,7 +186,7 @@ export default function MatchReservation() {
           />
         </div>
         <div className="flex justify-center">
-          <div className="flex text-[#6B6E78] text-xs items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
+          <div className="flex text-disabled-dark text-xs items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
             <button
               form="search"
               type="submit"
@@ -200,18 +200,18 @@ export default function MatchReservation() {
                 id="search"
                 onChange={handleSearch}
                 placeholder="지역, 체육관 명으로 검색"
-                className="w-[7.1875rem] placeholder-[#6B6E78] focus:outline-none focus:border-none"
+                className="w-[7.1875rem] placeholder-disabled-dark focus:outline-none focus:border-none"
               />
             </form>
           </div>
         </div>
-        <div className="flex justify-center text-[#6B6E78] text-xs ">
+        <div className="flex justify-center text-disabled-dark text-xs ">
           <div className="flex flex-col gap-2">
             <div className="flex gap-2">
               <button
                 type="button"
                 className={`flex items-center border rounded-[62.5rem] gap-x-2 px-4 py-2
-            ${selectedRegionNum > 0 ? 'text-[#FCA211] border-[#FCA211] bg-[#FFFBEA]' : 'text-[#6B6E78]'}
+            ${selectedRegionNum > 0 ? 'text-theme border-theme bg-theme-light' : 'text-disabled-dark'}
           `}
                 onClick={handleLocationModal}
               >
@@ -233,8 +233,8 @@ export default function MatchReservation() {
               </button>
               <button
                 type="button"
-                className={`flex items-center border rounded-[62.5rem] gap-x-2 px-4 py-2 text-[#6B6E78]
-                  ${selectedMatchTypeNum > 0 ? 'text-[#FCA211] border-[#FCA211] bg-[#FFFBEA]' : ''}
+                className={`flex items-center border rounded-[62.5rem] gap-x-2 px-4 py-2 text-disabled-dark
+                  ${selectedMatchTypeNum > 0 ? 'text-theme border-theme bg-theme-light' : ''}
                     `}
                 onClick={handleMaTchTypeModal}
               >
@@ -267,7 +267,7 @@ export default function MatchReservation() {
           <Pagination changeSelectedDate={setSelectedDate} />
         </div>
         {matchesEmpty ? (
-          <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-[#6B6E78]">
+          <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-disabled-dark">
             <div className="text-sm font-bold">
               해당 일자에 매치가 없어요 :(
             </div>

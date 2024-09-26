@@ -10,12 +10,12 @@ export default function MatchStatusTag({ matchStatus }: MatchStatusTagProps) {
     // 승리시 패배시
     <div
       className={`border rounded-full h-[50px] w-[50px] flex justify-center items-center
-      ${matchStatus === 'CREATED' && 'border-[#FCA211] text-[#FCA211] bg-theme-light'}
+      ${matchStatus === 'CREATED' && 'border-theme text-theme bg-theme-light'}
       ${matchStatus === 'MATCHED' && 'border-success text-success bg-success opacity-20'}
       ${matchStatus === 'CANCELED' && 'border-disabled-dark text-disabled-dark bg-disabled opacity-20'}
     `}
     >
-      {matchStatus === 'CREATED' && <p className="text-[#FCA211]">모집중</p>}
+      {matchStatus === 'CREATED' && <p className="text-theme">모집중</p>}
       {matchStatus === 'MATCHED' && <p className="text-success">모집완료</p>}
       {matchStatus === 'CANCELED' && <p className="text-disabled-dark">중단</p>}
     </div>

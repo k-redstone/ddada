@@ -25,21 +25,17 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
   // todo rating 에 따른 이미지와 mmr 텍스트 변경해주기
   // const { rating } = match
   const mmr = '프로페셔널 2'
-  const AteamNum = match.team1PlayerCount
-  const BteamNum = match.team2PlayerCount
-  console.log(match.matchType)
-  console.log(match.playersGender)
   return (
     <Link href={`/match-reservation/detail/${match.id}`}>
-      <div className="flex w-[47.6875rem] rounded-[0.75rem] border flex-col py-2 px-4 gap-2 hover:bg-[#F6F6F6]">
-        <div className="text-xs text-[#6B6E78]">
+      <div className="flex w-[47.6875rem] rounded-[0.75rem] border flex-col py-2 px-4 gap-2 hover:bg-base-50">
+        <div className="text-xs text-disabled-dark">
           경기일자 {fixMatchDay} {matchTime}
         </div>
         <div className="flex">
           <div className="flex flex-col gap-3 w-[18.75rem]">
             <div>
               <p className="text-base font-bold">{matchCourt}</p>
-              <p className="text-sm text-[#6B6E78]">{matchAddress}</p>
+              <p className="text-sm text-disabled-dark">{matchAddress}</p>
             </div>
             <div className="flex gap-1">
               <MatchTypeTag matchType={matchType} />
@@ -61,7 +57,7 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
               {/* <p className="text-xl font-bold">{BteamNum}</p> */}
               <MatchPlayerGenderIcon
                 matchType={matchType}
-                playersGender={match.playersGender.slice(0, 2)}
+                playersGender={match.playersGender.slice(2, 4)}
               />
               <p className="text-xs">B팀</p>
             </div>

@@ -127,7 +127,7 @@ export default function PasswordChange() {
       </div>
       <div className="flex flex-col gap-3 justify-center items-center">
         <p className="text-5xl font-normal">비밀번호 변경</p>
-        <p className="text-[#6B6E78]">
+        <p className="text-disabled-dark">
           0-16자의 영문 대/소문자, 숫자, 특수기호 조합을 사용할 수 있습니다.
         </p>
       </div>
@@ -140,7 +140,7 @@ export default function PasswordChange() {
             <p className="w-[120px] text-sm font-bold">현재 비밀번호</p>
             <div className="flex-grow">
               <label htmlFor="currentPassword">
-                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-[#FCA211]">
+                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
                   <input
                     type={currentPasswordVisibility ? 'text' : 'password'}
                     id="currentPassword"
@@ -164,7 +164,7 @@ export default function PasswordChange() {
                   </button>
                 </div>
                 {errors.currentPassword && (
-                  <p className="text-[#DC3545]">
+                  <p className="text-danger">
                     {errors.currentPassword.message}
                   </p>
                 )}
@@ -176,7 +176,7 @@ export default function PasswordChange() {
             <p className="w-[120px] text-sm font-bold">새 비밀번호</p>
             <div className="flex-grow">
               <label htmlFor="newPassword">
-                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-[#FCA211]">
+                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
                   <input
                     type={newPasswordVisibility ? 'text' : 'password'}
                     id="newPassword"
@@ -203,7 +203,7 @@ export default function PasswordChange() {
                   </button>
                 </div>
                 {errors.newPassword && (
-                  <p className="text-[#DC3545]">{errors.newPassword.message}</p>
+                  <p className="text-danger">{errors.newPassword.message}</p>
                 )}
               </label>
             </div>
@@ -213,7 +213,7 @@ export default function PasswordChange() {
             <p className="w-[120px] text-sm font-bold">새 비밀번호 확인</p>
             <div className="flex-grow">
               <label htmlFor="confirmPassword">
-                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-[#FCA211]">
+                <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
                   <input
                     type={passwordConfirmVisibility ? 'text' : 'password'}
                     id="confirmPassword"
@@ -240,7 +240,7 @@ export default function PasswordChange() {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-[#DC3545]">
+                  <p className="text-danger">
                     {errors.confirmPassword.message}
                   </p>
                 )}
@@ -252,8 +252,8 @@ export default function PasswordChange() {
             type="submit"
             className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
               isValid && !isSubmitting
-                ? 'bg-[#FCA211] text-white cursor-pointer'
-                : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+                ? 'bg-theme text-white cursor-pointer'
+                : 'bg-disabled text-disabled-dark cursor-not-allowed'
             }`}
             disabled={!isValid}
           >

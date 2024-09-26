@@ -4,12 +4,13 @@ import 'dayjs/locale/ko'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
 import { toast } from 'react-hot-toast'
-import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
+
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
 import MatchStatusTag from '@/features/mypage/components/MatchStatusTag/index.tsx'
 import { MyMatchDetailsType } from '@/features/mypage/types/MyMatchType.ts'
 import { deleteUserToMatch } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import MatchCancelModal from '@/features/reservationDetail/components/MatchCancelModal/index.tsx'
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
 
 interface MyMatchCardProps {
@@ -97,7 +98,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
             </div>
           ) : (
             <Link href={`/match-reservation/detail/${match.matchId}`}>
-              <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-[#FCA211] text-theme-light rounded">
+              <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-theme text-theme-light rounded">
                 상세
               </div>
             </Link>

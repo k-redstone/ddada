@@ -1,16 +1,19 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
+
 import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
 import {
   KR_DAY_OF_WEEK,
   MATCH_INFO,
 } from '@/features/court-reservation/constants/court-reservation.ts'
+import { getProfile } from '@/features/mypage/api/mypage/index.ts'
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import ModalCloseIcon from '@/static/imgs/court-reservation/court-reservation_modalclose_icon.svg'
 import CheckedIcon from '@/static/imgs/court-reservation/court-reservation_payment_checked_icon.svg'
 import UnCheckedIcon from '@/static/imgs/court-reservation/court-reservation_paymenty_unchecked_icon.svg'
@@ -21,6 +24,7 @@ declare global {
     PortOne: any
   }
 }
+
 interface PaymentModalProps {
   courtId: number
   closeModal: () => void
@@ -36,6 +40,12 @@ export default function PaymentModal({
   reservationDay,
   reservationTime,
 }: PaymentModalProps) {
+  const { data } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  })
+
+  const { gender } = data
   const router = useRouter()
   const pathName = usePathname()
   const day = dayjs(reservationDay).format('MM.DD')
@@ -61,14 +71,14 @@ export default function PaymentModal({
     } else if (matchType === '여자복식') {
       MatchType = 'FEMALE_DOUBLE'
     }
-    const data = {
+    const payload = {
       courtId,
       rankType: RankType,
       matchType: MatchType,
       date,
       time: `${reservationTime}`,
     }
-    const res = await postMatchReservation(data)
+    const res = await postMatchReservation(payload)
     console.log(res)
   }
 
@@ -161,7 +171,7 @@ export default function PaymentModal({
                   <UnCheckedIcon />
                 )}
                 친선
-                <p className="text-[#FCA211]">
+                <p className="text-theme">
                   (승리와 패배에 따른 실력점수와 등락이 없습니다.)
                 </p>
               </button>
@@ -187,13 +197,20 @@ export default function PaymentModal({
                   key={type}
                   type="button"
                   onClick={() => setMatchType(type)}
-                  className="flex items-center gap-2"
+                  className={`flex items-center gap-2
+                    ${gender === 'MALE' && type === '여자복식' && 'line-through text-disabled-dark'}
+                    ${gender === 'FEMALE' && type === '남자복식' && 'line-through text-disabled-dark'}
+                    `}
+                  disabled={
+                    (gender === 'MALE' && type === '여자복식') ||
+                    (gender === 'FEMALE' && type === '남자복식')
+                  }
                 >
                   {matchType === type ? <CheckedIcon /> : <UnCheckedIcon />}
                   {type}
                 </button>
               ))}
-              <p className="text-[#6B6E78]">단식은 추후 지원 예정입니다.</p>
+              <p className="text-disabled-dark">단식은 추후 지원 예정입니다.</p>
             </div>
           </div>
         </div>
@@ -223,14 +240,14 @@ export default function PaymentModal({
         <div className="flex gap-6">
           <button
             type="button"
-            className="text-[#FCA211] border border-[#FCA211] rounded px-4 py-2 border border-[#E5E5ED] grow"
+            className="text-theme border border-theme rounded px-4 py-2 border border-disabled grow"
             onClick={handleCloseModal}
           >
             닫기
           </button>
           <button
             type="button"
-            className="text-white bg-[#FCA211] rounded px-4 py-2 grow"
+            className="text-white bg-theme rounded px-4 py-2 grow"
             onClick={handlePayment}
           >
             결제하기

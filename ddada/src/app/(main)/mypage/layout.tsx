@@ -67,7 +67,7 @@ export default function Layout({
     return (
       <>
         <div className="flex justify-center h-full">
-          <div className="flex flex-col p-6 gap-4 text-[#6B6E78] font-bold w-[20.625rem]">
+          <div className="flex flex-col p-6 gap-4 text-disabled-dark font-bold w-[20.625rem]">
             <div className="flex flex-col py-6 gap justify-center items-center">
               <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden relative">
                 {profilePreSignedUrl ? (
@@ -98,7 +98,7 @@ export default function Layout({
                 type="button"
                 onClick={() => router.push('/mypage/profile-edit')}
                 className={`p-6 rounded-xl text-left
-                ${currentPath === 'profile-edit' ? 'bg-[#FFFBEA] text-[#FCA211]' : 'hover:bg-[#F6F6F6]'}`}
+                ${currentPath === 'profile-edit' ? 'bg-theme-light text-theme' : 'hover:bg-base-50'}`}
               >
                 내 프로필 수정
               </button>
@@ -106,7 +106,7 @@ export default function Layout({
                 type="button"
                 onClick={() => router.push('/mypage/password-change')}
                 className={`p-6 rounded-xl text-left
-                ${currentPath === 'password-change' ? 'bg-[#FFFBEA] text-[#FCA211]' : 'hover:bg-[#F6F6F6]'}`}
+                ${currentPath === 'password-change' ? 'bg-theme-light text-theme' : 'hover:bg-base-50'}`}
               >
                 비밀번호 변경
               </button>
@@ -114,7 +114,7 @@ export default function Layout({
                 type="button"
                 onClick={() => router.push('/mypage/mymatch')}
                 className={`p-6 rounded-xl text-left
-                ${currentPath === 'mymatch' ? 'bg-[#FFFBEA] text-[#FCA211]' : 'hover:bg-[#F6F6F6]'}`}
+                ${currentPath === 'mymatch' ? 'bg-theme-light text-theme' : 'hover:bg-base-50'}`}
               >
                 나의 매치
               </button>
@@ -122,7 +122,7 @@ export default function Layout({
                 type="button"
                 onClick={() => router.push('/mypage/playstyle')}
                 className={`p-6 rounded-xl text-left
-                ${currentPath === 'playstyle' ? 'bg-[#FFFBEA] text-[#FCA211]' : 'hover:bg-[#F6F6F6]'}`}
+                ${currentPath === 'playstyle' ? 'bg-theme-light text-theme' : 'hover:bg-base-50'}`}
               >
                 플레이스타일 분석
               </button>
@@ -132,7 +132,7 @@ export default function Layout({
                 <p className="underline">로그아웃</p>
               </button>
             </div>
-            <div className="p-6 text-[#DC3545]">
+            <div className="p-6 text-danger">
               <button type="button" onClick={handleOpenDeleteUserModal}>
                 회원탈퇴
               </button>

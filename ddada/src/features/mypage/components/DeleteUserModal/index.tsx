@@ -47,7 +47,7 @@ export default function DeleteUserModal({
           <p>{nickname}님,</p>
           <p>정말 탈퇴하시겠어요?</p>
         </div>
-        <div className="text-sm flex flex-col gap-2 text-[#6B6E78]">
+        <div className="text-sm flex flex-col gap-2 text-disabled-dark">
           <p>· 대기중인 매치가 있는 경우 삭제할 수 없습니다.</p>
           <p>· 회원님의 모든 정보가 삭제됩니다.</p>
           <p>· 회원탈퇴 후 30일 간 재가입이 불가능합니다.</p>
@@ -62,7 +62,7 @@ export default function DeleteUserModal({
             onClick={() => setChecked(!checked)}
           >
             {checked ? <CheckedBoxIcon /> : <UnChekedBoxIcon />}
-            <p className="text-[#6B6E78]">
+            <p className="text-disabled-dark">
               위 사항을 확인하였으며, 이에 동의합니다.
             </p>
           </button>
@@ -71,7 +71,7 @@ export default function DeleteUserModal({
           <button
             type="button"
             className={`text-sm px-6 py-4 grow  rounded-xl
-              ${checked ? 'bg-[#FCA211] text-[#FFFBEA]' : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'}
+              ${checked ? 'bg-theme text-theme-light' : 'bg-disabled text-disabled-dark cursor-not-allowed'}
               `}
             disabled={!checked}
             onClick={handleDeleteUser}

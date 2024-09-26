@@ -45,7 +45,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
       <div className="flex flex-col gap-4 flex-grow">
         <div>
           <p className="font-bold">{court.name}</p>
-          <p className="text-sm text-[#6B6E78]">{court.address}</p>
+          <p className="text-sm text-disabled-dark">{court.address}</p>
         </div>
         <div className="flex gap-[0.625rem]">
           <ParkingIcon />
@@ -63,8 +63,8 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
                 onClick={() => handleSelectedTime(time)}
                 className={`border px-2 py-1
                       rounded-[62.5rem]
-                  ${court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-[#E5E5ED]' : ''}
-                  ${selectedTime === time ? 'bg-[#FCA211] text-white' : ''}
+                  ${court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
+                  ${selectedTime === time ? 'bg-theme text-white' : ''}
                   `}
                 disabled={
                   court.reservations[selectedDate] &&
@@ -79,7 +79,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
       </div>
       <div className="text-xs flex flex-col justify-end gap-3">
         <div className="text-right">
-          <p className="text-[#E5E5ED] line-through">5000원</p>
+          <p className="text-disabled line-through">5000원</p>
           <div className="flex justify-end">
             <p className="font-bold">4000</p>
             <span>원/매치</span>
@@ -88,7 +88,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
         <button
           type="button"
           className={`text-white px-4 py-2  rounded-xl
-            ${selectedTime ? 'bg-[#FCA211]' : 'bg-[#E5E5ED]'}`}
+            ${selectedTime ? 'bg-theme' : 'bg-disabled'}`}
           onClick={handlePaymentModal}
           disabled={!selectedTime}
         >

@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
+
 import { WEEKDAYS } from '@/constants/day/index.ts'
 import {
   addJudgeToMatch,
@@ -17,6 +17,7 @@ import MatchCancelModal from '@/features/reservationDetail/components/MatchCance
 import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import { useFetchUserProfile, useUserRole } from '@/hooks/queries/user.ts'
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {

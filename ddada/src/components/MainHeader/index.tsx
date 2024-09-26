@@ -32,7 +32,6 @@ export default function MainHeader() {
       window.location.href = '/'
     }
   }
-
   return (
     <div className="px-4 flex gap-x-[0.625rem] py-[0.625rem]">
       {/* logo */}

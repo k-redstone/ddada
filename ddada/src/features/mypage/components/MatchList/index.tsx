@@ -39,14 +39,14 @@ export default function MatchList() {
               <button
                 type="button"
                 onClick={() => router.push('/match-reservation')}
-                className="border border-[#FCA211] text-[#FCA211] py-1 px-3 rounded-xl hover:bg-[#FCA211] hover:text-white transition-colors duration-200"
+                className="border border-theme text-theme py-1 px-3 rounded-xl hover:bg-theme hover:text-white transition-colors duration-200"
               >
                 매치 예약
               </button>
               <button
                 type="button"
                 onClick={() => router.push('/court-reservation')}
-                className="border border-[#FCA211] text-[#FCA211] py-1 px-3 rounded-xl hover:bg-[#FCA211] hover:text-white transition-colors duration-200"
+                className="border border-theme text-theme py-1 px-3 rounded-xl hover:bg-theme hover:text-white transition-colors duration-200"
               >
                 장소 예약
               </button>
