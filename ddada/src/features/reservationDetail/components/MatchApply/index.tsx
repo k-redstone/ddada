@@ -17,6 +17,7 @@ import MatchCancelModal from '@/features/reservationDetail/components/MatchCance
 import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import { useFetchUserProfile, useUserRole } from '@/hooks/queries/user.ts'
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {
@@ -28,6 +29,9 @@ export default function MatchApply() {
 
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
+
+  const { invalidateMatchReservationList, invalidateReservationList } =
+    useInvalidateMatchReservations()
 
   if (!isUserRole || !isUserProfile) {
     return (
@@ -56,6 +60,8 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+
+      invalidateMatchReservationList()
     } catch {
       console.error('asdf')
     }
@@ -72,6 +78,7 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
+      invalidateReservationList()
     } catch {
       console.error('asdf')
     }

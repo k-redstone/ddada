@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -63,6 +64,19 @@ export default function ResetPasswordStep2({
       inputRefs.current[index - 1]?.focus()
     }
   }
+  const handleCheckAuthCode = async () => {
+    const verificationCode = authCode.join('')
+    try {
+      await checkAuthCode(email, verificationCode)
+      changeViewStep(ResetPasswordStepType.step3)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 404) {
+          setErrorMessage('잘못된 인증번호입니다.')
+        }
+      }
+    }
+  }
 
   // 인증 코드 제출 함수
   const handleSubmit = (e: React.FormEvent) => {
@@ -75,16 +89,7 @@ export default function ResetPasswordStep2({
       return
     }
 
-    const verificationCode = authCode.join('')
-    checkAuthCode(email, verificationCode).then((res) => {
-      if (res.data.code === '200') {
-        changeViewStep(ResetPasswordStepType.step3)
-      } else {
-        setErrorMessage('잘못된 인증번호입니다.')
-        setAuthCode(['', '', '', '', '', ''])
-        setAuthCodeCheck(false)
-      }
-    })
+    handleCheckAuthCode()
   }
 
   // 타이머 설정 및 관리
@@ -112,6 +117,8 @@ export default function ResetPasswordStep2({
     setTimeLeft(180)
     setIsExpired(false)
     setErrorMessage('')
+    setAuthCode(['', '', '', '', '', ''])
+    setAuthCodeCheck(false)
   }
 
   return (

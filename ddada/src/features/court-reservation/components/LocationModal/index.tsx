@@ -76,8 +76,8 @@ export default function LocationModal({
             onClick={handleSelectedAllRegion}
             className={`${
               selectedRegion.includes('전체')
-                ? 'bg-[#FCA211] text-white'
-                : 'text-[#6B6E78]'
+                ? 'bg-theme text-white'
+                : 'text-disabled-dark'
             } border rounded-xl px-4 py-2`}
           >
             전체
@@ -93,8 +93,8 @@ export default function LocationModal({
                 onClick={() => handleSelectedRegion(region)}
                 className={`${
                   selectedRegion.includes(region)
-                    ? 'bg-[#FCA211] text-white'
-                    : 'text-[#6B6E78] border-[#E5E5ED]'
+                    ? 'bg-theme text-white'
+                    : 'text-disabled-dark border-disabled'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -112,8 +112,8 @@ export default function LocationModal({
                 onClick={() => handleSelectedRegion(region)}
                 className={`${
                   selectedRegion.includes(region)
-                    ? 'bg-[#FCA211] text-white'
-                    : 'text-[#6B6E78] border-[#E5E5ED]'
+                    ? 'bg-theme text-white'
+                    : 'text-disabled-dark border-disabled'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -131,8 +131,8 @@ export default function LocationModal({
                 onClick={() => handleSelectedRegion(region)}
                 className={`${
                   selectedRegion.includes(region)
-                    ? 'bg-[#FCA211] text-white'
-                    : 'text-[#6B6E78] border-[#E5E5ED]'
+                    ? 'bg-theme text-white'
+                    : 'text-disabled-dark border-disabled'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -150,8 +150,8 @@ export default function LocationModal({
                 onClick={() => handleSelectedRegion(region)}
                 className={`${
                   selectedRegion.includes(region)
-                    ? 'bg-[#FCA211] text-white'
-                    : 'text-[#6B6E78] border-[#E5E5ED]'
+                    ? 'bg-theme text-white'
+                    : 'text-disabled-dark border-disabled'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -169,8 +169,8 @@ export default function LocationModal({
                 onClick={() => handleSelectedRegion(region)}
                 className={`${
                   selectedRegion.includes(region)
-                    ? 'bg-[#FCA211] text-white'
-                    : 'text-[#6B6E78] border-[#E5E5ED]'
+                    ? 'bg-theme text-white'
+                    : 'text-disabled-dark border-disabled'
                 } border rounded-xl px-4 py-2`}
               >
                 {region}
@@ -182,14 +182,14 @@ export default function LocationModal({
           <button
             type="button"
             onClick={handleClearSelectedRegion}
-            className="text-[#6B6E78] border rounded px-4 py-2 border border-[#E5E5ED]"
+            className="text-disabled-dark border rounded px-4 py-2 border border-disabled"
           >
             초기화
           </button>
           <button
             type="button"
             onClick={handleSaveSelectedRegion}
-            className="text-white bg-[#FCA211] rounded px-4 py-2 grow"
+            className="text-white bg-theme rounded px-4 py-2 grow"
           >
             적용
           </button>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -10,6 +10,7 @@ import Courts from '@/features/court-reservation/components/Courts/index.tsx'
 import LocationModal from '@/features/court-reservation/components/LocationModal/index.tsx'
 import Pagination from '@/features/court-reservation/components/Pagination/index.tsx'
 import { useObserver } from '@/features/court-reservation/components/useObserver/index.tsx'
+import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import LocationColorIcon from '@/static/imgs/court-reservation/court-reservation_location_color_icon.svg'
 import LocationIcon from '@/static/imgs/court-reservation/court-reservation_location_icon.svg'
 import LocationDetailColorIcon from '@/static/imgs/court-reservation/court-reservation_location_under_color_icon.svg'
@@ -27,7 +28,10 @@ export default function CoatReservation() {
   const [locationModalOpen, setLocationModalOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string[]>(['전체'])
   const [selectedRegionNum, setSelectedRegionNum] = useState<number>(0)
-
+  useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  })
   useEffect(() => {
     if (selectedRegion.length === 1) {
       if (selectedRegion[0] === '전체') {
@@ -91,7 +95,6 @@ export default function CoatReservation() {
   const handleSelectedDate = (date: string) => {
     setSelectedDate(date)
   }
-
   return (
     <div className="flex justify-center items-center">
       <div className=" px-2">
@@ -105,7 +108,7 @@ export default function CoatReservation() {
             />
           </div>
 
-          <div className="flex gap-x-2 text-[#6B6E78] text-xs">
+          <div className="flex gap-x-2 text-disabled-dark text-xs">
             <div className="flex items-center border rounded-[62.5rem] gap-x-3 px-4 py-2 ">
               <form id="search" onSubmit={handleClickSearch}>
                 <input
@@ -113,7 +116,7 @@ export default function CoatReservation() {
                   id="search"
                   onChange={handleSearch}
                   placeholder="지역, 체육관 명으로 검색"
-                  className="w-[7.1875rem] placeholder-[#6B6E78] focus:outline-none focus:border-none"
+                  className="w-[7.1875rem] placeholder-disabled-dark focus:outline-none focus:border-none"
                 />
               </form>
               <button
@@ -127,7 +130,7 @@ export default function CoatReservation() {
             <button
               type="button"
               className={`flex items-center border rounded-[62.5rem] gap-x-2 px-4
-                ${selectedRegionNum > 0 ? 'text-[#FCA211] border-[#FCA211] bg-[#FFFBEA]' : 'text-[#6B6E78]'}
+                ${selectedRegionNum > 0 ? 'text-theme border-theme bg-theme-light' : 'text-disabled-dark'}
               `}
               onClick={handleLocationModal}
             >
@@ -173,7 +176,7 @@ export default function CoatReservation() {
               />
             ))
           ) : (
-            <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-[#6B6E78]">
+            <div className="flex flex-col justify-center items-center py-6 px-[0.625rem] text-disabled-dark">
               <div className="text-sm font-bold">
                 해당 일자에 예약 가능한 코트가 없어요 :({' '}
               </div>

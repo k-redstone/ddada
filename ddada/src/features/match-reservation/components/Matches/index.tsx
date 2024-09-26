@@ -10,9 +10,9 @@ export default function Matches({ matchList, selectedDate }: MatchesProps) {
   return (
     <div className="flex flex-col gap-1">
       {matchList.map((match) =>
-        selectedDate !== match.date ? null : (
-          <MatchesCards match={match} key={match.id} />
-        ),
+        selectedDate !== match.date
+          ? null
+          : !match.isReserved && <MatchesCards match={match} key={match.id} />,
       )}
     </div>
   )

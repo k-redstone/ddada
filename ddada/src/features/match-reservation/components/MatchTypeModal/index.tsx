@@ -89,7 +89,7 @@ export default function MatchTypeModal({
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('전체') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('전체') ? 'ring ring-theme' : ''}
               `}
               >
                 <AllMatch />
@@ -97,7 +97,7 @@ export default function MatchTypeModal({
               <div className="w-full flex justify-between text-left">
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold">전체</p>
-                  <p className="text-xs text-[#6B6E78]">
+                  <p className="text-xs text-disabled-dark">
                     모든 매치를 확인합니다.
                   </p>
                 </div>
@@ -111,7 +111,7 @@ export default function MatchTypeModal({
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('MIXED_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('MIXED_DOUBLE') ? 'ring ring-theme' : ''}
               `}
               >
                 <MixedMatch />
@@ -119,7 +119,7 @@ export default function MatchTypeModal({
               <div className="w-full flex justify-between text-left">
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold">혼합복식</p>
-                  <p className="text-xs text-[#6B6E78]">
+                  <p className="text-xs text-disabled-dark">
                     혼성간 팀을 이뤄 경기합니다.
                   </p>
                 </div>
@@ -135,7 +135,7 @@ export default function MatchTypeModal({
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('MALE_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('MALE_DOUBLE') ? 'ring ring-theme' : ''}
               `}
               >
                 <MaleMatch />
@@ -143,7 +143,7 @@ export default function MatchTypeModal({
               <div className="w-full flex justify-between text-left">
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold">남성복식</p>
-                  <p className="text-xs text-[#6B6E78]">
+                  <p className="text-xs text-disabled-dark">
                     남성 동성간 팀이 되어 경기합니다.
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export default function MatchTypeModal({
             >
               <div
                 className={`rounded-[0.75rem]
-                ${selectedMatchType.includes('FEMALE_DOUBLE') ? 'ring ring-[#FCA211]' : ''}
+                ${selectedMatchType.includes('FEMALE_DOUBLE') ? 'ring ring-theme' : ''}
               `}
               >
                 <FemaleMatch />
@@ -165,7 +165,7 @@ export default function MatchTypeModal({
               <div className="w-full flex justify-between text-left">
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold">여성복식</p>
-                  <p className="text-xs text-[#6B6E78]">
+                  <p className="text-xs text-disabled-dark">
                     여성 동성간 팀이 되어 경기합니다.
                   </p>
                 </div>
@@ -178,14 +178,14 @@ export default function MatchTypeModal({
           <button
             type="button"
             onClick={handleClearSelectedMatchType}
-            className="text-[#6B6E78] border rounded px-4 py-2 border border-[#E5E5ED]"
+            className="text-disabled-dark border rounded px-4 py-2 border border-disabled"
           >
             초기화
           </button>
           <button
             type="button"
             onClick={handleSaveSelectedMatchType}
-            className="text-white bg-[#FCA211] rounded px-4 py-2 grow"
+            className="text-white bg-theme rounded px-4 py-2 grow"
           >
             적용
           </button>

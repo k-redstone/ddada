@@ -62,7 +62,7 @@ export default function Pagination({ changeSelectedDate }: PaginationProps) {
             key={day.format('YYYY-MM-DD')}
             className={`
               flex-grow
-              ${selectedDay === day.format('YYYY-MM-DD') ? 'bg-[#FCA211] text-white font-bold' : 'text-[#6B6E78]'}`}
+              ${selectedDay === day.format('YYYY-MM-DD') ? 'bg-theme text-white font-bold' : 'text-disabled-dark'}`}
             onClick={() => {
               setSelectedDay(day.format('YYYY-MM-DD'))
               changeSelectedDate(day.format('YYYY-MM-DD'))

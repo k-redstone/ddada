@@ -10,8 +10,8 @@ export default function MatchTypeButton({
   return (
     <div
       className={`rounded-full px-2 py-1 text-xs text-white
-    ${matchType ? 'bg-[#FCA211]' : ''}
-    ${matchRankType && (matchRankType === 'RANK' ? 'bg-[#DC3545]' : 'bg-[#0D6EFD]')}
+    ${matchType ? 'bg-theme' : ''}
+    ${matchRankType && (matchRankType === 'RANK' ? 'bg-danger' : 'bg-primary')}
     `}
     >
       {matchType === 'FEMALE_DOUBLE' && '여성복식'}
