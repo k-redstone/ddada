@@ -35,7 +35,9 @@ export default function Step5({
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
-          <Image src={SolidImg} alt="SolidImg" />
+          <div className="flex justify-center">
+            <Image src={SolidImg} alt="SolidImg" />
+          </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">견고한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -49,7 +51,9 @@ export default function Step5({
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
-          <Image src={SuitableImg} alt="SuitableImg" />
+          <div className="flex justify-center">
+            <Image src={SuitableImg} alt="SuitableImg" />
+          </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">적당한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -63,7 +67,9 @@ export default function Step5({
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
-          <Image src={SinuousImg} alt="SinuousImg" />
+          <div className="flex justify-center">
+            <Image src={SinuousImg} alt="SinuousImg" />
+          </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">유연한</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">
@@ -77,7 +83,9 @@ export default function Step5({
           className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
           aria-hidden="true"
         >
-          <Image src={NoneImg} alt="NoneImg" />
+          <div className="flex justify-center">
+            <Image src={NoneImg} alt="NoneImg" />
+          </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">상관없음</span>
             <p className="text-xs text-[#6B6E78] flex flex-col items-center">

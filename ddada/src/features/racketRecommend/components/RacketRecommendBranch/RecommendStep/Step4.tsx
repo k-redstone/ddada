@@ -46,7 +46,6 @@ export default function Step4() {
     return setSelectedPrice([0])
   }
 
-  console.log(selectedPrice)
   return (
     <div className="flex flex-col gap-y-[5.25rem] w-[34rem] ">
       <p className="text-xl text-center">
