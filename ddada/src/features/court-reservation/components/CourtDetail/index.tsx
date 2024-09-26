@@ -41,7 +41,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
       <div>
         <img
           src={court.image}
-          alt="테스트이미지"
+          alt="코트이미지"
           className="w-[9.375rem] h-full rounded-[0.5rem]"
         />
       </div>

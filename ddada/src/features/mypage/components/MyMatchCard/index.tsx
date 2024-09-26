@@ -31,8 +31,8 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
       }
       await deleteUserToMatch(match.matchId, playerTeam)
       queryClient.invalidateQueries({ queryKey: ['myMatchList'] })
-    } catch (error) {
-      console.error(error)
+    } catch {
+      console.error('매치 취소 실패')
     }
   }
   return (

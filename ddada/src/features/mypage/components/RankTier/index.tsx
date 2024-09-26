@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { set } from 'react-hook-form'
 
 import Amateur from '@/static/imgs/rank/Amateur.svg'
 import Master from '@/static/imgs/rank/Master.svg'
@@ -13,6 +12,13 @@ interface RankTierProps {
 
 export default function RankTier({ rating }: RankTierProps) {
   useEffect(() => {
+    const tiers = [
+      { min: 0, max: 1000, tier: '루키', tierNum: 1 },
+      { min: 1000, max: 2000, tier: '아마추어', tierNum: 2 },
+      { min: 2000, max: 3000, tier: '세미프로', tierNum: 3 },
+      { min: 3000, max: 4000, tier: '프로페셔널', tierNum: 2 },
+      { min: 4000, max: 5000, tier: '마스터', tierNum: 3 },
+    ]
     const currentTier = tiers.find((t) => rating >= t.min && rating < t.max)
 
     if (currentTier) {
@@ -25,18 +31,10 @@ export default function RankTier({ rating }: RankTierProps) {
         setTierNum('III')
       }
     }
-  }, [])
+  }, [rating])
 
   const [tier, setTier] = useState<string>('')
   const [tierNum, setTierNum] = useState<string>('')
-
-  const tiers = [
-    { min: 0, max: 1000, tier: '루키', tierNum: 1 },
-    { min: 1000, max: 2000, tier: '아마추어', tierNum: 2 },
-    { min: 2000, max: 3000, tier: '세미프로', tierNum: 3 },
-    { min: 3000, max: 4000, tier: '프로페셔널', tierNum: 2 },
-    { min: 4000, max: 5000, tier: '마스터', tierNum: 3 },
-  ]
 
   return (
     <div

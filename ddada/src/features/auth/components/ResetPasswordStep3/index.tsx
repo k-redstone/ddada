@@ -62,6 +62,7 @@ export default function ResetPasswordStep3({ email }: ResetPasswordStep3Props) {
     },
     pattern: {
       value:
+        // eslint-disable-next-line no-useless-escape
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/,
       message: '한 개 이상의 숫자/영어/특수문자를 포함해야 합니다.',
     },
