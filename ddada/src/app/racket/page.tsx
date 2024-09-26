@@ -18,7 +18,7 @@ export default function RacketPage() {
         <div className="flex flex-col gap-y-12">
           <div className="text-2xl text-white text-center">
             <p>
-              <span className="text-[#FCA211]">라켓</span>을 사고 싶은데 찾기
+              <span className="text-theme">라켓</span>을 사고 싶은데 찾기
               어려우셨나요?
             </p>
             <p>따다에서 간단한 테스트로 추천받아보세요</p>
@@ -26,7 +26,7 @@ export default function RacketPage() {
 
           <div className="flex gap-x-2 justify-center">
             <TimerIcon />
-            <span className="text-[#FCA211] text-sm">2분</span>
+            <span className="text-theme text-sm">2분</span>
           </div>
           <Link
             className="border border-theme text-theme px-4 py-2 text-center rounded hover:text-white hover:bg-theme"

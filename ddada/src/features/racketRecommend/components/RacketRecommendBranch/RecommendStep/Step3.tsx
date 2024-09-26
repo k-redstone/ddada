@@ -31,13 +31,13 @@ export default function Step3({
         {/* 무거운 */}
         <div
           onClick={() => handleSelectNext('heavy')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <Image src={HeavyWeightImg} alt="HeavyWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">무거운</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>묵직하고 강한</span>
             </p>
           </div>
@@ -45,13 +45,13 @@ export default function Step3({
         {/* 가벼운 */}
         <div
           onClick={() => handleSelectNext('light')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <Image src={LightWeightImg} alt="LightWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">가벼운</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>민첩하고 빠른</span>
             </p>
           </div>
@@ -59,13 +59,13 @@ export default function Step3({
         {/* 상관없음 */}
         <div
           onClick={() => handleSelectNext('')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <Image src={NoneImg} alt="NoneWeightImg" />
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">상관없음</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>둘 다 괜찮다</span>
             </p>
           </div>

@@ -14,7 +14,7 @@ export default function PriceSelectCard({
 }: PriceSelectCardProps) {
   if (isClicked) {
     return (
-      <div className="flex items-center gap-x-6 py-3 px-6 border text-sm rounded-xl border-[#FCA211] text-[#FCA211] bg-[#FFFBEA]">
+      <div className="flex items-center gap-x-6 py-3 px-6 border text-sm rounded-xl border-theme text-theme bg-theme-light">
         <CheckedIcon />
         {children}
       </div>

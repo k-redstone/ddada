@@ -32,7 +32,7 @@ export default function Step5({
         {/* 견고한 */}
         <div
           onClick={() => handleSelectNext('stiff')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -40,7 +40,7 @@ export default function Step5({
           </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">견고한</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>강한 반발력, 높은 정확성</span>
             </p>
           </div>
@@ -48,7 +48,7 @@ export default function Step5({
         {/* 적당한 */}
         <div
           onClick={() => handleSelectNext('medium')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -56,7 +56,7 @@ export default function Step5({
           </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">적당한</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>균형 잡힌 성능, 적당한 탄성</span>
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function Step5({
         {/* 유연함 */}
         <div
           onClick={() => handleSelectNext('flexible')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -72,7 +72,7 @@ export default function Step5({
           </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">유연한</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>부드러움, 편안함</span>
             </p>
           </div>
@@ -80,7 +80,7 @@ export default function Step5({
         {/* 상관없음 */}
         <div
           onClick={() => handleSelectNext('')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-[#F6F6F6]"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -88,7 +88,7 @@ export default function Step5({
           </div>
           <div className="flex flex-col gap-y-1 items-center">
             <span className="text-sm">상관없음</span>
-            <p className="text-xs text-[#6B6E78] flex flex-col items-center">
+            <p className="text-xs text-disabled-dark flex flex-col items-center">
               <span>라켓의 탄성은 상관없다</span>
             </p>
           </div>

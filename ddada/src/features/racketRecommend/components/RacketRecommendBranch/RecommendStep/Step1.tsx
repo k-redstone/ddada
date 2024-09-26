@@ -61,7 +61,7 @@ export default function Step1() {
           <div>
             <button
               type="button"
-              className="border border-[#FCA211] py-3 px-6 flex gap-x-2.5 text-sm text-[#FCA211] rounded-xl items-center"
+              className="border border-theme py-3 px-6 flex gap-x-2.5 text-sm text-theme rounded-xl items-center"
               onClick={() => handleModalOpen()}
             >
               <span>라켓 찾기</span>
@@ -71,7 +71,7 @@ export default function Step1() {
           {selectedRacketList.length === 0 ? (
             <button
               type="button"
-              className={`border border-[#E5E5ED] text-[#6B6E78] rounded-xl py-3 px-6 ${isSelectNone && `bg-[#FFFBEA] text-[#FCA211] border-[#FFFBEA]`}`}
+              className={`border border-disabled text-disabled-dark rounded-xl py-3 px-6 ${isSelectNone && `bg-theme-light text-theme border-theme-light`}`}
               onClick={() => handleSelectNone()}
             >
               <span className="text-bold">없음</span>
