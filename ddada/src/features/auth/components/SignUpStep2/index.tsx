@@ -38,7 +38,6 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const nickName = watch('nickname')
   const phoneNumber = watch('phoneNumber')
   const smsAuthCode = watch('authNumber')
-  const birthYear = watch('birthYear')
   const searchParams = useSearchParams()
   const [emailExists, setEmailExists] = useState<boolean>(false)
   const [passwordExists, setPasswordExists] = useState<boolean>(false)
