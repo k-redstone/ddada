@@ -68,7 +68,7 @@ export default function Layout({
       <>
         <div className="flex justify-center h-full">
           <div className="flex flex-col p-6 gap-4 text-disabled-dark font-bold w-[20.625rem]">
-            <div className="flex flex-col py-6 gap justify-center items-center">
+            <div className="flex flex-col py-6 gap-1 justify-center items-center">
               <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden relative">
                 {profilePreSignedUrl ? (
                   <img
@@ -81,17 +81,25 @@ export default function Layout({
                 )}
               </div>
               <div className="flex gap-1">
-                <p>{nickname}</p>
+                <p className="text-sm font-medium	text-black">{nickname}</p>
                 <div className="flex justify-center items-center">
                   {gender === 'MALE' ? <MaleIcon /> : <FemaleIcon />}
                 </div>
               </div>
-              <p>{data.rating}</p>
-              {/* 나중에 number로 바꿔준대 지금은 걍 숫자 넣음 todo */}
-              <RankTier rating={4001} />
+              {/* <p>{data.rating}</p> */}
+              <RankTier rating={data.rating} />
               {/* 나중에 승률 내가 계산해야할듯? */}
-              <p className="text-sm">승패</p>
-              <p className="text-sm">승률</p>
+              <p className="text-xs font-medium">
+                {data.winCount}승 {data.loseCount}패
+              </p>
+              {data.winCount + data.loseCount > 0 ? (
+                <p className="text-xs font-medium">
+                  승률{' '}
+                  {(data.winCount / (data.winCount + data.loseCount)) * 100}%
+                </p>
+              ) : (
+                <p className="text-xs font-medium">승률 0%</p>
+              )}
             </div>
             <div className="flex flex-col gap-3 flex-grow">
               <button
