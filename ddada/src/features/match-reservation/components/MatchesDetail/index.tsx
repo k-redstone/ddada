@@ -46,7 +46,7 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
             <div className="flex flex-col justify-center gap-[0.625rem]">
               <MatchPlayerGenderIcon
                 matchType={matchType}
-                playersGender={match.playersGender.slice(0, 2)}
+                playersGender={match.team1Gender}
               />
               <p className="text-xs">A팀</p>
             </div>
@@ -54,10 +54,9 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
               <MatchBar />
             </div>
             <div className="flex flex-col justify-center gap-[0.625rem]">
-              {/* <p className="text-xl font-bold">{BteamNum}</p> */}
               <MatchPlayerGenderIcon
                 matchType={matchType}
-                playersGender={match.playersGender.slice(2, 4)}
+                playersGender={match.team2Gender}
               />
               <p className="text-xs">B팀</p>
             </div>
