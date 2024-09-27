@@ -129,7 +129,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="flex justify-left">
-            <Link href="/login">
+            <Link href="/manager-recruit">
               <div className="text-[#FCA211] py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
                 매니저 신청하기
               </div>
