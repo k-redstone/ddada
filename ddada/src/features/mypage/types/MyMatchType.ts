@@ -24,5 +24,6 @@ export type MyMatchDetailsType = {
   matchStatus: MatchStatus
   matchTime: string
   matchType: MatchType
+  myRatingChange: number
   rankType: RankType
 }

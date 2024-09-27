@@ -78,8 +78,7 @@ export default function PaymentModal({
       date,
       time: `${reservationTime}`,
     }
-    const res = await postMatchReservation(payload)
-    console.log(res)
+    await postMatchReservation(payload)
   }
 
   const handleCloseModal = () => {

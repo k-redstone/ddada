@@ -4,7 +4,6 @@ import localFont from 'next/font/local'
 import { Toaster } from 'react-hot-toast'
 
 import ReactQueryProviders from '@/providers/ReactQueryProvider.tsx'
-
 import '@/app/globals.css'
 
 const pretendard = localFont({

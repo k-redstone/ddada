@@ -1,8 +1,16 @@
+'use client'
+
+import { useUserRole } from '@/hooks/queries/user.ts'
+
 export default function ManagerLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { data } = useUserRole()
+  if (data?.memberType !== 'MANAGER') {
+    return <div className="text-3xl font-bold">권한이 없습니다.</div>
+  }
   return (
     <div className="flex flex-col h-screen">
       {/* 헤더 */}
