@@ -6,7 +6,6 @@ import MatchPlayerGenderIcon from '@/features/match-reservation/components/Match
 import RankIcon from '@/features/match-reservation/components/RankIcon/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import MatchBar from '@/static/imgs/match-reservation/match-reservation_match_bar_icon.svg'
-import MasterIcon from '@/static/imgs/rank/Master.svg'
 
 interface MatchesDetailProps {
   match: MatchType
