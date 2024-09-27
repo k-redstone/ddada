@@ -5,16 +5,16 @@ FROM node:20.12.0
 WORKDIR /app
 
 # 3. 의존성 설치를 위한 패키지 파일 복사
-COPY package.json yarn.lock ./
+# COPY package.json yarn.lock ./
 
 # 4. 의존성 설치
-RUN yarn install
+# RUN yarn install
 
 # 5. 애플리케이션 소스 코드 복사
 COPY . .
 
 # 6. Next.js 애플리케이션 빌드
-RUN yarn run build
+# RUN yarn run build
 
 # 7. 컨테이너가 사용할 포트 노출
 EXPOSE 3000
