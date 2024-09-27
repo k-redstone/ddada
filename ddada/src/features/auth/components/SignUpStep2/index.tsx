@@ -242,6 +242,12 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       value: true,
       message: '해당 칸이 빈칸입니다.',
     },
+    pattern: {
+      value:
+        // eslint-disable-next-line no-useless-escape
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/,
+      message: '한 개 이상의 숫자/영어/특수문자를 포함해야 합니다.',
+    },
   })
 
   const passwordConFirmRegister = register('confirmPassword', {

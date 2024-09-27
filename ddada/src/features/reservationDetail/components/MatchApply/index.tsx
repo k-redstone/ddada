@@ -19,6 +19,7 @@ import MatchCancelModal from '@/features/reservationDetail/components/MatchCance
 import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import { useFetchUserPk, useUserRole } from '@/hooks/queries/user.ts'
+import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {
@@ -37,6 +38,9 @@ export default function MatchApply() {
 
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
+
+  const { invalidateMatchReservationList, invalidateReservationList } =
+    useInvalidateMatchReservations()
 
   if (!isUserRole) {
     return (
@@ -72,6 +76,8 @@ export default function MatchApply() {
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
       toast.success('매치 예약에 성공했습니다.')
+
+      invalidateMatchReservationList()
     } catch {
       toast.error('매치 예약 중 오류가 발생했습니다.')
     }
@@ -87,7 +93,7 @@ export default function MatchApply() {
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchDetailData.id}`],
       })
-      toast.success('매치 예약 취소에 성공했습니다.')
+      invalidateReservationList()
     } catch {
       toast.error('매치 예약 취소 중 오류가 발생했습니다.')
     }

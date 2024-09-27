@@ -2,6 +2,7 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -33,6 +34,7 @@ export default function ResetPasswordStep3({ email }: ResetPasswordStep3Props) {
   const [passwordConfirmVisibility, setPasswordConfirmVisibility] =
     useState<boolean>(false)
   const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false)
+  const [passwordError, setPasswordError] = useState<string>('')
   const password = watch('password')
   const confirmPassword = watch('confirmPassword')
   const router = useRouter()
@@ -58,6 +60,12 @@ export default function ResetPasswordStep3({ email }: ResetPasswordStep3Props) {
       value: 8,
       message: '비밀번호는 8자 이상으로 입력해주세요.',
     },
+    pattern: {
+      value:
+        // eslint-disable-next-line no-useless-escape
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/,
+      message: '한 개 이상의 숫자/영어/특수문자를 포함해야 합니다.',
+    },
   })
 
   const passwordConFirmRegister = register('confirmPassword', {
@@ -70,11 +78,20 @@ export default function ResetPasswordStep3({ email }: ResetPasswordStep3Props) {
   })
 
   const sendResetPassword = async () => {
-    // todo 패스워드 초기화 연결
-    const res = await resetPassword(email, password)
-    console.log(res)
-    toast.success('비밀번호가 초기화되었습니다.')
-    router.push('/')
+    try {
+      await resetPassword(email, password)
+      toast.success('비밀번호가 초기화되었습니다.')
+      router.push('/')
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response?.data.message ===
+          '이전에 사용한 비밀번호는 사용할 수 없습니다.'
+        ) {
+          setPasswordError('이전에 사용한 비밀번호는 사용할 수 없습니다.')
+        }
+      }
+    }
   }
   return (
     <div className="min-w-[34rem] mt-[7.4013rem]">
@@ -156,6 +173,7 @@ export default function ResetPasswordStep3({ email }: ResetPasswordStep3Props) {
               )}
             </label>
           </div>
+          {passwordError && <p className="text-danger">{passwordError}</p>}
           <button
             type="submit"
             className={`py-[1.1875rem] w-full mt-3 rounded-xl ${

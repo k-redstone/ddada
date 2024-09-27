@@ -11,6 +11,7 @@ export type MatchType = {
   id: number
   isReserved: boolean
   matchType: string
+  playersGender: PlayersGender
   rankType: string
   rating: number
   status: string
@@ -18,3 +19,6 @@ export type MatchType = {
   team2PlayerCount: number
   time: string
 }
+
+export type Gender = 'FEMALE' | 'MALE' | 'notReserved'
+export type PlayersGender = Gender[]
