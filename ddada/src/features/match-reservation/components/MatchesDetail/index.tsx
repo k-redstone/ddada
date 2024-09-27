@@ -3,9 +3,9 @@ import Link from 'next/link'
 import MatchTypeTag from '@/components/MatchTypeTag/index.tsx'
 import MatchPlayerGenderIcon from '@/features/match-reservation/components/MatchPlayerGenderIcon/index.tsx'
 // import MatchTypeButton from '@/features/match-reservation/components/MatchTypeButton/index.tsx'
+import RankIcon from '@/features/match-reservation/components/RankIcon/index.tsx'
 import { MatchType } from '@/features/match-reservation/types/MatchType.ts'
 import MatchBar from '@/static/imgs/match-reservation/match-reservation_match_bar_icon.svg'
-import MasterIcon from '@/static/imgs/rank/Master.svg'
 
 interface MatchesDetailProps {
   match: MatchType
@@ -22,9 +22,6 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
   const matchTime = match.time.slice(0, 5)
   const matchCourt = match.court.name
   const matchAddress = match.court.address
-  // todo rating 에 따른 이미지와 mmr 텍스트 변경해주기
-  // const { rating } = match
-  const mmr = '프로페셔널 2'
   return (
     <Link href={`/match-reservation/detail/${match.id}`}>
       <div className="flex w-[47.6875rem] rounded-[0.75rem] border flex-col py-2 px-4 gap-2 hover:bg-base-50">
@@ -63,10 +60,7 @@ export default function MatchesDetail({ match }: MatchesDetailProps) {
           </div>
           <div className="flex justify-end w-[6.25rem]">
             <div className="flex flex-col justify-center items-center gap-2">
-              <div className="w-10 h-10 rounded-[1000px]">
-                <MasterIcon />
-              </div>
-              <p className="text-xs text-center">{mmr}</p>
+              <RankIcon rating={match.rating} />
             </div>
           </div>
         </div>

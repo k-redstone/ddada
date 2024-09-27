@@ -16,10 +16,9 @@ interface ResetPasswordStep2Props {
 }
 
 const authEmailReSend = async (email: string, resetTimer: () => void) => {
-  const res = await sendAuthEmail(email)
+  await sendAuthEmail(email)
   toast.success('인증번호를 재전송했습니다.')
   resetTimer()
-  console.log(res)
 }
 
 export default function ResetPasswordStep2({

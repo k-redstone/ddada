@@ -149,18 +149,67 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const handleBirthYearExists = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (event.target.value.length > 0) {
+    const { value } = event.target
+
+    // 생년월일 패턴 검증 (0000-00-00 형식)
+    const birthYearPattern = /^\d{4}-\d{2}-\d{2}$/
+
+    // 오늘 날짜
+    const today = new Date()
+
+    // 입력된 날짜
+    const inputDate = new Date(value)
+
+    // 연도 추출 (입력된 생년월일에서)
+    const inputYear = parseInt(value.split('-')[0], 10)
+
+    if (value.length > 0) {
+      if (!birthYearPattern.test(value)) {
+        setBirthYearExists(false)
+        setError('birthYear', {
+          type: 'manual',
+          message: '생년월일 형식을 확인해주세요. (예: 1990-01-01)', // 형식 오류 메시지
+        })
+        return
+      }
+
+      // 미래 날짜 확인
+      if (inputDate > today) {
+        setBirthYearExists(false)
+        setError('birthYear', {
+          type: 'manual',
+          message: '미래 날짜는 입력할 수 없습니다.', // 미래 날짜 오류 메시지
+        })
+        return
+      }
+
+      // 1900년 이후만 허용
+      if (inputYear < 1900) {
+        setBirthYearExists(false)
+        setError('birthYear', {
+          type: 'manual',
+          message: '1900년 이후의 날짜만 입력 가능합니다.', // 연도 범위 오류 메시지
+        })
+        return
+      }
+
+      // 모든 검증 통과
       setBirthYearExists(true)
+      clearErrors('birthYear')
     } else {
       setBirthYearExists(false)
     }
+
+    // 다른 필드들과 함께 다음 단계 버튼 활성화 여부 결정
     if (
       emailExists &&
       passwordExists &&
       passwordConfirmExists &&
       nickNameExists &&
       phoneNumberExists &&
-      event.target.value.length > 0
+      birthYearPattern.test(value) && // 형식 검증 통과
+      inputDate <= today && // 미래 날짜가 아님
+      inputYear >= 1900 // 1900년 이후의 연도
     ) {
       setIsNextStepEnabled(true)
     } else {
@@ -284,7 +333,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   const birthYearRegister = register('birthYear', {
     required: {
       value: true,
-      message: '해당 칸이 빈칸입니다.',
+      message: '',
     },
   })
 
@@ -526,7 +575,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       </div>
 
       {/* 생년월일 입력 */}
-      <div className="text-sm ">
+      <div className="text-sm">
         <label htmlFor="birthYear">
           <p className="text-[#6B6E78]">생년월일</p>
           <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
