@@ -39,7 +39,7 @@ export default function MatchRequestButton({
       toast.error('매치 예약 중 오류가 발생했습니다.')
     }
   }
-
+  console.log(isJoin)
   if (isJoin) {
     return (
       <button

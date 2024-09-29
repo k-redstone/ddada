@@ -50,10 +50,10 @@ export default function MatchRequestManagerButton({
     return (
       <button
         type="button"
-        className="border border-[#DC3545]  rounded-[.25rem] py-2 px-1 box-border"
+        className="border border-danger  rounded-[.25rem] py-2 px-1 box-border"
         onClick={() => handleMatchJudgeCancel()}
       >
-        <span className="text-xs text-[#DC3545]">매치 심판 취소하기</span>
+        <span className="text-xs text-danger">매치 심판 취소하기</span>
       </button>
     )
   }
@@ -61,7 +61,7 @@ export default function MatchRequestManagerButton({
   return (
     <button
       type="button"
-      className="bg-[#FCA211] rounded-[.25rem] py-2 px-1 box-border"
+      className="bg-theme rounded-[.25rem] py-2 px-1 box-border"
       onClick={() => handleMatchJudgeJoin()}
     >
       <span className="text-xs text-white">매치 심판 신청하기</span>

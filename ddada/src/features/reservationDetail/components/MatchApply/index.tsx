@@ -1,41 +1,33 @@
 /* eslint no-nested-ternary: "off" */
 
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'react-hot-toast'
 
 import { WEEKDAYS } from '@/constants/day/index.ts'
-import { fetchManagerPk } from '@/features/manager/api/managerAPI.tsx'
 import { deleteUserToMatch } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import MatchPaymentInfo from '@/features/reservationDetail/components/MatchApply/MatchPaymentInfo.tsx'
 import MatchRequestManagerButton from '@/features/reservationDetail/components/MatchApply/MatchRequestManagerButton.tsx'
 import MatchRequestPlayerButton from '@/features/reservationDetail/components/MatchApply/MatchRequestPlayerButton.tsx'
 import MatchStatus from '@/features/reservationDetail/components/MatchApply/MatchStatus.tsx'
+import MatchTeamSelectList from '@/features/reservationDetail/components/MatchApply/MatchTeamSelectList.tsx'
 import MatchCancelModal from '@/features/reservationDetail/components/MatchCancelModal/index.tsx'
-import TeamSelectBtn from '@/features/reservationDetail/components/TeamSelectBtn/index.tsx'
+import useGetUserStatus from '@/features/reservationDetail/hooks/useGetUserStatus.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
-import { useFetchUserPk, useUserRole } from '@/hooks/queries/user.ts'
+import { useUserRole } from '@/hooks/queries/user.ts'
 import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
 
 export default function MatchApply() {
   const queryClient = useQueryClient()
   const { data: userRole, isSuccess: isUserRole } = useUserRole()
-  const { data: playerPk } = useFetchUserPk()
-
-  const { data: managerPk } = useQuery({
-    queryKey: ['managerPk'],
-    queryFn: fetchManagerPk,
-    retry: 1,
-  })
 
   const matchDetailData = useMatchDetailContext()
   const [clickedTeam, setClickedTeam] = useState<number>(-1)
-
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
-
+  const { isTeamA, isTeamB, isManager } = useGetUserStatus(matchDetailData)
   const { invalidateReservationList } = useInvalidateMatchReservations()
 
   if (!isUserRole) {
@@ -46,23 +38,10 @@ export default function MatchApply() {
     )
   }
 
-  const isJoinTeamA = !![
-    matchDetailData.team1.player1,
-    matchDetailData.team1.player2,
-  ].find((player) => player?.id === playerPk?.playerId)
-  const isJoinTeamB = !![
-    matchDetailData.team2.player1,
-    matchDetailData.team2.player2,
-  ].find((player) => player?.id === playerPk?.playerId)
-
-  const isJoinManager = !![matchDetailData.manager].find(
-    (player) => player?.id === managerPk?.id,
-  )
-
   const handleMatchCancel = async () => {
     try {
       let playerTeam = 1
-      if (isJoinTeamB) {
+      if (isTeamB) {
         playerTeam = 2
       }
       await deleteUserToMatch(matchDetailData.id, playerTeam)
@@ -93,160 +72,16 @@ export default function MatchApply() {
         {/* 팀 선택 */}
         <div className="pb-3 flex flex-col gap-y-1  border-b border-[#E5E5ED] text-xs">
           <h2 className="text-sm font-bold">팀 선택</h2>
-          <div className="p-1 flex gap-x-2">
-            {/* 팀A 버튼 */}
-            {userRole?.memberType === 'PLAYER' ? (
-              <button
-                type="button"
-                className="flex-1"
-                onClick={() => {
-                  setClickedTeam(1)
-                }}
-                disabled={isJoinTeamA || isJoinTeamB}
-              >
-                <TeamSelectBtn
-                  isDisabled={false}
-                  isJoined={isJoinTeamA}
-                  isOtherTeamSelect={isJoinTeamB}
-                  isClicked={clickedTeam === 1}
-                >
-                  <span className="font-bold">A팀</span>
-                  <span>
-                    (
-                    {
-                      [
-                        matchDetailData.team1.player1,
-                        matchDetailData.team1.player2,
-                      ].filter((player) => player !== null).length
-                    }
-                    /2)
-                  </span>
-                </TeamSelectBtn>
-              </button>
-            ) : (
-              <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled>
-                  <span className="font-bold">A팀</span>
-                  <span>
-                    (
-                    {
-                      [
-                        matchDetailData.team1.player1,
-                        matchDetailData.team1.player2,
-                      ].filter((player) => player !== null).length
-                    }
-                    /2)
-                  </span>
-                </TeamSelectBtn>
-              </button>
-            )}
 
-            {/* 팀B 버튼 */}
-            {userRole?.memberType === 'PLAYER' ? (
-              <button
-                type="button"
-                className="flex-1"
-                onClick={() => setClickedTeam(2)}
-                disabled={isJoinTeamA || isJoinTeamB}
-              >
-                <TeamSelectBtn
-                  isDisabled={false}
-                  isJoined={isJoinTeamB}
-                  isClicked={clickedTeam === 2}
-                  isOtherTeamSelect={isJoinTeamA}
-                >
-                  <span className="font-bold">B팀</span>
-                  <span>
-                    (
-                    {
-                      [
-                        matchDetailData.team2.player1,
-                        matchDetailData.team2.player2,
-                      ].filter((player) => player !== null).length
-                    }
-                    /2)
-                  </span>
-                </TeamSelectBtn>
-              </button>
-            ) : (
-              <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled>
-                  <span className="font-bold">B팀</span>
-                  <span>
-                    (
-                    {
-                      [
-                        matchDetailData.team2.player1,
-                        matchDetailData.team2.player2,
-                      ].filter((player) => player !== null).length
-                    }
-                    /2)
-                  </span>
-                </TeamSelectBtn>
-              </button>
-            )}
-
-            {/* 매니저 버튼 */}
-            {userRole?.memberType === 'MANAGER' ? (
-              <button
-                type="button"
-                className="flex-1"
-                onClick={() => setClickedTeam(3)}
-                disabled={isJoinManager}
-              >
-                {isJoinManager ? (
-                  <TeamSelectBtn
-                    isDisabled={false}
-                    isClicked={clickedTeam === 3}
-                    isJoined={isJoinManager}
-                  >
-                    <span className="font-bold">매니저</span>
-                    <span>
-                      (
-                      {
-                        [matchDetailData.manager].filter(
-                          (player) => player !== null,
-                        ).length
-                      }
-                      /1)
-                    </span>
-                  </TeamSelectBtn>
-                ) : (
-                  <TeamSelectBtn
-                    isDisabled={isJoinManager}
-                    isClicked={clickedTeam === 3}
-                    isJoined={isJoinManager}
-                  >
-                    <span className="font-bold">매니저</span>
-                    <span>
-                      (
-                      {
-                        [matchDetailData.manager].filter(
-                          (player) => player !== null,
-                        ).length
-                      }
-                      /1)
-                    </span>
-                  </TeamSelectBtn>
-                )}
-              </button>
-            ) : (
-              <button type="button" className="flex-1" disabled>
-                <TeamSelectBtn isDisabled>
-                  <span className="font-bold">매니저</span>
-                  <span>
-                    (
-                    {
-                      [matchDetailData.manager].filter(
-                        (player) => player !== null,
-                      ).length
-                    }
-                    /1)
-                  </span>
-                </TeamSelectBtn>
-              </button>
-            )}
-          </div>
+          <MatchTeamSelectList
+            userRole={userRole?.memberType}
+            isTeamA={isTeamA}
+            isTeamB={isTeamB}
+            isManager={isManager}
+            data={matchDetailData}
+            clickedTeam={clickedTeam}
+            setClickedTeam={setClickedTeam}
+          />
         </div>
 
         {/* 예약정보 */}
@@ -271,14 +106,17 @@ export default function MatchApply() {
 
         {/* 결제금액 */}
 
-        <MatchPaymentInfo isMatchReserved={false} />
+        <MatchPaymentInfo isMatchReserved={!isTeamA && !isTeamB} />
 
         {/* 신청버튼 */}
         {userRole?.memberType === 'MANAGER' ? (
-          <MatchRequestManagerButton isJoin matchId={matchDetailData.id} />
+          <MatchRequestManagerButton
+            isJoin={isManager}
+            matchId={matchDetailData.id}
+          />
         ) : (
           <MatchRequestPlayerButton
-            isJoin={false}
+            isJoin={isTeamA || isTeamB}
             matchId={matchDetailData.id}
             clickedTeam={clickedTeam}
             handleModalOpen={handleModalOpen}
