@@ -15,7 +15,7 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
 
   return (
     <div
-      className={`px-2 py-6 flex gap-x-3 border border-[#E7E7E7] box-border ${isClicked && `bg-[#FFFBEA]`}`}
+      className={`px-2 py-6 flex gap-x-3 border border-base-100 box-border ${isClicked && `bg-theme-light`}`}
     >
       <div className="w-16 rounded-lg border border-black">
         {/* <img className="w-full h-full" src="" alt="court_img" /> */}
@@ -27,9 +27,9 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
             <span className="font-bold grow">{data.courtName}</span>
             <span className="text-sm">
               {diffDate === 0 ? (
-                <span className=" text-[#DC3545]">오늘</span>
+                <span className=" text-danger">오늘</span>
               ) : (
-                <span className=" text-[#6B6E78]">{diffDate}일 후</span>
+                <span className=" text-disabled-dark">{diffDate}일 후</span>
               )}
             </span>
           </p>
@@ -42,7 +42,7 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
             {data.time.getHours()}:{data.time.getMinutes()}
           </p>
         </div>
-        <div className="text-[#FCA211]">
+        <div className="text-theme">
           {data.number === 4 ? (
             <span className="font-bold text-xs">모집완료</span>
           ) : (

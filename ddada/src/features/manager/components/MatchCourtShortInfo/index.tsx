@@ -15,7 +15,7 @@ export default function MatchCourtShortInfo({ data }: MatchCourtInfoProps) {
           <p className="font-bold text-2xl">{data.courtName}</p>
           <p>
             <span className="text-[#5F6368]">{data.addr}</span>{' '}
-            <span className="text-[#FCA211] underline">주소복사</span>
+            <span className="text-theme underline">주소복사</span>
           </p>
           <div className="text-[#5F6368] flex gap-x-1 items-center">
             <ClockIcon />

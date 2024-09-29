@@ -21,9 +21,9 @@ function Button({
   }
 
   const btnStyle = {
-    earn: `${changeStyle ? ` bg-[#0D6EFD] text-[#ffffff]` : `border-[#0D6EFD] text-[#0D6EFD]`}`,
-    miss: `${changeStyle ? ` bg-[#DC3545] text-[#ffffff]` : `border-[#DC3545] text-[#DC3545] `}`,
-    fault: `${changeStyle ? ` bg-[#FCA211] text-[#ffffff]` : `border-[#FCA211] text-[#FCA211]`}`,
+    earn: `${changeStyle ? ` bg-primary text-white` : `border-primary text-primary`}`,
+    miss: `${changeStyle ? ` bg-danger text-white` : `border-danger text-danger `}`,
+    fault: `${changeStyle ? ` bg-theme text-white` : `border-theme text-theme`}`,
   }
   return (
     <button

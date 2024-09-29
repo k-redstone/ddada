@@ -65,12 +65,14 @@ export default function BadmintonScoreBoard() {
         isVisible={badmintonInstance.currentSet >= 4}
       />
       {badmintonInstance.winnerTeamNumber ? (
-        <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
+        <div className="bg-theme flex justify-center items-center h-[4.75rem] cursor-pointer">
           <span className="text-white text-xl font-bold ">매치 완료</span>
         </div>
       ) : (
-        <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">
-          <span className="text-[#6B6E78] text-xl font-bold">매치 완료</span>
+        <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
+          <span className="text-disabled-dark text-xl font-bold">
+            매치 완료
+          </span>
         </div>
       )}
     </div>
@@ -110,8 +112,8 @@ function BadmintonSetScore() {
   }))
 
   return (
-    <div className="w-[12.5rem] border border-[#FCA211] px-6 py-2 rounded-[62.5rem] flex justify-center items-center">
-      <p className="text-[#FCA211] text-4xl font-bold ">
+    <div className="w-[12.5rem] border border-theme px-6 py-2 rounded-[62.5rem] flex justify-center items-center">
+      <p className="text-theme text-4xl font-bold ">
         {badmintonInstance.team1SetScore} : {badmintonInstance.team2SetScore}{' '}
       </p>
     </div>
@@ -149,7 +151,7 @@ function MatchScoreCard({
 
   return (
     <div
-      className={`flex gap-x-2 px-6 py-5 border-[#E5E5ED] bg-  border rounded-xl justify-between ${!isVisible && `bg-[#E5E5ED]`}`}
+      className={`flex gap-x-2 px-6 py-5 border-disabled bg-  border rounded-xl justify-between ${!isVisible && `bg-disabled`}`}
     >
       {/* A팀 */}
       <div className="flex gap-x-3 items-center">
@@ -159,7 +161,7 @@ function MatchScoreCard({
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
-            <span className="text-[#6B6E78] text-sm font-bold">팀 A</span>
+            <span className="text-disabled-dark text-sm font-bold">팀 A</span>
             <div className="rounded-full w-2 h-2 bg-[#FFF3C5]" />
           </div>
         </div>
@@ -167,13 +169,13 @@ function MatchScoreCard({
       {/* 매치 점수 */}
       <div className="flex gap-x-6 text-4xl font-bold">
         <span
-          className={`${winnerTeam() === 1 ? `text-[#FCA211]` : `text-[#6B6E78]`}`}
+          className={`${winnerTeam() === 1 ? `text-theme` : `text-disabled-dark`}`}
         >
           {isVisible ? matchResult?.team1 : '00'}
         </span>
         <span>:</span>
         <span
-          className={`${winnerTeam() === 2 ? `text-[#FCA211] ` : `text-[#6B6E78]`}`}
+          className={`${winnerTeam() === 2 ? `text-theme ` : `text-disabled-dark`}`}
         >
           {isVisible ? matchResult?.team2 : '00'}
         </span>
@@ -186,8 +188,8 @@ function MatchScoreCard({
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
-            <div className="rounded-full w-2 h-2 bg-[#FCA211]" />
-            <span className="text-[#6B6E78] text-sm font-bold">팀 B</span>
+            <div className="rounded-full w-2 h-2 bg-theme" />
+            <span className="text-disabled-dark text-sm font-bold">팀 B</span>
           </div>
         </div>
       </div>

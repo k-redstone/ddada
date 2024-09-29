@@ -19,7 +19,7 @@ export default function ManagerSidebar() {
     <div className="flex flex-col gap-y-[.625rem]">
       <div className="p-2">
         <input
-          className="border placeholder-[#6B6E78] px-6 py-5 w-full text-black border-[#E5E5ED] rounded-xl h-16 "
+          className="border placeholder-disabled-dark px-6 py-5 w-full text-black border-disabled rounded-xl h-16 "
           placeholder="검색"
           type="text"
         />
@@ -31,7 +31,7 @@ export default function ManagerSidebar() {
       <div className="flex flex-col">
         <div className="flex text-sm w-ful">
           <span
-            className={`py-3 text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 1 && `font-bold text-[#FCA211] border-b-2 border-[#FCA211]`}`}
+            className={`py-3 text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 1 && `font-bold text-theme border-b-2 border-theme`}`}
             onClick={() => setClickedCategory(1)}
             aria-hidden="true"
           >
@@ -39,7 +39,7 @@ export default function ManagerSidebar() {
             {listDummy.filter((item) => item.status === 'reserved').length})
           </span>
           <span
-            className={`py-3 text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 2 && `font-bold text-[#FCA211] border-b-2 border-[#FCA211]`}`}
+            className={`py-3 text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 2 && `font-bold text-theme border-b-2 border-theme`}`}
             onClick={() => setClickedCategory(2)}
             aria-hidden="true"
           >
@@ -47,7 +47,7 @@ export default function ManagerSidebar() {
             {listDummy.filter((item) => item.status === 'play').length})
           </span>
           <span
-            className={`py-3  text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 3 && `font-bold text-[#FCA211] border-b-2 border-[#FCA211]`}`}
+            className={`py-3  text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 3 && `font-bold text-theme border-b-2 border-theme`}`}
             onClick={() => setClickedCategory(3)}
             aria-hidden="true"
           >
