@@ -1,50 +1,54 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
-import {
-  listDummy,
-  // singleDummy,
-} from '@/features/manager/constants/dummyData.ts'
+import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
+import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
 
 export default function ScoreBoardPage() {
   const params = useParams() as { gameId: string }
 
-  const dummy = listDummy.find(
-    (item) => item.id === parseInt(params.gameId, 10),
-  )
+  const { data, isSuccess } = useQuery({
+    queryKey: ['matchDetail', params.gameId],
+    queryFn: () => fetchMatchDetail(params.gameId),
+    enabled: !!params.gameId,
+  })
 
-  if (!dummy) {
+  if (!isSuccess) {
     return (
       <div>
         <p>임시</p>
       </div>
     )
   }
+
   return (
     <div className="bg-[#E7E7E7]">
-      <MatchCourtShortInfo data={dummy} />
+      <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
-        <MatchPlayerInfo />
-        <MatchRule>
-          <MatchRule.TitleWithUnderline />
-          <MatchRule.TossRule />
-          <MatchRule.ScoreRule />
-          <MatchRule.DoubleRule />
-          <MatchRule.InvalidityRule />
-          <MatchRule.FaultRule />
-        </MatchRule>
-        <MatchCourtInfo>
-          <MatchCourtInfo.Title />
-          <MatchCourtInfo.CourtImage />
-          <MatchCourtInfo.Number />
-          <MatchCourtInfo.Website />
-          <MatchCourtInfo.Detail />
-        </MatchCourtInfo>
+        <MatchReservationDetailProvider matchDetailData={data}>
+          <MatchPlayerInfo />
+          <MatchRule>
+            <MatchRule.TitleWithUnderline />
+            <MatchRule.TossRule />
+            <MatchRule.ScoreRule />
+            <MatchRule.DoubleRule />
+            <MatchRule.InvalidityRule />
+            <MatchRule.FaultRule />
+          </MatchRule>
+          <MatchCourtInfo>
+            <MatchCourtInfo.Title />
+            <MatchCourtInfo.CourtImage />
+            <MatchCourtInfo.Number />
+            <MatchCourtInfo.Website />
+            <MatchCourtInfo.Detail />
+          </MatchCourtInfo>
+        </MatchReservationDetailProvider>
 
         {true ? (
           <div>
