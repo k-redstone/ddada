@@ -13,7 +13,7 @@ export default function MatchStatus({
       textJsx = (
         <>
           <p className="font-bold">결제하고 바로 매치 확정하기 🤙</p>
-          <p className="text-sm text-[#6B6E78] ">
+          <p className="text-sm text-disabled-dark ">
             빠르게 팀을 고르고 매치를 준비하세요
           </p>
         </>
@@ -30,7 +30,7 @@ export default function MatchStatus({
       textJsx = (
         <>
           <p className="font-bold">결제하고 바로 매치 확정하기 🤙</p>
-          <p className="text-sm text-[#6B6E78] ">
+          <p className="text-sm text-disabled-dark ">
             빠르게 팀을 고르고 매치를 준비하세요
           </p>
         </>
@@ -38,7 +38,7 @@ export default function MatchStatus({
   }
 
   return (
-    <div className="pb-3 border-b border-[#E5E5ED]">
+    <div className="pb-3 border-b border-disabled">
       <div className="flex flex-col items-center">
         {isMatchReserved ? (
           <p className="font-bold">이미 예약한 매치에요.</p>

@@ -3,30 +3,30 @@ export default function RefundPolicyInfo() {
     <div className="p-2 flex flex-col gap-y-6  text-xs">
       {/* 제목 */}
       <div className="py-1 flex">
-        <h1 className="text-base font-bold border-b-2 border-[#FCA211] box-border">
+        <h1 className="text-base font-bold border-b-2 border-theme box-border">
           취소/환불규정
         </h1>
       </div>
       {/* 규정 */}
       <div className="flex flex-col gap-y-3">
-        <div className="flex gap-x-4 pb-1 border-b border-[#E5E5ED]">
-          <span className="text-[#6B6E78] w-20">매치 7일 전</span>
+        <div className="flex gap-x-4 pb-1 border-b border-disabled">
+          <span className="text-disabled-dark w-20">매치 7일 전</span>
           <span>무료 취소</span>
         </div>
-        <div className="flex gap-x-4 pb-1 border-b border-[#E5E5ED]">
-          <span className="text-[#6B6E78] w-20">매치 5일 전</span>
+        <div className="flex gap-x-4 pb-1 border-b border-disabled">
+          <span className="text-disabled-dark w-20">매치 5일 전</span>
           <span>총 금액의 70% 환급</span>
         </div>
-        <div className="flex gap-x-4 pb-1 border-b border-[#E5E5ED]">
-          <span className="text-[#6B6E78] w-20">매치 3일 전</span>
+        <div className="flex gap-x-4 pb-1 border-b border-disabled">
+          <span className="text-disabled-dark w-20">매치 3일 전</span>
           <span>총 금액의 40% 환급</span>
         </div>
-        <div className="flex gap-x-4 pb-1 border-b border-[#E5E5ED]">
-          <span className="text-[#6B6E78] w-20">매치 전날</span>
+        <div className="flex gap-x-4 pb-1 border-b border-disabled">
+          <span className="text-disabled-dark w-20">매치 전날</span>
           <span>환불 불가</span>
         </div>
-        <div className="flex gap-x-4 pb-1 border-b border-[#E5E5ED]">
-          <span className="text-[#6B6E78] w-20">매치 당일</span>
+        <div className="flex gap-x-4 pb-1 border-b border-disabled">
+          <span className="text-disabled-dark w-20">매치 당일</span>
           <span>환불 불가</span>
         </div>
       </div>

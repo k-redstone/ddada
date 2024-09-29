@@ -68,7 +68,7 @@ export default function MatchApply() {
         <MatchStatus status={matchDetailData.status} isMatchReserved={false} />
 
         {/* 팀 선택 */}
-        <div className="pb-3 flex flex-col gap-y-1  border-b border-[#E5E5ED] text-xs">
+        <div className="pb-3 flex flex-col gap-y-1  border-b border-disabled text-xs">
           <h2 className="text-sm font-bold">팀 선택</h2>
 
           <MatchTeamSelectList
@@ -83,7 +83,7 @@ export default function MatchApply() {
         </div>
 
         {/* 예약정보 */}
-        <div className="pb-3 flex flex-col gap-y-1  border-b border-[#E5E5ED] text-xs text-[#6B6E78]">
+        <div className="pb-3 flex flex-col gap-y-1  border-b border-disabled text-xs text-disabled-dark">
           <h2 className="text-sm font-bold text-black">예약정보</h2>
           <p className="text-sm">{matchDetailData.court.name}</p>
           <p>{matchDetailData.court.address}</p>

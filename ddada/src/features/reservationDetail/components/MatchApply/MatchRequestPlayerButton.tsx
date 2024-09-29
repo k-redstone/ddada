@@ -44,17 +44,17 @@ export default function MatchRequestButton({
     return (
       <button
         type="button"
-        className="border border-[#DC3545]  rounded-[.25rem] py-2 px-1 box-border"
+        className="border border-danger  rounded-[.25rem] py-2 px-1 box-border"
         onClick={() => handleModalOpen()}
       >
-        <span className="text-xs text-[#DC3545]">예약 취소하기</span>
+        <span className="text-xs text-danger">예약 취소하기</span>
       </button>
     )
   }
   return (
     <button
       type="button"
-      className="bg-[#FCA211] rounded-[.25rem] py-2 px-1 box-border"
+      className="bg-theme rounded-[.25rem] py-2 px-1 box-border"
       onClick={() => handleMatchJoin()}
     >
       <span className="text-xs text-white">매치 신청하기</span>
