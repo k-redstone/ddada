@@ -7,3 +7,7 @@ export type UserProfile = {
 export type UserRole = {
   memberType: 'PLAYER' | 'MANAGER'
 }
+
+export type UserPk = {
+  playerId: number
+}

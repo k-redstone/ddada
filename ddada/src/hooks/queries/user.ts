@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchUserProfile, loginUserRole } from '@/api/user/index.ts'
+import {
+  fetchUserPk,
+  fetchUserProfile,
+  loginUserRole,
+} from '@/api/user/index.ts'
 
 export function useUserRole() {
   return useQuery({
@@ -11,11 +15,19 @@ export function useUserRole() {
   })
 }
 
+export function useFetchUserPk() {
+  return useQuery({
+    queryKey: ['userPK'],
+    queryFn: fetchUserPk,
+    staleTime: Infinity,
+    retry: 1,
+  })
+}
+
 export function useFetchUserProfile() {
   return useQuery({
     queryKey: ['userProfile'],
     queryFn: fetchUserProfile,
-    staleTime: Infinity,
     retry: 1,
   })
 }
