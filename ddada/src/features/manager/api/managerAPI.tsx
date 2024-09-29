@@ -40,3 +40,6 @@ export async function changeMatchStatus(matchId: number) {
   }
   await privateAPI.patch(`/matches/status`, payload)
 }
+export async function storeMatchResult(matchId: number, payload: any) {
+  await privateAPI.put(`/manager/matches/${matchId}`, payload)
+}

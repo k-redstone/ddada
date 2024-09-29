@@ -2,23 +2,46 @@
 
 import { useLayoutEffect } from 'react'
 
+import { storeMatchResult } from '@/features/manager/api/managerAPI.tsx'
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
-// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import { REALDATADUMMY } from '@/features/manager/constants/dummyData.ts'
+import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
+import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 import BadmintonScoreboardInstance from '@/features/manager/utils/BadmintonScoreboardInstance.ts'
 
-export default function BadmintonScoreBoard() {
+interface BadmintonScoreBoardProps {
+  data: MatchDetailType
+}
+
+export default function BadmintonScoreBoard({
+  data,
+}: BadmintonScoreBoardProps) {
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
   }))
 
+  const handleMatchEnd = async () => {
+    if (!badmintonInstance) {
+      return
+    }
+    console.log(badmintonInstance.id)
+
+    const payload = {
+      winnerTeamNumber: badmintonInstance.winnerTeamNumber,
+      team1SetScore: badmintonInstance.team1SetScore,
+      team2SetScore: badmintonInstance.team2SetScore,
+      sets: badmintonInstance.sets,
+    }
+    console.log(payload)
+    await storeMatchResult(badmintonInstance.id as number, payload)
+  }
+
   useLayoutEffect(() => {
     const initInstance = new BadmintonScoreboardInstance(
-      1,
-      REALDATADUMMY.team1,
-      REALDATADUMMY.team2,
+      data.id,
+      data.team1,
+      data.team2,
     )
     initInstance.initialize()
     update(initInstance)
@@ -44,6 +67,7 @@ export default function BadmintonScoreBoard() {
         <BadmintonCourt />
       </div>
       <MatchScoreCard
+        data={data}
         matchResult={{
           team1: badmintonInstance.sets[0].team1Score,
           team2: badmintonInstance.sets[0].team2Score,
@@ -51,6 +75,7 @@ export default function BadmintonScoreBoard() {
         isVisible={badmintonInstance.currentSet >= 2}
       />
       <MatchScoreCard
+        data={data}
         matchResult={{
           team1: badmintonInstance.sets[1].team1Score,
           team2: badmintonInstance.sets[1].team2Score,
@@ -58,6 +83,7 @@ export default function BadmintonScoreBoard() {
         isVisible={badmintonInstance.currentSet >= 3}
       />
       <MatchScoreCard
+        data={data}
         matchResult={{
           team1: badmintonInstance.sets[2].team1Score,
           team2: badmintonInstance.sets[2].team2Score,
@@ -65,9 +91,13 @@ export default function BadmintonScoreBoard() {
         isVisible={badmintonInstance.currentSet >= 4}
       />
       {badmintonInstance.winnerTeamNumber ? (
-        <div className="bg-theme flex justify-center items-center h-[4.75rem] cursor-pointer">
+        <button
+          type="button"
+          onClick={() => handleMatchEnd()}
+          className="bg-theme flex justify-center items-center h-[4.75rem] cursor-pointer"
+        >
           <span className="text-white text-xl font-bold ">매치 완료</span>
-        </div>
+        </button>
       ) : (
         <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
           <span className="text-disabled-dark text-xl font-bold">
@@ -126,11 +156,13 @@ interface MatchResult {
 }
 
 function MatchScoreCard({
+  data,
   matchResult = { team1: 0, team2: 0 },
   isVisible = false,
 }: {
   matchResult?: MatchResult | null
   isVisible: boolean
+  data: MatchDetailType
 }) {
   const winnerTeam = () => {
     if (!isVisible) {
@@ -156,8 +188,8 @@ function MatchScoreCard({
       {/* A팀 */}
       <div className="flex gap-x-3 items-center">
         <div className="flex gap-x-3">
-          {/* <GameUserInfo /> */}
-          {/* <GameUserInfo /> */}
+          <GameUserInfo src={data.team1.player1.image} />
+          <GameUserInfo src={data.team1.player2.image} />
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
@@ -183,8 +215,8 @@ function MatchScoreCard({
       {/* B팀 */}
       <div className="flex gap-x-3 items-center flex-row-reverse">
         <div className="flex gap-x-3">
-          {/* <GameUserInfo /> */}
-          {/* <GameUserInfo /> */}
+          <GameUserInfo src={data.team2.player1.image} />
+          <GameUserInfo src={data.team2.player2.image} />
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
