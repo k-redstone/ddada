@@ -32,7 +32,7 @@ export default function ScoreBoardPage() {
       <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
         <MatchReservationDetailProvider matchDetailData={data}>
-          <MatchPlayerInfo />
+          <MatchPlayerInfo data={data} />
           <MatchRule>
             <MatchRule.TitleWithUnderline />
             <MatchRule.TossRule />

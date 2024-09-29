@@ -1,10 +1,12 @@
 // import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
-import { objectDummy } from '@/features/manager/constants/dummyData.ts'
-import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
-import TangerineFillDot from '@/static/imgs/manager/TangerineFillDot.svg'
-import TangerineLightDot from '@/static/imgs/manager/TangerineLightDot.svg'
+import MatchTeamInfo from '@/features/manager/components/MatchTeamInfo/index.tsx'
+import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 
-export default function MatchPlayerInfo() {
+interface MatchPlayerInfoProps {
+  data: MatchDetailType
+}
+
+export default function MatchPlayerInfo({ data }: MatchPlayerInfoProps) {
   return (
     <div className="p-2 flex flex-col gap-y-6 bg-white">
       <h2 className="text-xl font-bold">선수 정보</h2>
@@ -15,40 +17,24 @@ export default function MatchPlayerInfo() {
         <div className="flex flex-col gap-y-3">
           {/* 개별 컴포 */}
 
-          {objectDummy.team1.map((item, index) => (
-            <div className="flex gap-x-3" key={item.id}>
-              {/* <GameUserInfo /> */}
-              <div className="flex flex-col gap-y-1 text-sm">
-                <p className="flex gap-x-1 items-center">
-                  <span className="font-bold">[A{index + 1}] 나는혹석</span>
-                  <TangerineLightDot />
-                </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
-              </div>
-            </div>
+          {[data.team1.player1, data.team1.player2].map((player, idx) => (
+            <MatchTeamInfo
+              key={player ? player.id : data.id + idx}
+              team="A"
+              player={player}
+            />
           ))}
         </div>
         <div> | </div>
 
         {/* B팀 */}
         <div className="flex flex-col gap-y-3">
-          {objectDummy.team1.map((item, index) => (
-            <div className="flex gap-x-3" key={item.id}>
-              {/* <GameUserInfo /> */}
-              <div className="flex flex-col gap-y-1 text-sm">
-                <p className="flex gap-x-1 items-center">
-                  <span className="font-bold">[B{index + 1}] 나는혹석</span>
-                  <TangerineFillDot />
-                </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
-              </div>
-            </div>
+          {[data.team2.player1, data.team2.player2].map((player, idx) => (
+            <MatchTeamInfo
+              key={player ? player.id : data.id + idx}
+              team="B"
+              player={player}
+            />
           ))}
         </div>
       </div>

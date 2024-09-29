@@ -135,4 +135,5 @@ export type {
   ManagerMatchListPayload,
   ManagerMatchDetailType,
   FetchManagerMatchListType,
+  PlayerType,
 }
