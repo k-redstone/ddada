@@ -32,3 +32,11 @@ export async function fetchManagerMatchList(
   const res = await privateAPI.get('/manager/matches', { params })
   return res.data.result
 }
+
+export async function changeMatchStatus(matchId: number) {
+  const payload = {
+    matchId,
+    status: 'PLAYING',
+  }
+  await privateAPI.patch(`/matches/status`, payload)
+}

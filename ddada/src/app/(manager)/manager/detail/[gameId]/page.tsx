@@ -1,16 +1,18 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
+import { changeMatchStatus } from '@/features/manager/api/managerAPI.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
 import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
 
 export default function ScoreBoardPage() {
+  const queryClient = useQueryClient()
   const params = useParams() as { gameId: string }
 
   const { data, isSuccess } = useQuery({
@@ -18,6 +20,22 @@ export default function ScoreBoardPage() {
     queryFn: () => fetchMatchDetail(params.gameId),
     enabled: !!params.gameId,
   })
+
+  const handleMatchStart = async () => {
+    // todo: 매치 시작 분기로직
+
+    if (!data) {
+      return
+    }
+
+    if (data.status !== 'RESERVED') {
+      return
+    }
+    await changeMatchStatus(data.id).then(() => {
+      queryClient.invalidateQueries({ queryKey: ['matchDetail', data.id] })
+      queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+    })
+  }
 
   if (!isSuccess) {
     return (
@@ -58,9 +76,13 @@ export default function ScoreBoardPage() {
                 인원을 확인하고 매치를 시작해주세요.
               </span>
             </div>
-            <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
+            <button
+              type="button"
+              onClick={() => handleMatchStart()}
+              className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer w-full"
+            >
               <span className="text-white text-xl font-bold ">매치 시작</span>
-            </div>
+            </button>
           </div>
         ) : (
           <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">
