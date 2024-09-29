@@ -1,5 +1,3 @@
-/* eslint no-nested-ternary: "off" */
-
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'

@@ -34,7 +34,7 @@ export default function useGetUserStatus(data: MatchDetailType) {
         )
       })
     }
-  }, [isSuccess, data])
+  }, [isSuccess, data, userRole?.memberType])
 
   return { isTeamA, isTeamB, isManager }
 }
