@@ -30,7 +30,7 @@ export default function MatchPlayerInfo() {
           {/* player A1 */}
           <div className="flex gap-x-3">
             <GameUserInfo src={team1Data.player1.image} />
-            <div className="flex flex-col gap-y-1">
+            <div className="flex flex-col gap-y-1 grow">
               <p className="flex gap-x-1 items-center">
                 <span className="font-bold text-disabled-dark">
                   [A1] {team1Data.player1.nickname}
@@ -46,8 +46,8 @@ export default function MatchPlayerInfo() {
           {team1Data.player2 ? (
             <div className="flex gap-x-3">
               <GameUserInfo src={team1Data.player2.image} />
-              <div className="flex flex-col gap-y-1">
-                <p className="flex gap-x-1 items-center">
+              <div className="flex flex-col gap-y-1 grow">
+                <p className="flex gap-x-1 items-center text-disabled-dark">
                   <span className="font-bold">
                     [A2] {team1Data.player2.nickname}
                   </span>
@@ -70,9 +70,8 @@ export default function MatchPlayerInfo() {
           {/* player B1 */}
           {team2Data.player1 ? (
             <div className="flex gap-x-3">
-              <GameUserInfo src={team2Data.player1.image} />
-              <div className="flex flex-col gap-y-1">
-                <p className="flex gap-x-1 items-center">
+              <div className="flex flex-col gap-y-1 items-end grow">
+                <p className="flex gap-x-1 items-center text-disabled-dark">
                   <span className="font-bold">
                     [A2] {team2Data.player1.nickname}
                   </span>
@@ -82,6 +81,7 @@ export default function MatchPlayerInfo() {
                   <span>아마추어</span>
                 </p>
               </div>
+              <GameUserInfo src={team2Data.player1.image} />
             </div>
           ) : (
             <p className="text-sm text-disabled-dark font-bold text-center">
@@ -91,9 +91,8 @@ export default function MatchPlayerInfo() {
           {/* player B2 */}
           {team2Data.player2 ? (
             <div className="flex gap-x-3">
-              <GameUserInfo src={team2Data.player2.image} />
-              <div className="flex flex-col gap-y-1">
-                <p className="flex gap-x-1 items-center">
+              <div className="flex flex-col gap-y-1 items-end grow">
+                <p className="flex gap-x-1 items-center text-disabled-dark">
                   <span className="font-bold">
                     [A2] {team2Data.player2.nickname}
                   </span>
@@ -103,6 +102,7 @@ export default function MatchPlayerInfo() {
                   <span>아마추어</span>
                 </p>
               </div>
+              <GameUserInfo src={team2Data.player2.image} />
             </div>
           ) : (
             <p className="text-sm text-disabled-dark font-bold text-center">
