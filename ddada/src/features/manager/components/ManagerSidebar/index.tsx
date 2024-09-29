@@ -16,6 +16,10 @@ export default function ManagerSidebar() {
   // RESERVED: '예약됨',
   // PLAYING: '진행중',
   // FINISHED: '종료됨',
+  const { data: matchCreatedList, isSuccess: isCreated } = useQuery({
+    queryKey: ['managerMatch', { type: 'CREATED' }],
+    queryFn: () => fetchManagerMatchList({ statuses: 'CREATED' }),
+  })
   const { data: matchReservedList, isSuccess: isReserved } = useQuery({
     queryKey: ['managerMatch', { type: 'RESERVED' }],
     queryFn: () => fetchManagerMatchList({ statuses: 'RESERVED' }),
@@ -29,7 +33,7 @@ export default function ManagerSidebar() {
     queryFn: () => fetchManagerMatchList({ statuses: 'FINISHED' }),
   })
 
-  if (!isReserved || !isFinished || !isPlaying) {
+  if (!isReserved || !isFinished || !isPlaying || !isCreated) {
     return (
       <div>
         <p>Loading</p>
@@ -75,15 +79,17 @@ export default function ManagerSidebar() {
           </span>
         </div>
         {clickedCategory === 1 &&
-          matchReservedList.content.map((item) => (
-            <Link
-              href={`/manager/${CATEGORY_TO_PAGE[clickedCategory]}/${item.id}`}
-              key={item.id}
-              onClick={() => setClickedCard(item.id)}
-            >
-              <MatchCard data={item} isClicked={item.id === clickedCard} />
-            </Link>
-          ))}
+          [...matchCreatedList.content, ...matchReservedList.content].map(
+            (item) => (
+              <Link
+                href={`/manager/${CATEGORY_TO_PAGE[clickedCategory]}/${item.id}`}
+                key={item.id}
+                onClick={() => setClickedCard(item.id)}
+              >
+                <MatchCard data={item} isClicked={item.id === clickedCard} />
+              </Link>
+            ),
+          )}
         {clickedCategory === 2 &&
           matchPlayingList.content.map((item) => (
             <Link

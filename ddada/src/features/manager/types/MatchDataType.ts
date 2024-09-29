@@ -117,6 +117,16 @@ type ManagerMatchDetailType = {
   court: CourtType
 }
 
+type FetchManagerMatchListType = {
+  content: ManagerMatchDetailType[]
+  page: {
+    size: number
+    number: number
+    totalElements: number
+    totalPages: number
+  }
+}
+
 export type {
   SetResultType,
   TeamType,
@@ -124,4 +134,5 @@ export type {
   MatchReusltStoreType,
   ManagerMatchListPayload,
   ManagerMatchDetailType,
+  FetchManagerMatchListType,
 }

@@ -53,8 +53,9 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
               }).map(() => (
                 <TangerinefillDot key={data.id + Math.random()} />
               ))}
+
               {Array.from({
-                length: 4 - data.team1PlayerCount + data.team2PlayerCount,
+                length: 4 - (data.team1PlayerCount + data.team2PlayerCount),
               }).map(() => (
                 <TangerineBlankDot key={data.id + Math.random()} />
               ))}
