@@ -5,10 +5,12 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { logOut } from '@/api/user/index.ts'
+import { useUserRole } from '@/hooks/queries/user.ts'
 import Logo from '@/static/imgs/logo.svg'
 import CalendarIcon from '@/static/imgs/main/CalendarIcon.svg'
 
 export default function MainHeader() {
+  const { data } = useUserRole()
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [loginType, setLoginType] = useState<string | null>(null)
   const pathname = usePathname()
@@ -63,12 +65,20 @@ export default function MainHeader() {
         >
           라켓 추천 • 검색
         </Link>
-        {accessToken && (
+        {accessToken && data?.memberType === 'PLAYER' && (
           <Link
             href="/mypage/mymatch"
             className={`${currentPath === 'mypage' && 'text-[#FCA211]'}`}
           >
-            마이페이지
+            내 매치 확인하기
+          </Link>
+        )}
+        {accessToken && data?.memberType === 'MANAGER' && (
+          <Link
+            href="/manager"
+            className={`${currentPath === 'mypage' && 'text-[#FCA211]'}`}
+          >
+            매니저 페이지
           </Link>
         )}
       </div>

@@ -6,11 +6,11 @@ import Professional from '@/static/imgs/rank/Professional.svg'
 import Rookie from '@/static/imgs/rank/Rookie.svg'
 import SemiPro from '@/static/imgs/rank/Semi-pro.svg'
 
-interface RankTierProps {
+interface RankIconProps {
   rating: number
 }
 
-export default function RankTier({ rating }: RankTierProps) {
+export default function RankIcon({ rating }: RankIconProps) {
   useEffect(() => {
     const tiers = [
       { min: 0, max: 600, tier: '루키', tierNum: 0 },
@@ -45,16 +45,8 @@ export default function RankTier({ rating }: RankTierProps) {
   const [tierNum, setTierNum] = useState<string>('')
 
   return (
-    <div
-      className={`border-2 rounded-full flex items-center justify-center py-1 px-3 gap-2
-      ${tier === '루키' && 'border-black text-black bg-black bg-opacity-20'}
-      ${tier === '아마추어' && 'border-[#963D0A] text-[#963D0A] bg-[#963D0A] bg-opacity-20'}
-      ${tier === '세미프로' && 'border-[#6D6D6D] text-[#6D6D6D] bg-[#F6F6F6]'}
-      ${tier === '프로페셔널' && 'border-theme text-theme bg-theme-light'}
-      ${tier === '마스터' && 'border-[#9180D4] text-[#9180D4] bg-[#F1F2FC]'}
-      `}
-    >
-      <div className="flex items-center justify-center h-6 w-6">
+    <div className="flex flex-col justify-center items-center gap-2">
+      <div className="flex items-center justify-center h-10 w-10">
         {tier === '루키' && <Rookie className="w-full h-full" />}
         {tier === '아마추어' && <Amateur className="w-full h-full" />}
         {tier === '세미프로' && <SemiPro className="w-full h-full" />}

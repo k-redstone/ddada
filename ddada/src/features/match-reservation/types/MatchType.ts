@@ -11,7 +11,8 @@ export type MatchType = {
   id: number
   isReserved: boolean
   matchType: string
-  playersGender: PlayersGender
+  team1Gender: PlayersGender
+  team2Gender: PlayersGender
   rankType: string
   rating: number
   status: string

@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -26,6 +27,7 @@ export default function Login() {
   const [passwordExists, setPasswordExists] = useState<boolean>(false)
   const [axiosError, setAxiosError] = useState<boolean>(false)
   const searchParams = useSearchParams()
+  const queryCliet = useQueryClient()
   const redirect = searchParams.get('redirect') || '/'
   const router = useRouter()
 
@@ -70,6 +72,7 @@ export default function Login() {
     }
 
     fetchSocialLogin()
+    queryCliet.invalidateQueries({ queryKey: ['userRole'] })
   }, [searchParams])
 
   const handleKakaoLogin = () => {
@@ -110,8 +113,10 @@ export default function Login() {
       sessionStorage.setItem('loginType', 'custom')
       setAxiosError(false)
       if (redirect) {
+        queryCliet.invalidateQueries({ queryKey: ['userRole'] })
         router.push(redirect)
       } else {
+        queryCliet.invalidateQueries({ queryKey: ['userRole'] })
         router.push('/')
       }
     } catch {

@@ -1,7 +1,10 @@
+'use client'
+
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'react-hot-toast'
 
@@ -23,11 +26,19 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
   const { isModalOpen, portalElement, handleModalOpen, handleModalClose } =
     useModal()
   const { invalidateReservationList } = useInvalidateMatchReservations()
-
   const [team] = match.MyTeamAndNumber.split(' ')
   const dayOfWeek = dayjs(match.matchDate).format('dd')
+
+  const [ratingChangeColor, setRatingChangeColor] = useState<string>('')
+  useEffect(() => {
+    if (match.myRatingChange && match.myRatingChange < 0) {
+      setRatingChangeColor('DEFEAT')
+    } else if (match.myRatingChange && match.myRatingChange > 0) {
+      setRatingChangeColor('VICTORY')
+    }
+  }, [match.myRatingChange])
+
   const handleMatchCancel = async () => {
-    console.log(team, match.matchId)
     try {
       let playerTeam = 1
       if (team === 'B팀') {
@@ -56,10 +67,21 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
             portalElement,
           )
         : null}
-      {/* todo 승패여부에 따라서도 색깔을 넣어줘야함 */}
-      <div className="bg-base-50 rounded-xl flex gap-3 px-6 py-3">
+      <div
+        className={`bg-base-50 rounded-xl flex gap-3 px-6 py-3
+        ${ratingChangeColor === 'VICTORY' && 'bg-primary bg-opacity-10'}
+        ${ratingChangeColor === 'DEFEAT' && 'bg-danger bg-opacity-10'}
+        `}
+      >
         <div className="flex flex-col justify-center items center text-xs">
-          <MatchStatusTag matchStatus={match.matchStatus} />
+          {match.myRatingChange ? (
+            <MatchStatusTag
+              matchStatus={match.matchStatus}
+              ratingChange={match.myRatingChange}
+            />
+          ) : (
+            <MatchStatusTag matchStatus={match.matchStatus} />
+          )}
         </div>
         <div className="flex flex-col gap-3 flex-grow">
           <div className="flex flex-col gap-1">
@@ -86,7 +108,8 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
           </div>
         </div>
         <div className="flex gap-1 justify-center items-center text-xs">
-          {match.matchStatus === ('CREATED' || 'RESERVED') ? (
+          {match.matchStatus === 'CREATED' ||
+          match.matchStatus === 'RESERVED' ? (
             <div>
               <button
                 type="button"
