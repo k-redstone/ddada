@@ -35,10 +35,9 @@ export async function fetchManagerMatchList(
 
 export async function changeMatchStatus(matchId: number) {
   const payload = {
-    matchId,
     status: 'PLAYING',
   }
-  await privateAPI.patch(`/matches/status`, payload)
+  await privateAPI.patch(`/manager/matches/${matchId}/status`, payload)
 }
 export async function storeMatchResult(matchId: number, payload: any) {
   await privateAPI.put(`/manager/matches/${matchId}`, payload)

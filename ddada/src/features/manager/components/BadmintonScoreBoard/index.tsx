@@ -26,12 +26,13 @@ export default function BadmintonScoreBoard({
       return
     }
     console.log(badmintonInstance.id)
-
+    const set =
+      badmintonInstance.team1SetScore + badmintonInstance.team2SetScore
     const payload = {
       winnerTeamNumber: badmintonInstance.winnerTeamNumber,
       team1SetScore: badmintonInstance.team1SetScore,
       team2SetScore: badmintonInstance.team2SetScore,
-      sets: badmintonInstance.sets,
+      sets: badmintonInstance.sets.slice(0, set),
     }
     console.log(payload)
     await storeMatchResult(badmintonInstance.id as number, payload)
