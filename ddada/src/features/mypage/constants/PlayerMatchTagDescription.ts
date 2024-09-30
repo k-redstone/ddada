@@ -9,4 +9,15 @@ const PlayerMatchTagDescription: Record<string, string> = {
   번지점프: '불운이 따라 영향력이 좋지 않았던 매치였어요',
 }
 
-export { PlayerMatchTagDescription }
+const PlayerMatchTagColor: Record<string, string> = {
+  저지불가: '#DC3545',
+  스프린터: '#0D6EFD',
+  평범함: '#6B6E78',
+  롤러코스터: '#FCA211',
+  슬로우스타터: '#22BB33',
+  오르막길: '#007E00',
+  내리막길: '#963D0A',
+  번지점프: '#F27F3D',
+}
+
+export { PlayerMatchTagDescription, PlayerMatchTagColor }

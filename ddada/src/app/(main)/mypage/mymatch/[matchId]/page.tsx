@@ -4,10 +4,17 @@ import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { getMyMatchDetail } from '@/features/mypage/api/mypage/index.ts'
+import {
+  getMyMatchDetail,
+  getSetDetail,
+} from '@/features/mypage/api/mypage/index.ts'
 import MatchTimeLine from '@/features/mypage/components/MatchTimeLine/index.tsx'
 import PlayerMatchTag from '@/features/mypage/components/PlayerMatchTag/index.tsx'
-import { PlayerMatchTagDescription } from '@/features/mypage/constants/PlayerMatchTagDescription.ts'
+import {
+  PlayerMatchTagColor,
+  PlayerMatchTagDescription,
+} from '@/features/mypage/constants/PlayerMatchTagDescription.ts'
+import useGetUserInfo from '@/features/mypage/hooks/useGetUserInfo.tsx'
 import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
 import Timer from '@/static/imgs/mypage/my-page-timer.svg'
@@ -24,8 +31,14 @@ export default function MyMatchDetailPage({
   const { data } = useQuery({
     queryKey: ['myMatchDetail', { matchId }],
     queryFn: () => getMyMatchDetail(matchId),
+    retry: 1,
   })
   const [setNumber, setSetNumber] = useState<number>(1)
+  const { isTeamA, isTeamB, playerId } = useGetUserInfo(data)
+  const winnerTeam = data.result.winnerTeamNumber
+  // todo daty에 따라 matchTag달아줘야함
+  const matchTag = '저지불가'
+  // console.log(playerId)
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
       <div className="flex px-6 py-6 gap-6 border rounded-xl justify-center items-center text-disabled-dark">
@@ -78,7 +91,7 @@ export default function MyMatchDetailPage({
             </p>
           </div>
           <div>
-            <PlayerMatchTag matchTag="스프린터" />
+            <PlayerMatchTag matchTag={matchTag} />
           </div>
         </div>
         <Chart
@@ -113,7 +126,7 @@ export default function MyMatchDetailPage({
               // ],
               // type: 'datetime',
             },
-            colors: ['#22BB33', '#E5E5ED'],
+            colors: [`${PlayerMatchTagColor[matchTag]}`, '#E5E5ED'],
             // tooltip: {
             //   y: { formatter: (value) => `점수 ${value.toFixed(2)}` },
             // },
@@ -125,7 +138,7 @@ export default function MyMatchDetailPage({
             <VictoryCharacter />
           </div>
           <div className="flex-grow text-center">
-            {PlayerMatchTagDescription['스프린터']}
+            {PlayerMatchTagDescription[matchTag]}
           </div>
         </div>
       </div>

@@ -51,7 +51,12 @@ const getMyMatchDetail = async (matchId: string) => {
   const params = {
     matchId,
   }
-  const res = await privateAPI.get(`/player/matches/`, { params })
+  const res = await privateAPI.get(`/matches/`, { params })
+  return res.data.result
+}
+
+const getSetDetail = async (matchId: string, setNum: number) => {
+  const res = await privateAPI.get(`/matches/${matchId}/sets/${setNum}`)
   return res.data.result
 }
 export {
@@ -61,4 +66,5 @@ export {
   patchPasswordChange,
   getMyMatchList,
   getMyMatchDetail,
+  getSetDetail,
 }
