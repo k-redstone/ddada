@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { getMyMatchDetail } from '@/features/mypage/api/mypage/index.ts'
@@ -11,6 +12,8 @@ import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
 import Timer from '@/static/imgs/mypage/my-page-timer.svg'
 import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export default function MyMatchDetailPage({
   params,
@@ -78,7 +81,45 @@ export default function MyMatchDetailPage({
             <PlayerMatchTag matchTag="스프린터" />
           </div>
         </div>
-        <div>표</div>
+        <Chart
+          type="line"
+          series={[
+            {
+              name: '사용자',
+              data: [1000, 2000, 3000, 6000, 1000, 1000, 1000, 10000],
+            },
+            {
+              name: '매치평균',
+              data: [1500, 1000, 2500, 3000, 1000, 2000, 2000, 1000],
+            },
+          ]}
+          width={530}
+          height={106}
+          options={{
+            theme: { mode: 'light' },
+            chart: {
+              toolbar: { show: false },
+              background: 'transparent',
+            },
+            stroke: { curve: 'smooth', width: 3 },
+            grid: { show: false },
+            yaxis: { show: false },
+            xaxis: {
+              labels: { show: false },
+              axisTicks: { show: false },
+              axisBorder: { show: false },
+              // categories: [
+              //   1660004640, 1660091040, 1660177440, 1660177440, 1660177440,
+              // ],
+              // type: 'datetime',
+            },
+            colors: ['#22BB33', '#E5E5ED'],
+            // tooltip: {
+            //   y: { formatter: (value) => `점수 ${value.toFixed(2)}` },
+            // },
+            legend: { show: false },
+          }}
+        />
         <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-12 w-full justify-center items-center text-disabled-dark">
           <div>
             <VictoryCharacter />
@@ -89,7 +130,7 @@ export default function MyMatchDetailPage({
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex text-sm text-disabled-dark">
         <button
           type="button"
           className={`border-b px-6
@@ -115,7 +156,7 @@ export default function MyMatchDetailPage({
           3세트
         </button>
       </div>
-      <MatchTimeLine />
+      <MatchTimeLine setNumber={setNumber} />
     </div>
   )
 }
