@@ -1,5 +1,5 @@
 import { privateAPI } from '@/api/axios.ts'
-import { UserProfile, UserRole } from '@/types/user/index.ts'
+import { UserPk, UserProfile, UserRole } from '@/types/user/index.ts'
 
 const loginUserRole = async (): Promise<UserRole | null> => {
   const accessToken = sessionStorage.getItem('accessToken')
@@ -27,4 +27,11 @@ const logOut = async () => {
   return null
 }
 
-export { loginUserRole, logOut, fetchUserProfile }
+const fetchUserPk = async (): Promise<UserPk | null> => {
+  const accessToken = sessionStorage.getItem('accessToken')
+  if (!accessToken) return null
+  const res = await privateAPI.get('/player/id')
+  return res.data.result
+}
+
+export { loginUserRole, logOut, fetchUserProfile, fetchUserPk }

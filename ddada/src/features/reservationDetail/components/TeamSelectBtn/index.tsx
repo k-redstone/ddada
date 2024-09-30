@@ -13,9 +13,19 @@ export default function TeamSelectBtn({
   isOtherTeamSelect,
   children,
 }: TeamSelectBtnProps) {
+  if (isJoined) {
+    return (
+      <div
+        className={`rounded-xl px-4 py-2 border border-theme text-theme ${isClicked || isJoined ? `bg-theme text-white` : `bg-white text-theme`}`}
+      >
+        <div>{isClicked}</div>
+        <div className="flex flex-col ">{children}</div>
+      </div>
+    )
+  }
   if (isDisabled || isOtherTeamSelect) {
     return (
-      <div className="rounded-xl px-4 py-2 border bg-[#F6F6F6] border-[#E5E5ED] text-[#6B6E78]">
+      <div className="rounded-xl px-4 py-2 border bg-base-50 border-disabled text-disabled-dark">
         {isClicked}
         <div className="flex flex-col">{children}</div>
       </div>
@@ -23,7 +33,7 @@ export default function TeamSelectBtn({
   }
   return (
     <div
-      className={`rounded-xl px-4 py-2 border border-[#FCA211] text-[#FCA211] ${isClicked || isJoined ? `bg-[#FCA211] text-white` : `bg-white text-[#FCA211]`}`}
+      className={`rounded-xl px-4 py-2 border border-theme text-theme ${isClicked || isJoined ? `bg-theme text-white` : `bg-white text-theme`}`}
     >
       <div>{isClicked}</div>
       <div className="flex flex-col ">{children}</div>
