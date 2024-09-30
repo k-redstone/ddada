@@ -1,3 +1,5 @@
-export default function PlayStyle() {
-  return <div>플레이스타일</div>
+import PlayStyle from '@/features/mypage/components/PlayStyle/index.tsx'
+
+export default function PlayStylePage() {
+  return <PlayStyle />
 }
