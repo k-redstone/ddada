@@ -42,13 +42,15 @@ export default function BadmintonScoreBoard({
   }
 
   useLayoutEffect(() => {
-    const initInstance = new BadmintonScoreboardInstance(
-      data.id,
-      data.team1,
-      data.team2,
-    )
-    initInstance.initialize()
-    update(initInstance)
+    if (data.status === 'PLAYING') {
+      const initInstance = new BadmintonScoreboardInstance(
+        data.id,
+        data.team1,
+        data.team2,
+      )
+      initInstance.initialize()
+      update(initInstance)
+    }
   }, [])
 
   if (!badmintonInstance) {
