@@ -1,3 +1,6 @@
+// todo 빼야됨
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import GAINED_BAR from '@/static/imgs/mypage/my-page-gained-bar.svg'
 import LOST_BAR from '@/static/imgs/mypage/my-page-lost-bar.svg'
 
