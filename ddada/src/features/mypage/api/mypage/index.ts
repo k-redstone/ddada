@@ -47,10 +47,18 @@ const getMyMatchList = async () => {
   return res.data.result
 }
 
+const getMyMatchDetail = async (matchId: string) => {
+  const params = {
+    matchId,
+  }
+  const res = await privateAPI.get(`/player/matches/`, { params })
+  return res.data.result
+}
 export {
   getProfile,
   patchDeleteUser,
   putProfileEdit,
   patchPasswordChange,
   getMyMatchList,
+  getMyMatchDetail,
 }

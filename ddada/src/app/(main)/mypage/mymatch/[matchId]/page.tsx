@@ -1,15 +1,27 @@
 'use client'
+
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import Timer from '@/static/imgs/mypage/my-page-timer.svg'
+
+import { getMyMatchDetail } from '@/features/mypage/api/mypage/index.ts'
+import MatchTimeLine from '@/features/mypage/components/MatchTimeLine/index.tsx'
+import PlayerMatchTag from '@/features/mypage/components/PlayerMatchTag/index.tsx'
+import { PlayerMatchTagDescription } from '@/features/mypage/constants/PlayerMatchTagDescription.ts'
 import Calender from '@/static/imgs/mypage/my-page-calender.svg'
-import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
+import Timer from '@/static/imgs/mypage/my-page-timer.svg'
+import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
+
 export default function MyMatchDetailPage({
   params,
 }: {
   params: { matchId: string }
 }) {
   const { matchId } = params
+  const { data } = useQuery({
+    queryKey: ['myMatchDetail', { matchId }],
+    queryFn: () => getMyMatchDetail(matchId),
+  })
   const [setNumber, setSetNumber] = useState<number>(1)
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
@@ -62,19 +74,24 @@ export default function MyMatchDetailPage({
               <span className="font-bold">나는홍석</span>님은
             </p>
           </div>
-          <div>슬로우스타터</div>
+          <div>
+            <PlayerMatchTag matchTag="스프린터" />
+          </div>
         </div>
         <div>표</div>
         <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-12 w-full justify-center items-center text-disabled-dark">
           <div>
             <VictoryCharacter />
           </div>
-          <div className="flex-grow text-center">설명~~~~~~~~~~~~~~~~</div>
+          <div className="flex-grow text-center">
+            {PlayerMatchTagDescription['스프린터']}
+          </div>
         </div>
       </div>
 
       <div className="flex">
         <button
+          type="button"
           className={`border-b px-6
           ${setNumber === 1 && 'border-b-2 border-theme text-theme font-bold'}`}
           onClick={() => setSetNumber(1)}
@@ -82,6 +99,7 @@ export default function MyMatchDetailPage({
           1세트
         </button>
         <button
+          type="button"
           className={`border-b px-6
           ${setNumber === 2 && 'border-b-2 border-theme text-theme font-bold'}`}
           onClick={() => setSetNumber(2)}
@@ -89,6 +107,7 @@ export default function MyMatchDetailPage({
           2세트
         </button>
         <button
+          type="button"
           className={`border-b px-6
           ${setNumber === 3 && 'border-b-2 border-theme text-theme font-bold'}`}
           onClick={() => setSetNumber(3)}
@@ -96,7 +115,7 @@ export default function MyMatchDetailPage({
           3세트
         </button>
       </div>
-      <div>표</div>
+      <MatchTimeLine />
     </div>
   )
 }
