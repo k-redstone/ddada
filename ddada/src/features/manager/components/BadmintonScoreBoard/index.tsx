@@ -2,7 +2,10 @@
 
 import { useLayoutEffect } from 'react'
 
-import { storeMatchResult } from '@/features/manager/api/managerAPI.tsx'
+import {
+  changeMatchStatus,
+  storeMatchResult,
+} from '@/features/manager/api/managerAPI.tsx'
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
@@ -25,7 +28,6 @@ export default function BadmintonScoreBoard({
     if (!badmintonInstance) {
       return
     }
-    console.log(badmintonInstance.id)
     const set =
       badmintonInstance.team1SetScore + badmintonInstance.team2SetScore
     const payload = {
@@ -36,6 +38,7 @@ export default function BadmintonScoreBoard({
     }
     console.log(payload)
     await storeMatchResult(badmintonInstance.id as number, payload)
+    await changeMatchStatus(badmintonInstance.id as number, 'PLAYING')
   }
 
   useLayoutEffect(() => {

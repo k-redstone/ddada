@@ -35,7 +35,7 @@ export default function ScoreBoardPage() {
       toast.error('해당 경기는 아직 시작할 수 없어요')
       return
     }
-    await changeMatchStatus(data.id).then(() => {
+    await changeMatchStatus(data.id, 'PLAYING').then(() => {
       queryClient.invalidateQueries({ queryKey: ['matchDetail', data.id] })
       queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
       toast.success('경기가 시작되었습니다.')

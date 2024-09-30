@@ -136,4 +136,5 @@ export type {
   ManagerMatchDetailType,
   FetchManagerMatchListType,
   PlayerType,
+  MatchStatusType,
 }

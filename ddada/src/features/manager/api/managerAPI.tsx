@@ -3,6 +3,7 @@ import { ManagerPk } from '@/features/manager/types/ManagerType.ts'
 import {
   FetchManagerMatchListType,
   ManagerMatchListPayload,
+  MatchStatusType,
 } from '@/features/manager/types/MatchDataType.ts'
 
 export async function addJudgeToMatch(matchId: number) {
@@ -33,9 +34,12 @@ export async function fetchManagerMatchList(
   return res.data.result
 }
 
-export async function changeMatchStatus(matchId: number) {
+export async function changeMatchStatus(
+  matchId: number,
+  status: MatchStatusType,
+) {
   const payload = {
-    status: 'PLAYING',
+    status,
   }
   await privateAPI.patch(`/manager/matches/${matchId}/status`, payload)
 }
