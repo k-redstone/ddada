@@ -31,7 +31,7 @@ export default function Step3({
         {/* 무거운 */}
         <div
           onClick={() => handleSelectNext('heavy')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <Image src={HeavyWeightImg} alt="HeavyWeightImg" />
@@ -45,7 +45,7 @@ export default function Step3({
         {/* 가벼운 */}
         <div
           onClick={() => handleSelectNext('light')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <Image src={LightWeightImg} alt="LightWeightImg" />
@@ -59,7 +59,7 @@ export default function Step3({
         {/* 상관없음 */}
         <div
           onClick={() => handleSelectNext('')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <Image src={NoneImg} alt="NoneWeightImg" />
