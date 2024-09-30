@@ -1,7 +1,8 @@
 'use client'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
@@ -13,6 +14,7 @@ import { MatchReservationDetailProvider } from '@/features/reservationDetail/pro
 
 export default function ScoreBoardPage() {
   const queryClient = useQueryClient()
+  const router = useRouter()
   const params = useParams() as { gameId: string }
 
   const { data, isSuccess } = useQuery({
@@ -25,15 +27,19 @@ export default function ScoreBoardPage() {
     // todo: 매치 시작 분기로직
 
     if (!data) {
+      toast.error('해당 경기는 아직 시작할 수 없어요')
       return
     }
 
     if (data.status !== 'RESERVED') {
+      toast.error('해당 경기는 아직 시작할 수 없어요')
       return
     }
     await changeMatchStatus(data.id).then(() => {
       queryClient.invalidateQueries({ queryKey: ['matchDetail', data.id] })
       queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+      toast.success('경기가 시작되었습니다.')
+      router.push(`/manager/match/${data.id}`)
     })
   }
 
