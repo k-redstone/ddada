@@ -13,7 +13,7 @@ interface RankTierProps {
 export default function RankTier({ rating }: RankTierProps) {
   useEffect(() => {
     const tiers = [
-      { min: 0, max: 600, tier: '루키', tierNum: 0 },
+      { min: -Infinity, max: 600, tier: '루키', tierNum: 0 },
       { min: 600, max: 800, tier: '아마추어', tierNum: 1 },
       { min: 800, max: 1000, tier: '아마추어', tierNum: 2 },
       { min: 1000, max: 1200, tier: '아마추어', tierNum: 3 },
