@@ -59,6 +59,12 @@ const getSetDetail = async (matchId: string, setNum: number) => {
   const res = await privateAPI.get(`/matches/${matchId}/sets/${setNum}`)
   return res.data.result
 }
+
+// todo back api에 따라 수정 필요
+const getUserPlayStyle = async () => {
+  const res = await privateAPI.get('/player/playstyle')
+  return res.data.result
+}
 export {
   getProfile,
   patchDeleteUser,
@@ -67,4 +73,5 @@ export {
   getMyMatchList,
   getMyMatchDetail,
   getSetDetail,
+  getUserPlayStyle,
 }
