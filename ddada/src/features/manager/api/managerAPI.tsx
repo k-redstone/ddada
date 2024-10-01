@@ -22,14 +22,8 @@ export async function fetchManagerPk(): Promise<ManagerPk | null> {
 }
 
 export async function fetchManagerMatchList(
-  payload: ManagerMatchListPayload,
+  params: ManagerMatchListPayload,
 ): Promise<FetchManagerMatchListType> {
-  const params = {
-    statuses: payload.statuses,
-    todayOnly: false,
-    page: 0,
-    size: 10,
-  }
   const res = await privateAPI.get('/manager/matches', { params })
   return res.data.result
 }
