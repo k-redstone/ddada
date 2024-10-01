@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react'
 import MatchCard from '@/features/manager/components/MatchCard/index.tsx'
 import { CATEGORY_TO_PAGE } from '@/features/manager/constants/constManager.ts'
 import useFetchMatchList from '@/features/manager/hooks/useFetchMatchList.tsx'
-import ToggleBtn from '@/static/imgs/manager/ToggleBtn.svg'
 
 export default function ManagerSidebar() {
   const [clickedCard, setClickedCard] = useState<number>(-1)
@@ -31,9 +30,15 @@ export default function ManagerSidebar() {
     }
     setKeyword(inputRef.current.value)
   }
+
+  const handleToggle = () => {
+    setTodayOnly(!todayOnly)
+  }
+
   useEffect(() => {
     allRefetch()
-  }, [allRefetch, keyword, todayOnly])
+  }, [keyword, todayOnly])
+
   if (!allSuccess) {
     return (
       <div>
@@ -56,9 +61,15 @@ export default function ManagerSidebar() {
         <button
           aria-label="todayOnly"
           type="button"
-          onClick={() => setTodayOnly(!todayOnly)}
+          onClick={() => handleToggle()}
         >
-          <ToggleBtn />
+          <div
+            className={`rounded-full w-[1.375rem] h-[.7813rem] border-[.1875rem] flex items-center p-[.01rem] transition-colors duration-300 ${todayOnly ? `bg-theme border-theme` : ` border-[#5F6368]`}`}
+          >
+            <div
+              className={`rounded-full  w-[.375rem] h-[.375rem] transition-all duration-300 ${todayOnly ? `bg-white translate-x-[.625rem] ` : `bg-[#5F6368]`}`}
+            />
+          </div>
         </button>
         <label htmlFor="todayOnly" className="text-[#5F6368] text-xs">
           오늘 일정 모아보기
