@@ -3,10 +3,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
-// import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
+import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
-// import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
+import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import BlueCourtRight from '@/static/imgs/manager/BlueCourtRight.svg'
 import RedCourtLeft from '@/static/imgs/manager/RedCourtLeft.svg'
@@ -36,7 +36,7 @@ export default function ScoreBoardPage() {
         <div className="p-2 flex flex-col gap-y-6 bg-white">
           <p className="font-bold">게임 진행 중</p>
           <div className="flex justify-center">
-            <BadmintonSetScore />
+            <BadmintonSetScore data={data} />
           </div>
           <div className="flex justify-center">
             <div className="flex gap-x-6">
@@ -57,38 +57,46 @@ export default function ScoreBoardPage() {
             </div>
           </div>
           <MatchScoreCard
-            // data={data}
-            // matchResult={{
-            //   team1: badmintonInstance.sets[0].team1Score,
-            //   team2: badmintonInstance.sets[0].team2Score,
-            // }}
-            // isVisible={badmintonInstance.currentSet >= 2}
+            data={data}
             matchResult={{
-              team1: 21,
-              team2: 3,
+              team1:
+                data.sets && data.sets.length >= 1
+                  ? data.sets[0].team1Score
+                  : 0,
+              team2:
+                data.sets && data.sets.length >= 1
+                  ? data.sets[0].team2Score
+                  : 0,
             }}
-            isVisible
+            isVisible={!!(data.sets && data.sets.length >= 1)}
           />
           <MatchScoreCard
-            // data={data}
-            // matchResult={{
-            //   team1: badmintonInstance.sets[1].team1Score,
-            //   team2: badmintonInstance.sets[1].team2Score,
-            // }}
-            // isVisible={badmintonInstance.currentSet >= 3}
+            data={data}
             matchResult={{
-              team1: 25,
-              team2: 4,
+              team1:
+                data.sets && data.sets.length >= 2
+                  ? data.sets[1].team1Score
+                  : 0,
+              team2:
+                data.sets && data.sets.length >= 2
+                  ? data.sets[1].team2Score
+                  : 0,
             }}
-            isVisible
+            isVisible={!!(data.sets && data.sets.length >= 2)}
           />
           <MatchScoreCard
-            // data={data}
+            data={data}
             matchResult={{
-              team1: 0,
-              team2: 0,
+              team1:
+                data.sets && data.sets.length >= 3
+                  ? data.sets[2].team1Score
+                  : 0,
+              team2:
+                data.sets && data.sets.length >= 3
+                  ? data.sets[2].team2Score
+                  : 0,
             }}
-            isVisible={3 >= 4}
+            isVisible={!!(data.sets && data.sets.length >= 3)}
           />
           <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
             <span className="text-disabled-dark text-xl font-bold">
@@ -101,10 +109,13 @@ export default function ScoreBoardPage() {
   )
 }
 
-function BadmintonSetScore() {
+function BadmintonSetScore({ data }: { data: MatchDetailType }) {
   return (
     <div className="w-[12.5rem] border border-theme px-6 py-2 rounded-[62.5rem] flex justify-center items-center">
-      <p className="text-theme text-4xl font-bold ">1 : 2</p>
+      <p className="text-theme text-4xl font-bold ">
+        {data.team1SetScore ? data.team1SetScore : 0} :{' '}
+        {data.team2SetScore ? data.team2SetScore : 0}
+      </p>
     </div>
   )
 }
@@ -115,13 +126,13 @@ interface MatchResult {
 }
 
 function MatchScoreCard({
-  // data,
+  data,
   matchResult = { team1: 0, team2: 0 },
   isVisible = false,
 }: {
+  data: MatchDetailType
   matchResult?: MatchResult | null
   isVisible: boolean
-  // data: MatchDetailType
 }) {
   const winnerTeam = () => {
     if (!isVisible) {
@@ -147,8 +158,8 @@ function MatchScoreCard({
       {/* A팀 */}
       <div className="flex gap-x-3 items-center">
         <div className="flex gap-x-3">
-          {/* <GameUserInfo src={data.team1.player1.image} /> */}
-          {/* <GameUserInfo src={data.team1.player2.image} /> */}
+          <GameUserInfo src={data.team1.player1.image} />
+          <GameUserInfo src={data.team1.player2.image} />
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
@@ -174,8 +185,8 @@ function MatchScoreCard({
       {/* B팀 */}
       <div className="flex gap-x-3 items-center flex-row-reverse">
         <div className="flex gap-x-3">
-          {/* <GameUserInfo src={data.team2.player1.image} /> */}
-          {/* <GameUserInfo src={data.team2.player2.image} /> */}
+          <GameUserInfo src={data.team2.player1.image} />
+          <GameUserInfo src={data.team2.player2.image} />
         </div>
         <div className="grow">
           <div className="flex gap-x-1 items-center">
