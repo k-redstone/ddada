@@ -120,7 +120,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
               </button>
             </div>
           ) : (
-            <Link href={`/match-reservation/detail/${match.matchId}`}>
+            <Link href={`/mypage/mymatch/${match.matchId}`}>
               <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-theme text-theme-light rounded">
                 상세
               </div>
