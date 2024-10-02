@@ -3,11 +3,11 @@
 // import { useQuery } from '@tanstack/react-query'
 
 // import { fetchGymInfo } from '@/features/gym/api/GymAPI.ts'
-import GymInfo from '@/features/gym/components/GymInfo/index.tsx'
-import GymReservedList from '@/features/gym/components/GymReservedList/index.tsx'
+import Callcenter from '@/features/gym/components/CallCenter/index.tsx'
 import GymChart from '@/features/gym/components/GymChart/index.tsx'
 import GymIncome from '@/features/gym/components/GymIncome/index.tsx'
-import Callcenter from '@/features/gym/components/CallCenter/index.tsx'
+import GymInfo from '@/features/gym/components/GymInfo/index.tsx'
+import GymReservedList from '@/features/gym/components/GymReservedList/index.tsx'
 import { GymProvider } from '@/features/gym/providers/index.tsx'
 
 export default function GymDashboardPage() {
