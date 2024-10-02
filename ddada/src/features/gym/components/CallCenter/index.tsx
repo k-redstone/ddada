@@ -6,7 +6,7 @@ export default function Callcenter() {
       <div className="flex flex-col gap-y-2">
         <div className="flex gap-x-3">
           <CenterIcon />
-          <span className="text-2xl font-bold">고객센터 · 상담</span>
+          <span className="text-2xl font-bold shrink-0">고객센터 · 상담</span>
         </div>
         <div className="text-disabled-dark">
           <span>· 상담시간 매일 10시 - 19시</span>
