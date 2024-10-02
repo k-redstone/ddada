@@ -1,51 +1,20 @@
-// todo 빼야됨
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { ScoreDetail } from '@/features/mypage/types/MyMatchType.ts'
+import { PlayerType, SatDataType } from '@/features/mypage/types/MyMatchType.ts'
 import GAINED_BAR from '@/static/imgs/mypage/my-page-gained-bar.svg'
 import LOST_BAR from '@/static/imgs/mypage/my-page-lost-bar.svg'
 
 interface MatchTimeLineProps {
-  setNumber: number
-  teamAPlayer1: {
-    playerNum: number
-    playerId: number
-    nickname: string
-    profileImagePath: string
-  }
-  teamAPlayer2: {
-    playerNum: number
-    playerId: number
-    nickname: string
-    profileImagePath: string
-  }
-  teamBPlayer1: {
-    playerNum: number
-    playerId: number
-    nickname: string
-    profileImagePath: string
-  }
-  teamBPlayer2: {
-    playerNum: number
-    playerId: number
-    nickname: string
-    profileImagePath: string
-  }
+  teamAPlayer1: PlayerType
+  teamAPlayer2: PlayerType
+  teamBPlayer1: PlayerType
+  teamBPlayer2: PlayerType
   userTeamNum: number
-  setData: {
-    setNumber: number
-    setWinnerTeamNumber: number
-    team1Score: number
-    team2Score: number
-    scores: ScoreDetail[]
-  }
+  setData: SatDataType
 }
 
 export default function MatchTimeLine({
-  setNumber,
   teamAPlayer1,
   teamAPlayer2,
   teamBPlayer1,
@@ -77,8 +46,8 @@ export default function MatchTimeLine({
         return null
     }
   }
-  console.log(userTeamNum)
-  console.log(setData)
+  // console.log(userTeamNum)
+  // console.log(setData)
   return (
     <div className="flex flex-col items-center text-disabled-dark">
       <p className="text-sm">매치스코어</p>
@@ -100,7 +69,7 @@ export default function MatchTimeLine({
         </span>
       </div>
       <div className="flex flex-col items-center gap-[0.625rem] w-full">
-        {setData.scores.map((score, index) => {
+        {setData.scores.map((score) => {
           const earnedPlayer = getPlayerInfo(score.earnedMember)
           // const missedPlayer1 = getPlayerInfo(score.missedMember1)
           // const missedPlayer2 = getPlayerInfo(score.missedMember2)
@@ -131,15 +100,18 @@ export default function MatchTimeLine({
                       {teamAScore}:{teamBScore}
                     </p>
                     {earnedPlayer && (
-                      <div className="flex text-sm gap-2">
-                        <div className="w-6 h-6 overflow-hidden relative rounded-full">
-                          <Image
-                            src={earnedPlayer.profileImagePath}
-                            alt="profile"
-                            fill
-                          />
+                      <div className="flex gap-1">
+                        <div className="flex text-sm gap-2 p-1">
+                          <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                            <Image
+                              src={earnedPlayer.profileImagePath}
+                              alt="profile"
+                              fill
+                            />
+                          </div>
+                          <p className="text-xs">{earnedPlayer.nickname}</p>
                         </div>
-                        <p>{earnedPlayer.nickname}</p>
+                        <p className="text-sm">서브미스</p>
                       </div>
                     )}
                   </div>
@@ -159,15 +131,18 @@ export default function MatchTimeLine({
                       {teamAScore}:{teamBScore}
                     </p>
                     {earnedPlayer && (
-                      <div className="flex text-sm gap-2">
-                        <div className="w-6 h-6 overflow-hidden relative rounded-full">
-                          <Image
-                            src={earnedPlayer.profileImagePath}
-                            alt="profile"
-                            fill
-                          />
+                      <div className="flex gap-1">
+                        <div className="flex text-sm gap-2 p-1">
+                          <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                            <Image
+                              src={earnedPlayer.profileImagePath}
+                              alt="profile"
+                              fill
+                            />
+                          </div>
+                          <p className="text-xs">{earnedPlayer.nickname}</p>
                         </div>
-                        <p>{earnedPlayer.nickname}</p>
+                        <p className="text-sm">스매시</p>
                       </div>
                     )}
                   </div>

@@ -28,6 +28,14 @@ export type MyMatchDetailsType = {
   rankType: RankType
 }
 
+export type SatDataType = {
+  setNumber: number
+  setWinnerTeamNumber: number
+  team1Score: number
+  team2Score: number
+  scores: ScoreDetail[]
+}
+
 export type ScoreDetail = {
   scoreNumber: number
   earnedMember: number
@@ -35,4 +43,11 @@ export type ScoreDetail = {
   missedMember2: number | null
   earnedType: string
   missedType: string | null
+}
+
+export type PlayerType = {
+  playerNum: number
+  playerId: number
+  nickname: string
+  profileImagePath: string
 }

@@ -1,6 +1,3 @@
-// todo
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
@@ -8,13 +5,9 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useState } from 'react'
 
-import {
-  getMyMatchDetail,
-  getSetDetail,
-} from '@/features/mypage/api/mypage/index.ts'
+import { getMyMatchDetail } from '@/features/mypage/api/mypage/index.ts'
 import MatchTimeLine from '@/features/mypage/components/MatchTimeLine/index.tsx'
 import PlayerMatchTag from '@/features/mypage/components/PlayerMatchTag/index.tsx'
-import { DEFAULT_IMAGE } from '@/features/mypage/constants/defaultImage.ts'
 import {
   PlayerMatchTagColor,
   PlayerMatchTagDescription,
@@ -248,7 +241,11 @@ export default function MyMatchDetailPage({
         />
         <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-12 w-full justify-center items-center text-disabled-dark">
           <div>
-            <VictoryCharacter />
+            {userTeamNum === winnerTeam ? (
+              <VictoryCharacter />
+            ) : (
+              <DefeatCharacter />
+            )}
           </div>
           <div className="flex-grow text-center">
             {PlayerMatchTagDescription[matchTag]}
@@ -283,7 +280,6 @@ export default function MyMatchDetailPage({
         </button>
       </div>
       <MatchTimeLine
-        setNumber={setNumber}
         setData={data.sets[setNumber - 1]}
         teamAPlayer1={teamAPlayer1}
         teamAPlayer2={teamAPlayer2}
