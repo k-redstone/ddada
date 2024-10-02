@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import Image from 'next/image'
-import { set } from 'react-hook-form'
+import { useState } from 'react'
 
 import { ScoreDetail } from '@/features/mypage/types/MyMatchType.ts'
 import GAINED_BAR from '@/static/imgs/mypage/my-page-gained-bar.svg'
@@ -53,12 +53,29 @@ export default function MatchTimeLine({
   userTeamNum,
   setData,
 }: MatchTimeLineProps) {
+  const [teamAScore, setTeamAScore] = useState(0)
+  const [teamBScore, setTeamBScore] = useState(0)
   if (!setData) {
     return (
       <div className="flex flex-col items-center text-disabled-dark">
         <p className="text-sm">해당 세트는 존재하지 않아요</p>
       </div>
     )
+  }
+
+  const getPlayerInfo = (playerNum: number) => {
+    switch (playerNum) {
+      case teamAPlayer1.playerNum:
+        return teamAPlayer1
+      case teamAPlayer2.playerNum:
+        return teamAPlayer2
+      case teamBPlayer1.playerNum:
+        return teamBPlayer1
+      case teamBPlayer2.playerNum:
+        return teamBPlayer2
+      default:
+        return null
+    }
   }
   console.log(userTeamNum)
   console.log(setData)
@@ -83,37 +100,82 @@ export default function MatchTimeLine({
         </span>
       </div>
       <div className="flex flex-col items-center gap-[0.625rem] w-full">
-        {/* <div className="flex gap-3"> */}
-        {setData.scores.map((score, index) => (
-          <>
-            {/* <div>{score}</div> */}
-            <div key={index} className="flex gap-3 items-center w-full">
-              <div className="flex-1" />
-              <GAINED_BAR />
-              <div className="flex flex-col flex-1">
-                <p className="font-bold">{score.scoreNumber}</p>
-                <div className="flex text-sm gap-2">
-                  <div className="w-6 h-6 overflow-hidden relative rounded-full">
-                    <Image
-                      src={teamAPlayer1.profileImagePath}
-                      alt="profile"
-                      fill
-                    />
+        {setData.scores.map((score, index) => {
+          const earnedPlayer = getPlayerInfo(score.earnedMember)
+          // const missedPlayer1 = getPlayerInfo(score.missedMember1)
+          // const missedPlayer2 = getPlayerInfo(score.missedMember2)
+          const isUserTeam = userTeamNum === (score.earnedMember <= 20 ? 1 : 2)
+          const BarComponent = isUserTeam ? GAINED_BAR : LOST_BAR
+          const isTeamA = score.earnedMember <= 20
+
+          if (isTeamA) {
+            setTeamAScore((prevScore) => prevScore + 1)
+          } else {
+            setTeamBScore((prevScore) => prevScore + 1)
+          }
+
+          return (
+            <div
+              // todo 유니크한 key를 넣어주자
+              key={`${score.earnedMember}`}
+              className="flex gap-3 items-center w-full"
+            >
+              {isTeamA ? (
+                <>
+                  <div className="flex flex-col flex-1">
+                    <p
+                      className={`font-bold
+                      ${userTeamNum === 1 ? 'text-primary' : 'text-danger'}
+                      `}
+                    >
+                      {teamAScore}:{teamBScore}
+                    </p>
+                    {earnedPlayer && (
+                      <div className="flex text-sm gap-2">
+                        <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                          <Image
+                            src={earnedPlayer.profileImagePath}
+                            alt="profile"
+                            fill
+                          />
+                        </div>
+                        <p>{earnedPlayer.nickname}</p>
+                      </div>
+                    )}
                   </div>
-                  <p>{teamAPlayer1.nickname}</p>
-                </div>
-              </div>
+                  <BarComponent />
+                  <div className="flex-1" />
+                </>
+              ) : (
+                <>
+                  <div className="flex-1" />
+                  <BarComponent />
+                  <div className="flex flex-col flex-1">
+                    <p
+                      className={`font-bold
+                      ${userTeamNum === 2 ? 'text-primary' : 'text-danger'}
+                      `}
+                    >
+                      {teamAScore}:{teamBScore}
+                    </p>
+                    {earnedPlayer && (
+                      <div className="flex text-sm gap-2">
+                        <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                          <Image
+                            src={earnedPlayer.profileImagePath}
+                            alt="profile"
+                            fill
+                          />
+                        </div>
+                        <p>{earnedPlayer.nickname}</p>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
-          </>
-        ))}
-        {/* <div className="flex-1" />
-          <GAINED_BAR />
-          <div className="flex flex-col flex-1 text-sm">
-            <p className="font-bold">0:1</p>
-            <p>이미지, 이름, 획득방법</p>
-          </div> */}
-        {/* </div> */}
-        <LOST_BAR /> <LOST_BAR /> <LOST_BAR />
+          )
+        })}
       </div>
     </div>
   )
