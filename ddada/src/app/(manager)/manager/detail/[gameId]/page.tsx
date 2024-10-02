@@ -1,50 +1,78 @@
 'use client'
 
-import { useParams } from 'next/navigation'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useParams, useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
+import { changeMatchStatus } from '@/features/manager/api/managerAPI.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
-import {
-  listDummy,
-  // singleDummy,
-} from '@/features/manager/constants/dummyData.ts'
+import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
+import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
 
 export default function ScoreBoardPage() {
+  const queryClient = useQueryClient()
+  const router = useRouter()
   const params = useParams() as { gameId: string }
 
-  const dummy = listDummy.find(
-    (item) => item.id === parseInt(params.gameId, 10),
-  )
+  const { data, isSuccess } = useQuery({
+    queryKey: ['matchDetail', params.gameId],
+    queryFn: () => fetchMatchDetail(params.gameId),
+    enabled: !!params.gameId,
+  })
 
-  if (!dummy) {
+  const handleMatchStart = async () => {
+    // todo: 매치 시작 분기로직
+
+    if (!data) {
+      toast.error('해당 경기는 아직 시작할 수 없어요')
+      return
+    }
+
+    if (data.status !== 'RESERVED') {
+      toast.error('해당 경기는 아직 시작할 수 없어요')
+      return
+    }
+    await changeMatchStatus(data.id, 'PLAYING').then(() => {
+      queryClient.invalidateQueries({ queryKey: ['matchDetail', data.id] })
+      queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+      toast.success('경기가 시작되었습니다.')
+      router.push(`/manager/match/${data.id}`)
+    })
+  }
+
+  if (!isSuccess) {
     return (
       <div>
         <p>임시</p>
       </div>
     )
   }
+
   return (
     <div className="bg-[#E7E7E7]">
-      <MatchCourtShortInfo data={dummy} />
+      <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
-        <MatchPlayerInfo />
-        <MatchRule>
-          <MatchRule.TitleWithUnderline />
-          <MatchRule.TossRule />
-          <MatchRule.ScoreRule />
-          <MatchRule.DoubleRule />
-          <MatchRule.InvalidityRule />
-          <MatchRule.FaultRule />
-        </MatchRule>
-        <MatchCourtInfo>
-          <MatchCourtInfo.Title />
-          <MatchCourtInfo.CourtImage />
-          <MatchCourtInfo.Number />
-          <MatchCourtInfo.Website />
-          <MatchCourtInfo.Detail />
-        </MatchCourtInfo>
+        <MatchReservationDetailProvider matchDetailData={data}>
+          <MatchPlayerInfo data={data} />
+          <MatchRule>
+            <MatchRule.TitleWithUnderline />
+            <MatchRule.TossRule />
+            <MatchRule.ScoreRule />
+            <MatchRule.DoubleRule />
+            <MatchRule.InvalidityRule />
+            <MatchRule.FaultRule />
+          </MatchRule>
+          <MatchCourtInfo>
+            <MatchCourtInfo.Title />
+            <MatchCourtInfo.CourtImage />
+            <MatchCourtInfo.Number />
+            <MatchCourtInfo.Website />
+            <MatchCourtInfo.Detail />
+          </MatchCourtInfo>
+        </MatchReservationDetailProvider>
 
         {true ? (
           <div>
@@ -54,9 +82,13 @@ export default function ScoreBoardPage() {
                 인원을 확인하고 매치를 시작해주세요.
               </span>
             </div>
-            <div className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer">
+            <button
+              type="button"
+              onClick={() => handleMatchStart()}
+              className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer w-full"
+            >
               <span className="text-white text-xl font-bold ">매치 시작</span>
-            </div>
+            </button>
           </div>
         ) : (
           <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">

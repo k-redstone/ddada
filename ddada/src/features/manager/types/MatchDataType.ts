@@ -80,11 +80,19 @@ type SetResultType = {
 }
 
 type MatchReusltStoreType = {
-  id: number
-  winnerTeamNumber: 1 | 2
+  id?: number
+  winnerTeamNumber: 1 | 2 | number | null
   team1SetScore: number
   team2SetScore: number
   sets: SetResultType[]
+}
+
+type ManagerMatchListPayload = {
+  statuses: MatchStatusType
+  keyword?: string
+  todayOnly?: boolean
+  page?: number
+  size?: number
 }
 
 type MatchStatusType = keyof typeof MATCH_STATUS
@@ -93,4 +101,40 @@ type EarnType = keyof typeof EARN_TYPE
 type MissType = keyof typeof MISS_TYPE
 type Gender = 'MALE' | 'FEMALE'
 
-export type { SetResultType, TeamType, MatchDetailType, MatchReusltStoreType }
+type ManagerMatchDetailType = {
+  id: number
+  date: Date
+  time: string
+  status: MatchStatusType
+  rankType: 'RANK' | 'NORMAL'
+  matchType: MatchType
+  rating: number
+  team1PlayerCount: number
+  team2PlayerCount: number
+  team1Gender: ['MALE', 'MALE']
+  team2Gender: ['MALE', 'FEMALE']
+  isReserved: boolean
+  court: CourtType
+}
+
+type FetchManagerMatchListType = {
+  content: ManagerMatchDetailType[]
+  page: {
+    size: number
+    number: number
+    totalElements: number
+    totalPages: number
+  }
+}
+
+export type {
+  SetResultType,
+  TeamType,
+  MatchDetailType,
+  MatchReusltStoreType,
+  ManagerMatchListPayload,
+  ManagerMatchDetailType,
+  FetchManagerMatchListType,
+  PlayerType,
+  MatchStatusType,
+}

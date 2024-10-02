@@ -32,7 +32,7 @@ export default function BadmintonCourt() {
         onClick={() => handleScore('team1')}
         aria-hidden="true"
       >
-        <div className="text-[#FCA211] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="text-theme absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="text-4xl">팀 A</p>
           <p className="font-bold text-6xl">
             {badmintonInstance.getCurMatchScoreTeam1()}
@@ -45,7 +45,7 @@ export default function BadmintonCourt() {
         onClick={() => handleScore('team2')}
         aria-hidden="true"
       >
-        <div className="text-[#ffffff] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <p className="text-4xl">팀 B</p>
           <p className="font-bold text-6xl">
             {badmintonInstance.getCurMatchScoreTeam2()}

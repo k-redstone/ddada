@@ -32,7 +32,7 @@ export default function Step5({
         {/* 견고한 */}
         <div
           onClick={() => handleSelectNext('stiff')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -48,7 +48,7 @@ export default function Step5({
         {/* 적당한 */}
         <div
           onClick={() => handleSelectNext('medium')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -64,7 +64,7 @@ export default function Step5({
         {/* 유연함 */}
         <div
           onClick={() => handleSelectNext('flexible')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <div className="flex justify-center">
@@ -80,7 +80,7 @@ export default function Step5({
         {/* 상관없음 */}
         <div
           onClick={() => handleSelectNext('')}
-          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50"
+          className="max-h-[13.75rem] px-3 py-6 flex flex-col gap-y-3 rounded-xl hover:bg-base-50 cursor-pointer"
           aria-hidden="true"
         >
           <div className="flex justify-center">

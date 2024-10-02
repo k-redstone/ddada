@@ -1,21 +1,23 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
 import BadmintonScoreBoard from '@/features/manager/components/BadmintonScoreBoard/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
-import {
-  listDummy,
-  // singleDummy,
-} from '@/features/manager/constants/dummyData.ts'
+import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 
 export default function ScoreBoardPage() {
   const params = useParams() as { gameId: string }
-  const dummy = listDummy.find(
-    (item) => item.id === parseInt(params.gameId, 10),
-  )
-  if (!dummy) {
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['matchDetail', params.gameId],
+    queryFn: () => fetchMatchDetail(params.gameId),
+    enabled: !!params.gameId,
+  })
+
+  if (!isSuccess) {
     return (
       <div>
         <p>임시</p>
@@ -24,10 +26,10 @@ export default function ScoreBoardPage() {
   }
   return (
     <div className="bg-[#E7E7E7]">
-      <MatchCourtShortInfo data={dummy} />
+      <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
-        <MatchPlayerInfo />
-        <BadmintonScoreBoard />
+        <MatchPlayerInfo data={data} />
+        <BadmintonScoreBoard data={data} />
       </div>
     </div>
   )
