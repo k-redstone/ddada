@@ -80,8 +80,8 @@ type SetResultType = {
 }
 
 type MatchReusltStoreType = {
-  id: number
-  winnerTeamNumber: 1 | 2
+  id?: number
+  winnerTeamNumber: 1 | 2 | number | null
   team1SetScore: number
   team2SetScore: number
   sets: SetResultType[]

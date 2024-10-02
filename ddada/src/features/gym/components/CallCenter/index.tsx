@@ -13,7 +13,10 @@ export default function Callcenter() {
         </div>
       </div>
       <div className="w-full">
-        <button className="w-full px-6 py-3 rounded-xl text-theme border border-theme">
+        <button
+          type="button"
+          className="w-full px-6 py-3 rounded-xl text-theme border border-theme"
+        >
           상담 요청하기
         </button>
       </div>
