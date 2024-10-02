@@ -59,7 +59,7 @@ export default function Step4() {
         </button>
         <button type="button" onClick={() => handlePriceSelect(5)}>
           <PriceSelectCard isClicked={selectedPrice.includes(5)}>
-            <span>5만 원대</span>
+            <span>10만 원 미만</span>
           </PriceSelectCard>
         </button>
         <button type="button" onClick={() => handlePriceSelect(10)}>
@@ -75,16 +75,6 @@ export default function Step4() {
         <button type="button" onClick={() => handlePriceSelect(30)}>
           <PriceSelectCard isClicked={selectedPrice.includes(30)}>
             <span>30만 원대</span>
-          </PriceSelectCard>
-        </button>
-        <button type="button" onClick={() => handlePriceSelect(40)}>
-          <PriceSelectCard isClicked={selectedPrice.includes(40)}>
-            <span>40만 원대</span>
-          </PriceSelectCard>
-        </button>
-        <button type="button" onClick={() => handlePriceSelect(50)}>
-          <PriceSelectCard isClicked={selectedPrice.includes(50)}>
-            <span>50만 원대</span>
           </PriceSelectCard>
         </button>
       </div>
