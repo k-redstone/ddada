@@ -34,7 +34,7 @@ export default function PlayStyle() {
     return (
       <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 h-full">
         <NoDataIcon />
-        <div className="flex flex-col gap-6 text-disabled-dark">
+        <div className="flex flex-col gap-6 text-disabled-dark justify-center">
           <p className="text-6xl font-bold text-center">앗!</p>
           <div className="flex flex-col justify-center items-center text-xs">
             <p>아직 플레이스타일이 생성되지 않았어요.</p>

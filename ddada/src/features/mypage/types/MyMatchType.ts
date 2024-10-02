@@ -27,3 +27,12 @@ export type MyMatchDetailsType = {
   myRatingChange: number
   rankType: RankType
 }
+
+export type ScoreDetail = {
+  scoreNumber: number
+  earnedMember: number
+  missedMember1: number | null
+  missedMember2: number | null
+  earnedType: string
+  missedType: string | null
+}

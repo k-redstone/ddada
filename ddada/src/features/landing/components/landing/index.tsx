@@ -13,6 +13,9 @@ import Rank from '@/static/imgs/landing/landing-page_rank_cut.png'
 import FreeRegister from '@/static/imgs/landing/landing-page_real_time_reservation.png'
 
 export default function Landing() {
+  const handleGymPartnership = () => {
+    window.open('http://pf.kakao.com/_ewcIn/chat')
+  }
   return (
     <div className="w-full">
       <div className="w-full h-[500px] relative flex justify-center items-center">
@@ -84,11 +87,11 @@ export default function Landing() {
           </p>
         </div>
         <div className="flex justify-center">
-          <Link href="/login">
+          <button type="button" onClick={handleGymPartnership}>
             <div className="text-[#FCA211] text-xl py-4 px-12 border border-[#FCA211] hover:bg-[#FCA211] hover:text-[#FFFBEA] transition-colors duration-300 ease-in-out">
               체육관 제휴맺기
             </div>
-          </Link>
+          </button>
         </div>
         <div>
           <div className="flex gap-[4.5rem]">

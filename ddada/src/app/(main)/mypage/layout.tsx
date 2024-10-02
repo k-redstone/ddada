@@ -86,9 +86,8 @@ export default function Layout({
                   {gender === 'MALE' ? <MaleIcon /> : <FemaleIcon />}
                 </div>
               </div>
-              {/* <p>{data.rating}</p> */}
+              <p>{data.rating}</p>
               <RankTier rating={data.rating} />
-              {/* 나중에 승률 내가 계산해야할듯? */}
               <p className="text-xs font-medium">
                 {data.winCount}승 {data.loseCount}패
               </p>
