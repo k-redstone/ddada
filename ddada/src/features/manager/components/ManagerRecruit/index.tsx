@@ -40,7 +40,7 @@ export default function ManagerRecruitPage() {
         <div className="z-40 flex flex-col gap-6">
           <div className="text-white flex flex-col justify-center items-center gap-[0.625rem]">
             <p className="text-5xl  font-bold">DDADA 매니저</p>
-            <p className="text-3xl text-[#FCA211]">
+            <p className="text-3xl text-theme">
               DDADA
               <span className="text-3xl text-white">
                 와 함께 문화생활을 만들어요

@@ -112,27 +112,33 @@ export default function ScoreModal({
       <div className="fixed left-1/2 top-1/2 z-40 max-w-[57.4375rem] px-6 py-4 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl">
         <div className="flex flex-col gap-y-3">
           {/* 위에 툴바 */}
-          <div className="py-3 border-b border-[#E5E5ED] flex gap-x-3">
+          <div className="py-3 border-b border-disabled flex gap-x-3">
             <div className="flex gap-x-3">
               {/* <GameUserInfo /> */}
               {/* <GameUserInfo /> */}
             </div>
             {selectTeam === 'team1' ? (
               <div className="flex gap-x-1 items-center">
-                <span className="text-[#6B6E78] text-sm font-bold"> 팀 A</span>
+                <span className="text-disabled-dark text-sm font-bold">
+                  {' '}
+                  팀 A
+                </span>
                 <div className="rounded-full w-2 h-2 bg-[#FFF3C5]" />
               </div>
             ) : (
               <div className="flex gap-x-1 items-center">
-                <span className="text-[#6B6E78] text-sm font-bold"> 팀 B</span>
-                <div className="rounded-full w-2 h-2 bg-[#FCA211]" />
+                <span className="text-disabled-dark text-sm font-bold">
+                  {' '}
+                  팀 B
+                </span>
+                <div className="rounded-full w-2 h-2 bg-theme" />
               </div>
             )}
           </div>
 
           {/* 득점 인원 */}
           <div
-            className={`py-1 px-2 flex flex-col gap-y-2 rounded-md  ${missedType !== '' && `bg-[#F6F6F6]`}`}
+            className={`py-1 px-2 flex flex-col gap-y-2 rounded-md  ${missedType !== '' && `bg-base-50`}`}
           >
             <p className="font-bold">득점인원</p>
             <div className="flex gap-x-3">
@@ -227,7 +233,7 @@ export default function ScoreModal({
             </div>
           ) : (
             <div
-              className={`py-1 px-2 flex flex-col gap-y-2 rounded-md ${earnedType === '' && `bg-[#F6F6F6]`}`}
+              className={`py-1 px-2 flex flex-col gap-y-2 rounded-md ${earnedType === '' && `bg-base-50`}`}
             >
               <p className="font-bold">폴트인원</p>
               <div className="flex gap-x-3">
@@ -261,14 +267,14 @@ export default function ScoreModal({
           {/* 닫기 & 저장 */}
           <div className="flex gap-x-3 text-base">
             <button
-              className="grow rounded-xl border py-[.625rem] border-[#FCA211]"
+              className="grow rounded-xl border py-[.625rem] border-theme"
               type="button"
               onClick={() => modalhandler()}
             >
               닫기
             </button>
             <button
-              className={`grow rounded-xl border py-[.625rem]   ${checkCanSave() ? `text-[#ffffff] bg-[#FCA211] ` : `text-[#6B6E78] bg-[#E5E5ED]`}`}
+              className={`grow rounded-xl border py-[.625rem]   ${checkCanSave() ? `text-white bg-theme ` : `text-disabled-dark bg-disabled`}`}
               type="button"
               onClick={() => handleStoreScore()}
               disabled={!checkCanSave()}
