@@ -32,7 +32,6 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
-
   return (
     <div key={court.id} className="flex border-b w-[46rem] gap-[0.625rem] py-2">
       <div>
@@ -63,10 +62,11 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
                 onClick={() => handleSelectedTime(time)}
                 className={`border px-2 py-1
                       rounded-[62.5rem]
-                  ${court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
+                  ${court.reservations && court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
                   ${selectedTime === time ? 'bg-theme text-white' : ''}
                   `}
                 disabled={
+                  court.reservations &&
                   court.reservations[selectedDate] &&
                   court.reservations[selectedDate].includes(time)
                 }

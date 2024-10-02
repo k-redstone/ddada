@@ -15,7 +15,7 @@ import {
 import useGetUserInfo from '@/features/mypage/hooks/useGetUserInfo.tsx'
 import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
-import Timer from '@/static/imgs/mypage/my-page-timer.svg'
+// import Timer from '@/static/imgs/mypage/my-page-timer.svg'
 import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -81,11 +81,10 @@ export default function MyMatchDetailPage({
             <p>{data.date.slice(5)}</p>
             <p>{data.time.slice(0, 5)}</p>
           </div>
-          <div className="flex items-center gap-1 text-xs">
+          {/* <div className="flex items-center gap-1 text-xs">
             <Timer />
-            {/* todo 진행시간 넣기 */}
             <p>20분 15초</p>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center justify-center flex-grow gap-4 text-3xl">
           <span

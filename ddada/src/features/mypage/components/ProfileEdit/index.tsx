@@ -171,15 +171,11 @@ export default function ProfileEdit() {
         />
         <div>
           <div className="flex gap-[1.5rem]">
-            <div className="flex justify-center items-center rounded-full bg-base-50 h-[5rem] w-[5rem] overflow-hidden">
+            <div className="flex justify-center items-center rounded-full bg-base-50 h-[5rem] w-[5rem] overflow-hidden relative">
               {defaultImage ? (
                 <Logo />
               ) : (
-                <img
-                  src={profileImage}
-                  alt="프로필 사진"
-                  className="w-full h-full"
-                />
+                <Image src={profileImage as string} alt="프로필 사진" fill />
               )}
             </div>
 

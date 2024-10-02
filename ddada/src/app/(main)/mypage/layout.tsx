@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -71,11 +72,7 @@ export default function Layout({
             <div className="flex flex-col py-6 gap-1 justify-center items-center">
               <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden relative">
                 {profilePreSignedUrl ? (
-                  <img
-                    src={profilePreSignedUrl}
-                    alt="profile"
-                    className="w-full h-full"
-                  />
+                  <Image src={profilePreSignedUrl} alt="profile" fill />
                 ) : (
                   <Logo />
                 )}

@@ -2,6 +2,7 @@
 
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -146,15 +147,11 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
         </label>
         <div>
           <div className="flex gap-[1.5rem]">
-            <div className="flex justify-center items-center rounded-full bg-[#F6F6F6] h-[9.375rem] w-[9.375rem] overflow-hidden">
+            <div className="flex justify-center items-center rounded-full bg-[#F6F6F6] h-[9.375rem] w-[9.375rem] overflow-hidden relative">
               {defaultImage ? (
                 <Logo />
               ) : (
-                <img
-                  src={profileImage}
-                  alt="프로필 사진"
-                  className="w-full h-full"
-                />
+                <Image src={profileImage as string} alt="프로필 사진" fill />
               )}
             </div>
 

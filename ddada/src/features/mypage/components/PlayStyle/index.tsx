@@ -24,7 +24,6 @@ export default function PlayStyle() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full">
-        {/* Tailwind의 animate-spin 클래스를 사용하여 이미지 회전 */}
         <LoadingSpinner className="animate-spin" />
       </div>
     )
