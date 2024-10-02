@@ -31,15 +31,8 @@ export default function MyMatchDetailPage({
     queryFn: () => getMyMatchDetail(matchId),
     retry: 1,
   })
-  // const { userData } = useQuery({
-  //   queryKey: ['myMatchDetail', { matchId }],
-  //   queryFn: () => getMyMatchDetail(matchId),
-  //   retry: 1,
-  // })
   const [setNumber, setSetNumber] = useState<number>(1)
   const { userTeamNum, userId, userNickname } = useGetUserInfo(data || null)
-  // console.log(playerTeamNum, playerId)
-  // console.log(data)
   if (isLoading) {
     return <div>로딩중</div>
   }
@@ -68,8 +61,6 @@ export default function MyMatchDetailPage({
     profileImagePath: data.team2.player2.presignedUrl,
   }
   const winnerTeam = data.winnerTeamNumber
-  // console.log(winnerTeam)
-  // todo daty에 따라 matchTag달아줘야함
   const matchTag = '저지불가'
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
