@@ -16,6 +16,8 @@ export default function MainHeader() {
   const pathname = usePathname()
   const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
 
+  console.log(currentPath)
+
   useEffect(() => {
     setCurrentPath(pathname.split('/')[1])
   }, [pathname])
@@ -43,32 +45,32 @@ export default function MainHeader() {
       </div>
 
       {/* 가운데 링크들 */}
-      <div className="flex gap-x-12 items-center justify-center text-[#6B6E78] grow">
-        <Link href="/" className={`${currentPath === '' && 'text-[#FCA211]'}`}>
+      <div className="flex gap-x-12 items-center justify-center text-disabled-dark grow">
+        <Link href="/" className={`${currentPath === '' && 'text-theme'}`}>
           홈
         </Link>
         <Link
           href="/match-reservation"
-          className={`${currentPath === 'match-reservation' && 'text-[#FCA211]'}`}
+          className={`${currentPath === 'match-reservation' && 'text-theme'}`}
         >
           매치 예약
         </Link>
         <Link
           href="/court-reservation"
-          className={`${currentPath === 'court-reservation' && 'text-[#FCA211]'}`}
+          className={`${currentPath === 'court-reservation' && 'text-theme'}`}
         >
           장소 예약
         </Link>
         <Link
-          href="/"
-          className={`${currentPath === '/racket-recommend' && 'text-[#FCA211]'}`}
+          href="/racket"
+          className={`${currentPath === 'racket' && 'text-theme'}`}
         >
           라켓 추천 • 검색
         </Link>
         {accessToken && data?.memberType === 'PLAYER' && (
           <Link
             href="/mypage/mymatch"
-            className={`${currentPath === 'mypage' && 'text-[#FCA211]'}`}
+            className={`${currentPath === '/mypage/mymatch' && 'text-theme'}`}
           >
             내 매치 확인하기
           </Link>
@@ -76,9 +78,17 @@ export default function MainHeader() {
         {accessToken && data?.memberType === 'MANAGER' && (
           <Link
             href="/manager"
-            className={`${currentPath === 'mypage' && 'text-[#FCA211]'}`}
+            className={`${currentPath === 'manager' && 'text-theme'}`}
           >
             매니저 페이지
+          </Link>
+        )}
+        {accessToken && data?.memberType === 'GYM_ADMIN' && (
+          <Link
+            href="/dashboard"
+            className={`${currentPath === 'dashboard' && 'text-theme'}`}
+          >
+            체육관 페이지
           </Link>
         )}
       </div>
@@ -86,7 +96,7 @@ export default function MainHeader() {
       {/* 오른쪽 */}
       <div className="flex gap-x-[0.625rem] items-center text-xs">
         <Link
-          className="border border-[#6B6E78] rounded-[62.5rem] py-3 px-6"
+          className="border border-disabled-dark rounded-[62.5rem] py-3 px-6"
           href="/"
         >
           <p className="flex gap-x-3 items-center">
@@ -97,14 +107,14 @@ export default function MainHeader() {
         {accessToken ? (
           <button
             type="button"
-            className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
+            className="bg-disabled-dark rounded-[62.5rem] text-white py-3 px-6"
             onClick={handleLogout}
           >
             로그아웃
           </button>
         ) : (
           <Link
-            className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
+            className="bg-disabled-dark rounded-[62.5rem] text-white py-3 px-6"
             href="/login"
           >
             로그인
