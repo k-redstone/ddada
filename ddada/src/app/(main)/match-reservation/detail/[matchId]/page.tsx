@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
@@ -34,8 +35,13 @@ export default function MatchReservationDetailPage({
   return (
     <MatchReservationDetailProvider matchDetailData={data}>
       <div className=" max-w-[46rem] flex flex-col">
-        <div className="h-[12.5rem]">
-          <p>이미지임</p>
+        <div className="h-[12.5rem] overflow-hidden object-cover">
+          <Image
+            src={data.court.image}
+            alt="court Image"
+            width={736}
+            height={200}
+          />
         </div>
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-3 flex-1">

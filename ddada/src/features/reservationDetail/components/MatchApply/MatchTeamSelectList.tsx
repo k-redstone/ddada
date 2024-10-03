@@ -66,12 +66,11 @@ export default function MatchTeamSelectList({
           disabled={isTeamA || isTeamB || isManager || teamBLength === 2}
         >
           <TeamSelectBtn
-            isDisabled={
-              isManager || isTeamA || teamALength === 2 || teamBLength === 2
-            }
+            isDisabled={isManager || isTeamA || teamBLength === 2}
             isClicked={clickedTeam === 2 || isTeamB}
+            isJoined={isTeamB}
           >
-            <span className="font-bold">A팀</span>
+            <span className="font-bold">B팀</span>
             <span>
               ({teamBLength}
               /2)
