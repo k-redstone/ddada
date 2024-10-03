@@ -24,6 +24,19 @@ export default function ScoreBoardPage() {
       </div>
     )
   }
+  if (
+    data.status === 'RESERVED' ||
+    data.status === 'CREATED' ||
+    data.status === 'FINISHED' ||
+    data.status === 'CANCELED'
+  ) {
+    return (
+      <div className="h-full flex justify-center items-center">
+        <p className="text-2xl font-bold">잘못된 접근입니다.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-[#E7E7E7]">
       <MatchCourtShortInfo data={data} />
