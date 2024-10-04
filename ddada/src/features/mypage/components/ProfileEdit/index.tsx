@@ -147,7 +147,7 @@ export default function ProfileEdit() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Image src={ProfileEditLogo} alt="mypage-profile-edit" />
+      <Image src={ProfileEditLogo} alt="mypage-profile-edit" priority />
       <div className="flex justify-between items-center">
         <p className="text-xl font-bold">내 프로필</p>
         <button
