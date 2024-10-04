@@ -11,7 +11,6 @@ export default function useGetUserInfo(data: MatchDetailType) {
     undefined,
   )
   const [userTeamNum, setUserTeamNum] = useState<number>(0)
-
   useEffect(() => {
     if (!isSuccess || !data) {
       return

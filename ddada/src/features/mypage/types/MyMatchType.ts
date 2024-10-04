@@ -38,10 +38,10 @@ export type SatDataType = {
 
 export type ScoreDetail = {
   scoreNumber: number
-  earnedMember: number
+  earnedMember: number | null
   missedMember1: number | null
   missedMember2: number | null
-  earnedType: string
+  earnedType: string | null
   missedType: string | null
 }
 

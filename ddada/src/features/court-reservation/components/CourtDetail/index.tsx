@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
@@ -32,14 +33,11 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
+
   return (
     <div key={court.id} className="flex border-b w-[46rem] gap-[0.625rem] py-2">
-      <div>
-        <img
-          src={court.image}
-          alt="코트이미지"
-          className="w-[9.375rem] h-full rounded-[0.5rem]"
-        />
+      <div className="w-[9.375rem] max-h-[11.5rem] rounded-[0.5rem] relative overflow-hidden">
+        <Image src={court.image} alt="코트이미지" objectFit="cover" fill />
       </div>
       <div className="flex flex-col gap-4 flex-grow">
         <div>

@@ -40,25 +40,25 @@ export default function MyMatchDetailPage({
     playerNum: 11,
     playerId: data.team1.player1.id,
     nickname: data.team1.player1.nickname,
-    profileImagePath: data.team1.player1.presignedUrl,
+    profileImagePath: data.team1.player1.image,
   }
   const teamAPlayer2 = {
     playerNum: 12,
     playerId: data.team1.player2.id,
     nickname: data.team1.player2.nickname,
-    profileImagePath: data.team1.player2.presignedUrl,
+    profileImagePath: data.team1.player2.image,
   }
   const teamBPlayer1 = {
     playerNum: 21,
     playerId: data.team2.player1.id,
     nickname: data.team2.player1.nickname,
-    profileImagePath: data.team2.player1.presignedUrl,
+    profileImagePath: data.team2.player1.image,
   }
   const teamBPlayer2 = {
     playerNum: 22,
     playerId: data.team2.player2.id,
     nickname: data.team2.player2.nickname,
-    profileImagePath: data.team2.player2.presignedUrl,
+    profileImagePath: data.team2.player2.image,
   }
   const winnerTeam = data.winnerTeamNumber
   const matchTag = '저지불가'
