@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -68,13 +69,14 @@ export default function Layout({
       <>
         <div className="flex justify-center h-full">
           <div className="flex flex-col p-6 gap-4 text-disabled-dark font-bold w-[20.625rem]">
-            <div className="flex flex-col py-6 gap-1 justify-center items-center">
-              <div className="w-[80px] h-[80px] justify-center items-center rounded-full overflow-hidden relative">
+            <div className="flex flex-col py-6 gap-y-2 justify-center items-center">
+              <div className="w-[5rem] h-[5rem] justify-center items-center rounded-full overflow-hidden relative">
                 {profilePreSignedUrl ? (
-                  <img
+                  <Image
                     src={profilePreSignedUrl}
                     alt="profile"
-                    className="w-full h-full"
+                    width={80}
+                    height={80}
                   />
                 ) : (
                   <Logo />
@@ -133,6 +135,13 @@ export default function Layout({
                 ${currentPath === 'playstyle' ? 'bg-theme-light text-theme' : 'hover:bg-base-50'}`}
               >
                 플레이스타일 분석
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push('/manager-recruit')}
+                className="p-6 rounded-xl text-left mb-40 hover:bg-base-50"
+              >
+                매니저 신청
               </button>
             </div>
             <div className="p-6">

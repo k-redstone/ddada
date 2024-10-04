@@ -153,7 +153,7 @@ export default function ProfileEdit() {
         <button
           type="button"
           onClick={handleCheckNickName}
-          className={` py-2 px-3 rounded
+          className={` py-2 px-3 rounded-lg
             ${!nicknameError ? 'cursor-pointer bg-theme text-theme-light' : 'cursor-not-allowed bg-disabled text-disabled-dark'}
             `}
           disabled={!!nicknameError}
@@ -219,15 +219,15 @@ export default function ProfileEdit() {
       </div>
       <div className="flex justify-between items-center">
         <p className="w-[7.5rem] font-bold">이메일</p>
-        <div className="px-6 py-3 text-disabled-dark bg-base-50 flex-grow rounded-xl border">
+        <div className="px-6 py-4 text-disabled-dark bg-base-50 flex-grow rounded-xl border">
           {data.email}
         </div>
       </div>
 
       <div className="flex justify-between items-center">
-        <p className="w-[7.5rem]">닉네임</p>
+        <p className="w-[7.5rem] font-bold">닉네임</p>
         <div className="flex-grow">
-          <div className="flex justify-between px-6 py-3 text-disabled-dark flex-grow rounded-xl border">
+          <div className="flex justify-between px-6 py-4 text-disabled-dark flex-grow rounded-xl border">
             <input
               type="text"
               className="flex-grow focus:outline-none"
@@ -243,13 +243,13 @@ export default function ProfileEdit() {
 
       <div className="flex justify-between items-center">
         <p className="w-[7.5rem] font-bold">휴대폰 번호</p>
-        <div className="px-6 py-3 text-disabled-dark bg-base-50 flex-grow rounded-xl border">
-          {data.phoneNumber}
+        <div className="px-6 py-4 text-disabled-dark bg-base-50 flex-grow rounded-xl border">
+          {data.phoneNumber ? data.phoneNumber : '휴대폰 번호가 없습니다.'}
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <p className="w-[7.5rem]">한줄 소개</p>
-        <div className="flex justify-between px-6 py-3 text-disabled-dark flex-grow rounded-xl border">
+        <p className="w-[7.5rem] font-bold">한줄 소개</p>
+        <div className="flex justify-between px-6 py-4 text-disabled-dark flex-grow rounded-xl border">
           <input
             type="text"
             className="flex-grow focus:outline-none"

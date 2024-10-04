@@ -121,7 +121,7 @@ export default function PasswordChange() {
     }
   }
   return (
-    <div className="flex flex-col justify-center items-center gap-12 h-full">
+    <div className="py-20 flex flex-col justify-start items-center gap-12 h-full">
       <div>
         <PasswordIcon />
       </div>
@@ -136,8 +136,8 @@ export default function PasswordChange() {
           onSubmit={handleSubmit(sendResetPassword)}
           className="grid gap-4 px-10"
         >
-          <div className="flex items-center text-sm">
-            <p className="w-[120px] text-sm font-bold">현재 비밀번호</p>
+          <div className="mb-8 flex items-center text-sm">
+            <p className="w-[7.5rem] text-sm font-bold">현재 비밀번호</p>
             <div className="flex-grow">
               <label htmlFor="currentPassword">
                 <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
@@ -145,7 +145,7 @@ export default function PasswordChange() {
                     type={currentPasswordVisibility ? 'text' : 'password'}
                     id="currentPassword"
                     placeholder="비밀번호를 입력해주세요."
-                    className="w-full focus:outline-none"
+                    className="w-full py-2 focus:outline-none"
                     autoComplete="new-password"
                     {...currentPasswordRegister}
                   />
@@ -173,7 +173,7 @@ export default function PasswordChange() {
           </div>
 
           <div className="flex items-center text-sm">
-            <p className="w-[120px] text-sm font-bold">새 비밀번호</p>
+            <p className="w-[7.5rem] text-sm font-bold">새 비밀번호</p>
             <div className="flex-grow">
               <label htmlFor="newPassword">
                 <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
@@ -181,7 +181,7 @@ export default function PasswordChange() {
                     type={newPasswordVisibility ? 'text' : 'password'}
                     id="newPassword"
                     placeholder="비밀번호를 입력해주세요."
-                    className="w-full focus:outline-none"
+                    className="w-full py-2 focus:outline-none"
                     autoComplete="new-password"
                     {...newPasswordRegister}
                   />
@@ -210,7 +210,7 @@ export default function PasswordChange() {
           </div>
 
           <div className="flex items-center text-sm">
-            <p className="w-[120px] text-sm font-bold">새 비밀번호 확인</p>
+            <p className="w-[7.5rem] text-sm font-bold">새 비밀번호 확인</p>
             <div className="flex-grow">
               <label htmlFor="confirmPassword">
                 <div className="flex items-center border rounded-xl px-4 py-2 focus-within:ring-1 focus-within:ring-theme">
@@ -218,7 +218,7 @@ export default function PasswordChange() {
                     type={passwordConfirmVisibility ? 'text' : 'password'}
                     id="confirmPassword"
                     placeholder="비밀번호를 한번 더 입력해주세요."
-                    className="w-full focus:outline-none"
+                    className="w-full py-2 focus:outline-none"
                     autoComplete="new-password"
                     {...passwordConFirmRegister}
                   />

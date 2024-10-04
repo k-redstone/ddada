@@ -125,119 +125,117 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center  mt-[7.4013rem]">
+    <div className="flex items-center justify-center py-20">
       <div className="min-w-[34rem]">
-        <div className="text-4xl font-bold text-center mb-[4.375rem] text-[#2D2541]">
+        <div className="text-4xl font-bold text-center mb-20">
           <p>따다에 가입하고</p>
           <p>배드민턴을 즐겨보세요</p>
         </div>
-        <div className="bg-white">
-          <form
-            onSubmit={handleSubmit(loginSubmit)}
-            className="grid gap-4 px-10"
-          >
-            <div className="text-sm">
-              <label htmlFor="email">
-                <p className="text-[#6B6E78]">이메일</p>
-                <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
-                  <input
-                    type="text"
-                    id="email"
-                    placeholder="이메일을 입력해주세요."
-                    className="w-full focus:outline-none"
-                    autoComplete="new-email"
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...emailRegister}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
-              </label>
-            </div>
-            <div className="text-sm">
-              <label htmlFor="password">
-                <p className="text-[#6B6E78]">비밀번호</p>
-                <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
-                  <input
-                    type={passwordVisibility ? 'text' : 'password'}
-                    id="password"
-                    placeholder="비밀번호를 입력해주세요."
-                    className="w-full focus:outline-none"
-                    autoComplete="new-password"
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...passwordRegister}
-                  />
-
-                  {passwordExists && (
-                    <button
-                      type="button"
-                      onClick={handleVisibility}
-                      className="ml-2 w-6 h-6"
-                    >
-                      {passwordVisibility ? (
-                        <PasswordVisible className="cursor-pointer" />
-                      ) : (
-                        <PasswordUnVisible className="cursor-pointer" />
-                      )}
-                    </button>
-                  )}
-                </div>
-                {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
-                )}
-                {axiosError && (
-                  <p className="text-red-500">
-                    잘못된 이메일 또는 비밀번호입니다.
-                  </p>
-                )}
-              </label>
-            </div>
-            <div className="text-sm">
-              <Link
-                href="reset-password"
-                className="text-[#B0B0B0] hover:text-black"
-              >
-                비밀번호를 잊어버리셨나요?
-              </Link>
-              <button
-                type="submit"
-                className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
-                  isValid && !isSubmitting
-                    ? 'bg-[#FCA211] text-white cursor-pointer'
-                    : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
-                }`}
-                disabled={!isValid || isSubmitting}
-              >
-                로그인
-              </button>
-            </div>
-            <div className="text-sm">
-              <div className="flex justify-center items-center">
-                <div className="grow border-t" />
-                <span className="mx-2 text-[#E7E7E7]">또는</span>
-                <div className="grow border-t" />
+        <form
+          onSubmit={handleSubmit(loginSubmit)}
+          className="flex flex-col gap-y-4 px-10"
+        >
+          <div className="text-sm">
+            <label htmlFor="email">
+              <p className="text-disabled-dark">이메일</p>
+              <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-theme">
+                <input
+                  type="text"
+                  id="email"
+                  placeholder="이메일을 입력해주세요."
+                  className="w-full focus:outline-none"
+                  autoComplete="new-email"
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...emailRegister}
+                />
               </div>
-              <button
-                type="button"
-                onClick={handleKakaoLogin}
-                className="py-[1.2744rem] w-full bg-[#FEE500] text-[#000000] rounded-xl flex items-center justify-center relative mt-3"
-              >
-                <KakaoLogo className="absolute left-[0.625rem]" />
-                카카오로 로그인
-              </button>
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </label>
+          </div>
+          <div className="text-sm">
+            <label htmlFor="password">
+              <p className="text-disabled-dark">비밀번호</p>
+              <div className="flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme">
+                <input
+                  type={passwordVisibility ? 'text' : 'password'}
+                  id="password"
+                  placeholder="비밀번호를 입력해주세요."
+                  className="w-full focus:outline-none"
+                  autoComplete="new-password"
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...passwordRegister}
+                />
+
+                {passwordExists && (
+                  <button
+                    type="button"
+                    onClick={handleVisibility}
+                    className="ml-2 w-6 h-6"
+                  >
+                    {passwordVisibility ? (
+                      <PasswordVisible className="cursor-pointer" />
+                    ) : (
+                      <PasswordUnVisible className="cursor-pointer" />
+                    )}
+                  </button>
+                )}
+              </div>
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+              {axiosError && (
+                <p className="text-red-500">
+                  잘못된 이메일 또는 비밀번호입니다.
+                </p>
+              )}
+            </label>
+          </div>
+          <div className="text-sm">
+            <Link
+              href="reset-password"
+              className="text-disabled hover:text-disabled-dark"
+            >
+              비밀번호를 잊어버리셨나요?
+            </Link>
+            <button
+              type="submit"
+              className={`py-5 w-full mt-3 rounded-xl ${
+                isValid && !isSubmitting
+                  ? 'bg-theme text-white cursor-pointer'
+                  : 'bg-disabled text-disabled-dark cursor-not-allowed'
+              }`}
+              disabled={!isValid || isSubmitting}
+            >
+              로그인
+            </button>
+          </div>
+          <div className="text-sm">
+            <div className="flex justify-center items-center">
+              <div className="grow border-t" />
+              <span className="mx-2 text-base-100">또는</span>
+              <div className="grow border-t" />
             </div>
-            <p className="text-sm text-center">
-              아직 계정이 없으신가요?{' '}
-              <Link
-                href={`/signup?redirect=${encodeURIComponent(redirect)}`}
-                className="text-[#FCA211] font-bold"
-              >
-                회원가입
-              </Link>
-            </p>
-          </form>
-        </div>
+            <button
+              type="button"
+              onClick={handleKakaoLogin}
+              className="py-[1.2744rem] w-full bg-[#FEE500] text-black rounded-xl flex items-center justify-center relative mt-3"
+            >
+              <KakaoLogo className="absolute left-[0.625rem]" />
+              카카오로 로그인
+            </button>
+          </div>
+          <p className="text-sm text-center">
+            아직 계정이 없으신가요?{' '}
+            <Link
+              href={`/signup?redirect=${encodeURIComponent(redirect)}`}
+              className="text-theme font-bold"
+            >
+              회원가입
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
   )

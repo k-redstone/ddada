@@ -1,4 +1,6 @@
-import Logo from '@/static/imgs/logo.svg'
+import Link from 'next/link'
+
+import Logo from '@/static/imgs/logo-responsive.svg'
 
 export default function RacketRecommendLayout({
   children,
@@ -7,12 +9,15 @@ export default function RacketRecommendLayout({
 }>) {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-center p-2.5 gap-y-2.5">
-        <Logo />
+      <Link
+        href="/"
+        className="h-20 flex items-center justify-center gap-y-2.5"
+      >
+        <Logo className="w-14" />
         <div>
-          <p className=" font-bold text-2xl">DDADA 라켓 추천</p>
+          <p className=" font-bold text-xl">DDADA 라켓 추천</p>
         </div>
-      </div>
+      </Link>
       {children}
     </div>
   )

@@ -32,7 +32,7 @@ export default function DeleteUserModal({
           aria-hidden="true"
         />
       </div>
-      <div className="flex flex-col gap-6 fixed top-1/4 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg p-6">
+      <div className="flex flex-col gap-6 fixed top-1/5 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg p-6">
         <div className="flex justify-between items-center">
           <ExclamationMarkIcon />
           <button
