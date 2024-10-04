@@ -37,6 +37,7 @@ export async function changeMatchStatus(
   }
   await privateAPI.patch(`/manager/matches/${matchId}/status`, payload)
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function storeMatchResult(matchId: number, payload: any) {
   await privateAPI.put(`/manager/matches/${matchId}`, payload)
 }
