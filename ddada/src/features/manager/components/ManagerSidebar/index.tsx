@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import MatchCard from '@/features/manager/components/MatchCard/index.tsx'
 import { CATEGORY_TO_PAGE } from '@/features/manager/constants/constManager.ts'
 import useFetchMatchList from '@/features/manager/hooks/useFetchMatchList.tsx'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
 export default function ManagerSidebar() {
   const [clickedCard, setClickedCard] = useState<number>(-1)
@@ -41,8 +42,8 @@ export default function ManagerSidebar() {
 
   if (!allSuccess) {
     return (
-      <div>
-        <p>Loading</p>
+      <div className="flex justify-center items-center">
+        <LoadingSpinner className="animate-spin" />
       </div>
     )
   }

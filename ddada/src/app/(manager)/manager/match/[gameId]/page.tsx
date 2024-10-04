@@ -12,7 +12,7 @@ import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAP
 
 export default function ScoreBoardPage() {
   const params = useParams() as { gameId: string }
-  const [isVisible, setVisible] = useState<boolean>(true)
+  const [isVisible, setVisible] = useState<boolean>(false)
   const { data, isSuccess } = useQuery({
     queryKey: ['matchDetail', params.gameId],
     queryFn: () => fetchMatchDetail(params.gameId),
@@ -20,26 +20,25 @@ export default function ScoreBoardPage() {
   })
 
   useEffect(() => {
-    setVisible(true)
-    fetchManagerPk().then((res) => {
-      if (data?.manager?.id !== res?.id) {
-        setVisible(false)
-      }
-    })
-    if (
-      data?.status === 'RESERVED' ||
-      data?.status === 'CREATED' ||
-      data?.status === 'FINISHED' ||
-      data?.status === 'CANCELED'
-    ) {
-      setVisible(false)
+    if (isSuccess) {
+      fetchManagerPk().then((res) => {
+        if (data.manager?.id === res?.id) {
+          if (data.status === 'PLAYING') {
+            setVisible(true)
+          }
+        }
+      })
     }
-  }, [data?.manager?.id, data?.status])
+  }, [data?.manager?.id, data?.status, isSuccess])
 
-  if (!isVisible || !isSuccess) {
+  if (!isSuccess) {
+    return null
+  }
+
+  if (!isVisible) {
     return (
-      <div className="h-full flex justify-center items-center">
-        <p className="text-2xl font-bold">잘못된 접근입니다.</p>
+      <div className="h-[calc(100vh-3.9375rem)] w-full relative flex justify-center items-center">
+        <p className="fixed text-2xl font-bold">잘못된 접근입니다.</p>
       </div>
     )
   }

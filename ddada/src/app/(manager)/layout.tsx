@@ -2,6 +2,7 @@
 
 import ManagerHeader from '@/features/manager/components/ManagerHeader/index.tsx'
 import { useUserRole } from '@/hooks/queries/user.ts'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
 export default function ManagerLayout({
   children,
@@ -16,7 +17,7 @@ export default function ManagerLayout({
         {/* 헤더 */}
         <ManagerHeader />
         <div className="grow flex justify-center items-center">
-          <p className="text-2xl font-bold">로딩중...</p>
+          <LoadingSpinner className="animate-spin" />
         </div>
       </div>
     )
