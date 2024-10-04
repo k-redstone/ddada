@@ -2,6 +2,7 @@
 
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -42,6 +43,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
   const gender = watch('gender')
   useEffect(() => {
     clearErrors('profilePicture')
+    console.log('profilePicture', Object.keys(errors))
     if (profilePicture && gender && Object.keys(errors).length === 0) {
       setIsNextStepEnabled(true)
     } else {
@@ -134,7 +136,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
     <>
       <div className="text-sm">
         <label htmlFor="profilePicture">
-          <p className="text-[#6B6E78]">프로필 사진</p>
+          <p className="text-disabled-dark">프로필 사진</p>
           <input
             type="file"
             id="profilePicture"
@@ -145,16 +147,22 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
           />
         </label>
         <div>
-          <div className="flex gap-[1.5rem]">
-            <div className="flex justify-center items-center rounded-full bg-[#F6F6F6] h-[9.375rem] w-[9.375rem] overflow-hidden">
+          <div className="flex gap-6">
+            <div className="h-[9.375rem] w-[9.375rem] flex justify-center items-center rounded-full bg-[#F6F6F6] overflow-hidden">
               {defaultImage ? (
                 <Logo />
               ) : (
-                <img
-                  src={profileImage}
-                  alt="프로필 사진"
-                  className="w-full h-full"
-                />
+                profileImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <Image
+                    src={profileImage}
+                    alt="프로필 사진"
+                    objectFit="cover"
+                    width={150}
+                    height={150}
+                    className="w-full h-full"
+                  />
+                )
               )}
             </div>
 
@@ -162,7 +170,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
               <div className="flex gap-4">
                 <button
                   type="button"
-                  className="px-[1.5rem] py-[0.75rem] rounded-[0.75rem] border border-[#E5E5ED] text-[#6B6E78]"
+                  className="px-[1.5rem] py-[0.75rem] rounded-[0.75rem] border border-disabled text-disabled-dark"
                   onClick={() =>
                     document.getElementById('profilePicture')?.click()
                   }
@@ -177,7 +185,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
                 {profileImage && (
                   <button
                     type="button"
-                    className="text-[#DC3545] rounded-[0.75rem] border border-[#DC3545] px-[1.5rem] py-[0.75rem]"
+                    className="text-danger rounded-[0.75rem] border border-danger px-[1.5rem] py-[0.75rem]"
                     onClick={handleImageDelete}
                   >
                     삭제
@@ -187,9 +195,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
               <div>
                 <p>.png, .jpeg, .gif 파일은 최대 2MB까지 지원합니다.</p>
                 {errors.profilePicture && (
-                  <p className="text-[#DC3545]">
-                    {errors.profilePicture.message}
-                  </p>
+                  <p className="text-danger">{errors.profilePicture.message}</p>
                 )}
               </div>
             </div>
@@ -198,7 +204,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       </div>
       <div className="text-sm">
         <label htmlFor="gender">
-          <p className="text-[#6B6E78]">성별</p>
+          <p className="text-disabled-dark">성별</p>
           <input
             type="text"
             id="gender"
@@ -209,47 +215,43 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
 
         <div className="flex gap-2">
           <div
-            className={`relative flex-col justify-center items-center border rounded-[0.75rem] ${
-              maleChecked ? 'border-[#FCA211]' : 'border-[#E5E5ED]'
+            className={`bg-white relative flex-col justify-center items-center border rounded-[0.75rem] ${
+              maleChecked ? 'border-theme' : 'border-disabled'
             }`}
           >
-            {maleChecked && (
-              <CheckIcon className="absolute top-4 right-[1.4375rem]" />
-            )}
+            {maleChecked && <CheckIcon className="absolute top-4 right-6" />}
             <button type="button" onClick={handleMaleGender}>
               <div className="p-6">
                 <MaleIcon />
-                <p className="text-center text-[#6B6E78]">남성</p>
+                <p className="text-center text-disabled-dark">남성</p>
               </div>
             </button>
           </div>
           <div
-            className={`relative flex-col justify-center items-center border rounded-[0.75rem] ${
-              femaleChecked ? 'border-[#FCA211]' : 'border-[#E5E5ED]'
+            className={`bg-white relative flex-col justify-center items-center border rounded-[0.75rem] ${
+              femaleChecked ? 'border-theme' : 'border-disabled'
             }`}
           >
-            {femaleChecked && (
-              <CheckIcon className="absolute top-4 right-[1.4375rem]" />
-            )}
+            {femaleChecked && <CheckIcon className="absolute top-4 right-6" />}
             <button type="button" onClick={handleFeMaleGender}>
               <div className="p-6">
                 <FemaleIcon />
-                <p className="text-center text-[#6B6E78]">여성</p>
+                <p className="text-center text-disabled-dark">여성</p>
               </div>
             </button>
           </div>
         </div>
         {errors.gender && (
-          <p className="text-[#DC3545]">{errors.gender.message}</p>
+          <p className="text-danger">{errors.gender.message}</p>
         )}
       </div>
 
       <div className="text-sm">
         <label htmlFor="introduction">
-          <p className="text-[#6B6E78]">(선택) 한줄 소개</p>
+          <p className="text-disabled-dark">(선택) 한줄 소개</p>
           <div
-            className={`flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] 
-              ${errors.email ? 'border-[#DC3545]' : ''}`}
+            className={`flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-theme 
+              ${errors.email ? 'border-danger' : ''}`}
           >
             <input
               type="text"
@@ -261,7 +263,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
             />
           </div>
           {errors.email && (
-            <p className="text-[#DC3545]">{errors.email.message}</p>
+            <p className="text-danger">{errors.email.message}</p>
           )}
         </label>
       </div>
@@ -270,8 +272,8 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
         onClick={handleSubmit(signUpFinished)}
         className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
           isNextStepEnabled
-            ? 'bg-[#FCA211] text-white cursor-pointer'
-            : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+            ? 'bg-theme text-white cursor-pointer'
+            : 'bg-disabled text-disabled-dark cursor-not-allowed'
         }`}
         disabled={!isNextStepEnabled}
       >

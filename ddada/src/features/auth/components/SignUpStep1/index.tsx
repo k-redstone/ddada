@@ -60,7 +60,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
       >
         {checkAge && <CheckedBox />}
         {!checkAge && <UnCheckedBox />}
-        <p className="ml-2.5 font-[#6B6E78]">[필수] 만 14세 이상입니다.</p>
+        <p className="ml-2.5 text-disabled-dark">[필수] 만 14세 이상입니다.</p>
       </button>
       <div className="flex justify-between">
         <button
@@ -70,7 +70,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         >
           {checkTos && <CheckedBox />}
           {!checkTos && <UnCheckedBox />}
-          <p className="ml-2.5 font-[#6B6E78]">[필수] 따다 이용약관 동의</p>
+          <p className="ml-2.5 text-disabled-dark">[필수] 따다 이용약관 동의</p>
         </button>
         <button
           type="button"
@@ -82,7 +82,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         </button>
       </div>
       {isTosOpen && (
-        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-[#6B6E78]">
+        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-disabled-dark">
           <p>
             따다의 이용약관은 따다 서비스 이용을 위한 기본 규칙을 설명합니다.
           </p>
@@ -100,7 +100,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         >
           {checkService && <CheckedBox />}
           {!checkService && <UnCheckedBox />}
-          <p className="ml-2.5 font-[#6B6E78]">
+          <p className="ml-2.5 text-disabled-dark">
             [필수] 따다 서비스 이용약관 동의
           </p>
         </button>
@@ -114,7 +114,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         </button>
       </div>
       {isServiceOpen && (
-        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-[#6B6E78]">
+        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-disabled-dark">
           <p>따다의 서비스 이용약관은 서비스의 세부 이용 방법 및 제한 사항을</p>
           <p>
             설명합니다. 서비스 사용 시 발생할 수 있는 권리와 의무를 포함하며,
@@ -130,7 +130,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         >
           {checkPersonal && <CheckedBox />}
           {!checkPersonal && <UnCheckedBox />}
-          <p className="ml-2.5 font-[#6B6E78]">
+          <p className="ml-2.5 text-disabled-dark">
             [필수] 따다 개인정보 수집 및 이용 동의
           </p>
         </button>
@@ -144,7 +144,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         </button>
       </div>
       {isPersonalOpen && (
-        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-[#6B6E78]">
+        <div className="ml-6 mt-2 text-sm whitespace-pre-line text-disabled-dark">
           <p>따다는 회원의 개인정보를 안전하게 보호하며, 본 동의는 회원님의</p>
           <p>정보를 수집하고, 서비스 제공을 위해 사용할 수 있음을 동의하는</p>
           <p> 절차입니다.</p>
@@ -158,7 +158,7 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
       >
         {checkMarketing && <CheckedBox />}
         {!checkMarketing && <UnCheckedBox />}
-        <p className="ml-2.5 font-[#6B6E78]">
+        <p className="ml-2.5 text-disabled-dark">
           [선택] 마케팅 및 프로모션 수신 동의
         </p>
       </button>
@@ -168,8 +168,8 @@ export default function SignUpStep1({ changeViewStep }: SignUpStep1Props) {
         onClick={() => changeViewStep(SignUpStepType.step2)}
         className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
           isNextStepEnabled
-            ? 'bg-[#FCA211] text-white cursor-pointer'
-            : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+            ? 'bg-theme text-white cursor-pointer'
+            : 'bg-disabled text-disabled-dark cursor-not-allowed'
         }`}
         disabled={!isNextStepEnabled}
       >
