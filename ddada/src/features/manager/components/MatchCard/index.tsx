@@ -24,8 +24,10 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
         <Image
           src={data.court.image}
           alt="court image"
-          objectFit="cover"
+          sizes="50vw"
+          style={{ objectFit: 'cover' }}
           fill
+          priority
         />
       </div>
       <div className="flex flex-col gap-y-3 w-full max-w-[16.375rem]">
