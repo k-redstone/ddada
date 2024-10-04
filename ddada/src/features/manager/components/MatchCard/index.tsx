@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import { ManagerMatchDetailType } from '@/features/manager/types/MatchDataType.ts'
 import TangerineBlankDot from '@/static/imgs/manager/TangerineBlankDot.svg'
 import TangerinefillDot from '@/static/imgs/manager/TangerineFillDot.svg'
@@ -18,9 +20,8 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
     <div
       className={`px-2 py-6 flex gap-x-3 border border-base-100 box-border ${isClicked && `bg-theme-light`}`}
     >
-      <div className="w-16 rounded-lg border border-black">
-        {/* <img className="w-full h-full" src="" alt="court_img" /> */}
-        <p>이미지들어감</p>
+      <div className="w-16 rounded-lg border border-black relative">
+        <Image src={data.court.image} alt="court image" fill />
       </div>
       <div className="flex flex-col gap-y-3  w-full">
         <div className="flex flex-col gap-y-1">

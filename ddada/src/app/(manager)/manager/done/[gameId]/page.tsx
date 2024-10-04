@@ -35,6 +35,7 @@ export default function ScoreBoardPage() {
     ) {
       setVisible(false)
     }
+    setVisible(true)
   }, [data?.manager?.id, data?.status])
 
   if (!isSuccess) {
