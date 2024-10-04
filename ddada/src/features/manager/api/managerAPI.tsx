@@ -3,6 +3,7 @@ import { ManagerPk } from '@/features/manager/types/ManagerType.ts'
 import {
   FetchManagerMatchListType,
   ManagerMatchListPayload,
+  MatchReusltStoreType,
   MatchStatusType,
 } from '@/features/manager/types/MatchDataType.ts'
 
@@ -37,7 +38,10 @@ export async function changeMatchStatus(
   }
   await privateAPI.patch(`/manager/matches/${matchId}/status`, payload)
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function storeMatchResult(matchId: number, payload: any) {
+// todo payload 타입지정
+export async function storeMatchResult(
+  matchId: number,
+  payload: MatchReusltStoreType,
+) {
   await privateAPI.put(`/manager/matches/${matchId}`, payload)
 }
