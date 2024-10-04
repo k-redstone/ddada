@@ -20,13 +20,22 @@ export default function MatchCard({ data, isClicked }: MatchCardProps) {
     <div
       className={`px-2 py-6 flex gap-x-3 border border-base-100 box-border ${isClicked && `bg-theme-light`}`}
     >
-      <div className="w-16 rounded-lg border border-black relative">
-        <Image src={data.court.image} alt="court image" fill />
+      <div className="w-16 rounded-lg relative overflow-hidden">
+        <Image
+          src={data.court.image}
+          alt="court image"
+          objectFit="cover"
+          fill
+        />
       </div>
-      <div className="flex flex-col gap-y-3  w-full">
+      <div className="flex flex-col gap-y-3 w-full max-w-[16.375rem]">
         <div className="flex flex-col gap-y-1">
-          <p className="flex gap-x-[.625rem]">
-            <span className="font-bold grow">{data.court.name}</span>
+          <p className="flex gap-x-2.5">
+            <span className="font-bold grow">
+              {data.court.name.length > 14
+                ? `${data.court.name.substring(0, 14)}...`
+                : data.court.name}
+            </span>
             <span className="text-sm">
               {diffDate === 0 ? (
                 <span className=" text-danger">오늘</span>
