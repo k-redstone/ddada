@@ -46,8 +46,6 @@ export default function MatchTimeLine({
         return null
     }
   }
-  // console.log(userTeamNum)
-  // console.log(setData)
   return (
     <div className="flex flex-col items-center text-disabled-dark">
       <p className="text-sm">매치스코어</p>

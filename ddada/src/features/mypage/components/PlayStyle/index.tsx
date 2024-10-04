@@ -23,7 +23,7 @@ export default function PlayStyle() {
   })
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center px-6 py-20">
         <LoadingSpinner className="animate-spin" />
       </div>
     )
@@ -31,7 +31,7 @@ export default function PlayStyle() {
 
   if (isError) {
     return (
-      <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 h-full">
+      <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
         <NoDataIcon />
         <div className="flex flex-col gap-6 text-disabled-dark justify-center">
           <p className="text-6xl font-bold text-center">앗!</p>
