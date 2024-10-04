@@ -96,7 +96,7 @@ export default function Layout({
                 <p className="text-xs font-medium">승률 0%</p>
               )}
             </div>
-            <div className="flex flex-col gap-3 flex-grow">
+            <div className="flex flex-col gap-3 flex-grow mb-[9.375rem] text-sm">
               <button
                 type="button"
                 onClick={() => router.push('/mypage/profile-edit')}

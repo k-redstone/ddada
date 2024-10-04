@@ -179,7 +179,7 @@ export default function ProfileEdit() {
               )}
             </div>
 
-            <div className="grid gap-4 mb-[3.625rem]">
+            <div className="grid gap-4">
               <div className="flex gap-4">
                 <button
                   type="button"

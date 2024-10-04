@@ -90,6 +90,8 @@ export default function PaymentModal({
     if (!accessToken) {
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
+      // todo 여기에 결제 전에 예약을 해보고 만약 동시간대 예약이면 백에서 에러메세지 내뱉을거니 그거에 따라 toast.error로 메세지 띄우자
+
       handlePortOne()
       closeModal()
     }
@@ -103,7 +105,7 @@ export default function PaymentModal({
         paymentId: `payment-${crypto.randomUUID()}`,
         // orderName에 예약한 장소 이름 넣기
         orderName: 'test',
-        totalAmount: 1000,
+        totalAmount: 4000,
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
         issueName: 'ddada',
