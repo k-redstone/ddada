@@ -35,7 +35,7 @@ export default function MatchStatusTag({
         <p className="text-primary">+{ratingChange}</p>
       )}
       {matchStatus === 'FINISHED' && ratingChangeColor === 'DEFEAT' && (
-        <p className="text-danger">-{ratingChange}</p>
+        <p className="text-danger">{ratingChange}</p>
       )}
     </div>
   )
