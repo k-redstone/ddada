@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
@@ -22,9 +23,13 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   }, [selectedDate])
   const [selectedTime, setSelectedTime] = useState<string>('')
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
-
+  const router = useRouter()
   const handlePaymentModal = () => {
-    setPaymentModalOpen(true)
+    if (sessionStorage.getItem('accessToken')) {
+      setPaymentModalOpen(true)
+    } else {
+      router.push(`/login?redirect=court-reservation`)
+    }
   }
   const handlePaymentModalOff = () => {
     setPaymentModalOpen(false)
