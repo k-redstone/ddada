@@ -48,10 +48,7 @@ const getMyMatchList = async () => {
 }
 
 const getMyMatchDetail = async (matchId: string) => {
-  const params = {
-    matchId,
-  }
-  const res = await privateAPI.get(`/matches/`, { params })
+  const res = await privateAPI.get(`/matches/${matchId}`)
   return res.data.result
 }
 

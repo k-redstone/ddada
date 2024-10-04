@@ -43,7 +43,6 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
   const gender = watch('gender')
   useEffect(() => {
     clearErrors('profilePicture')
-    console.log('profilePicture', Object.keys(errors))
     if (profilePicture && gender && Object.keys(errors).length === 0) {
       setIsNextStepEnabled(true)
     } else {

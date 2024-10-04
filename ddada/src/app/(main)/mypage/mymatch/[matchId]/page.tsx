@@ -1,16 +1,11 @@
-// todo
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useState } from 'react'
 
-import {
-  getMyMatchDetail,
-  getSetDetail,
-} from '@/features/mypage/api/mypage/index.ts'
+import { getMyMatchDetail } from '@/features/mypage/api/mypage/index.ts'
 import MatchTimeLine from '@/features/mypage/components/MatchTimeLine/index.tsx'
 import PlayerMatchTag from '@/features/mypage/components/PlayerMatchTag/index.tsx'
 import {
@@ -20,7 +15,7 @@ import {
 import useGetUserInfo from '@/features/mypage/hooks/useGetUserInfo.tsx'
 import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
-import Timer from '@/static/imgs/mypage/my-page-timer.svg'
+// import Timer from '@/static/imgs/mypage/my-page-timer.svg'
 import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -31,56 +26,154 @@ export default function MyMatchDetailPage({
   params: { matchId: string }
 }) {
   const { matchId } = params
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['myMatchDetail', { matchId }],
     queryFn: () => getMyMatchDetail(matchId),
     retry: 1,
   })
   const [setNumber, setSetNumber] = useState<number>(1)
-  const { isTeamA, isTeamB, playerId } = useGetUserInfo(data)
-  const winnerTeam = data.result.winnerTeamNumber
-  // todo daty에 따라 matchTag달아줘야함
+  const { userTeamNum, userId, userNickname } = useGetUserInfo(data || null)
+  if (isLoading) {
+    return <div>로딩중</div>
+  }
+  const teamAPlayer1 = {
+    playerNum: 11,
+    playerId: data.team1.player1.id,
+    nickname: data.team1.player1.nickname,
+    profileImagePath: data.team1.player1.image,
+  }
+  const teamAPlayer2 = {
+    playerNum: 12,
+    playerId: data.team1.player2.id,
+    nickname: data.team1.player2.nickname,
+    profileImagePath: data.team1.player2.image,
+  }
+  const teamBPlayer1 = {
+    playerNum: 21,
+    playerId: data.team2.player1.id,
+    nickname: data.team2.player1.nickname,
+    profileImagePath: data.team2.player1.image,
+  }
+  const teamBPlayer2 = {
+    playerNum: 22,
+    playerId: data.team2.player2.id,
+    nickname: data.team2.player2.nickname,
+    profileImagePath: data.team2.player2.image,
+  }
+  const winnerTeam = data.winnerTeamNumber
   const matchTag = '저지불가'
-  // console.log(playerId)
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
-      <div className="flex px-6 py-6 gap-6 border rounded-xl justify-center items-center text-disabled-dark">
+      <div
+        className={`flex px-6 py-6 gap-6 border rounded-xl justify-center items-center text-disabled-dark
+      ${userTeamNum === winnerTeam ? 'border-primary' : 'border-danger'}
+      `}
+      >
         <div className="flex flex-col justify-center items-center gap-3">
-          <p className="text-3xl font-bold text-center">승리</p>
+          {userTeamNum === winnerTeam ? (
+            <p className="text-3xl font-bold text-center text-primary">승리</p>
+          ) : (
+            <p className="text-3xl font-bold text-center text-danger">패배</p>
+          )}
+
           <div className="flex items-center gap-1 text-xs">
             <Calender />
-            <p>09.26</p>
-            <p>10:00</p>
+            <p>{data.date.slice(5)}</p>
+            <p>{data.time.slice(0, 5)}</p>
           </div>
-          <div className="flex items-center gap-1 text-xs">
+          {/* <div className="flex items-center gap-1 text-xs">
             <Timer />
             <p>20분 15초</p>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center justify-center flex-grow gap-4 text-3xl">
-          <span>1</span>
+          <span
+            className={`
+            ${userTeamNum === 1 && 'font-bold'}
+            ${userTeamNum === 1 && userTeamNum === winnerTeam && 'text-primary'}
+            ${userTeamNum === 1 && userTeamNum !== winnerTeam && 'text-danger'}
+            `}
+          >
+            {data.team1SetScore}
+          </span>
           <span>:</span>
-          <span>2</span>
+          <span
+            className={`
+            ${userTeamNum === 2 && 'font-bold'}
+            ${userTeamNum === 2 && userTeamNum === winnerTeam && 'text-primary'}
+            ${userTeamNum === 2 && userTeamNum !== winnerTeam && 'text-danger'}
+            `}
+          >
+            {data.team2SetScore}
+          </span>
         </div>
         <div className="flex text-xs">
           <div className="flex flex-col">
             <div className="flex gap-2 p-1">
-              <div>이미지</div>
-              <p>쿨핀</p>
+              <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                <Image
+                  src={teamAPlayer1.profileImagePath}
+                  alt="A_player1_image"
+                  fill
+                />
+              </div>
+              <p
+                className={`
+              ${userId === teamAPlayer1.playerId && 'font-bold'} 
+              `}
+              >
+                {teamAPlayer1.nickname}
+              </p>
             </div>
             <div className="flex gap-2 p-1">
-              <div>이미지</div>
-              <p>쿨핀</p>
+              <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                <Image
+                  src={teamAPlayer2.profileImagePath}
+                  alt="A_player2_image"
+                  fill
+                />
+              </div>
+              <p
+                className={`
+                ${userId === teamAPlayer2.playerId && 'font-bold'} 
+                `}
+              >
+                {teamAPlayer2.nickname}
+              </p>
             </div>
           </div>
           <div className="flex flex-col">
             <div className="flex gap-2 p-1">
-              <div>이미지</div>
-              <p>쿨핀</p>
+              <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                <Image
+                  src={teamBPlayer1.profileImagePath}
+                  alt="B_player1_image"
+                  fill
+                />
+              </div>
+              <p
+                className={`
+                ${userId === teamBPlayer1.playerId && 'font-bold'} 
+                `}
+              >
+                {teamBPlayer1.nickname}
+              </p>
             </div>
             <div className="flex gap-2 p-1">
-              <div>이미지</div>
-              <p>쿨핀</p>
+              <div className="w-6 h-6 overflow-hidden relative rounded-full">
+                <Image
+                  src={teamBPlayer2.profileImagePath}
+                  alt="B_player2_image"
+                  fill
+                />
+              </div>
+              <p
+                className={`
+                ${userId === teamBPlayer2.playerId && 'font-bold'} 
+                `}
+              >
+                {teamBPlayer2.nickname}
+              </p>
             </div>
           </div>
         </div>
@@ -90,7 +183,7 @@ export default function MyMatchDetailPage({
           <div className="flex flex-col justify-center items-center text-3xl">
             <p>이번 매치,</p>
             <p>
-              <span className="font-bold">나는홍석</span>님은
+              <span className="font-bold">{userNickname}</span>님은
             </p>
           </div>
           <div>
@@ -138,7 +231,11 @@ export default function MyMatchDetailPage({
         />
         <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-12 w-full justify-center items-center text-disabled-dark">
           <div>
-            <VictoryCharacter />
+            {userTeamNum === winnerTeam ? (
+              <VictoryCharacter />
+            ) : (
+              <DefeatCharacter />
+            )}
           </div>
           <div className="flex-grow text-center">
             {PlayerMatchTagDescription[matchTag]}
@@ -172,7 +269,14 @@ export default function MyMatchDetailPage({
           3세트
         </button>
       </div>
-      <MatchTimeLine setNumber={setNumber} />
+      <MatchTimeLine
+        setData={data.sets[setNumber - 1]}
+        teamAPlayer1={teamAPlayer1}
+        teamAPlayer2={teamAPlayer2}
+        teamBPlayer1={teamBPlayer1}
+        teamBPlayer2={teamBPlayer2}
+        userTeamNum={userTeamNum}
+      />
     </div>
   )
 }

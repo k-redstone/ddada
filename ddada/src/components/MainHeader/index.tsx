@@ -16,8 +16,6 @@ export default function MainHeader() {
   const pathname = usePathname()
   const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
 
-  console.log(currentPath)
-
   useEffect(() => {
     setCurrentPath(pathname.split('/')[1])
   }, [pathname])

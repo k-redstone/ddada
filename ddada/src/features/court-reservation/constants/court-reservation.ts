@@ -36,12 +36,12 @@ export const MATCH_INFO = {
 export const KR_DAY_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토']
 
 export const COURT_RESERVATION_TIMES = [
-  '10:00:00',
-  '12:00:00',
-  '14:00:00',
-  '16:00:00',
-  '18:00:00',
-  '20:00:00',
+  '10:00',
+  '12:00',
+  '14:00',
+  '16:00',
+  '18:00',
+  '20:00',
 ]
 
 export const DUMMY_COURTS = [

@@ -1,13 +1,17 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import dayjs from 'dayjs'
 import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
+import {
+  getPlayerBookings,
+  postMatchReservation,
+} from '@/features/court-reservation/api/court/index.ts'
 import {
   KR_DAY_OF_WEEK,
   MATCH_INFO,
@@ -78,7 +82,18 @@ export default function PaymentModal({
       date,
       time: `${reservationTime}`,
     }
-    await postMatchReservation(payload)
+    try {
+      await postMatchReservation(payload)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response!.data.message ===
+          '같은 시간에 다른 경기가 이미 예약된 선수입니다.'
+        ) {
+          toast.error('이미 동시간대 예약된 매치가 있습니다.')
+        }
+      }
+    }
   }
 
   const handleCloseModal = () => {
@@ -90,8 +105,15 @@ export default function PaymentModal({
     if (!accessToken) {
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
-      handlePortOne()
-      closeModal()
+      // todo 여기에 결제 전에 예약을 해보고 만약 동시간대 예약이면 백에서 에러메세지 내뱉을거니 그거에 따라 toast.error로 메세지 띄우자
+      try {
+        await getPlayerBookings(date, reservationTime)
+        handlePortOne()
+        closeModal()
+      } catch {
+        toast.error('이미 동시간대 예약된 매치가 있습니다.')
+        closeModal()
+      }
     }
   }
 
@@ -102,8 +124,8 @@ export default function PaymentModal({
         channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
         paymentId: `payment-${crypto.randomUUID()}`,
         // orderName에 예약한 장소 이름 넣기
-        orderName: 'test',
-        totalAmount: 1000,
+        orderName: '코트 예약',
+        totalAmount: 4000,
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
         issueName: 'ddada',

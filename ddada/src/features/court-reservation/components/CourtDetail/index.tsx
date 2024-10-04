@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
@@ -32,14 +33,18 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
-
   return (
-    <div key={court.id} className="flex border-b w-[46rem] gap-[0.625rem] py-2">
-      <div>
-        <img
+    <div
+      key={court.name}
+      className="flex border-b w-[46rem] gap-[0.625rem] py-2"
+    >
+      <div className="w-[9.375rem] max-h-[11.5rem] rounded-[0.5rem] relative overflow-hidden">
+        <Image
           src={court.image}
           alt="코트이미지"
-          className="w-[9.375rem] h-full rounded-[0.5rem]"
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 50vw, 100vw"
+          fill
         />
       </div>
       <div className="flex flex-col gap-4 flex-grow">
@@ -63,10 +68,11 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
                 onClick={() => handleSelectedTime(time)}
                 className={`border px-2 py-1
                       rounded-[62.5rem]
-                  ${court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
+                  ${court.reservations && court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
                   ${selectedTime === time ? 'bg-theme text-white' : ''}
                   `}
                 disabled={
+                  court.reservations &&
                   court.reservations[selectedDate] &&
                   court.reservations[selectedDate].includes(time)
                 }

@@ -36,11 +36,11 @@ const signupSubmit = async (payload: SignUpSubmitType) => {
   formData.append('birth', payload.birthYear)
   formData.append('password', payload.password)
   formData.append('number', payload.phoneNumber)
-  if (payload.introduction) {
-    formData.append('description', payload.introduction)
+  if (payload.description) {
+    formData.append('description', payload.description)
   }
-  if (payload.profilePicture) {
-    formData.append('profileImagePath', payload.profilePicture)
+  if (payload.profileImage && payload.profileImage?.name) {
+    formData.append('image', payload.profileImage)
   }
   const res = await instance.post('/player/signup', formData, {
     headers: {

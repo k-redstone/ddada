@@ -19,9 +19,9 @@ export interface SignUpSubmitType {
   nickname: string
   phoneNumber: string
   birthYear: string
-  profilePicture?: File | null
+  profileImage?: File | null
   gender: string
-  introduction?: string
+  description?: string
 }
 
 export interface SignUpResponseType {

@@ -16,6 +16,9 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: 'DDADA - 배드민턴 경기 매치, 라켓 추천 플랫폼',
   description: 'DDADA는 배드민턴 경기 매치, 라켓 추천 플랫폼입니다.',
+  icons: {
+    icon: '/logo.png',
+  },
 }
 
 export default function RootLayout({

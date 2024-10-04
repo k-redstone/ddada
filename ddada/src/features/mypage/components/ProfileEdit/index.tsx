@@ -147,7 +147,7 @@ export default function ProfileEdit() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Image src={ProfileEditLogo} alt="mypage-profile-edit" />
+      <Image src={ProfileEditLogo} alt="mypage-profile-edit" priority />
       <div className="flex justify-between items-center">
         <p className="text-xl font-bold">내 프로필</p>
         <button
@@ -171,19 +171,15 @@ export default function ProfileEdit() {
         />
         <div>
           <div className="flex gap-[1.5rem]">
-            <div className="flex justify-center items-center rounded-full bg-base-50 h-[5rem] w-[5rem] overflow-hidden">
+            <div className="flex justify-center items-center rounded-full bg-base-50 h-[5rem] w-[5rem] overflow-hidden relative">
               {defaultImage ? (
                 <Logo />
               ) : (
-                <img
-                  src={profileImage}
-                  alt="프로필 사진"
-                  className="w-full h-full"
-                />
+                <Image src={profileImage as string} alt="프로필 사진" fill />
               )}
             </div>
 
-            <div className="grid gap-4 mb-[3.625rem]">
+            <div className="grid gap-4">
               <div className="flex gap-4">
                 <button
                   type="button"

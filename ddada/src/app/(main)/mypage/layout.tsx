@@ -75,8 +75,8 @@ export default function Layout({
                   <Image
                     src={profilePreSignedUrl}
                     alt="profile"
-                    width={80}
-                    height={80}
+                    fill
+                    priority
                   />
                 ) : (
                   <Logo />
@@ -88,9 +88,7 @@ export default function Layout({
                   {gender === 'MALE' ? <MaleIcon /> : <FemaleIcon />}
                 </div>
               </div>
-              {/* <p>{data.rating}</p> */}
-              <RankTier rating={data.rating} />
-              {/* 나중에 승률 내가 계산해야할듯? */}
+              <RankTier rating={data.rating} gameCount={data.gameCount} />
               <p className="text-xs font-medium">
                 {data.winCount}승 {data.loseCount}패
               </p>
@@ -103,7 +101,7 @@ export default function Layout({
                 <p className="text-xs font-medium">승률 0%</p>
               )}
             </div>
-            <div className="flex flex-col gap-3 flex-grow">
+            <div className="flex flex-col gap-3 flex-grow mb-[9.375rem] text-sm">
               <button
                 type="button"
                 onClick={() => router.push('/mypage/profile-edit')}
