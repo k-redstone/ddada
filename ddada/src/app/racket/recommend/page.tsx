@@ -62,7 +62,7 @@ export default function RecommendPage() {
     )
   }
   return (
-    <div className="flex justify-center  min-h-[calc(100vh-5.125rem)] py-2">
+    <div className="flex justify-center pb-20">
       <div className="grow flex flex-col gap-y-[5.25rem] max-w-[34rem]">
         <div className="flex">
           <button type="button" onClick={() => handleMoveBack()}>
