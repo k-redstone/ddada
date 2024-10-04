@@ -8,9 +8,10 @@ import SemiPro from '@/static/imgs/rank/Semi-pro.svg'
 
 interface RankTierProps {
   rating: number
+  gameCount: number
 }
 
-export default function RankTier({ rating }: RankTierProps) {
+export default function RankTier({ rating, gameCount }: RankTierProps) {
   useEffect(() => {
     const tiers = [
       { min: -Infinity, max: 600, tier: '루키', tierNum: 0 },
@@ -27,7 +28,10 @@ export default function RankTier({ rating }: RankTierProps) {
     ]
     const currentTier = tiers.find((t) => rating >= t.min && rating < t.max)
 
-    if (currentTier) {
+    if (gameCount < 3) {
+      setTier('루키')
+      setTierNum('')
+    } else if (currentTier) {
       setTier(currentTier.tier)
       if (currentTier.tierNum === 0) {
         setTierNum('')
