@@ -39,7 +39,7 @@ const signupSubmit = async (payload: SignUpSubmitType) => {
   if (payload.description) {
     formData.append('description', payload.description)
   }
-  if (payload.profileImage) {
+  if (payload.profileImage && payload.profileImage?.name) {
     formData.append('image', payload.profileImage)
   }
   const res = await instance.post('/player/signup', formData, {
