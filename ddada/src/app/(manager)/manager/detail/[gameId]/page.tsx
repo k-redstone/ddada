@@ -104,6 +104,7 @@ export default function ScoreBoardPage() {
           </MatchCourtInfo>
         </MatchReservationDetailProvider>
 
+        {/* todo 일단 바로 실행할 수 있게 만들어놓음 */}
         {true ? (
           <div>
             <div className="bg-[#471801] flex justify-center items-center py-3">

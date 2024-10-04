@@ -2,6 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
@@ -11,27 +13,36 @@ import MatchPlayerInfo from '@/features/reservationDetail/components/MatchPlayer
 import MatchShortInfo from '@/features/reservationDetail/components/MatchShortInfo/index.tsx'
 import RefundPolicyInfo from '@/features/reservationDetail/components/RefundPolicyInfo/index.tsx'
 import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
+import { useUserRole } from '@/hooks/queries/user.ts'
 
 export default function MatchReservationDetailPage({
   params,
 }: {
   params: { matchId: string }
 }) {
+  const router = useRouter()
   const { matchId } = params
-
+  const { data: userRole, isSuccess: isUserRole } = useUserRole()
   const { data, isSuccess } = useQuery({
     queryKey: ['matchDetail', matchId],
     queryFn: () => fetchMatchDetail(matchId),
     enabled: !!matchId,
   })
 
-  if (!isSuccess) {
+  useEffect(() => {
+    if (userRole?.memberType === 'GYM_ADMIN') {
+      router.push('/match-reservation')
+    }
+  }, [isUserRole, router, userRole?.memberType])
+
+  if (!isSuccess || !isUserRole || userRole?.memberType === 'GYM_ADMIN') {
     return (
       <div>
         <p>asdf</p>
       </div>
     )
   }
+
   return (
     <MatchReservationDetailProvider matchDetailData={data}>
       <div className=" max-w-[46rem] flex flex-col">
