@@ -62,7 +62,6 @@ export default function CoatReservation() {
     retry: 1,
     initialPageParam: 0,
   })
-
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting) {
       fetchNextPage()

@@ -33,11 +33,19 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
-
   return (
-    <div key={court.id} className="flex border-b w-[46rem] gap-[0.625rem] py-2">
+    <div
+      key={court.name}
+      className="flex border-b w-[46rem] gap-[0.625rem] py-2"
+    >
       <div className="w-[9.375rem] max-h-[11.5rem] rounded-[0.5rem] relative overflow-hidden">
-        <Image src={court.image} alt="코트이미지" objectFit="cover" fill />
+        <Image
+          src={court.image}
+          alt="코트이미지"
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 50vw, 100vw"
+          fill
+        />
       </div>
       <div className="flex flex-col gap-4 flex-grow">
         <div>
