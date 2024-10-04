@@ -342,11 +342,11 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 이메일 입력 */}
       <div className="text-sm">
         <label htmlFor="email">
-          <p className="text-[#6B6E78]">이메일</p>
+          <p className="text-disabled-dark">이메일</p>
           <div
-            className={`flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] 
-              ${errors.email ? 'border-[#DC3545]' : ''}
-              ${kkaoEmailExist ? 'bg-[#F6F6F6] text-[#6B6E78]' : ''}`}
+            className={`flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme 
+              ${errors.email ? 'border-danger' : ''}
+              ${kkaoEmailExist ? 'bg-[#F6F6F6] text-disabled-dark' : ''}`}
           >
             <input
               type="text"
@@ -360,7 +360,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             />
           </div>
           {errors.email && (
-            <p className="text-[#DC3545]">{errors.email.message}</p>
+            <p className="text-danger">{errors.email.message}</p>
           )}
         </label>
       </div>
@@ -368,8 +368,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 비밀번호 입력 */}
       <div className="text-sm">
         <label htmlFor="password">
-          <p className="text-[#6B6E78]">비밀번호</p>
-          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <p className="text-disabled-dark">비밀번호</p>
+          <div className="flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme">
             <input
               type={passwordVisibility ? 'text' : 'password'}
               id="password"
@@ -394,7 +394,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </button>
           </div>
           {errors.password && (
-            <p className="text-[#DC3545]">{errors.password.message}</p>
+            <p className="text-danger">{errors.password.message}</p>
           )}
         </label>
       </div>
@@ -402,7 +402,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 비밀번호 확인 입력 */}
       <div className="text-sm">
         <label htmlFor="confirmPassword">
-          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <div className="flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme">
             <input
               type={passwordConfirmVisibility ? 'text' : 'password'}
               id="confirmPassword"
@@ -427,7 +427,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-[#DC3545]">{errors.confirmPassword.message}</p>
+            <p className="text-danger">{errors.confirmPassword.message}</p>
           )}
         </label>
       </div>
@@ -435,13 +435,13 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 닉네임 입력 */}
       <div className="text-sm">
         <label htmlFor="nickname">
-          <p className="text-[#6B6E78]">닉네임</p>
-          <div className="flex items-center gap-[0.5rem]">
+          <p className="text-disabled-dark">닉네임</p>
+          <div className="flex items-center gap-2">
             <div
-              className={`flex-grow flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211] ${
-                nickNameAlreadyExist && 'border-[#DC3545]'
+              className={`flex-grow flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme ${
+                nickNameAlreadyExist && 'border-danger'
               }
-              ${nickNameCheck && 'bg-[#F6F6F6] text-[#6B6E78]'}`}
+              ${nickNameCheck && 'bg-[#F6F6F6] text-disabled-dark'}`}
             >
               <input
                 type="text"
@@ -459,10 +459,10 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             <button
               type="button"
               onClick={() => handleCheckNickName()}
-              className={`px-[1.5rem] py-[1.3125rem] rounded-xl ${
+              className={`px-6 py-5 outline-none rounded-xl ${
                 nickName && !errors.nickname
-                  ? 'bg-[#FCA211] text-white cursor-pointer'
-                  : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+                  ? 'bg-theme text-white cursor-pointer'
+                  : 'bg-disabled text-disabled-dark cursor-not-allowed'
               }`}
               disabled={!nickName}
             >
@@ -470,10 +470,10 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </button>
           </div>
           {errors.nickname && (
-            <p className="text-[#DC3545]">{errors.nickname.message}</p>
+            <p className="text-danger">{errors.nickname.message}</p>
           )}
           {nickNameAlreadyExist && (
-            <p className="text-[#DC3545]">이미 사용중인 닉네임입니다.</p>
+            <p className="text-danger">이미 사용중인 닉네임입니다.</p>
           )}
         </label>
       </div>
@@ -481,15 +481,15 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 전화번호 입력 */}
       <div className="text-sm">
         <label htmlFor="phoneNumber">
-          <p className="text-[#6B6E78]">휴대폰번호</p>
-          <div className="flex gap-[0.5rem]">
-            <select className=" border rounded-xl px-6 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <p className="text-disabled-dark">휴대폰번호</p>
+          <div className="flex gap-2">
+            <select className=" border outline-none rounded-xl px-6 py-5 focus-within:ring-1 focus-within:ring-theme">
               <option>+82</option>
               <option>+81</option>
             </select>
             <div
-              className={`flex w-full items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]
-            ${phoneNumberCheck && 'bg-[#F6F6F6] text-[#6B6E78]'}`}
+              className={`flex w-full items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme
+            ${phoneNumberCheck && 'bg-[#F6F6F6] text-disabled-dark'}`}
             >
               <input
                 type="text"
@@ -507,7 +507,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
         </label>
         {!phoneNumberCheck && authNumber && (
           <>
-            <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] mt-[0.5rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+            <div className="flex items-center border rounded-xl px-4 py-5 mt-2 focus-within:ring-1 focus-within:ring-theme">
               <input
                 type="text"
                 id="authNumber"
@@ -515,15 +515,15 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
                 className="w-full focus:outline-none"
                 {...register('authNumber')}
               />
-              <div className="text-[#FCA211]">
+              <div className="text-theme">
                 <p>{formatTime(timeLeft)}</p>
               </div>
             </div>
-            <div className="mt-[0.5rem] flex gap-[0.25rem] justify-end">
+            <div className="mt-2 flex gap-1 justify-end">
               <button
                 type="button"
                 onClick={() => handleReCheckPhoneNumber()}
-                className="px-[1.5rem] py-[1.3125rem] rounded-xl border border-[#FCA211] text-[#FCA211]"
+                className="px-[1.5rem] py-5 rounded-xl border border-theme text-theme"
                 disabled={!phoneNumber}
               >
                 인증번호 재전송
@@ -532,10 +532,10 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
               <button
                 type="button"
                 onClick={() => handleSendAuthNumber()}
-                className={`px-[1.5rem] py-[1.3125rem] rounded-xl ${
+                className={`px-6 py-5 rounded-xl ${
                   phoneNumber && !errors.phoneNumber
-                    ? 'bg-[#FCA211] text-white cursor-pointer'
-                    : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+                    ? 'bg-theme text-white cursor-pointer'
+                    : 'bg-disabled text-disabled-dark cursor-not-allowed'
                 }`}
                 disabled={!phoneNumber}
               >
@@ -547,7 +547,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
         {/* todo 최종전에 삭제 */}
         <button
           type="button"
-          className="px-[1.5rem] py-[1.3125rem] rounded-xl bg-[#FCA211] text-white cursor-pointer"
+          className="px-6 py-5 outline-none rounded-xl bg-theme text-white cursor-pointer"
           onClick={() => {
             setPhoneNumberCheck(true)
             setAuthNumber(true)
@@ -557,14 +557,14 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           돈내기방지용 인증완료 버튼
         </button>
         {!authNumber && (
-          <div className="mt-[0.5rem] flex justify-end">
+          <div className="mt-2 flex justify-end">
             <button
               type="button"
               onClick={() => handleCheckPhoneNumber()}
-              className={`px-[1.5rem] py-[1.3125rem] rounded-xl ${
+              className={`px-6 py-5 rounded-xl ${
                 phoneNumber && !errors.phoneNumber
-                  ? 'bg-[#FCA211] text-white cursor-pointer'
-                  : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+                  ? 'bg-theme text-white cursor-pointer'
+                  : 'bg-disabled text-disabled-dark cursor-not-allowed'
               }`}
               disabled={!phoneNumber || !!errors.phoneNumber}
             >
@@ -577,8 +577,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       {/* 생년월일 입력 */}
       <div className="text-sm">
         <label htmlFor="birthYear">
-          <p className="text-[#6B6E78]">생년월일</p>
-          <div className="flex items-center border rounded-xl px-4 py-[1.3125rem] focus-within:ring-1 focus-within:ring-[#FCA211]">
+          <p className="text-disabled-dark">생년월일</p>
+          <div className="flex items-center border rounded-xl px-4 py-5 focus-within:ring-1 focus-within:ring-theme">
             <input
               type="date"
               id="birthYear"
@@ -589,7 +589,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             />
           </div>
           {errors.birthYear && (
-            <p className="text-[#DC3545]">{errors.birthYear.message}</p>
+            <p className="text-danger">{errors.birthYear.message}</p>
           )}
         </label>
       </div>
@@ -597,10 +597,10 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       <button
         type="button"
         onClick={() => changeViewStep(SignUpStepType.step3)}
-        className={`py-[1.1875rem] w-full mt-3 rounded-xl ${
+        className={`py-5 outline-none w-full mt-3 rounded-xl ${
           isNextStepEnabled
-            ? 'bg-[#FCA211] text-white cursor-pointer'
-            : 'bg-[#E5E5ED] text-[#6B6E78] cursor-not-allowed'
+            ? 'bg-theme text-white cursor-pointer'
+            : 'bg-disabled text-disabled-dark cursor-not-allowed'
         }`}
         disabled={!isNextStepEnabled}
       >

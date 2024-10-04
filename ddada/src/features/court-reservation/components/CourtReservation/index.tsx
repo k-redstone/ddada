@@ -96,7 +96,7 @@ export default function CoatReservation() {
     setSelectedDate(date)
   }
   return (
-    <div className="flex justify-center items-center">
+    <div className="pb-20 flex justify-center items-center">
       <div className=" px-2">
         <div className="flex flex-col gap-3 py-4">
           <div className="flex justify-center">

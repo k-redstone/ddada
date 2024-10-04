@@ -8,7 +8,7 @@ import TimerIcon from '@/static/imgs/racketRecommned/TimerIcon.svg'
 
 export default function RacketPage() {
   return (
-    <div className="relative w-full h-[calc(100vh-5.125rem)]">
+    <div className="relative w-full h-[calc(100vh-5rem)]">
       <Image
         className="w-full h-full"
         src={MainBackgroundImg}
@@ -29,7 +29,7 @@ export default function RacketPage() {
             <span className="text-theme text-sm">2분</span>
           </div>
           <Link
-            className="border border-theme text-theme px-4 py-2 text-center rounded hover:text-white hover:bg-theme"
+            className="border border-theme text-theme px-4 py-4 transition-colors duration-200 ease-in-out text-center rounded hover:text-white hover:bg-theme"
             href="/racket/recommend"
           >
             시작
