@@ -126,8 +126,10 @@ export default function MatchTeamSelectList({
         disabled={isTeamA || isTeamB || isManager || userRole === 'PLAYER'}
       >
         <TeamSelectBtn
-          isDisabled={isTeamA || isTeamB || userRole === 'PLAYER'}
-          // isJoined={isJoinTeamA}
+          isDisabled={
+            isTeamA || isTeamB || userRole === 'PLAYER' || managerLength === 1
+          }
+          isJoined={isManager}
           isClicked={clickedTeam === 3 || isManager}
         >
           <span className="font-bold">매니저</span>
