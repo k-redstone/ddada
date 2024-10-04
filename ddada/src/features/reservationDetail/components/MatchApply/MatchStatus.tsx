@@ -25,6 +25,9 @@ export default function MatchStatus({
     case 'FINISHED':
       textJsx = <p className="font-bold">이미 종료된 경기에요 🙏</p>
       break
+    case 'PLAYING':
+      textJsx = <p className="font-bold">이미 진행중인 경기에요🙏</p>
+      break
 
     default:
       textJsx = (
@@ -49,9 +52,3 @@ export default function MatchStatus({
     </div>
   )
 }
-
-// CREATED("모집중"),
-// RESERVED("예약됨"), ("사용자입장에서는 전부모인경우 모집완료")
-// PLAYING("진행중"),
-// FINISHED("종료됨"),
-// CANCELED("취소됨");
