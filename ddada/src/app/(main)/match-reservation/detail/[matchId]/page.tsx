@@ -14,6 +14,7 @@ import MatchShortInfo from '@/features/reservationDetail/components/MatchShortIn
 import RefundPolicyInfo from '@/features/reservationDetail/components/RefundPolicyInfo/index.tsx'
 import { MatchReservationDetailProvider } from '@/features/reservationDetail/providers/index.tsx'
 import { useUserRole } from '@/hooks/queries/user.ts'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
 export default function MatchReservationDetailPage({
   params,
@@ -37,8 +38,8 @@ export default function MatchReservationDetailPage({
 
   if (!isSuccess || !isUserRole || userRole?.memberType === 'GYM_ADMIN') {
     return (
-      <div>
-        <p>asdf</p>
+      <div className="flex justify-center items-center">
+        <LoadingSpinner className="animate-spin" />
       </div>
     )
   }

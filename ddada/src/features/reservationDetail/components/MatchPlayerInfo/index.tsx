@@ -1,14 +1,13 @@
 'use client'
 
+import UserTierWithIcon from '@/components/UserTierWithIcon/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
-import BronzeIcon from '@/static/imgs/manager/BronzeIcon.svg'
 
 export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()
   const team1Data = matchDetailData?.team1
   const team2Data = matchDetailData?.team2
-  console.log(matchDetailData)
 
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
@@ -39,10 +38,7 @@ export default function MatchPlayerInfo() {
                     [A1] {team1Data.player1.nickname}
                   </span>
                 </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
+                <UserTierWithIcon rating={team1Data.player1.rating} />
               </div>
             </div>
           ) : (
@@ -61,10 +57,7 @@ export default function MatchPlayerInfo() {
                     [A2] {team1Data.player2.nickname}
                   </span>
                 </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
+                <UserTierWithIcon rating={team1Data.player2.rating} />
               </div>
             </div>
           ) : (
@@ -85,10 +78,7 @@ export default function MatchPlayerInfo() {
                     [A2] {team2Data.player1.nickname}
                   </span>
                 </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
+                <UserTierWithIcon rating={team2Data.player1.rating} />
               </div>
               <GameUserInfo src={team2Data.player1.image} />
             </div>
@@ -106,10 +96,7 @@ export default function MatchPlayerInfo() {
                     [A2] {team2Data.player2.nickname}
                   </span>
                 </p>
-                <p className="flex gap-x-1 items-center">
-                  <BronzeIcon />
-                  <span>아마추어</span>
-                </p>
+                <UserTierWithIcon rating={team2Data.player2.rating} />
               </div>
               <GameUserInfo src={team2Data.player2.image} />
             </div>

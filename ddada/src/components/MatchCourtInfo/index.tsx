@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { createContext, useContext } from 'react'
 
 import { CourtType } from '@/features/manager/types/MatchDataType.ts'
@@ -51,9 +52,10 @@ function TitleWithUnderline() {
 }
 
 function CourtImage() {
+  const matchDetailData = useMatchDetailContext()
   return (
-    <div className="flex flex-col gap-y-2 h-[12.5rem] border border-black">
-      <p>이미지 들어감</p>
+    <div className="flex flex-col gap-y-2 h-[12.5rem] relative">
+      <Image alt="court banner" src={matchDetailData.court.image} fill />
     </div>
   )
 }

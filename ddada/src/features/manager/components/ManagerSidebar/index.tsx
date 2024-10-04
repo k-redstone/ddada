@@ -76,7 +76,7 @@ export default function ManagerSidebar() {
         </label>
       </div>
       <div className="flex flex-col">
-        <div className="flex text-sm w-ful">
+        <div className="flex text-sm w-full">
           <span
             className={`py-3 text-center flex-1 shrink-0 cursor-pointer ${clickedCategory === 1 && `font-bold text-theme border-b-2 border-theme`}`}
             onClick={() => setClickedCategory(1)}
