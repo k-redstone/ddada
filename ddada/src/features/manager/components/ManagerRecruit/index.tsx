@@ -21,18 +21,18 @@ export default function ManagerRecruitPage() {
   return (
     <div className="w-full">
       <button
-        className="fixed bottom-20 py-3 px-12 bg-theme rounded-full text-theme-light text-xl left-1/2 -translate-x-1/2 -translate-y-1/2
-        hover:animate-pulse transition-colors duration-300 ease-in-out"
+        className="fixed bottom-10 z-50 py-3 px-12 bg-theme rounded-full text-theme-light text-xl left-1/2 -translate-x-1/2 -translate-y-1/2
+        hover:animate-pulse"
         type="button"
         onClick={recruitForm}
       >
         매니저 신청하기
       </button>
-      <div className="w-full h-[500px] relative flex justify-center items-center">
+      <div className="w-full h-[31.25rem] relative flex justify-center items-center">
         <Image
           src={RecruitMainLogo}
           alt="landing page main logo"
-          className="absolute z-10 w-full"
+          className="absolute w-full"
           fill
           style={{ objectFit: 'cover' }}
           priority
@@ -54,8 +54,8 @@ export default function ManagerRecruitPage() {
           <p>DDADA 매니저하고</p>
           <p>혜택 받자</p>
         </div>
-        <div className="flex gap-[4.5rem]">
-          <div className="flex flex-col gap-3 justify-center items-center w-[400px] h-[400px] shadow-xl rounded-3xl">
+        <div className="w-full max-w-[75rem] flex gap-20">
+          <div className="aspect-square flex-1 flex flex-col gap-2 py-4 justify-center items-center shadow-xl rounded-3xl">
             <div>
               <Image src={Benefits} alt="복리후생" />
             </div>
@@ -66,7 +66,7 @@ export default function ManagerRecruitPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 justify-center items-center w-[400px] h-[400px] shadow-xl rounded-3xl">
+          <div className="aspect-square flex-1 flex flex-col gap-2 py-4 justify-center items-center shadow-xl rounded-3xl">
             <div>
               <Image src={FreeCoupon} alt="매치 무료쿠폰" />
             </div>
@@ -77,7 +77,7 @@ export default function ManagerRecruitPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 justify-center items-center w-[400px] h-[400px] shadow-xl rounded-3xl">
+          <div className="aspect-square flex-1 flex flex-col gap-2 py-4 justify-center items-center shadow-xl rounded-3xl">
             <div>
               <Image src={Money} alt="매치수당" />
             </div>

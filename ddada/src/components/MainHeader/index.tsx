@@ -84,7 +84,7 @@ export default function MainHeader() {
       </div>
 
       {/* 오른쪽 */}
-      <div className="flex gap-x-2 items-center text-xs">
+      <div className="flex gap-x-4 items-center text-xs">
         {accessToken && data?.memberType === 'PLAYER' && (
           <Link
             className="border border-disabled-dark rounded-full py-3 px-6"
