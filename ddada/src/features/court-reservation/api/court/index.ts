@@ -36,4 +36,11 @@ const postMatchReservation = async (data: {
   return res
 }
 
-export { getCourtList, postMatchReservation }
+const getPlayerBookings = async (date: string, time: string) => {
+  const res = await privateAPI.get('/matches/player/bookings', {
+    params: { date, time },
+  })
+  return res
+}
+
+export { getCourtList, postMatchReservation, getPlayerBookings }

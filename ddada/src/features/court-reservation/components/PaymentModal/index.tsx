@@ -8,7 +8,10 @@ import Script from 'next/script'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { postMatchReservation } from '@/features/court-reservation/api/court/index.ts'
+import {
+  getPlayerBookings,
+  postMatchReservation,
+} from '@/features/court-reservation/api/court/index.ts'
 import {
   KR_DAY_OF_WEEK,
   MATCH_INFO,
@@ -103,9 +106,14 @@ export default function PaymentModal({
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
       // todo 여기에 결제 전에 예약을 해보고 만약 동시간대 예약이면 백에서 에러메세지 내뱉을거니 그거에 따라 toast.error로 메세지 띄우자
-      matchReservation()
-      handlePortOne()
-      closeModal()
+      try {
+        await getPlayerBookings(date, reservationTime)
+        handlePortOne()
+        closeModal()
+      } catch {
+        toast.error('이미 동시간대 예약된 매치가 있습니다.')
+        closeModal()
+      }
     }
   }
 
