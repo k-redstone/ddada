@@ -2,12 +2,15 @@ import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 import { addUserToMatch } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
+import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
+import { UserRole } from '@/types/user/index.ts'
 
 interface MatchRequestButtonProps {
   matchId: number
   clickedTeam: number
   isJoin: boolean
+  userRole: UserRole | null
   handleModalOpen: () => void
 }
 
@@ -15,10 +18,20 @@ export default function MatchRequestButton({
   clickedTeam,
   matchId,
   isJoin,
+  userRole,
   handleModalOpen,
 }: MatchRequestButtonProps) {
   const queryClient = useQueryClient()
+  const matchDetailData = useMatchDetailContext()
   const { invalidateMatchReservationList } = useInvalidateMatchReservations()
+  const teamALength = [
+    matchDetailData.team1.player1,
+    matchDetailData.team1.player2,
+  ].filter((player) => player !== null).length
+  const teamBLength = [
+    matchDetailData.team2.player1,
+    matchDetailData.team2.player2,
+  ].filter((player) => player !== null).length
 
   const handleMatchJoin = async () => {
     if (clickedTeam === -1) {
@@ -39,6 +52,23 @@ export default function MatchRequestButton({
       toast.error('매치 예약 중 오류가 발생했습니다.')
     }
   }
+  if (
+    matchDetailData.status === 'PLAYING' ||
+    matchDetailData.status === 'FINISHED' ||
+    matchDetailData.status === 'CANCELED' ||
+    userRole === undefined ||
+    userRole === null
+  ) {
+    return (
+      <button
+        type="button"
+        className="border border-disabled  rounded-[.25rem] py-2 px-1 box-border bg-base-50"
+        disabled
+      >
+        <span className="text-xs text-disabled-dark">신청 마감</span>
+      </button>
+    )
+  }
 
   if (isJoin) {
     return (
@@ -51,6 +81,18 @@ export default function MatchRequestButton({
       </button>
     )
   }
+  if (teamALength + teamBLength === 4) {
+    return (
+      <button
+        type="button"
+        className="border border-disabled  rounded-[.25rem] py-2 px-1 box-border bg-base-50"
+        disabled
+      >
+        <span className="text-xs text-disabled-dark">신청 마감</span>
+      </button>
+    )
+  }
+
   return (
     <button
       type="button"

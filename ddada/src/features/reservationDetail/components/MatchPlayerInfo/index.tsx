@@ -8,6 +8,7 @@ export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()
   const team1Data = matchDetailData?.team1
   const team2Data = matchDetailData?.team2
+  console.log(matchDetailData)
 
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
@@ -28,20 +29,28 @@ export default function MatchPlayerInfo() {
         {/* A팀 */}
         <div className="flex flex-col gap-y-6">
           {/* player A1 */}
-          <div className="flex gap-x-3">
-            <GameUserInfo src={team1Data.player1.image} />
-            <div className="flex flex-col gap-y-1 grow">
-              <p className="flex gap-x-1 items-center">
-                <span className="font-bold text-disabled-dark">
-                  [A1] {team1Data.player1.nickname}
-                </span>
-              </p>
-              <p className="flex gap-x-1 items-center">
-                <BronzeIcon />
-                <span>아마추어</span>
-              </p>
+
+          {team1Data.player1 ? (
+            <div className="flex gap-x-3">
+              <GameUserInfo src={team1Data.player1.image} />
+              <div className="flex flex-col gap-y-1 grow">
+                <p className="flex gap-x-1 items-center text-disabled-dark">
+                  <span className="font-bold">
+                    [A1] {team1Data.player1.nickname}
+                  </span>
+                </p>
+                <p className="flex gap-x-1 items-center">
+                  <BronzeIcon />
+                  <span>아마추어</span>
+                </p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <p className="text-sm text-disabled-dark font-bold text-center">
+              매칭중...
+            </p>
+          )}
+
           {/* player A2 */}
           {team1Data.player2 ? (
             <div className="flex gap-x-3">

@@ -2,11 +2,15 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import MatchCourtInfo from '@/components/MatchCourtInfo/index.tsx'
 import MatchRule from '@/components/MatchRule/index.tsx'
-import { changeMatchStatus } from '@/features/manager/api/managerAPI.tsx'
+import {
+  changeMatchStatus,
+  fetchManagerPk,
+} from '@/features/manager/api/managerAPI.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
 import { fetchMatchDetail } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
@@ -15,6 +19,7 @@ import { MatchReservationDetailProvider } from '@/features/reservationDetail/pro
 export default function ScoreBoardPage() {
   const queryClient = useQueryClient()
   const router = useRouter()
+  const [isVisible, setVisible] = useState<boolean>(true)
   const params = useParams() as { gameId: string }
 
   const { data, isSuccess } = useQuery({
@@ -35,18 +40,43 @@ export default function ScoreBoardPage() {
       toast.error('해당 경기는 아직 시작할 수 없어요')
       return
     }
-    await changeMatchStatus(data.id, 'PLAYING').then(() => {
-      queryClient.invalidateQueries({ queryKey: ['matchDetail', data.id] })
-      queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+    await changeMatchStatus(data.id, 'PLAYING').then(async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['matchDetail', data.id],
+      })
+      await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
       toast.success('경기가 시작되었습니다.')
       router.push(`/manager/match/${data.id}`)
     })
   }
 
+  useEffect(() => {
+    fetchManagerPk().then((res) => {
+      if (data?.manager?.id !== res?.id) {
+        setVisible(false)
+      }
+    })
+    if (
+      data?.status === 'PLAYING' ||
+      data?.status === 'FINISHED' ||
+      data?.status === 'CANCELED'
+    ) {
+      setVisible(false)
+    }
+  }, [data?.manager?.id, data?.status])
+
   if (!isSuccess) {
     return (
       <div>
         <p>임시</p>
+      </div>
+    )
+  }
+
+  if (!isVisible) {
+    return (
+      <div className="h-full flex justify-center items-center">
+        <p className="text-2xl font-bold">잘못된 접근입니다.</p>
       </div>
     )
   }
@@ -74,6 +104,7 @@ export default function ScoreBoardPage() {
           </MatchCourtInfo>
         </MatchReservationDetailProvider>
 
+        {/* todo 일단 바로 실행할 수 있게 만들어놓음 */}
         {true ? (
           <div>
             <div className="bg-[#471801] flex justify-center items-center py-3">

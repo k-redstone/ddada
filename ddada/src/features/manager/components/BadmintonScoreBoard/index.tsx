@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 
 import {
@@ -19,6 +20,7 @@ interface BadmintonScoreBoardProps {
 export default function BadmintonScoreBoard({
   data,
 }: BadmintonScoreBoardProps) {
+  const router = useRouter()
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
@@ -38,10 +40,12 @@ export default function BadmintonScoreBoard({
     }
     console.log(payload)
     await storeMatchResult(badmintonInstance.id as number, payload)
-    await changeMatchStatus(badmintonInstance.id as number, 'PLAYING')
+    await changeMatchStatus(badmintonInstance.id as number, 'FINISHED')
+    router.push(`/manager/match/${data.id}`)
   }
 
   useLayoutEffect(() => {
+    console.log(data)
     if (data.status === 'PLAYING') {
       const initInstance = new BadmintonScoreboardInstance(
         data.id,
