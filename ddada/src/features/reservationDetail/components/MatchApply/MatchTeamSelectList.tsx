@@ -30,7 +30,6 @@ export default function MatchTeamSelectList({
   const managerLength = [data.manager].filter(
     (player) => player !== null,
   ).length
-
   if (userRole === 'PLAYER') {
     return (
       <div className="p-1 flex gap-x-2">
@@ -123,11 +122,21 @@ export default function MatchTeamSelectList({
         onClick={() => {
           setClickedTeam(3)
         }}
-        disabled={isTeamA || isTeamB || isManager || userRole === 'PLAYER'}
+        disabled={
+          isTeamA ||
+          isTeamB ||
+          isManager ||
+          userRole === 'PLAYER' ||
+          userRole === undefined
+        }
       >
         <TeamSelectBtn
           isDisabled={
-            isTeamA || isTeamB || userRole === 'PLAYER' || managerLength === 1
+            isTeamA ||
+            isTeamB ||
+            userRole === 'PLAYER' ||
+            managerLength === 1 ||
+            userRole === undefined
           }
           isJoined={isManager}
           isClicked={clickedTeam === 3 || isManager}

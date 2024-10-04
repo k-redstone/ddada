@@ -4,11 +4,13 @@ import { toast } from 'react-hot-toast'
 import { addUserToMatch } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
 import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
+import { UserRole } from '@/types/user/index.ts'
 
 interface MatchRequestButtonProps {
   matchId: number
   clickedTeam: number
   isJoin: boolean
+  userRole: UserRole | null
   handleModalOpen: () => void
 }
 
@@ -16,6 +18,7 @@ export default function MatchRequestButton({
   clickedTeam,
   matchId,
   isJoin,
+  userRole,
   handleModalOpen,
 }: MatchRequestButtonProps) {
   const queryClient = useQueryClient()
@@ -52,7 +55,9 @@ export default function MatchRequestButton({
   if (
     matchDetailData.status === 'PLAYING' ||
     matchDetailData.status === 'FINISHED' ||
-    matchDetailData.status === 'CANCELED'
+    matchDetailData.status === 'CANCELED' ||
+    userRole === undefined ||
+    userRole === null
   ) {
     return (
       <button

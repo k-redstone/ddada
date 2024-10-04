@@ -120,6 +120,7 @@ export default function MatchApply() {
             isJoin={isTeamA || isTeamB}
             matchId={matchDetailData.id}
             clickedTeam={clickedTeam}
+            userRole={userRole}
             handleModalOpen={handleModalOpen}
           />
         )}
