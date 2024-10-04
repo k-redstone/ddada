@@ -42,7 +42,7 @@ export default function ScoreBoardPage() {
     }
     await changeMatchStatus(data.id, 'PLAYING').then(async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['matchDetail', data.id],
+        queryKey: ['matchDetail', `${data.id}`],
       })
       await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
       toast.success('경기가 시작되었습니다.')
