@@ -103,8 +103,11 @@ export default function MatchApply() {
         </div>
 
         {/* 결제금액 */}
-
-        <MatchPaymentInfo isMatchReserved={!isTeamA && !isTeamB} />
+        {matchDetailData.status === 'RESERVED' ||
+          matchDetailData.status === 'CREATED' ||
+          (!isManager && (
+            <MatchPaymentInfo isMatchReserved={!isTeamA && !isTeamB} />
+          ))}
 
         {/* 신청버튼 */}
         {userRole?.memberType === 'MANAGER' ? (
@@ -117,6 +120,7 @@ export default function MatchApply() {
             isJoin={isTeamA || isTeamB}
             matchId={matchDetailData.id}
             clickedTeam={clickedTeam}
+            userRole={userRole}
             handleModalOpen={handleModalOpen}
           />
         )}

@@ -16,6 +16,8 @@ export default function MainHeader() {
   const pathname = usePathname()
   const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
 
+  console.log(currentPath)
+
   useEffect(() => {
     setCurrentPath(pathname.split('/')[1])
   }, [pathname])
@@ -76,9 +78,17 @@ export default function MainHeader() {
         {accessToken && data?.memberType === 'MANAGER' && (
           <Link
             href="/manager"
-            className={`${currentPath === 'mypage' && 'text-theme'}`}
+            className={`${currentPath === 'manager' && 'text-theme'}`}
           >
             매니저 페이지
+          </Link>
+        )}
+        {accessToken && data?.memberType === 'GYM_ADMIN' && (
+          <Link
+            href="/dashboard"
+            className={`${currentPath === 'dashboard' && 'text-theme'}`}
+          >
+            체육관 페이지
           </Link>
         )}
       </div>

@@ -21,6 +21,7 @@ export default function MatchPlayerInfo({ data }: MatchPlayerInfoProps) {
             <MatchTeamInfo
               key={player ? player.id : data.id + idx}
               team="A"
+              idx={idx}
               player={player}
             />
           ))}
@@ -33,6 +34,7 @@ export default function MatchPlayerInfo({ data }: MatchPlayerInfoProps) {
             <MatchTeamInfo
               key={player ? player.id : data.id + idx}
               team="B"
+              idx={idx}
               player={player}
             />
           ))}

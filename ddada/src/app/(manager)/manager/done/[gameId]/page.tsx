@@ -2,7 +2,9 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
+import { fetchManagerPk } from '@/features/manager/api/managerAPI.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import MatchCourtShortInfo from '@/features/manager/components/MatchCourtShortInfo/index.tsx'
 import MatchPlayerInfo from '@/features/manager/components/MatchPlayerInfo/index.tsx'
@@ -13,20 +15,37 @@ import RedCourtLeft from '@/static/imgs/manager/RedCourtLeft.svg'
 
 export default function ScoreBoardPage() {
   const params = useParams() as { gameId: string }
-
+  const [isVisible, setVisible] = useState<boolean>(true)
   const { data, isSuccess } = useQuery({
     queryKey: ['matchDetail', params.gameId],
     queryFn: () => fetchMatchDetail(params.gameId),
     enabled: !!params.gameId,
   })
 
-  if (!isSuccess) {
+  useEffect(() => {
+    setVisible(true)
+    fetchManagerPk().then((res) => {
+      if (data?.manager?.id !== res?.id) {
+        setVisible(false)
+      }
+    })
+    if (
+      data?.status === 'PLAYING' ||
+      data?.status === 'CREATED' ||
+      data?.status === 'RESERVED'
+    ) {
+      setVisible(false)
+    }
+  }, [data?.manager?.id, data?.status])
+
+  if (!isVisible || !isSuccess) {
     return (
-      <div>
-        <p>임시</p>
+      <div className="h-full flex justify-center items-center">
+        <p className="text-2xl font-bold">잘못된 접근입니다.</p>
       </div>
     )
   }
+
   return (
     <div className="bg-[#E7E7E7]">
       <MatchCourtShortInfo data={data} />
@@ -45,14 +64,18 @@ export default function ScoreBoardPage() {
                   <p className="text-4xl">팀 A</p>
                   <p className="font-bold text-6xl">0</p>
                 </div>
-                <RedCourtLeft />
+                <div className="h-[25rem] grow">
+                  <RedCourtLeft className="w-full h-full" />
+                </div>
               </div>
               <div className="relative">
                 <div className="text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                   <p className="text-4xl">팀 B</p>
                   <p className="font-bold text-6xl">0</p>
                 </div>
-                <BlueCourtRight />
+                <div className="h-[25rem] grow">
+                  <BlueCourtRight className="w-full h-full" />
+                </div>
               </div>
             </div>
           </div>
