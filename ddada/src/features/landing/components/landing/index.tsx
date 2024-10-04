@@ -86,11 +86,11 @@ export default function Landing() {
           </p>
         </div>
         <div className="flex justify-center">
-          <Link href="/login">
+          <button type="button" onClick={handleGymPartnership}>
             <div className="text-theme text-xl py-4 px-12 border border-theme hover:bg-theme hover:text-theme-light transition-colors duration-300 ease-in-out">
               체육관 제휴맺기
             </div>
-          </Link>
+          </button>
         </div>
         <div>
           <div className="w-full max-w-[75rem] flex gap-20">

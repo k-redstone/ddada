@@ -72,12 +72,7 @@ export default function Layout({
             <div className="flex flex-col py-6 gap-y-2 justify-center items-center">
               <div className="w-[5rem] h-[5rem] justify-center items-center rounded-full overflow-hidden relative">
                 {profilePreSignedUrl ? (
-                  <Image
-                    src={profilePreSignedUrl}
-                    alt="profile"
-                    width={80}
-                    height={80}
-                  />
+                  <Image src={profilePreSignedUrl} alt="profile" fill />
                 ) : (
                   <Logo />
                 )}
