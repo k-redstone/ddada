@@ -175,7 +175,7 @@ export default function MatchReservation() {
   }
 
   return (
-    <div className="flex justify-center items-center px-2  gap-2">
+    <div className="flex justify-center items-center px-2 pb-20 gap-2">
       <div className="flex flex-col gap-3 py-4">
         <div className="flex justify-center">
           <Image

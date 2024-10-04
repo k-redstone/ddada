@@ -34,7 +34,7 @@ export default function ResultLoading() {
   // 3초 후 이동 & 결과 post 로직 만들어야함
 
   return (
-    <div className="flex flex-col gap-y-[5.25rem] max-w-[34rem]">
+    <div className="flex flex-col gap-y-20 max-w-[34rem]">
       <div className="flex">
         <button type="button" onClick={() => router.back()}>
           <p className="flex gap-x-2 items-center text-sm  text-disabled-dark">
@@ -43,7 +43,7 @@ export default function ResultLoading() {
           </p>
         </button>
       </div>
-      <div className="relative py-[4.5rem] rounded-xl">
+      <div className="relative rounded-xl">
         <p className="absolute flex flex-col gap-y-2 justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
           <span className="text-xs">내 선호 라켓유형은?</span>
           {/* 여기에 props */}
@@ -72,13 +72,18 @@ export default function ResultLoading() {
         </span>
       </div>
 
-      <div className="bg-disabled rounded-xl px-6 py-3 ">
+      <div className="bg-base-50 rounded-xl px-6 py-3 ">
         <ul className=" text-sm list-disc list-inside flex flex-col gap-y-2">
           <li className="">
             유형에 맞는 라켓이 없을 시 가장 유사한 라켓을 추천해드려요
           </li>
           <li>
-            여기는 유의사항이 추가될 것 같은데 일단 더미텍스트로 넣어놓으세요
+            추천 결과는 최신 데이터를 기반으로 하고 있으나, 시간에 따라 상품
+            정보가 변경될 수 있어요
+          </li>
+          <li>
+            라켓의 실제 사용감은 개인의 체형, 기호에 따라 다를 수 있으니, 구매
+            전 실제 제품을 방문체험해보시는 것을 권장해요
           </li>
         </ul>
       </div>

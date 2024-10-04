@@ -36,7 +36,7 @@ export default function PlayStyle() {
         <NoDataIcon />
         <div className="flex flex-col gap-6 text-disabled-dark">
           <p className="text-6xl font-bold text-center">앗!</p>
-          <div className="flex flex-col justify-center items-center text-xs">
+          <div className="flex flex-col justify-center items-center text-sm">
             <p>아직 플레이스타일이 생성되지 않았어요.</p>
             <p>
               매치 수가 부족하거나, 일관적인 플레이가 없는 것이 원인일 수
