@@ -20,6 +20,7 @@ export default function ScoreBoardPage() {
   })
 
   useEffect(() => {
+    setVisible(true)
     fetchManagerPk().then((res) => {
       if (data?.manager?.id !== res?.id) {
         setVisible(false)
@@ -33,18 +34,9 @@ export default function ScoreBoardPage() {
     ) {
       setVisible(false)
     }
-    setVisible(true)
   }, [data?.manager?.id, data?.status])
 
-  if (!isSuccess) {
-    return (
-      <div>
-        <p>임시</p>
-      </div>
-    )
-  }
-
-  if (!isVisible) {
+  if (!isVisible || !isSuccess) {
     return (
       <div className="h-full flex justify-center items-center">
         <p className="text-2xl font-bold">잘못된 접근입니다.</p>

@@ -38,7 +38,9 @@ export default function BadmintonCourt() {
             {badmintonInstance.getCurMatchScoreTeam1()}
           </p>
         </div>
-        <RedCourtLeft />
+        <div className="h-[25rem] grow">
+          <RedCourtLeft className="w-full h-full" />
+        </div>
       </div>
       <div
         className="relative"
@@ -51,7 +53,9 @@ export default function BadmintonCourt() {
             {badmintonInstance.getCurMatchScoreTeam2()}
           </p>
         </div>
-        <BlueCourtRight />
+        <div className="h-[25rem] grow">
+          <BlueCourtRight className="w-full h-full" />
+        </div>
       </div>
       {isModalOpen && (
         <ScoreModal
