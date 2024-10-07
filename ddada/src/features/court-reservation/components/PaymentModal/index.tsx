@@ -150,7 +150,7 @@ export default function PaymentModal({
     <>
       <Script src="https://cdn.portone.io/v2/browser-sdk.js" />
       <div
-        className="fixed z-10 inset-0  overflow-hidden flex justify-center items-center"
+        className="fixed z-10 inset-0 overflow-hidden flex justify-center items-center"
         onClick={closeModal}
         aria-hidden="true"
       >
