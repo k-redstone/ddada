@@ -3,7 +3,7 @@ const EARN_TYPE: { [key: string]: string } = {
   DROP: '드롭',
   CLEAR: '클리어',
   PUSH: '푸시',
-  NET: '네트플레이',
+  HAIRPIN: '헤어핀',
   SERVE: '서브',
 }
 const MISS_TYPE: { [key: string]: string } = {
@@ -26,4 +26,8 @@ const MATCH_TYPE: { [key: string]: string } = {
   MIXED_DOUBLE: '혼합복식',
 }
 
-export { EARN_TYPE, MISS_TYPE, MATCH_STATUS, MATCH_TYPE }
+const SCOREBOARD_SETTING: { [key: string]: number } = {
+  matchScore: 3,
+}
+
+export { EARN_TYPE, MISS_TYPE, MATCH_STATUS, MATCH_TYPE, SCOREBOARD_SETTING }

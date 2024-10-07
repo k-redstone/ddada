@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import ScoreModal from '@/features/manager/components/ScoreModal/index.tsx'
+import { SCOREBOARD_SETTING } from '@/features/manager/constants/matchConstants.ts'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
 import BlueCourtRight from '@/static/imgs/manager/BlueCourtRight.svg'
 import RedCourtLeft from '@/static/imgs/manager/RedCourtLeft.svg'
@@ -18,6 +20,19 @@ export default function BadmintonCourt() {
 
   const handleScore = (team: string) => {
     if (badmintonInstance.winnerTeamNumber) return
+    const teamScore1 = badmintonInstance.getCurMatchScoreTeam1()
+    const teamScore2 = badmintonInstance.getCurMatchScoreTeam2()
+    const scoreDifference = Math.abs(teamScore1 - teamScore2)
+
+    // 세트 종료 분기처리
+    if (
+      scoreDifference >= 2 &&
+      Math.max(teamScore1, teamScore2) >= SCOREBOARD_SETTING.matchScore
+    ) {
+      toast.error('되돌리기 또는 다시하기를 확인해주세요')
+      return
+    }
+
     setselectTeam(team)
     setModalOpen(true)
   }
@@ -39,7 +54,7 @@ export default function BadmintonCourt() {
           </p>
         </div>
         <div className="h-[25rem] grow">
-          <RedCourtLeft className="w-full h-full" />
+          <RedCourtLeft className="w-full h-full cursor-pointer" />
         </div>
       </div>
       <div
@@ -54,7 +69,7 @@ export default function BadmintonCourt() {
           </p>
         </div>
         <div className="h-[25rem] grow">
-          <BlueCourtRight className="w-full h-full" />
+          <BlueCourtRight className="w-full h-full cursor-pointer" />
         </div>
       </div>
       {isModalOpen && (

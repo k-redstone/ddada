@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 
@@ -21,6 +22,7 @@ export default function BadmintonScoreBoard({
   data,
 }: BadmintonScoreBoardProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
@@ -32,20 +34,29 @@ export default function BadmintonScoreBoard({
     }
     const set =
       badmintonInstance.team1SetScore + badmintonInstance.team2SetScore
+    const sets = badmintonInstance.sets.slice(0, set)
+
+    const filteredSet = sets.map((item) => ({
+      ...item,
+      scores: item.scores.filter(
+        (score) => !(score.earnedType === null && score.missedType === null),
+      ),
+    }))
+
     const payload = {
       winnerTeamNumber: badmintonInstance.winnerTeamNumber,
       team1SetScore: badmintonInstance.team1SetScore,
       team2SetScore: badmintonInstance.team2SetScore,
-      sets: badmintonInstance.sets.slice(0, set),
+      sets: filteredSet,
     }
-    console.log(payload)
+    badmintonInstance.finishMatch()
     await storeMatchResult(badmintonInstance.id as number, payload)
     await changeMatchStatus(badmintonInstance.id as number, 'FINISHED')
-    router.push(`/manager/match/${data.id}`)
+    await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+    router.push(`/manager/done/${data.id}`)
   }
 
   useLayoutEffect(() => {
-    console.log(data)
     if (data.status === 'PLAYING') {
       const initInstance = new BadmintonScoreboardInstance(
         data.id,
