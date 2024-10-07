@@ -21,12 +21,12 @@ export type RacketDetailType = {
   weight: string
   material: string
   image: string
-  made: string
+  manufacturer: string
 }
 
 export type RacketShortType = {
   id: number
   name: string
-  made: string
+  manufacturer: string
   image: string
 }
