@@ -70,7 +70,7 @@ export default function ScoreModal({
   }
 
   const handleStoreScore = () => {
-    if (missedType === 'SERVE') {
+    if (missedType === 'SERVE_MISS') {
       handleStoreFaultScore()
     } else {
       handleStoreEarnScore()
@@ -90,12 +90,12 @@ export default function ScoreModal({
   }
 
   const checkCanSave = () => {
-    if (missedType !== 'SERVE') {
+    if (missedType !== 'SERVE_MISS') {
       if (earnedType !== '' && missedUser.length !== 0 && earnedUser !== -1)
         return true
     }
 
-    if (missedType === 'SERVE') {
+    if (missedType === 'SERVE_MISS') {
       if (faultUser !== -1) return true
     }
     return false
@@ -203,7 +203,7 @@ export default function ScoreModal({
           </div>
 
           {/* 폴트인원 */}
-          {missedType === 'SERVE' ? (
+          {missedType === 'SERVE_MISS' ? (
             // 서브 미스 일때
             <div className="py-1 px-2 flex flex-col gap-y-2 rounded-md">
               <p className="font-bold">폴트인원</p>

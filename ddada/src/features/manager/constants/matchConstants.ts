@@ -4,9 +4,10 @@ const EARN_TYPE: { [key: string]: string } = {
   CLEAR: '클리어',
   PUSH: '푸시',
   NET: '네트플레이',
+  SERVE: '서브',
 }
 const MISS_TYPE: { [key: string]: string } = {
-  SERVE: '서브폴트',
+  SERVE_MISS: '서브폴트',
 }
 
 const MATCH_STATUS: { [key: string]: string } = {
