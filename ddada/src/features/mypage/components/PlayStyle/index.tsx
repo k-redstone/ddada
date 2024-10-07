@@ -46,23 +46,24 @@ export default function PlayStyle() {
     )
   }
 
-  if (data.match <= 3) {
-    return (
-      <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
-        <NoDataIcon />
-        <div className="flex flex-col gap-6 text-disabled-dark justify-center">
-          <p className="text-6xl font-bold text-center">앗!</p>
-          <div className="flex flex-col justify-center items-center text-sm">
-            <p>아직 플레이스타일이 생성되지 않았어요.</p>
-            <p>
-              매치 수가 3판 이하이거나, 일관적인 플레이가 없는 것이 원인일 수
-              있어요.
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  // todo 나중에 활성화하기
+  // if (data.match <= 3) {
+  //   return (
+  //     <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
+  //       <NoDataIcon />
+  //       <div className="flex flex-col gap-6 text-disabled-dark justify-center">
+  //         <p className="text-6xl font-bold text-center">앗!</p>
+  //         <div className="flex flex-col justify-center items-center text-sm">
+  //           <p>아직 플레이스타일이 생성되지 않았어요.</p>
+  //           <p>
+  //             매치 수가 3판 이하이거나, 일관적인 플레이가 없는 것이 원인일 수
+  //             있어요.
+  //           </p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <PlayStyleLogoProps userPlayStyle={data.type} />
