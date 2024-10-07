@@ -71,6 +71,7 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
         className={`bg-base-50 rounded-xl flex gap-3 px-6 py-3
         ${ratingChangeColor === 'VICTORY' && 'bg-primary bg-opacity-10'}
         ${ratingChangeColor === 'DEFEAT' && 'bg-danger bg-opacity-10'}
+        ${match.matchStatus === 'PLAYING' && 'bg-purple-400 bg-opacity-20'}
         `}
       >
         <div className="flex flex-col justify-center items center text-xs">
@@ -109,19 +110,20 @@ export default function MyMatchCard({ match }: MyMatchCardProps) {
         </div>
         <div className="flex gap-1 justify-center items-center text-xs">
           {match.matchStatus === 'CREATED' ||
-          match.matchStatus === 'RESERVED' ? (
-            <div>
-              <button
-                type="button"
-                onClick={() => handleModalOpen()}
-                className="py-1 px-3 border border-disabled text-disabled-dark flex justify-center items-center rounded bg-white"
-              >
-                <p>취소</p>
-              </button>
-            </div>
-          ) : (
+            (match.matchStatus === 'RESERVED' && (
+              <div>
+                <button
+                  type="button"
+                  onClick={() => handleModalOpen()}
+                  className="py-1 px-3 border border-disabled text-disabled-dark flex justify-center items-center rounded bg-white"
+                >
+                  <p>취소</p>
+                </button>
+              </div>
+            ))}
+          {match.matchStatus === 'FINISHED' && (
             <Link href={`/mypage/mymatch/${match.matchId}`}>
-              <div className="py-1 px-3 text-disabled-dark flex justify-center items-center bg-theme text-theme-light rounded">
+              <div className="py-1 px-3 flex justify-center items-center bg-theme text-theme-light rounded">
                 상세
               </div>
             </Link>

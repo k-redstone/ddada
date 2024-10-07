@@ -28,7 +28,6 @@ export default function PlayStyle() {
       </div>
     )
   }
-
   if (isError) {
     return (
       <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
@@ -47,16 +46,40 @@ export default function PlayStyle() {
     )
   }
 
+  // todo 나중에 활성화하기
+  // if (data.match <= 3) {
+  //   return (
+  //     <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
+  //       <NoDataIcon />
+  //       <div className="flex flex-col gap-6 text-disabled-dark justify-center">
+  //         <p className="text-6xl font-bold text-center">앗!</p>
+  //         <div className="flex flex-col justify-center items-center text-sm">
+  //           <p>아직 플레이스타일이 생성되지 않았어요.</p>
+  //           <p>
+  //             매치 수가 3판 이하이거나, 일관적인 플레이가 없는 것이 원인일 수
+  //             있어요.
+  //           </p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <PlayStyleLogoProps userPlayStyle="AGGRESSIVE" />
+      <PlayStyleLogoProps userPlayStyle={data.type} />
       <Chart
         type="radar"
         series={[
           {
             // todo 사용자 데이터로 넣기
             name: '플레이어',
-            data: [20, 30, 40, 50, 60],
+            data: [
+              data.rate.strategy,
+              data.rate.score_rate,
+              data.rate.lose_rate,
+              data.rate.skills,
+              data.rate.recovery,
+            ],
           },
         ]}
         height="530px"
@@ -126,7 +149,7 @@ export default function PlayStyle() {
             </div>
 
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.strategy}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -143,7 +166,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.score_rate}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -158,7 +181,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.lose_rate}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -175,7 +198,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.skills}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -191,7 +214,7 @@ export default function PlayStyle() {
               <p className="text-xs text-disabled-dark">있는 지표</p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.recovery}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>

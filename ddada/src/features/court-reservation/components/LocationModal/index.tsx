@@ -52,14 +52,17 @@ export default function LocationModal({
     closeModal()
   }
   return (
-    <>
-      <div
-        className="fixed left-0 top-0 z-10 h-screen w-screen overflow-hidden"
-        onClick={closeModal}
-        aria-hidden="true"
-      />
+    <div
+      className="fixed z-10 inset-0 overflow-hidden flex justify-center items-center"
+      onClick={closeModal}
+      aria-hidden="true"
+    >
       {/* height 수정 필요 */}
-      <div className="flex flex-col text-xs gap-6 fixed top-10 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        aria-hidden="true"
+        className="flex flex-col text-xs gap-6 fixed z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6"
+      >
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-bold">지역 선택</h2>
           <button
@@ -195,6 +198,6 @@ export default function LocationModal({
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
