@@ -1,8 +1,8 @@
 'use client'
 
-// import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
-// import { fetchGymInfo } from '@/features/gym/api/GymAPI.ts'
+import { fetchGymInfo } from '@/features/gym/api/GymAPI.ts'
 import Callcenter from '@/features/gym/components/CallCenter/index.tsx'
 import GymChart from '@/features/gym/components/GymChart/index.tsx'
 import GymIncome from '@/features/gym/components/GymIncome/index.tsx'
@@ -11,21 +11,21 @@ import GymReservedList from '@/features/gym/components/GymReservedList/index.tsx
 import { GymProvider } from '@/features/gym/providers/index.tsx'
 
 export default function GymDashboardPage() {
-  // const { data: gymInfo, isSuccess: isGymInfoSuccess } = useQuery({
-  //   queryKey: ['gyminfo'],
-  //   queryFn: fetchGymInfo,
-  // })
+  const { data: gymInfo, isSuccess: isGymInfoSuccess } = useQuery({
+    queryKey: ['gyminfo'],
+    queryFn: fetchGymInfo,
+  })
 
-  // if (!isGymInfoSuccess) {
-  //   return (
-  //     <div>
-  //       <p>loading</p>
-  //     </div>
-  //   )
-  // }
+  if (!isGymInfoSuccess) {
+    return (
+      <div>
+        <p>loading</p>
+      </div>
+    )
+  }
 
   return (
-    <GymProvider gymInfo={null}>
+    <GymProvider gymInfo={gymInfo}>
       <div className="flex flex-col bg-base-50">
         {/* 메인 이름 */}
         <GymInfo />
