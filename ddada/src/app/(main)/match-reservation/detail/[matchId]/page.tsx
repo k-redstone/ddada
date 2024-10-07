@@ -47,12 +47,13 @@ export default function MatchReservationDetailPage({
   return (
     <MatchReservationDetailProvider matchDetailData={data}>
       <div className=" max-w-[46rem] flex flex-col">
-        <div className="h-[12.5rem] overflow-hidden object-cover">
+        <div className="h-[12.5rem] overflow-hidden object-cover relative">
           <Image
             src={data.court.image}
             alt="court Image"
-            width={736}
-            height={200}
+            style={{ objectFit: 'cover' }}
+            fill
+            priority
           />
         </div>
         <div className="flex gap-x-1">

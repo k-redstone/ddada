@@ -16,6 +16,7 @@ import { useMatchDetailContext } from '@/features/reservationDetail/providers/in
 import { useUserRole } from '@/hooks/queries/user.ts'
 import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import useModal from '@/hooks/useModal/index.tsx'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
 export default function MatchApply() {
   const queryClient = useQueryClient()
@@ -30,8 +31,8 @@ export default function MatchApply() {
 
   if (!isUserRole) {
     return (
-      <div>
-        <p>now loading</p>
+      <div className="flex justify-center items-center">
+        <LoadingSpinner className="animate-spin" />
       </div>
     )
   }

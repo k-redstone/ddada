@@ -19,7 +19,7 @@ import { MatchReservationDetailProvider } from '@/features/reservationDetail/pro
 export default function ScoreBoardPage() {
   const queryClient = useQueryClient()
   const router = useRouter()
-  const [isVisible, setVisible] = useState<boolean>(true)
+  const [isVisible, setVisible] = useState<boolean>(false)
   const params = useParams() as { gameId: string }
 
   const { data, isSuccess } = useQuery({
@@ -42,7 +42,7 @@ export default function ScoreBoardPage() {
     }
     await changeMatchStatus(data.id, 'PLAYING').then(async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['matchDetail', data.id],
+        queryKey: ['matchDetail', `${data.id}`],
       })
       await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
       toast.success('경기가 시작되었습니다.')
@@ -51,25 +51,25 @@ export default function ScoreBoardPage() {
   }
 
   useEffect(() => {
-    setVisible(true)
-    fetchManagerPk().then((res) => {
-      if (data?.manager?.id !== res?.id) {
-        setVisible(false)
-      }
-    })
-    if (
-      data?.status === 'PLAYING' ||
-      data?.status === 'FINISHED' ||
-      data?.status === 'CANCELED'
-    ) {
-      setVisible(false)
+    if (isSuccess) {
+      fetchManagerPk().then((res) => {
+        if (data.manager?.id === res?.id) {
+          if (data.status === 'RESERVED' || data.status === 'CREATED') {
+            setVisible(true)
+          }
+        }
+      })
     }
-  }, [data?.manager?.id, data?.status])
+  }, [data?.manager?.id, data?.status, isSuccess])
 
-  if (!isVisible || !isSuccess) {
+  if (!isSuccess) {
+    return null
+  }
+
+  if (!isVisible) {
     return (
-      <div className="h-full flex justify-center items-center">
-        <p className="text-2xl font-bold">잘못된 접근입니다.</p>
+      <div className="h-[calc(100vh-3.9375rem)] w-full relative flex justify-center items-center">
+        <p className="fixed text-2xl font-bold">잘못된 접근입니다.</p>
       </div>
     )
   }
