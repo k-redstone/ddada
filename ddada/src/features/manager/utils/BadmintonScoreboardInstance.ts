@@ -1,5 +1,6 @@
 'use client'
 
+import { SCOREBOARD_SETTING } from '@/features/manager/constants/matchConstants.ts'
 import {
   SetResultType,
   TeamType,
@@ -8,10 +9,10 @@ import {
 type TeamKey = 'team1' | 'team2'
 
 type HistoryType = {
-  player?: number
-  earnedType?: string
-  missedUser?: Array<number>
-  missedType?: string
+  player?: number | null
+  earnedType?: string | null
+  missedUser?: Array<number> | null
+  missedType?: string | null
 
   team1SetScore: number
   team2SetScore: number
@@ -75,6 +76,13 @@ class BadmintonScoreboardInstance {
     })
     this.sets.push({
       setNumber: 3,
+      setWinnerTeamNumber: null,
+      team1Score: 0,
+      team2Score: 0,
+      scores: [],
+    })
+    this.sets.push({
+      setNumber: 4,
       setWinnerTeamNumber: null,
       team1Score: 0,
       team2Score: 0,
@@ -183,7 +191,7 @@ class BadmintonScoreboardInstance {
     this.sets[this.currentSet - 1][opponentScoreKey] += 1
 
     // 데이터 저장
-    this.saveToHistory(player, missedType)
+    this.saveToHistory(null, null, [player], missedType)
 
     // 현재 세트 종료 확인
     const isSetEnd = this.checkSetEnd(
@@ -218,7 +226,10 @@ class BadmintonScoreboardInstance {
     const scoreDifference = Math.abs(teamScore - opponentScore)
 
     // 세트 종료 분기처리
-    if (scoreDifference >= 2 && Math.max(teamScore, opponentScore) >= 3) {
+    if (
+      scoreDifference >= 2 &&
+      Math.max(teamScore, opponentScore) >= SCOREBOARD_SETTING.matchScore
+    ) {
       const winningTeam = teamScore > opponentScore ? teamName : opponentTeam
       const winSetScoreKey: 'team1SetScore' | 'team2SetScore' =
         `${winningTeam}SetScore` as const
@@ -240,8 +251,9 @@ class BadmintonScoreboardInstance {
   finishMatch() {
     if (this.winnerTeamNumber) {
       localStorage.removeItem('badmintonScoreboard')
+      return
     }
-    throw new Error('asdf')
+    throw new Error('게임 종료 중 에러가 발생했습니다.')
   }
 
   /**
@@ -250,16 +262,16 @@ class BadmintonScoreboardInstance {
   checkGameWinner() {
     if (this.team1SetScore === 2) {
       this.storeSetResult()
-
       this.winnerTeamNumber = 1 // 팀1 승리
       this.currentSet += 1
+      this.saveToHistory()
       return true
     }
     if (this.team2SetScore === 2) {
       this.storeSetResult()
-
       this.winnerTeamNumber = 2 // 팀2 승리
       this.currentSet += 1
+      this.saveToHistory()
       return true
     }
     return false
@@ -364,10 +376,10 @@ class BadmintonScoreboardInstance {
   }
 
   saveToHistory(
-    player?: number,
-    earnedType?: string,
-    missedUser?: Array<number>,
-    missedType?: string,
+    player?: number | null,
+    earnedType?: string | null,
+    missedUser?: Array<number> | null,
+    missedType?: string | null,
   ) {
     // 현재 상태를 히스토리에 저장하고, 인덱스 갱신
     const currentState = {
