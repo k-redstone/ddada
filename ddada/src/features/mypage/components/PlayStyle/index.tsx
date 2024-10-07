@@ -63,7 +63,6 @@ export default function PlayStyle() {
       </div>
     )
   }
-
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <PlayStyleLogoProps userPlayStyle={data.type} />
@@ -149,7 +148,7 @@ export default function PlayStyle() {
             </div>
 
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.strategy}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -166,7 +165,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.score_rate}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -181,7 +180,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.lose_rate}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -198,7 +197,7 @@ export default function PlayStyle() {
               </p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.skills}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
@@ -214,7 +213,7 @@ export default function PlayStyle() {
               <p className="text-xs text-disabled-dark">있는 지표</p>
             </div>
             <div className="flex-1 flex-col gap-1">
-              <p className="text-3xl font-bold">32</p>
+              <p className="text-3xl font-bold">{data.rate.recovery}</p>
               <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
               </div>
