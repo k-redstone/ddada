@@ -4,6 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import { getCourtList } from '@/features/court-reservation/api/court/index.ts'
 import Courts from '@/features/court-reservation/components/Courts/index.tsx'
@@ -74,6 +75,9 @@ export default function CoatReservation() {
 
   const handleClickSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (search.length < 2) {
+      toast.error('검색어는 2글자 이상 입력해주세요')
+    }
     setFilterCoat(search)
   }
   const handleSelectedRegion = (regions: string[]) => {
