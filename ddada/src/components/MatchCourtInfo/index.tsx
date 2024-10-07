@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { createContext, useContext } from 'react'
+import { toast } from 'react-hot-toast'
 
 import { CourtType } from '@/features/manager/types/MatchDataType.ts'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
@@ -77,13 +78,27 @@ function Location() {
 
 function Number() {
   const courtData = useCourtInfoContext()
+
+  const handleCopy = (number: string | undefined) => {
+    if (number === null || number === undefined) {
+      return
+    }
+    navigator.clipboard.writeText(number)
+    toast.success('번호를 복사했습니다!')
+  }
   return (
     <div className="flex flex-col gap-y-2">
       <h2 className="font-bold">전화번호</h2>
       <ul>
         <li className="list-inside list-disc pl-2">
           <span>{courtData?.contactNumber}</span>{' '}
-          <span className="text-[#FCA211]">번호복사</span>
+          <button
+            type="button"
+            onClick={() => handleCopy(courtData?.contactNumber)}
+            className="text-[#FCA211] underline cursor-pointer"
+          >
+            번호복사
+          </button>
         </li>
       </ul>
     </div>
