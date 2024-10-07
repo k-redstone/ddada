@@ -136,11 +136,19 @@ function BadmintonTool() {
 
   return (
     <div className="flex gap-x-3">
-      <button type="button" onClick={() => handleUndo()}>
-        undo
+      <button
+        type="button"
+        className="bg-disabled-dark rounded-full py-2 px-4"
+        onClick={() => handleUndo()}
+      >
+        <span className="text-white text-xs">되돌리기</span>
       </button>
-      <button type="button" onClick={() => handleRedo()}>
-        redo
+      <button
+        type="button"
+        className="bg-disabled-dark rounded-full py-2 px-4"
+        onClick={() => handleRedo()}
+      >
+        <span className="text-white text-xs">다시하기</span>
       </button>
     </div>
   )
