@@ -9,6 +9,7 @@ import GymIncome from '@/features/gym/components/GymIncome/index.tsx'
 import GymInfo from '@/features/gym/components/GymInfo/index.tsx'
 import GymReservedList from '@/features/gym/components/GymReservedList/index.tsx'
 import { GymProvider } from '@/features/gym/providers/index.tsx'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
 export default function GymDashboardPage() {
   const { data: gymInfo, isSuccess: isGymInfoSuccess } = useQuery({
@@ -18,8 +19,8 @@ export default function GymDashboardPage() {
 
   if (!isGymInfoSuccess) {
     return (
-      <div>
-        <p>loading</p>
+      <div className="h-full flex justify-center items-center">
+        <LoadingSpinner className="animate-spin" />
       </div>
     )
   }
