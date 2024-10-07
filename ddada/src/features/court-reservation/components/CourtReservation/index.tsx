@@ -165,11 +165,6 @@ export default function CoatReservation() {
         </div>
 
         <div>
-          {/* {status === 'success' && (
-            <Courts
-              courtList={data.pages.map((page) => page.data.result.content)}
-            />
-          )} */}
           {data?.pages[0].data.result.content[0] ? (
             data?.pages.map((page) => (
               <Courts
