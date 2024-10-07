@@ -18,7 +18,6 @@ import {
 import useGetUserInfo from '@/features/mypage/hooks/useGetUserInfo.tsx'
 import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
-// import Timer from '@/static/imgs/mypage/my-page-timer.svg'
 import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
 import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 
@@ -39,8 +38,6 @@ export default function MyMatchDetailPage({
     queryFn: () => getMyMatchDetail(matchId),
     retry: 1,
   })
-
-  // todo 수정 필요
   const {
     data: user,
     isLoading: userLoading,
