@@ -9,6 +9,7 @@ interface RacketRecommendStoreProps {
     weight: string
     shaft: string
   }
+  init: () => void
 
   setCanMoveNext: (value: boolean) => void
   setPreference: (
@@ -27,6 +28,20 @@ const useRacketRecommendStore = create<RacketRecommendStoreProps>()((set) => ({
     weight: '',
     shaft: '',
   },
+
+  init: () => {
+    set({
+      canMoveNext: false,
+      userPreference: {
+        racket: [],
+        price: [],
+        balance: '',
+        weight: '',
+        shaft: '',
+      },
+    })
+  },
+
   setCanMoveNext: (value) =>
     set(() => ({
       canMoveNext: value,

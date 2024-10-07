@@ -50,7 +50,6 @@ export default function RacketSearchModal({
     }
     const racketData = await fetchRacketSearch(inputRef.current.value)
     setRacketDataList(racketData)
-    console.log(racketData)
     return null
   }
 
