@@ -13,3 +13,10 @@ export async function fetchGymMatchList(date: string): Promise<GymMatchList> {
   const res = await privateAPI.get(`/gym/matches`, { params })
   return res.data.result
 }
+
+export async function gymWithdraw(account: string) {
+  const payload = {
+    account,
+  }
+  await privateAPI.patch('/gym/withdraw', payload)
+}
