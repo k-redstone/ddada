@@ -364,18 +364,18 @@ export default function MyMatchDetailPage({
                 상대 분석
               </p>
               <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-y-2">
-                  <p className="text-md font-semibold text-green-700">상대1</p>
-                  <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
-                    {user.strategy[0].message}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-y-2">
-                  <p className="text-md font-semibold text-green-700">상대2</p>
-                  <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
-                    {user.strategy[1].message}
-                  </p>
-                </div>
+                {user.strategy.map(
+                  (enemy: { loser: number; message: string }, idx: number) => (
+                    <div key={enemy.loser} className="flex flex-col gap-y-2">
+                      <p className="text-md font-semibold text-green-700">
+                        상대{idx + 1}
+                      </p>
+                      <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
+                        {enemy.message}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </div>
           </div>
