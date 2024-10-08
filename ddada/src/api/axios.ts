@@ -35,15 +35,11 @@ privateAPI.interceptors.response.use(
     const originalRequest = error.config
     const statusCode = error.response?.status
     if (statusCode === 401) {
-      try {
-        const newAccessToken = await postRefreshToken()
+      const newAccessToken = await postRefreshToken()
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-        return await privateAPI(originalRequest)
-      } catch (refreshError) {
-        console.error('토큰갱신에 실패했습니다.', refreshError)
-        return Promise.reject(refreshError)
-      }
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+      const res = await axios(originalRequest)
+      return res
     }
 
     return Promise.reject(error)

@@ -26,14 +26,13 @@ export default function MainHeader() {
   }, [])
 
   useEffect(() => {
+    if (!accessToken) return
     const fetchProfileImage = async () => {
-      if (accessToken) {
-        try {
-          const userData = await getProfileImage()
-          setProfileImage(userData.profilePreSignedUrl)
-        } catch (error) {
-          console.error('프로필 이미지를 가져오는데 문제발생', error)
-        }
+      try {
+        const userData = await getProfileImage()
+        setProfileImage(userData.profilePreSignedUrl)
+      } catch (error) {
+        console.error('프로필 이미지를 가져오는데 문제발생', error)
       }
     }
     fetchProfileImage()
