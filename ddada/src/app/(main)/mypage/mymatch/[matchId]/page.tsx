@@ -57,7 +57,7 @@ export default function MyMatchDetailPage({
     )
   }
 
-  if (matchError || userError) {
+  if (matchError && userError) {
     return (
       <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
         <div className="flex flex-col gap-6 text-disabled-dark justify-center">
@@ -97,7 +97,7 @@ export default function MyMatchDetailPage({
   }
   const winnerTeam = match.winnerTeamNumber
   let matchTag = '평범함'
-  if (!userLoading) {
+  if (!userLoading && !userError) {
     if (
       user.score_lose_rate.my_score_rate >
         user.score_lose_rate.mean_score_rate + 0.05 &&
@@ -245,14 +245,21 @@ export default function MyMatchDetailPage({
           </div>
         </div>
       </div>
-      {userLoading ? (
+      {userError && (
+        <div className="flex flex-col gap-6 py-8 justify-center items-center">
+          <p className="text-theme">플레이어의 데이터를 찾을 수 없어요</p>
+          <p className="text-theme">잠시 후 다시 시도해주세요</p>
+        </div>
+      )}
+      {userLoading && (
         <div className="flex flex-col gap-y-6 py-8 justify-center items-center">
           <LoadingSpinner className="animate-spin" />
           <p className="text-theme animate-pulse">
             플레이어의 데이터를 분석중이에요
           </p>
         </div>
-      ) : (
+      )}
+      {!userLoading && !userError && (
         <div className="flex flex-col justify-center items-center gap-6 py-6">
           <div className="flex flex-col justify-center items-center gap-3">
             <div className="flex flex-col justify-center items-center text-3xl">
@@ -271,23 +278,23 @@ export default function MyMatchDetailPage({
               {
                 name: '사용자',
                 data: [
-                  user.score_lose_rate.my_score_rate, // my_score_rate
-                  user.score_lose_rate.my_lose_rate, // my_lose_rate
-                  user.skill.score.skill_rate.pushs, // skill.score.skill_rate.pushs
-                  user.skill.score.skill_rate.smash, // skill.score.skill_rate.smash
-                  user.skill.score.skill_rate.drops, // skill.score.skill_rate.drops
-                  user.skill.score.skill_rate.clears, // skill.score.skill_rate.clears
+                  user.score_lose_rate.my_score_rate,
+                  user.score_lose_rate.my_lose_rate,
+                  user.skill.score.skill_rate.pushs,
+                  user.skill.score.skill_rate.smash,
+                  user.skill.score.skill_rate.drops,
+                  user.skill.score.skill_rate.clears,
                 ],
               },
               {
                 name: '매치평균',
                 data: [
-                  user.score_lose_rate.mean_score_rate, // mean_score_rate
-                  user.score_lose_rate.mean_lose_rate, // mean_lose_rate
-                  user.skill.score.middle_skill_rate.pushs, // skill.score.middle_skill_rate.pushs
-                  user.skill.score.middle_skill_rate.smash, // skill.score.middle_skill_rate.smash
-                  user.skill.score.middle_skill_rate.drops, // skill.score.middle_skill_rate.drops
-                  user.skill.score.middle_skill_rate.clears, // skill.score.middle_skill_rate.clears
+                  user.score_lose_rate.mean_score_rate,
+                  user.score_lose_rate.mean_lose_rate,
+                  user.skill.score.middle_skill_rate.pushs,
+                  user.skill.score.middle_skill_rate.smash,
+                  user.skill.score.middle_skill_rate.drops,
+                  user.skill.score.middle_skill_rate.clears,
                 ],
               },
             ]}
@@ -307,12 +314,12 @@ export default function MyMatchDetailPage({
                 axisTicks: { show: false },
                 axisBorder: { show: false },
                 categories: [
-                  '득점율', // my_score_rate, mean_score_rate
-                  '실점율', // my_lose_rate, mean_lose_rate
-                  '푸시', // skill.score.skill_rate.pushs, skill.score.middle_skill_rate.pushs
-                  '스매시', // skill.score.skill_rate.smash, skill.score.middle_skill_rate.smash
-                  '드롭', // skill.score.skill_rate.drops, skill.score.middle_skill_rate.drops
-                  '클리어', // skill.score.skill_rate.clears, skill.score.middle_skill_rate.clears
+                  '득점율',
+                  '실점율',
+                  '푸시',
+                  '스매시',
+                  '드롭',
+                  '클리어',
                 ],
               },
               colors: [`${PlayerMatchTagColor[matchTag]}`, '#E5E5ED'],
@@ -322,7 +329,7 @@ export default function MyMatchDetailPage({
               legend: { show: false },
             }}
           />
-          <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-12 w-full justify-center items-center text-disabled-dark">
+          <div className="flex bg-base-50 rounded-xl border border-disabled py-6 px-12 gap-8 w-full justify-center items-center text-disabled-dark">
             <div>
               {userTeamNum === winnerTeam ? (
                 <VictoryCharacter />
@@ -332,6 +339,44 @@ export default function MyMatchDetailPage({
             </div>
             <div className="flex-grow text-center">
               {PlayerMatchTagDescription[matchTag]}
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-6 text-disabled-dark">
+            <div className="flex flex-col flex-1 gap-6 p-6">
+              <p className="text-lg font-bold text-theme border-b-2 border-theme">
+                스킬 분석
+              </p>
+              <div className="flex flex-col gap-y-2 text-primary">
+                <p className="text-md font-semibold">강점</p>
+                <p className="bg-primary rounded-xl border border-primary p-4 bg-opacity-10 text-sm">
+                  {user.skill.score.message}
+                </p>
+              </div>
+              <div className="flex flex-col gap-y-2 text-danger">
+                <p className="text-md font-semibold">약점</p>
+                <p className="bg-danger rounded-xl border border-danger p-4 bg-opacity-10 text-sm">
+                  {user.skill.lose.message}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col flex-1 gap-6 p-6">
+              <p className="text-lg font-bold text-theme border-b-2 border-theme">
+                상대 분석
+              </p>
+              <div className="flex flex-col gap-6">
+                {user.strategy.map(
+                  (enemy: { loser: number; message: string }, idx: number) => (
+                    <div key={enemy.loser} className="flex flex-col gap-y-2">
+                      <p className="text-md font-semibold text-green-700">
+                        상대{idx + 1}
+                      </p>
+                      <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
+                        {enemy.message}
+                      </p>
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -105,7 +105,6 @@ export default function PaymentModal({
     if (!accessToken) {
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
-      // todo 여기에 결제 전에 예약을 해보고 만약 동시간대 예약이면 백에서 에러메세지 내뱉을거니 그거에 따라 toast.error로 메세지 띄우자
       try {
         await getPlayerBookings(date, reservationTime)
         handlePortOne()
@@ -123,8 +122,7 @@ export default function PaymentModal({
         storeId: process.env.NEXT_PUBLIC_STORE_ID,
         channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
         paymentId: `payment-${crypto.randomUUID()}`,
-        // orderName에 예약한 장소 이름 넣기
-        orderName: '코트 예약',
+        orderName: `${courtName} ${day} ${reservationTime} 예약`,
         totalAmount: 4000,
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
@@ -135,8 +133,6 @@ export default function PaymentModal({
         toast.error('예약 실패')
         return console.log('예약 실패')
       }
-      // todo 나중에 이 response에 있는걸로 블라블라하기
-      // todo 마이페이지로 보내버리기
       invalidateReservationList()
       router.push('/mypage/mymatch')
       matchReservation()
@@ -154,8 +150,6 @@ export default function PaymentModal({
         onClick={closeModal}
         aria-hidden="true"
       >
-        {/* height 수정 필요 */}
-
         <div
           onClick={(e) => e.stopPropagation()}
           aria-hidden="true"
@@ -171,7 +165,7 @@ export default function PaymentModal({
               <ModalCloseIcon />
             </button>
           </div>
-          <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl border text-lg font-bold">
+          <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl text-lg font-bold">
             <p>{courtName}</p>
             <p>
               {day}({DAY_OF_WEEK}) {reservationTime.slice(0, 5)}
