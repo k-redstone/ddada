@@ -71,7 +71,6 @@ export default function PlayStyle() {
         type="radar"
         series={[
           {
-            // todo 사용자 데이터로 넣기
             name: '플레이어',
             data: [
               data.rate.strategy,
@@ -112,8 +111,6 @@ export default function PlayStyle() {
             axisTicks: { show: false },
             axisBorder: { show: false },
             categories: ['전략', '득점율', '실점율', '기술', '회복'],
-
-            // type: 'datetime',
           },
           markers: { size: 4, strokeColors: '#fdbb52', colors: '#fffbea' },
           colors: [`#E5E5ED`, '#E5E5ED'],
@@ -133,9 +130,9 @@ export default function PlayStyle() {
             <p className="text-xl font-bold flex-1">누적 매치 수(매치)</p>
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">32</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -150,9 +147,9 @@ export default function PlayStyle() {
 
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">{data.rate.strategy}</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -167,9 +164,9 @@ export default function PlayStyle() {
             </div>
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">{data.rate.score_rate}</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -182,9 +179,9 @@ export default function PlayStyle() {
             </div>
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">{data.rate.lose_rate}</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -199,9 +196,9 @@ export default function PlayStyle() {
             </div>
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">{data.rate.skills}</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -215,9 +212,9 @@ export default function PlayStyle() {
             </div>
             <div className="flex-1 flex-col gap-1">
               <p className="text-3xl font-bold">{data.rate.recovery}</p>
-              <div className="text-xs flex gap-[10px] py-1 px-2">
+              {/* <div className="text-xs flex gap-[10px] py-1 px-2">
                 +5 <span className="text-disabled-dark">지난 주와 비교</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

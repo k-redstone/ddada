@@ -57,7 +57,7 @@ export default function MyMatchDetailPage({
     )
   }
 
-  if (matchError || userError) {
+  if (matchError && userError) {
     return (
       <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
         <div className="flex flex-col gap-6 text-disabled-dark justify-center">
@@ -97,7 +97,7 @@ export default function MyMatchDetailPage({
   }
   const winnerTeam = match.winnerTeamNumber
   let matchTag = '평범함'
-  if (!userLoading) {
+  if (!userLoading && !userError) {
     if (
       user.score_lose_rate.my_score_rate >
         user.score_lose_rate.mean_score_rate + 0.05 &&
@@ -245,14 +245,21 @@ export default function MyMatchDetailPage({
           </div>
         </div>
       </div>
-      {userLoading ? (
+      {userError && (
+        <div className="flex flex-col gap-6 py-8 justify-center items-center">
+          <p className="text-theme">플레이어의 데이터를 찾을 수 없어요</p>
+          <p className="text-theme">잠시 후 다시 시도해주세요</p>
+        </div>
+      )}
+      {userLoading && (
         <div className="flex flex-col gap-y-6 py-8 justify-center items-center">
           <LoadingSpinner className="animate-spin" />
           <p className="text-theme animate-pulse">
             플레이어의 데이터를 분석중이에요
           </p>
         </div>
-      ) : (
+      )}
+      {!userLoading && !userError && (
         <div className="flex flex-col justify-center items-center gap-6 py-6">
           <div className="flex flex-col justify-center items-center gap-3">
             <div className="flex flex-col justify-center items-center text-3xl">
