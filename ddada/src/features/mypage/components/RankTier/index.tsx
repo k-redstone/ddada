@@ -14,8 +14,7 @@ interface RankTierProps {
 export default function RankTier({ rating, gameCount }: RankTierProps) {
   useEffect(() => {
     const tiers = [
-      { min: -Infinity, max: 600, tier: '루키', tierNum: 0 },
-      { min: 600, max: 800, tier: '아마추어', tierNum: 1 },
+      { min: -Infinity, max: 800, tier: '아마추어', tierNum: 1 },
       { min: 800, max: 1000, tier: '아마추어', tierNum: 2 },
       { min: 1000, max: 1200, tier: '아마추어', tierNum: 3 },
       { min: 1200, max: 1400, tier: '세미프로', tierNum: 1 },

@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 
@@ -21,6 +22,7 @@ export default function BadmintonScoreBoard({
   data,
 }: BadmintonScoreBoardProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
@@ -32,20 +34,29 @@ export default function BadmintonScoreBoard({
     }
     const set =
       badmintonInstance.team1SetScore + badmintonInstance.team2SetScore
+    const sets = badmintonInstance.sets.slice(0, set)
+
+    const filteredSet = sets.map((item) => ({
+      ...item,
+      scores: item.scores.filter(
+        (score) => !(score.earnedType === null && score.missedType === null),
+      ),
+    }))
+
     const payload = {
       winnerTeamNumber: badmintonInstance.winnerTeamNumber,
       team1SetScore: badmintonInstance.team1SetScore,
       team2SetScore: badmintonInstance.team2SetScore,
-      sets: badmintonInstance.sets.slice(0, set),
+      sets: filteredSet,
     }
-    console.log(payload)
+    badmintonInstance.finishMatch()
     await storeMatchResult(badmintonInstance.id as number, payload)
     await changeMatchStatus(badmintonInstance.id as number, 'FINISHED')
-    router.push(`/manager/match/${data.id}`)
+    await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+    router.push(`/manager/done/${data.id}`)
   }
 
   useLayoutEffect(() => {
-    console.log(data)
     if (data.status === 'PLAYING') {
       const initInstance = new BadmintonScoreboardInstance(
         data.id,
@@ -136,11 +147,19 @@ function BadmintonTool() {
 
   return (
     <div className="flex gap-x-3">
-      <button type="button" onClick={() => handleUndo()}>
-        undo
+      <button
+        type="button"
+        className="bg-disabled-dark rounded-full py-2 px-4"
+        onClick={() => handleUndo()}
+      >
+        <span className="text-white text-xs">되돌리기</span>
       </button>
-      <button type="button" onClick={() => handleRedo()}>
-        redo
+      <button
+        type="button"
+        className="bg-disabled-dark rounded-full py-2 px-4"
+        onClick={() => handleRedo()}
+      >
+        <span className="text-white text-xs">다시하기</span>
       </button>
     </div>
   )

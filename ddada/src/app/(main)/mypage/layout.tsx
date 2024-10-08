@@ -95,7 +95,11 @@ export default function Layout({
               {data.winCount + data.loseCount > 0 ? (
                 <p className="text-xs font-medium">
                   승률{' '}
-                  {(data.winCount / (data.winCount + data.loseCount)) * 100}%
+                  {(
+                    (data.winCount / (data.winCount + data.loseCount)) *
+                    100
+                  ).toFixed(2)}
+                  %
                 </p>
               ) : (
                 <p className="text-xs font-medium">승률 0%</p>

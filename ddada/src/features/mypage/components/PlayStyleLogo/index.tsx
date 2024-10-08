@@ -13,19 +13,19 @@ interface PlayStyleLogoProps {
 export default function PlayStyleLogo({ userPlayStyle }: PlayStyleLogoProps) {
   return (
     <div className="flex flex-col items-center">
-      {userPlayStyle === 'AGGRESSIVE' && (
+      {userPlayStyle === '공격적 플레이어' && (
         <Image src={Aggressive} alt="Aggressive" width={580} height={220} />
       )}
-      {userPlayStyle === 'ALLROUNDER' && (
+      {userPlayStyle === '균형 잡힌 플레이어' && (
         <Image src={Allrounder} alt="Allrounder" width={580} height={220} />
       )}
-      {userPlayStyle === 'DEFENSIVE' && (
+      {userPlayStyle === '수비적 플레이어' && (
         <Image src={Defensive} alt="Defensive" width={580} height={220} />
       )}
-      {userPlayStyle === 'RECOVERY' && (
+      {userPlayStyle === '회복형 플레이어' && (
         <Image src={Recovery} alt="Recovery" width={580} height={220} />
       )}
-      {userPlayStyle === 'STRATEGIC' && (
+      {userPlayStyle === '전략적 플레이어' && (
         <Image src={Strategic} alt="Strategic" width={580} height={220} />
       )}
       <p className="text-xs font-disabled-dark">

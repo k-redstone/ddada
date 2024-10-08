@@ -90,7 +90,6 @@ export default function MatchTimeLine({
 
           return (
             <div
-              // todo 유니크한 key를 넣어주자
               key={`${score.scoreNumber}`}
               className="flex gap-3 items-center w-full"
             >

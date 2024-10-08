@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import PaymentModal from '@/features/court-reservation/components/PaymentModal/index.tsx'
@@ -17,15 +18,25 @@ interface CourtsDetailProps {
 }
 
 export default function Courts({ court, selectedDate }: CourtsDetailProps) {
+  const [selectedTime, setSelectedTime] = useState<string>('')
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
+  const router = useRouter()
+  const now = new Date()
+  const todayString = now.toISOString().split('T')[0]
+  const currentTime = now.getHours() * 60 + now.getMinutes()
+
   useEffect(() => {
     setSelectedTime('')
   }, [selectedDate])
-  const [selectedTime, setSelectedTime] = useState<string>('')
-  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
 
   const handlePaymentModal = () => {
-    setPaymentModalOpen(true)
+    if (sessionStorage.getItem('accessToken')) {
+      setPaymentModalOpen(true)
+    } else {
+      router.push(`/login?redirect=court-reservation`)
+    }
   }
+
   const handlePaymentModalOff = () => {
     setPaymentModalOpen(false)
   }
@@ -33,6 +44,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
   const handleSelectedTime = (time: string) => {
     setSelectedTime(time)
   }
+
   return (
     <div
       key={court.name}
@@ -61,25 +73,31 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold">예약 가능시간</p>
           <div className="flex gap-[0.625rem] text-xs">
-            {COURT_RESERVATION_TIMES.map((time) => (
-              <button
-                key={time}
-                type="button"
-                onClick={() => handleSelectedTime(time)}
-                className={`border px-2 py-1
-                      rounded-[62.5rem]
-                  ${court.reservations && court.reservations[selectedDate] && court.reservations[selectedDate].includes(time) ? 'text-disabled' : ''}
-                  ${selectedTime === time ? 'bg-theme text-white' : ''}
-                  `}
-                disabled={
-                  court.reservations &&
+            {COURT_RESERVATION_TIMES.map((time) => {
+              const [hours, minutes] = time.split(':').map(Number)
+              const reservationTime = hours * 60 + minutes
+              const isPastTime =
+                selectedDate === todayString && reservationTime < currentTime
+              const isDisabled =
+                isPastTime ||
+                (court.reservations &&
                   court.reservations[selectedDate] &&
-                  court.reservations[selectedDate].includes(time)
-                }
-              >
-                {time.slice(0, 5)}
-              </button>
-            ))}
+                  court.reservations[selectedDate].includes(time))
+
+              return (
+                <button
+                  key={time}
+                  type="button"
+                  onClick={() => handleSelectedTime(time)}
+                  className={`border px-2 py-1 rounded-[62.5rem]
+                    ${isDisabled ? 'text-disabled' : ''}
+                    ${selectedTime === time ? 'bg-theme text-white' : ''}`}
+                  disabled={isDisabled}
+                >
+                  {time.slice(0, 5)}
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -93,7 +111,7 @@ export default function Courts({ court, selectedDate }: CourtsDetailProps) {
         </div>
         <button
           type="button"
-          className={`text-white px-4 py-2  rounded-xl
+          className={`text-white px-4 py-2 rounded-xl
             ${selectedTime ? 'bg-theme' : 'bg-disabled'}`}
           onClick={handlePaymentModal}
           disabled={!selectedTime}
