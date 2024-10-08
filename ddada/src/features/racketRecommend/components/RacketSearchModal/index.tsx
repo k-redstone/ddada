@@ -78,7 +78,10 @@ export default function RacketSearchModal({
             placeholder="라켓, 브랜드 명으로 검색"
             className="text-xs text-disabled-dark grow focus:outline-none"
           />
-          <SearchIcon className="cursor-pointer" />
+          <SearchIcon
+            onClick={() => handleRacketSearch()}
+            className="cursor-pointer"
+          />
         </form>
         <div className="max-h-[31.25rem] flex flex-col gap-y-6 overflow-y-scroll pr-2">
           {racketDataList.map((item) => (

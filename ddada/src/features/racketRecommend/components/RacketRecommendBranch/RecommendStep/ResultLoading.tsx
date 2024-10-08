@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 
 import RacketRecommendCard from '@/features/racketRecommend/components/RacketRecommendCard/index.tsx'
 // import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 import BackIcon from '@/static/imgs/racketRecommned/BackIcon.svg'
-import LoadingGIF from '@/static/imgs/racketRecommned/LoadingGIF.png'
 import ResultBanner from '@/static/imgs/racketRecommned/ResultBanner.png'
 
 export default function ResultLoading() {
@@ -25,9 +25,11 @@ export default function ResultLoading() {
 
   if (!isVisible) {
     return (
-      <div className="flex flex-col gap-y-3 w-[34rem] items-center justify-center">
-        <Image src={LoadingGIF} alt="LoadingGIF" />
-        <span className="text-xl">결과를 분석 중이에요</span>
+      <div className="flex flex-col gap-y-4 w-[34rem] items-center justify-center">
+        <LoadingSpinner className="animate-spin" />
+        <span className="text-xl animate-pulse text-theme">
+          결과를 분석 중이에요
+        </span>
       </div>
     )
   }
