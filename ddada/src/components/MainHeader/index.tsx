@@ -1,10 +1,11 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { logOut } from '@/api/user/index.ts'
+import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import { useUserRole } from '@/hooks/queries/user.ts'
 import Logo from '@/static/imgs/logo-responsive.svg'
 import CalendarIcon from '@/static/imgs/main/CalendarIcon.svg'
@@ -12,9 +13,9 @@ import CalendarIcon from '@/static/imgs/main/CalendarIcon.svg'
 export default function MainHeader() {
   const { data } = useUserRole()
   const [accessToken, setAccessToken] = useState<string | null>(null)
-  const [loginType, setLoginType] = useState<string | null>(null)
   const pathname = usePathname()
   const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
+  const [profileImage, setProfileImage] = useState<string | null>(null)
 
   useEffect(() => {
     setCurrentPath(pathname.split('/')[1])
@@ -22,18 +23,26 @@ export default function MainHeader() {
 
   useEffect(() => {
     setAccessToken(sessionStorage.getItem('accessToken'))
-    setLoginType(sessionStorage.getItem('loginType'))
   }, [])
 
-  const handleLogout = async () => {
-    if (loginType === 'kakao') {
-      await logOut()
-      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&logout_redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI}`
-    } else {
-      await logOut()
-      window.location.href = '/'
+  useEffect(() => {
+    if (!accessToken) return
+    const fetchProfileImage = async () => {
+      try {
+        const userData = await getProfileImage()
+        setProfileImage(userData.profilePreSignedUrl)
+      } catch (error) {
+        console.error('프로필 이미지를 가져오는데 문제발생', error)
+      }
     }
+    fetchProfileImage()
+  }, [accessToken])
+
+  const getProfileImage = async () => {
+    const userProfil = await getProfile()
+    return userProfil
   }
+
   return (
     <div className="px-8 py-4 flex gap-x-3">
       {/* logo */}
@@ -105,13 +114,16 @@ export default function MainHeader() {
           </Link>
         )}
         {accessToken ? (
-          <button
-            type="button"
-            className="text-disabled-dark underline py-3"
-            onClick={handleLogout}
-          >
-            로그아웃
-          </button>
+          <>
+            {profileImage && (
+              <Link href="/mypage/profile-edit">
+                <div className="w-[3.125rem] h-[3.125rem] justify-center items-center rounded-full overflow-hidden relative">
+                  <Image src={profileImage} alt="profile" fill priority />
+                </div>
+              </Link>
+            )}
+            {null}
+          </>
         ) : (
           <Link
             className="bg-disabled-dark rounded-full text-white py-3 px-6"

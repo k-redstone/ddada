@@ -2,6 +2,8 @@
 
 import axios from 'axios'
 
+import { postRefreshToken } from '@/api/user/index.ts'
+
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export const publicAPI = axios.create({
@@ -28,21 +30,18 @@ privateAPI.interceptors.response.use(
   (response) => {
     return response
   },
+  // acceeToken이 만료되었을 때 refresh token을 이용해 accessToken을 재발급
   async (error) => {
-    // const statusCode = error.response?.status
-    // if (error.config.url === '/api/reissue' && statusCode === 400) {
-    //   return Promise.reject(error)
-    // }
-    // if (statusCode === 401) {
-    //   const res = await privateAPI.post('/api/reissue')
-    //   sessionStorage.setItem('access', res.headers.access)
-    //   error.config.headers.access = res.headers.access
-    //   const reResponse = await axios(error.config)
-    //   return reResponse
-    // }
-    // if (statusCode === 404) {
-    //   console.log(404)
-    // }
+    const originalRequest = error.config
+    const statusCode = error.response?.status
+    if (statusCode === 401) {
+      const newAccessToken = await postRefreshToken()
+
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+      const res = await axios(originalRequest)
+      return res
+    }
+
     return Promise.reject(error)
   },
 )

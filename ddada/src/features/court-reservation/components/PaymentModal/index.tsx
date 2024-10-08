@@ -105,7 +105,6 @@ export default function PaymentModal({
     if (!accessToken) {
       router.push(`/login?redirect=${encodeURIComponent(pathName)}`)
     } else {
-      // todo 여기에 결제 전에 예약을 해보고 만약 동시간대 예약이면 백에서 에러메세지 내뱉을거니 그거에 따라 toast.error로 메세지 띄우자
       try {
         await getPlayerBookings(date, reservationTime)
         handlePortOne()
@@ -123,8 +122,7 @@ export default function PaymentModal({
         storeId: process.env.NEXT_PUBLIC_STORE_ID,
         channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
         paymentId: `payment-${crypto.randomUUID()}`,
-        // orderName에 예약한 장소 이름 넣기
-        orderName: '코트 예약',
+        orderName: `${courtName} ${day} ${reservationTime} 예약`,
         totalAmount: 4000,
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
@@ -135,8 +133,6 @@ export default function PaymentModal({
         toast.error('예약 실패')
         return console.log('예약 실패')
       }
-      // todo 나중에 이 response에 있는걸로 블라블라하기
-      // todo 마이페이지로 보내버리기
       invalidateReservationList()
       router.push('/mypage/mymatch')
       matchReservation()
@@ -150,129 +146,135 @@ export default function PaymentModal({
     <>
       <Script src="https://cdn.portone.io/v2/browser-sdk.js" />
       <div
-        className="fixed left-0 top-0 z-10 h-screen w-screen overflow-hidden"
+        className="fixed z-10 inset-0 overflow-hidden flex justify-center items-center"
         onClick={closeModal}
         aria-hidden="true"
-      />
-      {/* height 수정 필요 */}
-      <div className="flex flex-col gap-6 fixed top-10 left-1/3 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">예약 및 결제 </h2>
-          <button
-            type="button"
-            onClick={closeModal}
-            aria-label="예약 및 결제 닫기"
-          >
-            <ModalCloseIcon />
-          </button>
-        </div>
-        <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl border text-lg font-bold">
-          <p>{courtName}</p>
-          <p>
-            {day}({DAY_OF_WEEK}) {reservationTime.slice(0, 5)}
-          </p>
-        </div>
-        <div>
-          <hr />
-        </div>
-        <div className="flex flex-col gap-3 ">
-          <h3 className="text-lg font-bold">매치정보 선택</h3>
-          <div className="flex flex-col gap-2">
-            <p>경쟁여부</p>
-
-            <div>
-              <button
-                type="button"
-                onClick={() => setCompetitionType('친선')}
-                className="flex items-center gap-2"
-              >
-                {competitionType === '친선' ? (
-                  <CheckedIcon />
-                ) : (
-                  <UnCheckedIcon />
-                )}
-                친선
-                <p className="text-theme">
-                  (승리와 패배에 따른 실력점수와 등락이 없습니다.)
-                </p>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCompetitionType('경쟁')}
-                className="flex items-center gap-2"
-              >
-                {competitionType === '경쟁' ? (
-                  <CheckedIcon />
-                ) : (
-                  <UnCheckedIcon />
-                )}
-                경쟁
-              </button>
-            </div>
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          aria-hidden="true"
+          className="flex flex-col gap-6 z-20 w-[35rem] bg-white rounded-xl overflow-hidden drop-shadow-lg py-4 px-6"
+        >
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold">예약 및 결제 </h2>
+            <button
+              type="button"
+              onClick={closeModal}
+              aria-label="예약 및 결제 닫기"
+            >
+              <ModalCloseIcon />
+            </button>
           </div>
-          <div className="flex flex-col gap-2">
-            <p>매치타입</p>
-            <div>
-              {MATCH_INFO.matchType.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setMatchType(type)}
-                  className={`flex items-center gap-2
-                    ${gender === 'MALE' && type === '여자복식' && 'line-through text-disabled-dark'}
-                    ${gender === 'FEMALE' && type === '남자복식' && 'line-through text-disabled-dark'}
-                    `}
-                  disabled={
-                    (gender === 'MALE' && type === '여자복식') ||
-                    (gender === 'FEMALE' && type === '남자복식')
-                  }
-                >
-                  {matchType === type ? <CheckedIcon /> : <UnCheckedIcon />}
-                  {type}
-                </button>
-              ))}
-              <p className="text-disabled-dark">단식은 추후 지원 예정입니다.</p>
-            </div>
+          <div className="flex-col gap-3 px-6 py-3 border border-3.5 border-black rounded-xl text-lg font-bold">
+            <p>{courtName}</p>
+            <p>
+              {day}({DAY_OF_WEEK}) {reservationTime.slice(0, 5)}
+            </p>
           </div>
-        </div>
-        <div>
-          <hr />
-        </div>
-        <div className="flex flex-col gap-1">
-          <h3 className="text-lg font-bold">결제 정보</h3>
-
-          <div className="flex justify-between">
-            <p>매치 가격</p>
-            <p>5,000원</p>
-          </div>
-          <div className="flex justify-between">
-            <p>첫 예약 할인</p>
-            <p>-1,000원</p>
-          </div>
-
           <div>
             <hr />
           </div>
-          <div className="flex justify-between">
-            <p className="font-bold">첫 결제 금액</p>
-            <p>4,000원</p>
+          <div className="flex flex-col gap-3 ">
+            <h3 className="text-lg font-bold">매치정보 선택</h3>
+            <div className="flex flex-col gap-2">
+              <p>경쟁여부</p>
+
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setCompetitionType('친선')}
+                  className="flex items-center gap-2"
+                >
+                  {competitionType === '친선' ? (
+                    <CheckedIcon />
+                  ) : (
+                    <UnCheckedIcon />
+                  )}
+                  친선
+                  <p className="text-theme">
+                    (승리와 패배에 따른 실력점수와 등락이 없습니다.)
+                  </p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCompetitionType('경쟁')}
+                  className="flex items-center gap-2"
+                >
+                  {competitionType === '경쟁' ? (
+                    <CheckedIcon />
+                  ) : (
+                    <UnCheckedIcon />
+                  )}
+                  경쟁
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>매치타입</p>
+              <div>
+                {MATCH_INFO.matchType.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setMatchType(type)}
+                    className={`flex items-center gap-2
+                    ${gender === 'MALE' && type === '여자복식' && 'line-through text-disabled-dark'}
+                    ${gender === 'FEMALE' && type === '남자복식' && 'line-through text-disabled-dark'}
+                    `}
+                    disabled={
+                      (gender === 'MALE' && type === '여자복식') ||
+                      (gender === 'FEMALE' && type === '남자복식')
+                    }
+                  >
+                    {matchType === type ? <CheckedIcon /> : <UnCheckedIcon />}
+                    {type}
+                  </button>
+                ))}
+                <p className="text-disabled-dark">
+                  단식은 추후 지원 예정입니다.
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="flex gap-6">
-          <button
-            type="button"
-            className="text-theme border border-theme rounded px-4 py-2 border border-disabled grow"
-            onClick={handleCloseModal}
-          >
-            닫기
-          </button>
-          <button
-            type="button"
-            className="text-white bg-theme rounded px-4 py-2 grow"
-            onClick={handlePayment}
-          >
-            결제하기
-          </button>
+          <div>
+            <hr />
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-lg font-bold">결제 정보</h3>
+
+            <div className="flex justify-between">
+              <p>매치 가격</p>
+              <p>5,000원</p>
+            </div>
+            <div className="flex justify-between">
+              <p>첫 예약 할인</p>
+              <p>-1,000원</p>
+            </div>
+
+            <div>
+              <hr />
+            </div>
+            <div className="flex justify-between">
+              <p className="font-bold">첫 결제 금액</p>
+              <p>4,000원</p>
+            </div>
+          </div>
+          <div className="flex gap-6">
+            <button
+              type="button"
+              className="text-theme border border-theme rounded px-4 py-2 border border-disabled grow"
+              onClick={handleCloseModal}
+            >
+              닫기
+            </button>
+            <button
+              type="button"
+              className="text-white bg-theme rounded px-4 py-2 grow"
+              onClick={handlePayment}
+            >
+              결제하기
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -1,20 +1,27 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { fetchRecommendRacket } from '@/features/racketRecommend/api/racketSearch.ts'
 import RacketRecommendCard from '@/features/racketRecommend/components/RacketRecommendCard/index.tsx'
-// import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 import BackIcon from '@/static/imgs/racketRecommned/BackIcon.svg'
-import LoadingGIF from '@/static/imgs/racketRecommned/LoadingGIF.png'
 import ResultBanner from '@/static/imgs/racketRecommned/ResultBanner.png'
 
 export default function ResultLoading() {
   const router = useRouter()
 
-  // const { userPreference } = useRacketRecommendStore()
+  const { userPreference } = useRacketRecommendStore()
   const [isVisible, setVisible] = useState<boolean>(false)
+  const { data, isSuccess } = useQuery({
+    queryKey: ['racketRecommend'],
+    queryFn: () => fetchRecommendRacket(userPreference),
+    staleTime: 0,
+  })
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,15 +30,16 @@ export default function ResultLoading() {
     return () => clearTimeout(timer)
   }, [])
 
-  if (!isVisible) {
+  if (!isVisible || !isSuccess) {
     return (
-      <div className="flex flex-col gap-y-3 w-[34rem] items-center justify-center">
-        <Image src={LoadingGIF} alt="LoadingGIF" />
-        <span className="text-xl">결과를 분석 중이에요</span>
+      <div className="flex flex-col gap-y-4 w-[34rem] items-center justify-center">
+        <LoadingSpinner className="animate-spin" />
+        <span className="text-xl animate-pulse text-theme">
+          결과를 분석 중이에요
+        </span>
       </div>
     )
   }
-  // 3초 후 이동 & 결과 post 로직 만들어야함
 
   return (
     <div className="flex flex-col gap-y-20 max-w-[34rem]">
@@ -47,7 +55,7 @@ export default function ResultLoading() {
         <p className="absolute flex flex-col gap-y-2 justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
           <span className="text-xs">내 선호 라켓유형은?</span>
           {/* 여기에 props */}
-          <span className="text-5xl font-bold">단단한 철벽형</span>
+          <span className="text-5xl font-bold">{data?.my_type.nickname}</span>
         </p>
         <Image
           className="w-[35.375rem] h-[18rem] object-cover overflow-hidden rounded-xl"
@@ -61,15 +69,10 @@ export default function ResultLoading() {
       <div className="flex flex-col gap-y-2.5 items-center">
         <span>🧐</span>
         <span className="text-xl">
-          <span className="text-theme">단단한 철벽형</span>은 어떤 특징을
-          가지고있나요?
+          <span className="text-theme">{data?.my_type.nickname}</span>은 어떤
+          특징을 가지고있나요?
         </span>
-        <span className="text-sm text-center">
-          단단한 철벽항 라켓은 셔틀콕 방향을 정밀하게 제어하는 견고함, 충격을 잘
-          흡수하는 뛰어난 내구성을 가지고 있어요. 이 유형을 가지고 있는 많은
-          사람들은 수비적인 플레이를 선호한다는 특징이 있어요. 장시간 사용 시
-          손목과 팔에 피로를 줄 수 있으니 유의하세요!
-        </span>
+        <span className="text-sm text-center">{data?.my_type.explanation}</span>
       </div>
 
       <div className="bg-base-50 rounded-xl px-6 py-3 ">
@@ -90,7 +93,8 @@ export default function ResultLoading() {
 
       <div className="text-center">
         <p className="text-sm">
-          플레이어님께 딱 맞는 <span className="font-bold">3개의 라켓</span>을
+          플레이어님께 딱 맞는{' '}
+          <span className="font-bold">{data?.racket.length}개의 라켓</span>을
           찾았어요!
         </p>
       </div>
@@ -105,9 +109,9 @@ export default function ResultLoading() {
           </span>
         </div>
         <div className="flex gap-x-6 mb-40">
-          <RacketRecommendCard />
-          <RacketRecommendCard />
-          <RacketRecommendCard />
+          {data?.racket.map((racket) => (
+            <RacketRecommendCard key={racket.racket_id} data={racket} />
+          ))}
         </div>
       </div>
     </div>

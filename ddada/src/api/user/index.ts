@@ -1,4 +1,4 @@
-import { privateAPI } from '@/api/axios.ts'
+import { privateAPI, publicAPI } from '@/api/axios.ts'
 import { UserPk, UserProfile, UserRole } from '@/types/user/index.ts'
 
 const loginUserRole = async (): Promise<UserRole | null> => {
@@ -34,4 +34,22 @@ const fetchUserPk = async (): Promise<UserPk | null> => {
   return res.data.result
 }
 
-export { loginUserRole, logOut, fetchUserProfile, fetchUserPk }
+const postRefreshToken = async () => {
+  const refreshToken = sessionStorage.getItem('refreshToken')
+  if (!refreshToken) return null
+  const res = await publicAPI.post('/auth/refresh', {
+    refreshToken,
+  })
+  console.log(res)
+  sessionStorage.setItem('accessToken', res.data.result.accessToken)
+  sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
+  return res.data.accessToken
+}
+
+export {
+  loginUserRole,
+  logOut,
+  fetchUserProfile,
+  fetchUserPk,
+  postRefreshToken,
+}

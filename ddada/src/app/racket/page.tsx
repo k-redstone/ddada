@@ -3,10 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import useSelectRacketStore from '@/features/racketRecommend/stores/useSelectRacketStore.ts'
 import MainBackgroundImg from '@/static/imgs/racketRecommned/MainBackgroundImg.png'
 import TimerIcon from '@/static/imgs/racketRecommned/TimerIcon.svg'
 
 export default function RacketPage() {
+  const { init: initRacketRecommendStore } = useRacketRecommendStore()
+  const { init: initSelectRacketStore } = useSelectRacketStore()
   return (
     <div className="relative w-full h-[calc(100vh-5rem)]">
       <Image
@@ -31,6 +35,10 @@ export default function RacketPage() {
           <Link
             className="border border-theme text-theme px-4 py-4 transition-colors duration-200 ease-in-out text-center rounded hover:text-white hover:bg-theme"
             href="/racket/recommend"
+            onClick={() => {
+              initRacketRecommendStore()
+              initSelectRacketStore()
+            }}
           >
             시작
           </Link>
