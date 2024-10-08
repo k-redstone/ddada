@@ -47,7 +47,7 @@ export default function PlayStyle() {
   }
 
   // todo 나중에 활성화하기
-  // if (data.match <= 3) {
+  // if (data.match < 3) {
   //   return (
   //     <div className="flex flex-col justify-center items-center gap-[2.625rem] px-6 py-20">
   //       <NoDataIcon />
