@@ -4,7 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useState } from 'react'
-
+interface Enemy {
+  loser: number
+  message: string
+  lose_skill?: string[][] // 각 강도 수준에 포함된 스킬 배열 (optional)
+}
 import {
   getMyMatchDetail,
   getUserAnalysis,
@@ -133,6 +137,7 @@ export default function MyMatchDetailPage({
       matchTag = '스프린터'
     }
   }
+  console.log(user)
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
       <div
@@ -351,33 +356,164 @@ export default function MyMatchDetailPage({
                 <p className="bg-primary rounded-xl border border-primary p-4 bg-opacity-10 text-sm">
                   {user.skill.score.message}
                 </p>
+                <Chart
+                  type="pie"
+                  series={[
+                    user.skill.score.skill_rate.pushs,
+                    user.skill.score.skill_rate.smash,
+                    user.skill.score.skill_rate.net,
+                    user.skill.score.skill_rate.drops,
+                    user.skill.score.skill_rate.clears,
+                  ]}
+                  width={200}
+                  height={95}
+                  options={{
+                    labels: ['푸시', '스매시', '네트', '드롭', '클리어'],
+                    chart: {
+                      toolbar: { show: false },
+                      background: 'transparent',
+                    },
+                  }}
+                />
+                <p className="text-center text-xs text-disabled-dark">
+                  득점 기술 비율
+                </p>
               </div>
               <div className="flex flex-col gap-y-2 text-danger">
                 <p className="text-md font-semibold">약점</p>
                 <p className="bg-danger rounded-xl border border-danger p-4 bg-opacity-10 text-sm">
                   {user.skill.lose.message}
                 </p>
+                <Chart
+                  type="pie"
+                  series={[
+                    user.skill.lose.lose_skill_rate.pushs,
+                    user.skill.lose.lose_skill_rate.smash,
+                    user.skill.lose.lose_skill_rate.net,
+                    user.skill.lose.lose_skill_rate.drops,
+                    user.skill.lose.lose_skill_rate.clears,
+                  ]}
+                  width={200}
+                  height={95}
+                  options={{
+                    labels: ['푸시', '스매시', '네트', '드롭', '클리어'],
+                    chart: {
+                      toolbar: { show: false },
+                      background: 'transparent',
+                    },
+                  }}
+                />
+                <p className="text-center text-xs text-disabled-dark">
+                  실점 기술 비율
+                </p>
               </div>
             </div>
-            <div className="flex flex-col flex-1 gap-6 p-6">
-              <p className="text-lg font-bold text-theme border-b-2 border-theme">
-                상대 분석
-              </p>
-              <div className="flex flex-col gap-6">
-                {user.strategy.map(
-                  (enemy: { loser: number; message: string }, idx: number) => (
-                    <div key={enemy.loser} className="flex flex-col gap-y-2">
-                      <p className="text-md font-semibold text-green-700">
-                        상대{idx + 1}
-                      </p>
-                      <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
-                        {enemy.message}
-                      </p>
-                    </div>
-                  ),
-                )}
+            {user.strategy.length ? (
+              <div className="flex flex-col flex-1 gap-6 p-6">
+                <p className="text-lg font-bold text-theme border-b-2 border-theme">
+                  상대 분석
+                </p>
+                <div className="flex flex-col gap-6">
+                  {user.strategy.map((enemy: Enemy, idx: number) => {
+                    console.log(enemy.lose_skill)
+                    const skillLevels = {
+                      clears:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('clears'),
+                        ) ?? -1,
+                      drops:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('drops'),
+                        ) ?? -1,
+                      net:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('net'),
+                        ) ?? -1,
+                      serve:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('serve'),
+                        ) ?? -1,
+                      smash:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('smash'),
+                        ) ?? -1,
+                      pushs:
+                        enemy.lose_skill?.findIndex((level) =>
+                          level.includes('pushs'),
+                        ) ?? -1,
+                    }
+
+                    return (
+                      <div key={enemy.loser} className="flex flex-col gap-y-2">
+                        <p className="text-md font-semibold text-green-700">
+                          상대{idx + 1}
+                        </p>
+                        <p className="bg-green-100 text-green-700 rounded-xl border border-green-700 p-4 bg-opacity-20 text-sm">
+                          {enemy.message}
+                        </p>
+                        <Chart
+                          type="bar"
+                          height={250}
+                          padding={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                          series={[
+                            {
+                              name: '강도 수준',
+                              data: Object.values(skillLevels).map((level) =>
+                                level === -1 ? 0 : level + 1,
+                              ),
+                            },
+                          ]}
+                          options={{
+                            chart: {
+                              background: 'transparent',
+                              toolbar: { show: false },
+                            },
+                            plotOptions: {
+                              bar: {
+                                horizontal: false,
+                                columnWidth: '50%',
+                              },
+                            },
+                            xaxis: {
+                              categories: [
+                                '클리어',
+                                '드롭',
+                                '네트',
+                                '서브',
+                                '스매시',
+                                '푸시',
+                              ],
+                            },
+                            yaxis: {
+                              labels: {
+                                formatter: (val) =>
+                                  [
+                                    '미포함',
+                                    '아주약함',
+                                    '약함',
+                                    '평범',
+                                    '강함',
+                                    '아주강함',
+                                  ][val] ?? '미포함',
+                              },
+                              max: 5,
+                            },
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            title: {
+                              text: `상대${idx + 1} 수비력`,
+                              align: 'center',
+                            },
+                            colors: ['#fca211'],
+                          }}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       )}

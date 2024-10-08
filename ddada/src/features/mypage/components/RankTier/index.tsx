@@ -8,7 +8,7 @@ import SemiPro from '@/static/imgs/rank/Semi-pro.svg'
 
 interface RankTierProps {
   rating: number
-  gameCount: number
+  gameCount?: number
 }
 
 export default function RankTier({ rating, gameCount }: RankTierProps) {
@@ -27,7 +27,7 @@ export default function RankTier({ rating, gameCount }: RankTierProps) {
     ]
     const currentTier = tiers.find((t) => rating >= t.min && rating < t.max)
 
-    if (gameCount < 3) {
+    if (gameCount && gameCount < 3) {
       setTier('루키')
       setTierNum('')
     } else if (currentTier) {
