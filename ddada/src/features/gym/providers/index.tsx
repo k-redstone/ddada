@@ -1,16 +1,16 @@
 'use client'
 
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext } from 'react'
 
 import { GymInfo } from '@/features/gym/types/GymTypes.ts'
 
 interface GymContextProps {
-  gymInfo: GymInfo | null | undefined
+  gymInfo: GymInfo | null
   children?: React.ReactNode
 }
 
 // Context 생성
-const GymContext = createContext<GymContextProps | null>(null)
+const GymContext = createContext<GymInfo | null>(null)
 
 // Context를 사용하는 Custom Hook
 export const useGymContext = () => {
@@ -23,6 +23,5 @@ export const useGymContext = () => {
 
 // Context Provider 생성
 export function GymProvider({ gymInfo, children }: GymContextProps) {
-  const value = useMemo(() => ({ gymInfo }), [])
-  return <GymContext.Provider value={value}>{children}</GymContext.Provider>
+  return <GymContext.Provider value={gymInfo}>{children}</GymContext.Provider>
 }

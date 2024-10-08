@@ -27,7 +27,7 @@ const MATCH_TYPE: { [key: string]: string } = {
 }
 
 const SCOREBOARD_SETTING: { [key: string]: number } = {
-  matchScore: 3,
+  matchScore: 21,
 }
 
 export { EARN_TYPE, MISS_TYPE, MATCH_STATUS, MATCH_TYPE, SCOREBOARD_SETTING }

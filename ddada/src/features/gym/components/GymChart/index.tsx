@@ -1,16 +1,14 @@
 'use client'
 
-import dayjs from 'dayjs'
 import dynamic from 'next/dynamic'
+
+import { useGymContext } from '@/features/gym/providers/index.tsx'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export default function GymChart() {
-  const today = dayjs()
-  const daysArray = Array.from({ length: 7 }, (_, i) =>
-    today.subtract(7 - i, 'day').format('MM.DD'),
-  )
-  console.log(daysArray)
+  const gymInfo = useGymContext()
+  const defalutCount = Array.from({ length: 15 }, () => 0)
   return (
     <div className="bg-white rounded-3xl px-8 py-6 flex flex-col gap-y-6">
       <h2 className="text-2xl font-bold">날짜 별 매치 현황 통계</h2>
@@ -19,7 +17,9 @@ export default function GymChart() {
         series={[
           {
             name: '매치현황',
-            data: [3, 1, 5, 7, 2, 8, 2],
+            data: gymInfo
+              ? gymInfo.matchStatistics.map((item) => item.matchCount)
+              : defalutCount,
           },
         ]}
         options={{
@@ -37,7 +37,10 @@ export default function GymChart() {
             labels: { show: true },
             axisTicks: { show: true },
             axisBorder: { show: true },
-            categories: daysArray,
+            categories: gymInfo?.matchStatistics.map((item) => {
+              const [, month, day] = item.date.split('-')
+              return `${month}.${day}`
+            }),
           },
           colors: ['#FCA211'],
           legend: { show: true },
