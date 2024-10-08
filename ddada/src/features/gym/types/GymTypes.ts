@@ -1,7 +1,8 @@
-type GymManager = {
+export type GymManager = {
   id: number
   nickname: string
-  image?: string
+  image: string
+  income: number
 }
 
 type MatchStatistics = {

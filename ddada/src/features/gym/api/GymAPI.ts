@@ -6,7 +6,17 @@ export async function fetchGymInfo(): Promise<GymInfo> {
   return res.data.result
 }
 
-export async function fetchGymMatchList(): Promise<GymMatchList> {
-  const res = await privateAPI.get(`/gym/matches`)
+export async function fetchGymMatchList(date: string): Promise<GymMatchList> {
+  const params = {
+    date,
+  }
+  const res = await privateAPI.get(`/gym/matches`, { params })
   return res.data.result
+}
+
+export async function gymWithdraw(account: string) {
+  const payload = {
+    AcountAddress: account,
+  }
+  await privateAPI.patch('/gym/withdraw', payload)
 }
