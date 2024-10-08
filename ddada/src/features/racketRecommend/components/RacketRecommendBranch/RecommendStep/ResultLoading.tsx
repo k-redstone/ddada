@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import RacketRecommendCard from '@/features/racketRecommend/components/RacketRecommendCard/index.tsx'
-// import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
+import useRacketRecommendStore from '@/features/racketRecommend/stores/useRacketRecommendStore.ts'
 import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
 import BackIcon from '@/static/imgs/racketRecommned/BackIcon.svg'
 import ResultBanner from '@/static/imgs/racketRecommned/ResultBanner.png'
@@ -13,7 +13,7 @@ import ResultBanner from '@/static/imgs/racketRecommned/ResultBanner.png'
 export default function ResultLoading() {
   const router = useRouter()
 
-  // const { userPreference } = useRacketRecommendStore()
+  const { userPreference } = useRacketRecommendStore()
   const [isVisible, setVisible] = useState<boolean>(false)
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export default function ResultLoading() {
     return () => clearTimeout(timer)
   }, [])
 
+  console.log(userPreference)
   if (!isVisible) {
     return (
       <div className="flex flex-col gap-y-4 w-[34rem] items-center justify-center">
