@@ -16,7 +16,7 @@ export async function fetchGymMatchList(date: string): Promise<GymMatchList> {
 
 export async function gymWithdraw(account: string) {
   const payload = {
-    account,
+    AcountAddress: account,
   }
   await privateAPI.patch('/gym/withdraw', payload)
 }

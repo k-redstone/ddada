@@ -6,7 +6,7 @@ import useModal from '@/hooks/useModal/index.tsx'
 import WithdrawIcon from '@/static/imgs/gym/WithdrawIcon.svg'
 
 export default function GymInfo() {
-  const { gymInfo } = useGymContext()
+  const gymInfo = useGymContext()
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
     useModal()
 

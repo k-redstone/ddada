@@ -2,7 +2,7 @@ import { useGymContext } from '@/features/gym/providers/index.tsx'
 import HomeIcon from '@/static/imgs/gym/HomeIcon.svg'
 
 export default function GymIncome() {
-  const { gymInfo } = useGymContext()
+  const gymInfo = useGymContext()
   return (
     <div className="bg-white rounded-3xl py-6 px-8 flex flex-col gap-y-6">
       <div className="flex gap-x-3">

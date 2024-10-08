@@ -10,7 +10,7 @@ interface IncomeModalProps {
 }
 
 export default function IncomeModal({ handleModalClose }: IncomeModalProps) {
-  const { gymInfo } = useGymContext()
+  const gymInfo = useGymContext()
   const queryClient = useQueryClient()
 
   const handleWithdraw = async () => {

@@ -59,7 +59,10 @@ export default function GymReservedList() {
           </div>
         )}
         {data.matches.map((match) => (
-          <div className="rounded-full grid grid-cols-[50px_repeat(5,_1fr)]  gap-x-2 p-3 justify-center items-center text-disabled-dark">
+          <div
+            key={match.id}
+            className="rounded-full grid grid-cols-[50px_repeat(5,_1fr)]  gap-x-2 p-3 justify-center items-center text-disabled-dark"
+          >
             <div className="w-[3.125rem] text-center">{match.id}</div>
             <span>{match.time}</span>
             <span className="font-bold">{match.courtNumber}번 코트</span>

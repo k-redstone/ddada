@@ -7,7 +7,7 @@ import { useGymContext } from '@/features/gym/providers/index.tsx'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export default function GymChart() {
-  const { gymInfo } = useGymContext()
+  const gymInfo = useGymContext()
   const defalutCount = Array.from({ length: 15 }, () => 0)
   return (
     <div className="bg-white rounded-3xl px-8 py-6 flex flex-col gap-y-6">
