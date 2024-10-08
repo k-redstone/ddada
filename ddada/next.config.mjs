@@ -17,6 +17,7 @@ const nextConfig = {
         pathname: '/**', // 모든 경로 허용
       },
     ],
+    domains: ['img.danawa.com'],
   },
 }
 

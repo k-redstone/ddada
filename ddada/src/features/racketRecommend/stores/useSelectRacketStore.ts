@@ -8,11 +8,19 @@ interface SelectRacketStoreProps {
   updateIsNone: (value: boolean) => void
   addSelectedRacketList: (value: RacketDetailType) => void
   deleteSelectedRacketList: (value: number) => void
+  init: () => void
 }
 
 const useSelectRacketStore = create<SelectRacketStoreProps>()((set) => ({
   isSelectNone: false,
   selectedRacketList: [],
+
+  init: () => {
+    set({
+      isSelectNone: false,
+      selectedRacketList: [],
+    })
+  },
 
   updateIsNone: (value) => set(() => ({ isSelectNone: value })),
 
