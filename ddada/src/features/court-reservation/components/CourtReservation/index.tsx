@@ -32,6 +32,7 @@ export default function CoatReservation() {
   useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
+    retry: 0,
   })
   useEffect(() => {
     if (selectedRegion.length === 1) {
