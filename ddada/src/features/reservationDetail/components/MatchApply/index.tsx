@@ -104,11 +104,11 @@ export default function MatchApply() {
         </div>
 
         {/* 결제금액 */}
-        {matchDetailData.status === 'RESERVED' ||
-          matchDetailData.status === 'CREATED' ||
-          (!isManager && (
+        {(matchDetailData.status === 'RESERVED' ||
+          matchDetailData.status === 'CREATED') &&
+          !isManager && (
             <MatchPaymentInfo isMatchReserved={!isTeamA && !isTeamB} />
-          ))}
+          )}
 
         {/* 신청버튼 */}
         {userRole?.memberType === 'MANAGER' ? (
