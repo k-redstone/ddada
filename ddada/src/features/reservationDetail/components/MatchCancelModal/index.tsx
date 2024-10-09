@@ -1,5 +1,6 @@
 import CommonModal from '@/components/CommonModal/index.tsx'
 import ExclamationIcon from '@/static/imgs/matchReservation/ExclamationIcon.svg'
+
 interface MatchCancelModalProps {
   handleMatchCancel: () => void
   handleModalClose: () => void

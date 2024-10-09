@@ -3,11 +3,16 @@
 import UserTierWithIcon from '@/components/UserTierWithIcon/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import {
+  getAverageRating,
+  getTier,
+} from '@/features/reservationDetail/utils/index.ts'
 
 export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()
   const team1Data = matchDetailData?.team1
   const team2Data = matchDetailData?.team2
+  const averageRating = getAverageRating(matchDetailData)
 
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
@@ -18,7 +23,8 @@ export default function MatchPlayerInfo() {
       </div>
       <div className="bg-primary px-2 py-1 flex justify-center">
         <p className="text-white">
-          현재 매치의 평균 티어는 <span className="font-bold">세미프로</span>
+          현재 매치의 평균 티어는{' '}
+          <span className="font-bold">{getTier(averageRating)}</span>
           에요
         </p>
       </div>
