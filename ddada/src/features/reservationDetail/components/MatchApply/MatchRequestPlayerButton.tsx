@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import Script from 'next/script'
 import { toast } from 'react-hot-toast'
 
 import { getProfile } from '@/features/mypage/api/mypage/index.ts'
@@ -50,7 +51,7 @@ export default function MatchRequestButton({
       })
 
       checkGenderMatchJoin(matchDetailData, clickedTeam, playerGender.gender)
-
+      await requestPayment()
       await addUserToMatch(matchId, clickedTeam)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchId}`],
@@ -67,11 +68,32 @@ export default function MatchRequestButton({
         case 'miss gender':
           toast.error('참여하는 팀의 성별을 확인해주세요')
           break
+        case 'pay':
+          toast.error('결제에 실패했습니다.')
+          break
         default:
           toast.error('매치 예약 중 오류가 발생했습니다.')
       }
     }
   }
+
+  async function requestPayment() {
+    const response = await window.PortOne.requestPayment({
+      storeId: process.env.NEXT_PUBLIC_STORE_ID,
+      channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
+      paymentId: `payment-${crypto.randomUUID()}`,
+      orderName: `${matchDetailData.court.name} ${matchDetailData.date} ${matchDetailData.time} 참가`,
+      totalAmount: 4000,
+      currency: 'CURRENCY_KRW',
+      payMethod: 'EASY_PAY',
+      issueName: 'ddada',
+    })
+
+    if (response.code != null) {
+      throw Error('pay')
+    }
+  }
+
   if (
     matchDetailData.status === 'PLAYING' ||
     matchDetailData.status === 'FINISHED' ||
@@ -114,12 +136,15 @@ export default function MatchRequestButton({
   }
 
   return (
-    <button
-      type="button"
-      className="bg-theme rounded-[.25rem] py-2 px-1 box-border"
-      onClick={() => handleMatchJoin()}
-    >
-      <span className="text-xs text-white">매치 신청하기</span>
-    </button>
+    <>
+      <Script src="https://cdn.portone.io/v2/browser-sdk.js" />
+      <button
+        type="button"
+        className="bg-theme rounded-[.25rem] py-2 px-1 box-border"
+        onClick={() => handleMatchJoin()}
+      >
+        <span className="text-xs text-white">매치 신청하기</span>
+      </button>
+    </>
   )
 }
