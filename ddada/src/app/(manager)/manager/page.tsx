@@ -1,3 +1,3 @@
 export default function ManagerPage() {
-  return <div className="bg-[#F6F6F6] w-full h-full" />
+  return <div className="bg-base-50 w-full h-full" />
 }
