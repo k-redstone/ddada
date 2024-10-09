@@ -1,5 +1,5 @@
 import CommonModal from '@/components/CommonModal/index.tsx'
-
+import ExclamationIcon from '@/static/imgs/matchReservation/ExclamationIcon.svg'
 interface MatchCancelModalProps {
   handleMatchCancel: () => void
   handleModalClose: () => void
@@ -12,7 +12,9 @@ export default function MatchCancelModal({
   return (
     <CommonModal handleModalClose={handleModalClose}>
       <div className="bg-white rounded-xl flex flex-col gap-y-6 p-6">
-        <div>이미지임</div>
+        <div className="w-full flex justify-center">
+          <ExclamationIcon />
+        </div>
         <div className="flex flex-col gap-y-1 items-center">
           <p className="text-2xl font-bold">예약된 매치를 취소하시겠어요?</p>
           <p className="text-xs text-disabled-dark">
