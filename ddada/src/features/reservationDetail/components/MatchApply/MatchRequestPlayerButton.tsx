@@ -65,7 +65,7 @@ export default function MatchRequestButton({
         className="border border-disabled  rounded-[.25rem] py-2 px-1 box-border bg-base-50"
         disabled
       >
-        <span className="text-xs text-disabled-dark">신청 마감</span>
+        <span className="text-xs text-disabled-dark">신청 불가</span>
       </button>
     )
   }
