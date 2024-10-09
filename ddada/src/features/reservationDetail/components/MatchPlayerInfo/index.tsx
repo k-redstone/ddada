@@ -7,6 +7,8 @@ import {
   getAverageRating,
   getTier,
 } from '@/features/reservationDetail/utils/index.ts'
+import ManIcon from '@/static/imgs/matchReservation/ManIcon.svg'
+import WomanIcon from '@/static/imgs/matchReservation/WomanIcon.svg'
 
 export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()
@@ -43,6 +45,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A1] {team1Data.player1.nickname}
                   </span>
+                  {team1Data.player1.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team1Data.player1.rating} />
               </div>
@@ -62,6 +69,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team1Data.player2.nickname}
                   </span>
+                  {team1Data.player2.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team1Data.player2.rating} />
               </div>
@@ -83,6 +95,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team2Data.player1.nickname}
                   </span>
+                  {team2Data.player1.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team2Data.player1.rating} />
               </div>
@@ -101,6 +118,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team2Data.player2.nickname}
                   </span>
+                  {team2Data.player2.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team2Data.player2.rating} />
               </div>
