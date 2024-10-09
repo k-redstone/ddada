@@ -1,8 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
+import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import { addUserToMatch } from '@/features/reservationDetail/api/matchDetailAPI.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import { checkGenderMatchJoin } from '@/features/reservationDetail/utils/index.ts'
 import useInvalidateMatchReservations from '@/hooks/useInvalidateMatchReservations/index.tsx'
 import { UserRole } from '@/types/user/index.ts'
 
@@ -40,7 +42,15 @@ export default function MatchRequestButton({
     // if (isJoinTeamA || isJoinTeamB) {
     //   return
     // }
+
     try {
+      const playerGender = await queryClient.ensureQueryData({
+        queryKey: ['profile'],
+        queryFn: getProfile,
+      })
+
+      checkGenderMatchJoin(matchDetailData, clickedTeam, playerGender.gender)
+
       await addUserToMatch(matchId, clickedTeam)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchId}`],
@@ -48,8 +58,18 @@ export default function MatchRequestButton({
       toast.success('매치 예약에 성공했습니다.')
 
       invalidateMatchReservationList()
-    } catch {
-      toast.error('매치 예약 중 오류가 발생했습니다.')
+    } catch (error) {
+      const err = error as Error
+      switch (err.message) {
+        case 'gender':
+          toast.error('매치타입을 확인해주세요')
+          break
+        case 'miss gender':
+          toast.error('참여하는 팀의 성별을 확인해주세요')
+          break
+        default:
+          toast.error('매치 예약 중 오류가 발생했습니다.')
+      }
     }
   }
   if (

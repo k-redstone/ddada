@@ -1,4 +1,7 @@
-import { MatchDetailType } from '@/features/manager/types/MatchDataType.ts'
+import {
+  MatchDetailType,
+  TeamType,
+} from '@/features/manager/types/MatchDataType.ts'
 
 export function getTier(rating: number) {
   const tiers = [
@@ -58,4 +61,55 @@ export function getAverageRating(matchDetailData: MatchDetailType) {
       .map((player) => player.rating).length
 
   return averageRating
+}
+
+export function checkGenderMatchJoin(
+  matchDetailData: MatchDetailType,
+  selectTeam: number,
+  gender: 'MALE' | 'FEMALE',
+) {
+  switch (matchDetailData.matchType) {
+    case 'MALE_DOUBLE':
+      if (gender === 'MALE') {
+        return true
+      }
+      throw Error('gender')
+    case 'FEMALE_DOUBLE':
+      if (gender === 'FEMALE') {
+        return true
+      }
+      throw Error('gender')
+
+    case 'MIXED_DOUBLE':
+      if (selectTeam === 1) {
+        if (assignPlayer(matchDetailData.team1, gender)) return true
+      } else if (selectTeam === 2) {
+        if (assignPlayer(matchDetailData.team2, gender)) return true
+      }
+      throw Error('miss gender')
+
+    default:
+      throw Error('gender')
+  }
+}
+
+function assignPlayer(team: TeamType, gender: 'MALE' | 'FEMALE') {
+  // player1이 없으면 player1에 배정 가능
+  if (!team.player1) {
+    // player2와 성별이 같으면 안 되고, player2와 다른 성별이면 배정 가능
+    if (!team.player2 || team.player2.gender !== gender) {
+      return true
+    }
+  }
+
+  // player1이 이미 있고, player2가 없으면 player2에 배정 가능
+  if (!team.player2) {
+    // player1과 다른 성별이면 player2에 배정 가능
+    if (team.player1.gender !== gender) {
+      return true
+    }
+  }
+
+  // player1과 player2가 모두 채워져 있거나 성별이 맞지 않는 경우 배정 불가
+  return false
 }
