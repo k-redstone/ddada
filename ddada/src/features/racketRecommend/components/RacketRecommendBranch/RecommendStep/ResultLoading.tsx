@@ -53,9 +53,11 @@ export default function ResultLoading() {
       </div>
       <div className="relative rounded-xl">
         <p className="absolute flex flex-col gap-y-2 justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
-          <span className="text-xs">내 선호 라켓유형은?</span>
+          <span className="text-sm">내 선호 라켓유형은?</span>
           {/* 여기에 props */}
-          <span className="text-5xl font-bold">{data?.my_type.nickname}</span>
+          <span className="text-[2.5rem] font-bold text-center">
+            {data?.my_type.nickname}
+          </span>
         </p>
         <Image
           className="w-[35.375rem] h-[18rem] object-cover overflow-hidden rounded-xl"
@@ -108,7 +110,7 @@ export default function ResultLoading() {
             선수님의 유형에 맞게 준비했어요
           </span>
         </div>
-        <div className="flex gap-x-6 mb-40">
+        <div className="grid grid-cols-3 gap-x-6 mb-40">
           {data?.racket.map((racket) => (
             <RacketRecommendCard key={racket.racket_id} data={racket} />
           ))}

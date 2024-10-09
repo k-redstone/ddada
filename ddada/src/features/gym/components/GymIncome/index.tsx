@@ -4,7 +4,7 @@ import HomeIcon from '@/static/imgs/gym/HomeIcon.svg'
 export default function GymIncome() {
   const gymInfo = useGymContext()
   return (
-    <div className="bg-white rounded-3xl py-6 px-8 flex flex-col gap-y-6">
+    <div className="bg-white rounded-3xl py-6 px-8 flex flex-col gap-y-6 w-[20.5625rem]">
       <div className="flex gap-x-3">
         <HomeIcon />
         <span className="text-2xl font-bold">누적 수입</span>

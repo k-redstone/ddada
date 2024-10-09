@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useLayoutEffect } from 'react'
+import { toast } from 'react-hot-toast'
 
 import {
   changeMatchStatus,
@@ -49,11 +50,15 @@ export default function BadmintonScoreBoard({
       team2SetScore: badmintonInstance.team2SetScore,
       sets: filteredSet,
     }
-    badmintonInstance.finishMatch()
-    await storeMatchResult(badmintonInstance.id as number, payload)
-    await changeMatchStatus(badmintonInstance.id as number, 'FINISHED')
-    await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
-    router.push(`/manager/done/${data.id}`)
+    await changeMatchStatus(badmintonInstance.id as number, 'FINISHED').then(
+      async () => {
+        await storeMatchResult(badmintonInstance.id as number, payload)
+        await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
+        badmintonInstance.finishMatch()
+        toast.success('경기가 종료되었습니다.')
+        router.push(`/manager/done/${data.id}`)
+      },
+    )
   }
 
   useLayoutEffect(() => {
