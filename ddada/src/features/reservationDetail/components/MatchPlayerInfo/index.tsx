@@ -3,11 +3,18 @@
 import UserTierWithIcon from '@/components/UserTierWithIcon/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import { useMatchDetailContext } from '@/features/reservationDetail/providers/index.tsx'
+import {
+  getAverageRating,
+  getTier,
+} from '@/features/reservationDetail/utils/index.ts'
+import ManIcon from '@/static/imgs/matchReservation/ManIcon.svg'
+import WomanIcon from '@/static/imgs/matchReservation/WomanIcon.svg'
 
 export default function MatchPlayerInfo() {
   const matchDetailData = useMatchDetailContext()
   const team1Data = matchDetailData?.team1
   const team2Data = matchDetailData?.team2
+  const averageRating = getAverageRating(matchDetailData)
 
   return (
     <div className="p-2 flex flex-col gap-y-3 bg-white text-xs">
@@ -18,7 +25,8 @@ export default function MatchPlayerInfo() {
       </div>
       <div className="bg-primary px-2 py-1 flex justify-center">
         <p className="text-white">
-          현재 매치의 평균 티어는 <span className="font-bold">세미프로</span>
+          현재 매치의 평균 티어는{' '}
+          <span className="font-bold">{getTier(averageRating)}</span>
           에요
         </p>
       </div>
@@ -37,6 +45,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A1] {team1Data.player1.nickname}
                   </span>
+                  {team1Data.player1.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team1Data.player1.rating} />
               </div>
@@ -56,6 +69,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team1Data.player2.nickname}
                   </span>
+                  {team1Data.player2.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team1Data.player2.rating} />
               </div>
@@ -77,6 +95,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team2Data.player1.nickname}
                   </span>
+                  {team2Data.player1.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team2Data.player1.rating} />
               </div>
@@ -95,6 +118,11 @@ export default function MatchPlayerInfo() {
                   <span className="font-bold">
                     [A2] {team2Data.player2.nickname}
                   </span>
+                  {team2Data.player2.gender === 'MALE' ? (
+                    <ManIcon />
+                  ) : (
+                    <WomanIcon />
+                  )}
                 </p>
                 <UserTierWithIcon rating={team2Data.player2.rating} />
               </div>
