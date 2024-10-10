@@ -96,6 +96,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
 
   useEffect(() => {
     const passwordPattern =
+      // eslint-disable-next-line no-useless-escape
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/
     // 비밀번호와 확인 비밀번호가 일치하고, 정규식 패턴을 만족하는지 확인
     if (password === confirmPassword && passwordPattern.test(password)) {
