@@ -62,7 +62,7 @@ export default function MatchReservation() {
     }
   }, [selectedMatchType])
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: [
       'matchList',
       selectedMatchRankType,
@@ -135,7 +135,7 @@ export default function MatchReservation() {
   )
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && hasNextPage) {
       fetchNextPage()
     }
   }
