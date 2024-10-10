@@ -120,8 +120,7 @@ export default function MatchReservation() {
     getNextPageParam: (lastPage) => {
       const page = lastPage.data.result.page.number
       const { totalPages } = lastPage.data.result.page
-      if (totalPages === page + 1 || totalPages === 0 || totalPages === 1)
-        return false
+      if (totalPages === page + 1 || totalPages === 0) return undefined
       return page + 1
     },
     initialPageParam: 0,
