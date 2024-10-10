@@ -64,7 +64,7 @@ export default function RankingPage() {
   const firstPlace = data.length > 0 ? data[0] : null
   const secondPlace = data.length > 1 ? data[1] : null
   const thirdPlace = data.length > 2 ? data[2] : null
-  const allRankings = data.slice(3)
+  const allRankings = data.slice(3, -1)
   const displayedRankings = allRankings.slice(0, page * itemsPerPage)
   const hasMore = displayedRankings.length < allRankings.length
 
@@ -85,6 +85,13 @@ export default function RankingPage() {
           <div className="rounded-lg p-4 mb-6 text-gray-700">
             <p className="font-semibold text-lg text-gray-600">플레이어 랭킹</p>
             <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              {data[data.length - 1].ranking < 0 ? (
+                <p className="text-xl font-bold text-theme">-위</p>
+              ) : (
+                <p className="text-xl font-bold text-theme">
+                  {data[data.length - 1].ranking}위
+                </p>
+              )}
               <p className="text-xl font-bold text-theme">
                 {data[data.length - 1].ranking}위
               </p>
