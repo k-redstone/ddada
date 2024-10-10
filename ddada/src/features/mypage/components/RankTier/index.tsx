@@ -31,7 +31,7 @@ export default function RankTier({ rating, gameCount }: RankTierProps) {
     ]
     const currentTier = tiers.find((t) => rating >= t.min && rating < t.max)
 
-    if (gameCount && (gameCount === 0 || gameCount < 3)) {
+    if (gameCount !== undefined && (gameCount === 0 || gameCount < 3)) {
       setTier('루키')
       setTierNum('')
     } else if (currentTier) {
