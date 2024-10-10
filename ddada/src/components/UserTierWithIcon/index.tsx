@@ -9,9 +9,13 @@ import SemiPro from '@/static/imgs/rank/Semi-pro.png'
 
 interface UserTierWithIconProps {
   rating: number
+  gameCount: number
 }
 
-export default function UserTierWithIcon({ rating }: UserTierWithIconProps) {
+export default function UserTierWithIcon({
+  rating,
+  gameCount,
+}: UserTierWithIconProps) {
   useEffect(() => {
     const tiers = [
       { min: -Infinity, max: 600, tier: '루키', tierNum: 0 },
@@ -38,6 +42,10 @@ export default function UserTierWithIcon({ rating }: UserTierWithIconProps) {
         setTierNum('II')
       } else if (currentTier.tierNum === 3) {
         setTierNum('III')
+      }
+      if (gameCount !== undefined && (gameCount === 0 || gameCount < 3)) {
+        setTier('루키')
+        setTierNum('')
       }
     }
   }, [rating])

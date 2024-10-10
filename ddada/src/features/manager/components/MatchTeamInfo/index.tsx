@@ -28,7 +28,10 @@ export default function MatchTeamInfo({
               </span>
               {team === 'A' ? <TangerineLightDot /> : <TangerineFillDot />}
             </p>
-            <UserTierWithIcon rating={player.rating} />
+            <UserTierWithIcon
+              rating={player.rating}
+              gameCount={player.gameCount}
+            />
           </div>
         </div>
       ) : (

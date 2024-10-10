@@ -11,6 +11,7 @@ type PlayerType = {
   gender: Gender
   rating: number
   image: string
+  gameCount: number
 }
 
 type TeamType = {
