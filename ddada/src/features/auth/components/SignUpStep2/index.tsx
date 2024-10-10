@@ -67,7 +67,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
       passwordConfirmExists &&
       nickNameExists &&
       phoneNumberExists &&
-      birthYearExists
+      birthYearExists &&
+      isPasswordMatch
     ) {
       setIsNextStepEnabled(true)
     } else {
@@ -80,6 +81,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     nickNameExists,
     phoneNumberExists,
     birthYearExists,
+    isPasswordMatch,
   ])
 
   useEffect(() => {
@@ -93,8 +95,11 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
   }, [])
 
   useEffect(() => {
-    if (password === confirmPassword) {
-      setIsPasswordMatch(password === confirmPassword)
+    const passwordPattern =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'"\\|,.<>\/?]).{8,20}$/
+    // 비밀번호와 확인 비밀번호가 일치하고, 정규식 패턴을 만족하는지 확인
+    if (password === confirmPassword && passwordPattern.test(password)) {
+      setIsPasswordMatch(true)
       setPasswordExists(true)
       setPasswordConfirmExists(true)
     } else {
