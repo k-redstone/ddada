@@ -242,6 +242,8 @@
 <details>
 <summary>회원가입</summary>  
 <img src="docs/images/auth/signup.gif" height="300" width="200">
+<p>- react-hook-form으로 각 항목의 validation을 확인후 회원가입을 진행하였다.</p>
+<p>- 각 단계를 switch-case로 분기하여서 하나의 component에서 처리하였다.</p>
 </details>
 
 ### 2. 일반 유저
