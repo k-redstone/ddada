@@ -149,10 +149,10 @@
 ┃ ┃ ┃ ┃ ┗ 📂[matchId]
 ┃ ┃ ┣ 📂mypage
 ┃ ┃ ┃ ┣ 📂mymatch
-┃ ┃ ┃ ┃ ┣ 📂[matchId]
+┃ ┃ ┃ ┃ ┗ 📂[matchId]
 ┃ ┃ ┃ ┣ 📂password-change
 ┃ ┃ ┃ ┣ 📂playstyle
-┃ ┃ ┃ ┣ 📂profile-edit
+┃ ┃ ┃ ┗ 📂profile-edit
 ┃ ┃ ┣ 📂ranking
 ┃ ┣ 📂(manager)
 ┃ ┃ ┣ 📂manager
@@ -164,7 +164,7 @@
 ┃ ┃ ┃ ┃ ┗ 📂[gameId]
 ┃ ┣ 📂dashboard
 ┃ ┣ 📂racket
-┃ ┃ ┣ 📂recommend
+┃ ┃ ┗ 📂recommend
 ┣ 📂components
 ┃ ┣ 📂CommonModal
 ┃ ┣ 📂landing
@@ -175,7 +175,7 @@
 ┃ ┣ 📂MatchTypeTag
 ┃ ┗ 📂UserTierWithIcon
 ┣ 📂constants
-┃ ┣ 📂day
+┃ ┗ 📂day
 ┣ 📂features
 ┃ ┣ 📂auth
 ┃ ┣ 📂court-reservation
@@ -325,7 +325,12 @@
 ### 4. 체육관 관리자
 
 <details>
-<summary>대시보드 페이지</summary> 
+<summary>대시보드 페이지</summary>
+
+<img src="docs/images/gym/gym_dashboard.png" width="500">
+<p>대시보드 페이지</p>
+<img src="docs/images/gym/gym_money.png" height="300" width="300"> 
+<p>돈 인출 모달</p>
 </details>
 
 ## ⚒️ **프로젝트 후기**
