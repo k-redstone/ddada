@@ -1,4 +1,4 @@
-import { privateAPI } from '@/api/axios'
+import { privateAPI } from '@/api/axios.ts'
 
 const getRanking = async () => {
   const res = await privateAPI.get('/player/rankings')

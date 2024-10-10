@@ -4,11 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useState } from 'react'
-interface Enemy {
-  loser: number
-  message: string
-  lose_skill?: string[][] // 각 강도 수준에 포함된 스킬 배열 (optional)
-}
+
 import {
   getMyMatchDetail,
   getUserAnalysis,
@@ -24,6 +20,12 @@ import Calender from '@/static/imgs/mypage/my-page-calender.svg'
 import DefeatCharacter from '@/static/imgs/mypage/my-page-defeat-char.svg'
 import VictoryCharacter from '@/static/imgs/mypage/my-page-victory-char.svg'
 import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
+
+interface Enemy {
+  loser: number
+  message: string
+  lose_skill?: string[][] // 각 강도 수준에 포함된 스킬 배열 (optional)
+}
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -137,7 +139,6 @@ export default function MyMatchDetailPage({
       matchTag = '스프린터'
     }
   }
-  console.log(user)
   return (
     <div className="flex flex-col gap-3 py-6 justify-center ">
       <div
@@ -251,7 +252,7 @@ export default function MyMatchDetailPage({
         </div>
       </div>
       {userError && (
-        <div className="flex flex-col gap-6 py-8 justify-center items-center">
+        <div className="flex flex-col gap-y-2 py-8 justify-center items-center">
           <p className="text-theme">플레이어의 데이터를 찾을 수 없어요</p>
           <p className="text-theme">잠시 후 다시 시도해주세요</p>
         </div>
@@ -415,7 +416,6 @@ export default function MyMatchDetailPage({
                 </p>
                 <div className="flex flex-col gap-6">
                   {user.strategy.map((enemy: Enemy, idx: number) => {
-                    console.log(enemy.lose_skill)
                     const skillLevels = {
                       clears:
                         enemy.lose_skill?.findIndex((level) =>

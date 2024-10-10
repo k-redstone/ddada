@@ -1,12 +1,19 @@
 'use client'
-import Image from 'next/image'
-import RankingLogo from '@/static/imgs/ranking/ranking_main_logo.png'
-import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
-import { getRanking } from '@/features/ranking/api/getRanking.ts'
+
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
+import { useState } from 'react'
+
+import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import RankTier from '@/features/mypage/components/RankTier/index.tsx'
+import { getRanking } from '@/features/ranking/api/getRanking.ts'
+import LoadingSpinner from '@/static/imgs/mypage/playstyle/my-page-playstyle-spinner.svg'
+import RankingLogo from '@/static/imgs/ranking/ranking_main_logo.png'
 
 export default function RankingPage() {
+  const [page, setPage] = useState(1)
+  const itemsPerPage = 50
+
   const { data, isLoading } = useQuery({
     queryKey: ['ranking'],
     queryFn: getRanking,
@@ -14,16 +21,32 @@ export default function RankingPage() {
     staleTime: 1000 * 60 * 1,
   })
 
-  if (isLoading) {
+  const { data: userProfile, isLoading: userLoading } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+    retry: 0,
+    staleTime: 1000 * 60 * 1,
+  })
+
+  if (userLoading || isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-50">
-        <div className="p-8 bg-white rounded-lg shadow-lg">
-          <LoadingSpinner className="animate-spin w-12 h-12" />
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="flex flex-col gap-y-6 py-8 justify-center items-center">
+          <LoadingSpinner className="animate-spin" />
+          <p className="text-theme animate-pulse">
+            랭킹을 불러오는 중입니다. 잠시만 기달려주세요.
+          </p>
         </div>
       </div>
     )
   }
-  const [firstPlace, secondPlace, thirdPlace, ...restRankings] = data
+
+  const [firstPlace, secondPlace, thirdPlace, ...allRankings] = data.slice(
+    0,
+    -1,
+  )
+  const displayedRankings = allRankings.slice(0, page * itemsPerPage)
+  const hasMore = displayedRankings.length < allRankings.length
 
   return (
     <div className="flex flex-col items-center py-8 min-h-screen">
@@ -38,9 +61,9 @@ export default function RankingPage() {
       </div>
 
       <div className="flex flex-col rounded-xl p-6 w-full max-w-2xl gap-y-6">
-        <div className="rounded-lg p-4 mb-6  text-gray-700">
+        <div className="rounded-lg p-4 mb-6 text-gray-700">
           <p className="font-semibold text-lg text-gray-600">플레이어 랭킹</p>
-          <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out">
+          <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
             <p className="text-xl font-bold text-theme">
               {data[data.length - 1].ranking}위
             </p>
@@ -50,6 +73,7 @@ export default function RankingPage() {
             <RankTier rating={data[data.length - 1].rating} />
           </div>
         </div>
+
         <p className="font-semibold text-lg text-gray-600">전체 랭킹</p>
 
         <div className="flex justify-center items-end mb-12 gap-4">
@@ -83,20 +107,45 @@ export default function RankingPage() {
             </div>
           </div>
         </div>
+
         <div className="space-y-4">
-          {restRankings.slice(0, -1).map((rank: any, index: number) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out"
-            >
-              <p className="text-lg font-semibold text-gray-700">
-                {rank.ranking}위
-              </p>
-              <p className="text-lg">{rank.nickname}</p>
-              <RankTier rating={rank.rating} />
-            </div>
-          ))}
+          {displayedRankings.map(
+            (rank: { ranking: number; nickname: string; rating: number }) => (
+              <div
+                key={rank.ranking}
+                className={`flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out
+                  ${userProfile?.nickname === rank.nickname && 'border-theme border-2'}
+                  `}
+              >
+                <p
+                  className={`text-lg font-semibold text-gray-700
+                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}
+                  `}
+                >
+                  {rank.ranking}위
+                </p>
+                <p
+                  className={`text-lg
+                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}
+                  `}
+                >
+                  {rank.nickname}
+                </p>
+                <RankTier rating={rank.rating} />
+              </div>
+            ),
+          )}
         </div>
+
+        {hasMore && (
+          <button
+            type="button"
+            onClick={() => setPage(page + 1)}
+            className="mt-6 px-4 py-2 bg-theme text-white font-semibold rounded-lg hover:bg-opacity-50"
+          >
+            더보기
+          </button>
+        )}
       </div>
     </div>
   )
