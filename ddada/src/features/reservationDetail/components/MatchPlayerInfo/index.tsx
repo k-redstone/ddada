@@ -51,7 +51,10 @@ export default function MatchPlayerInfo() {
                     <WomanIcon />
                   )}
                 </p>
-                <UserTierWithIcon rating={team1Data.player1.rating} />
+                <UserTierWithIcon
+                  rating={team1Data.player1.rating}
+                  gameCount={team1Data.player1.gameCount}
+                />
               </div>
             </div>
           ) : (
@@ -75,7 +78,10 @@ export default function MatchPlayerInfo() {
                     <WomanIcon />
                   )}
                 </p>
-                <UserTierWithIcon rating={team1Data.player2.rating} />
+                <UserTierWithIcon
+                  rating={team1Data.player2.rating}
+                  gameCount={team1Data.player2.gameCount}
+                />
               </div>
             </div>
           ) : (
@@ -101,7 +107,10 @@ export default function MatchPlayerInfo() {
                     <WomanIcon />
                   )}
                 </p>
-                <UserTierWithIcon rating={team2Data.player1.rating} />
+                <UserTierWithIcon
+                  rating={team2Data.player1.rating}
+                  gameCount={team2Data.player1.gameCount}
+                />
               </div>
               <GameUserInfo src={team2Data.player1.image} />
             </div>
@@ -124,7 +133,10 @@ export default function MatchPlayerInfo() {
                     <WomanIcon />
                   )}
                 </p>
-                <UserTierWithIcon rating={team2Data.player2.rating} />
+                <UserTierWithIcon
+                  rating={team2Data.player2.rating}
+                  gameCount={team2Data.player2.gameCount}
+                />
               </div>
               <GameUserInfo src={team2Data.player2.image} />
             </div>
