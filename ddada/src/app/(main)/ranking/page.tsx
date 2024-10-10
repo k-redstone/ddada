@@ -92,9 +92,6 @@ export default function RankingPage() {
                   {data[data.length - 1].ranking}위
                 </p>
               )}
-              <p className="text-xl font-bold text-theme">
-                {data[data.length - 1].ranking}위
-              </p>
               <p className="text-lg text-theme font-medium">
                 {data[data.length - 1].nickname}
               </p>
