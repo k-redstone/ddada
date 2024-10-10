@@ -247,7 +247,7 @@ export default function PaymentModal({
               <p>5,000원</p>
             </div>
             <div className="flex justify-between">
-              <p>첫 예약 할인</p>
+              <p>런칭 할인</p>
               <p>-1,000원</p>
             </div>
 
@@ -255,14 +255,14 @@ export default function PaymentModal({
               <hr />
             </div>
             <div className="flex justify-between">
-              <p className="font-bold">첫 결제 금액</p>
+              <p className="font-bold">결제 금액</p>
               <p>4,000원</p>
             </div>
           </div>
           <div className="flex gap-6">
             <button
               type="button"
-              className="text-theme border border-theme rounded px-4 py-2 border border-disabled grow"
+              className="text-theme  rounded px-4 py-2 border border-disabled grow"
               onClick={handleCloseModal}
             >
               닫기

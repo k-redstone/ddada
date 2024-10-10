@@ -14,14 +14,22 @@ export default function RankingPage() {
   const [page, setPage] = useState(1)
   const itemsPerPage = 50
 
-  const { data, isLoading } = useQuery({
+  const {
+    data,
+    isLoading,
+    isError: rankError,
+  } = useQuery({
     queryKey: ['ranking'],
     queryFn: getRanking,
     retry: 0,
     staleTime: 1000 * 60 * 1,
   })
 
-  const { data: userProfile, isLoading: userLoading } = useQuery({
+  const {
+    data: userProfile,
+    isLoading: userLoading,
+    isError: userError,
+  } = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
     retry: 0,
@@ -35,6 +43,18 @@ export default function RankingPage() {
           <LoadingSpinner className="animate-spin" />
           <p className="text-theme animate-pulse">
             랭킹을 불러오는 중입니다. 잠시만 기달려주세요.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (rankError || userError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="flex flex-col gap-y-6 py-8 justify-center items-center">
+          <p className="text-disabled-dark font-bold">
+            랭킹을 불러오는 중 문제가 발생했습니다.
           </p>
         </div>
       </div>

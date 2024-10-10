@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { logOut } from '@/api/user/index.ts'
 import { getProfile } from '@/features/mypage/api/mypage/index.ts'
 import { useUserRole } from '@/hooks/queries/user.ts'
 import Logo from '@/static/imgs/logo-responsive.svg'
@@ -16,7 +17,10 @@ export default function MainHeader() {
   const pathname = usePathname()
   const [currentPath, setCurrentPath] = useState<string>(pathname.split('/')[1])
   const [profileImage, setProfileImage] = useState<string | null>(null)
-
+  const [loginType, setLoginType] = useState<string | null>(null)
+  useEffect(() => {
+    setLoginType(sessionStorage.getItem('loginType'))
+  }, [])
   useEffect(() => {
     setCurrentPath(pathname.split('/')[1])
   }, [pathname])
@@ -41,6 +45,15 @@ export default function MainHeader() {
   const getProfileImage = async () => {
     const userProfil = await getProfile()
     return userProfil
+  }
+  const handleLogout = async () => {
+    if (loginType === 'kakao') {
+      await logOut()
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_KEY}&logout_redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI}`
+    } else {
+      await logOut()
+      window.location.href = '/'
+    }
   }
 
   return (
@@ -122,6 +135,7 @@ export default function MainHeader() {
             </p>
           </Link>
         )}
+
         {accessToken ? (
           <>
             {profileImage && (
@@ -140,6 +154,11 @@ export default function MainHeader() {
           >
             로그인
           </Link>
+        )}
+        {accessToken && (
+          <button type="button" onClick={handleLogout}>
+            <p className="text-disabled-dark underline">로그아웃</p>
+          </button>
         )}
       </div>
     </div>
