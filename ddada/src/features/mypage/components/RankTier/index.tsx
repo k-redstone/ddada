@@ -13,6 +13,9 @@ interface RankTierProps {
 }
 
 export default function RankTier({ rating, gameCount }: RankTierProps) {
+  const [tier, setTier] = useState<string>('')
+  const [tierNum, setTierNum] = useState<string>('')
+
   useEffect(() => {
     const tiers = [
       { min: -Infinity, max: 800, tier: '아마추어', tierNum: 1 },
@@ -43,10 +46,7 @@ export default function RankTier({ rating, gameCount }: RankTierProps) {
         setTierNum('III')
       }
     }
-  }, [rating])
-
-  const [tier, setTier] = useState<string>('')
-  const [tierNum, setTierNum] = useState<string>('')
+  }, [rating, gameCount])
 
   return (
     <div
