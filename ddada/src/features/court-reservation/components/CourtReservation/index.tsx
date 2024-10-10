@@ -21,7 +21,8 @@ import SearchIcon from '@/static/imgs/court-reservation/court-reservation_search
 
 export default function CoatReservation() {
   const bottom = useRef(null)
-
+  const accessToken =
+    typeof window !== 'undefined' ? sessionStorage.getItem('accessToken') : null
   const today = dayjs().format('YYYY-MM-DD')
   const [selectedDate, setSelectedDate] = useState(today)
   const [search, setSearch] = useState('')
@@ -32,6 +33,7 @@ export default function CoatReservation() {
   useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
+    enabled: !!accessToken,
     retry: 0,
   })
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function CoatReservation() {
     }
   }, [selectedRegion])
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['courtList', filterCoat, selectedRegion],
     queryFn: ({ pageParam = 0 }) => {
       if (selectedRegion && selectedRegion[0] === '전체') {
@@ -66,7 +68,7 @@ export default function CoatReservation() {
     initialPageParam: 0,
   })
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && hasNextPage) {
       fetchNextPage()
     }
   }
