@@ -50,9 +50,10 @@ export default function BadmintonScoreBoard({
       team2SetScore: badmintonInstance.team2SetScore,
       sets: filteredSet,
     }
+
+    await storeMatchResult(badmintonInstance.id as number, payload)
     await changeMatchStatus(badmintonInstance.id as number, 'FINISHED').then(
       async () => {
-        await storeMatchResult(badmintonInstance.id as number, payload)
         await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
         badmintonInstance.finishMatch()
         toast.success('경기가 종료되었습니다.')
