@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import withBundleAnalyzer from '@next/bundle-analyzer'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
@@ -20,5 +23,9 @@ const nextConfig = {
     domains: ['img.danawa.com'],
   },
 }
+const analyzing = process.env.ANALYZE === 'true'
+const configExport = analyzing
+  ? withBundleAnalyzer({ enabled: true })(nextConfig)
+  : nextConfig
 
-export default nextConfig
+export default configExport
