@@ -1,10 +1,11 @@
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import Amateur from '@/static/imgs/rank/Amateur.svg'
-import Master from '@/static/imgs/rank/Master.svg'
-import Professional from '@/static/imgs/rank/Professional.svg'
-import Rookie from '@/static/imgs/rank/Rookie.svg'
-import SemiPro from '@/static/imgs/rank/Semi-pro.svg'
+import Amateur from '@/static/imgs/rank/Amateur.png'
+import Master from '@/static/imgs/rank/Master.png'
+import Professional from '@/static/imgs/rank/Professional.png'
+import Rookie from '@/static/imgs/rank/Rookie.png'
+import SemiPro from '@/static/imgs/rank/Semi-pro.png'
 
 interface RankIconProps {
   rating: number
@@ -47,11 +48,21 @@ export default function RankIcon({ rating }: RankIconProps) {
   return (
     <div className="flex flex-col justify-center items-center gap-2">
       <div className="flex items-center justify-center h-10 w-10">
-        {tier === '루키' && <Rookie className="w-full h-full" />}
-        {tier === '아마추어' && <Amateur className="w-full h-full" />}
-        {tier === '세미프로' && <SemiPro className="w-full h-full" />}
-        {tier === '프로페셔널' && <Professional className="w-full h-full" />}
-        {tier === '마스터' && <Master className="w-full h-full" />}
+        {tier === '루키' && (
+          <Image src={Rookie} alt="루키" width={24} height={24} />
+        )}
+        {tier === '아마추어' && (
+          <Image src={Amateur} alt="아마추어" width={24} height={24} />
+        )}
+        {tier === '세미프로' && (
+          <Image src={SemiPro} alt="세미프로" width={24} height={24} />
+        )}
+        {tier === '프로페셔널' && (
+          <Image src={Professional} alt="프로페셔널 " width={24} height={24} />
+        )}
+        {tier === '마스터' && (
+          <Image src={Master} alt="마스터" width={24} height={24} />
+        )}
       </div>
       <p className="text-sm font-normal">
         {tier} {tierNum}

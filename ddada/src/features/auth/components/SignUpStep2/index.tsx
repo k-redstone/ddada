@@ -536,7 +536,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </div>
           </>
         )}
-        {/* todo 최종전에 삭제 */}
+        {/* 임시버튼
         <button
           type="button"
           className="px-6 py-5 outline-none rounded-xl bg-theme text-white cursor-pointer"
@@ -547,7 +547,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
           }}
         >
           돈내기방지용 인증완료 버튼
-        </button>
+        </button> */}
         {!authNumber && (
           <div className="mt-2 flex justify-end">
             <button

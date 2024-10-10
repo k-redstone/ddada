@@ -83,7 +83,7 @@ export default function MatchRequestButton({
       channelKey: process.env.NEXT_PUBLIC_CHANNEL_KEY,
       paymentId: `payment-${crypto.randomUUID()}`,
       orderName: `${matchDetailData.court.name} ${matchDetailData.date} ${matchDetailData.time} 참가`,
-      totalAmount: 4000,
+      totalAmount: 5500,
       currency: 'CURRENCY_KRW',
       payMethod: 'EASY_PAY',
       issueName: 'ddada',
