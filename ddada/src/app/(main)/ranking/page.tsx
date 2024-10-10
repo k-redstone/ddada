@@ -61,10 +61,10 @@ export default function RankingPage() {
     )
   }
 
-  const [firstPlace, secondPlace, thirdPlace, ...allRankings] = data.slice(
-    0,
-    -1,
-  )
+  const firstPlace = data.length > 0 ? data[0] : null
+  const secondPlace = data.length > 1 ? data[1] : null
+  const thirdPlace = data.length > 2 ? data[2] : null
+  const allRankings = data.slice(3)
   const displayedRankings = allRankings.slice(0, page * itemsPerPage)
   const hasMore = displayedRankings.length < allRankings.length
 
@@ -81,51 +81,59 @@ export default function RankingPage() {
       </div>
 
       <div className="flex flex-col rounded-xl p-6 w-full max-w-2xl gap-y-6">
-        <div className="rounded-lg p-4 mb-6 text-gray-700">
-          <p className="font-semibold text-lg text-gray-600">플레이어 랭킹</p>
-          <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-            <p className="text-xl font-bold text-theme">
-              {data[data.length - 1].ranking}위
-            </p>
-            <p className="text-lg text-theme font-medium">
-              {data[data.length - 1].nickname}
-            </p>
-            <RankTier rating={data[data.length - 1].rating} />
+        {data.length > 0 && (
+          <div className="rounded-lg p-4 mb-6 text-gray-700">
+            <p className="font-semibold text-lg text-gray-600">플레이어 랭킹</p>
+            <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              <p className="text-xl font-bold text-theme">
+                {data[data.length - 1].ranking}위
+              </p>
+              <p className="text-lg text-theme font-medium">
+                {data[data.length - 1].nickname}
+              </p>
+              <RankTier rating={data[data.length - 1].rating} />
+            </div>
           </div>
-        </div>
+        )}
 
         <p className="font-semibold text-lg text-gray-600">전체 랭킹</p>
 
         <div className="flex justify-center items-end mb-12 gap-4">
-          <div className="text-center">
-            <div className="bg-gray-200 rounded-full p-4 mb-2 text-2xl font-bold">
-              2
+          {secondPlace && (
+            <div className="text-center">
+              <div className="bg-gray-200 rounded-full p-4 mb-2 text-2xl font-bold">
+                2
+              </div>
+              <div className="bg-white rounded-lg p-4 shadow-md">
+                <p className="font-semibold">{secondPlace.nickname}</p>
+                <RankTier rating={secondPlace.rating} />
+              </div>
             </div>
-            <div className="bg-white rounded-lg p-4 shadow-md">
-              <p className="font-semibold">{secondPlace.nickname}</p>
-              <RankTier rating={secondPlace.rating} />
-            </div>
-          </div>
+          )}
 
-          <div className="text-center -mt-8">
-            <div className="bg-yellow-400 rounded-full p-4 mb-2 text-3xl font-bold">
-              1
+          {firstPlace && (
+            <div className="text-center -mt-8">
+              <div className="bg-yellow-400 rounded-full p-4 mb-2 text-3xl font-bold">
+                1
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <p className="font-bold text-xl">{firstPlace.nickname}</p>
+                <RankTier rating={firstPlace.rating} />
+              </div>
             </div>
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <p className="font-bold text-xl">{firstPlace.nickname}</p>
-              <RankTier rating={firstPlace.rating} />
-            </div>
-          </div>
+          )}
 
-          <div className="text-center">
-            <div className="bg-orange-200 rounded-full p-4 mb-2 text-2xl font-bold">
-              3
+          {thirdPlace && (
+            <div className="text-center">
+              <div className="bg-orange-200 rounded-full p-4 mb-2 text-2xl font-bold">
+                3
+              </div>
+              <div className="bg-white rounded-lg p-4 shadow-md">
+                <p className="font-semibold">{thirdPlace.nickname}</p>
+                <RankTier rating={thirdPlace.rating} />
+              </div>
             </div>
-            <div className="bg-white rounded-lg p-4 shadow-md">
-              <p className="font-semibold">{thirdPlace.nickname}</p>
-              <RankTier rating={thirdPlace.rating} />
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -134,20 +142,17 @@ export default function RankingPage() {
               <div
                 key={rank.ranking}
                 className={`flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-150 ease-in-out
-                  ${userProfile?.nickname === rank.nickname && 'border-theme border-2'}
-                  `}
+                  ${userProfile?.nickname === rank.nickname && 'border-theme border-2'}`}
               >
                 <p
                   className={`text-lg font-semibold text-gray-700
-                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}
-                  `}
+                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}`}
                 >
                   {rank.ranking}위
                 </p>
                 <p
                   className={`text-lg
-                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}
-                  `}
+                  ${userProfile?.nickname === rank.nickname ? 'text-theme' : 'text-gray-700'}`}
                 >
                   {rank.nickname}
                 </p>
