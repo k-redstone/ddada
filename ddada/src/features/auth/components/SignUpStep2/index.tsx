@@ -536,7 +536,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             </div>
           </>
         )}
-        {/* 임시버튼
+        {/* 임시버튼 todo 삭제 필요 */}
         <button
           type="button"
           className="px-6 py-5 outline-none rounded-xl bg-theme text-white cursor-pointer"
@@ -546,8 +546,8 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
             setPhoneNumberExists(true)
           }}
         >
-          돈내기방지용 인증완료 버튼
-        </button> */}
+          돈내기방지용 인증완료 버튼(숫자만 입력하세요 ex. 01012345678)
+        </button>
         {!authNumber && (
           <div className="mt-2 flex justify-end">
             <button
