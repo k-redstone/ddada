@@ -21,8 +21,11 @@ export default function PlayStyle() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center px-6 py-20">
+      <div className="flex flex-col gap-y-6 justify-center items-center px-6 py-20">
         <LoadingSpinner className="animate-spin" />
+        <p className="text-theme animate-pulse">
+          플레이스타일 분석을 가져오는 중입니다. 잠시만 기달려주세요.
+        </p>
       </div>
     )
   }

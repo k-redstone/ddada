@@ -74,13 +74,22 @@ export default function MainHeader() {
         >
           라켓 추천 • 검색
         </Link>
+
         {accessToken && data?.memberType === 'PLAYER' && (
-          <Link
-            href="/mypage/profile-edit"
-            className={`${currentPath === 'mypage' && 'text-theme'}`}
-          >
-            마이페이지
-          </Link>
+          <>
+            <Link
+              href="/ranking"
+              className={`${currentPath === 'ranking' && 'text-theme'}`}
+            >
+              랭킹
+            </Link>
+            <Link
+              href="/mypage/profile-edit"
+              className={`${currentPath === 'mypage' && 'text-theme'}`}
+            >
+              마이페이지
+            </Link>
+          </>
         )}
         {accessToken && data?.memberType === 'MANAGER' && (
           <Link
