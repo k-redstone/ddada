@@ -47,7 +47,7 @@ export default function ScoreBoardPage() {
   }
 
   return (
-    <div className="bg-[#E7E7E7]">
+    <div className="bg-base-100">
       <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
         <MatchPlayerInfo data={data} />

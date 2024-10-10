@@ -57,8 +57,8 @@ export default function ManagerHeader() {
         {accessToken ? (
           <button
             type="button"
-            className="bg-[#6B6E78] rounded-[62.5rem] text-white py-3 px-6"
-            onClick={handleLogout}
+            className="text-disabled-dark underline py-3"
+            onClick={() => handleLogout()}
           >
             로그아웃
           </button>

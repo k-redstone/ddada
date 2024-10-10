@@ -75,7 +75,7 @@ export default function ScoreBoardPage() {
   }
 
   return (
-    <div className="bg-[#E7E7E7]">
+    <div className="bg-base-100">
       <MatchCourtShortInfo data={data} />
       <div className="flex flex-col gap-y-3">
         <MatchReservationDetailProvider matchDetailData={data}>
@@ -109,14 +109,14 @@ export default function ScoreBoardPage() {
             <button
               type="button"
               onClick={() => handleMatchStart()}
-              className="bg-[#FCA211] flex justify-center items-center h-[4.75rem] cursor-pointer w-full"
+              className="bg-theme flex justify-center items-center h-[4.75rem] cursor-pointer w-full"
             >
               <span className="text-white text-xl font-bold ">매치 시작</span>
             </button>
           </div>
         ) : (
-          <div className="bg-[#E5E5ED] flex justify-center items-center h-[4.75rem]">
-            <span className="text-[#6B6E78] text-xl font-bold">
+          <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
+            <span className="text-disabled-dark text-xl font-bold">
               매치 대기중
             </span>
           </div>

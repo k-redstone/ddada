@@ -24,17 +24,13 @@ export default function RacketRecommendCard({
           <span className="text-disabled-dark">{data.manufacturer}</span>
           <span className="text-sm">{data.name}</span>
         </p>
-        <p className="flex flex-col items-center gap-x-1 text-disabled-dark">
-          <p>
-            <span>{data.weight}</span>
-            <span>•</span>
-            <span>{data.material}</span>
-          </p>
-          <p>
-            <span>{data.shaft}</span>
-            <span>•</span>
-            <span>{data.balance}</span>
-          </p>
+        <p className="flex flex-col gap-x-1 text-disabled-dark">
+          <span className="animate-pulse">{data.type}</span>
+          <span>• {data.weight}</span>
+          <span>• {data.material}</span>
+          <span>• {data.shaft}</span>
+          <span>• {data.balance}</span>
+          <span>• {data.price.toLocaleString()}원</span>
         </p>
       </div>
     </div>
