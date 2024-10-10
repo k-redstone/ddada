@@ -21,6 +21,9 @@ export default function DeleteUserModal({
   }
   const handleDeleteUser = async () => {
     patchDeleteUser()
+    sessionStorage.removeItem('accessToken')
+    sessionStorage.removeItem('refreshToken')
+    sessionStorage.removeItem('loginType')
     window.location.href = '/'
   }
   return (
