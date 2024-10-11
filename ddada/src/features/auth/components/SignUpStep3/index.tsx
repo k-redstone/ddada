@@ -2,9 +2,12 @@
 
 'use client'
 
+import axios from 'axios'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 import { signupSubmit } from '@/features/auth/api/signup/index.ts'
 import {
@@ -31,7 +34,7 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
     setError,
     clearErrors,
   } = useFormContext<SignUpFormData>()
-
+  const router = useRouter()
   const [profileImage, setProfileImage] = useState<string | undefined>(
     undefined,
   )
@@ -114,14 +117,26 @@ export default function SignUpStep3({ changeViewStep }: SignUpStep3Props) {
       phoneNumber: data.phoneNumber,
       description: data.introduction,
     }
-
-    const res = await signupSubmit(payload)
-    sessionStorage.setItem('accessToken', res.data.result.accessToken)
-    sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
-    if (sessionStorage.getItem('loginType') !== 'kakao') {
-      sessionStorage.setItem('loginType', 'custom')
+    try {
+      const res = await signupSubmit(payload)
+      sessionStorage.setItem('accessToken', res.data.result.accessToken)
+      sessionStorage.setItem('refreshToken', res.data.result.refreshToken)
+      if (sessionStorage.getItem('loginType') !== 'kakao') {
+        sessionStorage.setItem('loginType', 'custom')
+      }
+      changeViewStep(SignUpStepType.step4)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 409) {
+          setError('email', {
+            type: 'manual',
+            message: '이미 가입된 이메일입니다.',
+          })
+          toast.error('이미 가입된 이메일입니다.')
+          router.push('/login')
+        }
+      }
     }
-    changeViewStep(SignUpStepType.step4)
   }
   const profilePictureRegister = register('profilePicture', {})
 

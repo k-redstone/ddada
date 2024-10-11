@@ -135,6 +135,7 @@ export default function SignUpStep2({ changeViewStep }: SignUpStep2Props) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
     if (event.target.value.length > 0 && emailRegex.test(event.target.value)) {
       setEmailExists(true)
+      clearErrors('email')
     } else {
       setEmailExists(false)
     }
