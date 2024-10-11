@@ -71,6 +71,11 @@ export default function MatchRequestButton({
         case 'pay':
           toast.error('결제에 실패했습니다.')
           break
+
+        case 'time':
+          toast.error('같은 시간대 예약한 매치가 있습니다.')
+          break
+
         default:
           toast.error('매치 예약 중 오류가 발생했습니다.')
       }
