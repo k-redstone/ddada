@@ -2,7 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import {
@@ -24,6 +24,7 @@ export default function BadmintonScoreBoard({
 }: BadmintonScoreBoardProps) {
   const router = useRouter()
   const queryClient = useQueryClient()
+  const [isDataStore, setDataStore] = useState<boolean>(false)
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
@@ -51,18 +52,27 @@ export default function BadmintonScoreBoard({
       sets: filteredSet,
     }
 
+    localStorage.setItem('dataStore', JSON.stringify(true))
+    setDataStore(true)
+
     await storeMatchResult(badmintonInstance.id as number, payload)
     await changeMatchStatus(badmintonInstance.id as number, 'FINISHED').then(
       async () => {
+        setDataStore(false)
+        localStorage.removeItem('dataStore')
         await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
         badmintonInstance.finishMatch()
-        toast.success('경기가 종료되었습니다.')
+        toast.success('경기가 종료되었습니다. 새로고침 해주세요')
         router.push(`/manager/done/${data.id}`)
       },
     )
   }
 
   useLayoutEffect(() => {
+    const status = localStorage.getItem('dataStore') || false
+    if (typeof status === 'string') {
+      setDataStore(true)
+    }
     if (data.status === 'PLAYING') {
       const initInstance = new BadmintonScoreboardInstance(
         data.id,
@@ -121,9 +131,12 @@ export default function BadmintonScoreBoard({
         <button
           type="button"
           onClick={() => handleMatchEnd()}
-          className="bg-theme flex justify-center items-center h-[4.75rem] cursor-pointer"
+          disabled={isDataStore}
+          className={`flex justify-center items-center h-[4.75rem] ${isDataStore ? 'bg-disabled-dark' : 'bg-theme cursor-pointer'}`}
         >
-          <span className="text-white text-xl font-bold ">매치 완료</span>
+          <span className="text-white text-xl font-bold ">
+            {isDataStore ? '매칭 저장 중..' : '매치 완료'}
+          </span>
         </button>
       ) : (
         <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
