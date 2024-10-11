@@ -77,6 +77,9 @@ export default function MyMatchDetailPage({
     )
   }
 
+  if (!matchLoading) {
+    console.log(user)
+  }
   const teamAPlayer1 = {
     playerNum: 11,
     playerId: match.team1.player1.id,
@@ -346,6 +349,72 @@ export default function MyMatchDetailPage({
             <div className="flex-grow text-center">
               {PlayerMatchTagDescription[matchTag]}
             </div>
+          </div>
+          <div className="flex flex-col flex-1 gap-6 p-6 w-full">
+            <p className="text-lg font-bold text-theme border-b-2 border-theme">
+              매치 분석
+            </p>
+            <Chart
+              type="bar"
+              series={[
+                {
+                  name: '평균',
+                  data: [
+                    user.score_lose_rate.mean_lose_rate,
+                    user.score_lose_rate.mean_score_rate,
+                  ],
+                },
+                {
+                  name: '플레이어',
+                  data: [
+                    user.score_lose_rate.my_lose_rate,
+                    user.score_lose_rate.my_score_rate,
+                  ],
+                },
+              ]}
+              height={350}
+              options={{
+                plotOptions: {
+                  bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                  },
+                },
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  show: true,
+                  width: 2,
+                  colors: ['transparent'],
+                },
+                xaxis: {
+                  categories: ['실점율', '득점율'],
+                },
+                yaxis: {
+                  labels: {
+                    formatter(val) {
+                      return val.toFixed(2)
+                    },
+                  },
+                },
+                fill: {
+                  opacity: 1,
+                },
+                tooltip: {
+                  y: {
+                    formatter(val) {
+                      return `${val}`
+                    },
+                  },
+                },
+                chart: {
+                  toolbar: { show: false },
+                  background: 'transparent',
+                },
+                colors: ['#E5E5ED', '#fca211'],
+              }}
+            />
           </div>
           <div className="flex flex-col md:flex-row gap-6 text-disabled-dark">
             <div className="flex flex-col flex-1 gap-6 p-6">
