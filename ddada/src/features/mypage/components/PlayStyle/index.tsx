@@ -66,7 +66,7 @@ export default function PlayStyle() {
   // }
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <PlayStyleLogoProps userPlayStyle={data.type} />
+      <PlayStyleLogoProps userPlayStyle={data} />
       <Chart
         type="radar"
         series={[
