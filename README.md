@@ -237,11 +237,11 @@
 
 <details>
 <summary>로그인 화면</summary>  
-<img src="docs/images/auth/login.png" height="300" width="200">
+<img src="docs/images/auth/login.png" height="400">
 </details>
 <details>
 <summary>회원가입</summary>  
-<img src="docs/images/auth/signup.gif" height="300" width="200">
+<img src="docs/images/auth/signup.gif" height="400">
 <p>- react-hook-form으로 각 항목의 validation을 확인후 회원가입을 진행하였다.</p>
 <p>- 각 단계를 switch-case로 분기하여서 하나의 component에서 처리하였다.</p>
 </details>
@@ -250,76 +250,80 @@
 
 <details>
 <summary>랜딩 페이지</summary>
-<img src="docs/images/main/landing/landing.gif" width="500">
+<img src="docs/images/main/landing/landing.gif" width="600">
 </details>
 
 <details>
 <summary>매치 예약 페이지</summary>
 <h3>[매치가 없을 때]</h3>
-<img src="docs/images/main/match_reservation/no_match.png" width="500">
+<img src="docs/images/main/match_reservation/match_reservation_no_match.gif" width="600">
 <h3>[매치가 있을 때]</h3>
-<img src="docs/images/main/match_reservation/no_match.png" width="500">
-<h3>[시연]</h3>
-<img src="docs/images/main/match_reservation/match_reservation_no_match.gif" width="500">
+<img src="docs/images/main/match_reservation/match_reservation.gif" width="600">
 </details>
 
 <details>
 <summary>장소 예약 페이지</summary>
-<img src="docs/images/main/landing.gif" width="500">
+<img src="docs/images/main/court_reservation/court_reservation.gif" width="600">
 </details>
 
 <details>
 <summary>라켓 추천 • 검색 페이지</summary>
-<img src="docs/images/main/landing.gif" width="500">
+<img src="docs/images/main/racket_recommend/racket_recommend.gif" width="600">
 </details>
 
 <details>
 <summary>랭킹</summary>
-<img src="docs/images/main/landing.gif" width="500">
+<img src="docs/images/main/ranking/ranking.JPG" height="400">
 </details>
 
 <details>
 <summary>매니저 모집 페이지</summary>
 <p>매니저 신청하기 버튼 클릭시 구글 폼으로 이동합니다.</p>
-<img src="docs/images/main/manager_recruit/manager_recruit.png" width="500">
+<img src="docs/images/main/manager_recruit/manager_recruit.png" width="600">
 </details>
 
 <details>
 <summary>체육관 제휴 페이지</summary>
 <p>체육관 제휴맺기 클릭 시 카카오 오픈채팅으로 연결됩니다.</p>
-<img src="docs/images/main/gym_recruit/gym_recruit.png" width="500">
+<img src="docs/images/main/gym_recruit/gym_recruit.png" width="600">
 </details>
 
 <details>
 <summary>마이 페이지</summary>
   <details style="margin-left: 20px">
     <summary>내 프로필 수정</summary>
-    <img src="docs/images/main/mypage/profileedit.png" width="500">
+    <img src="docs/images/main/mypage/mypage_profile_edit.gif" width="600">
   </details>
   <details style="margin-left: 20px">
     <summary>비밀번호 변경</summary>
-    <img src="docs/images/main/mypage/passwordchange.png" width="500">
+    <img src="docs/images/main/mypage/mapage_password_change.gif" width="600">
   </details>
   <details style="margin-left: 20px">
     <summary>나의 매치</summary>
+    <img src="docs/images/main/mypage/mypage_match_detail.gif" width="600">
   </details>
    <details style="margin-left: 20px">
     <summary>플레이스타일 분석</summary>
+    <img src="docs/images/main/mypage/mypage_playstyle_1.png" width="300">
+    <img src="docs/images/main/mypage/mypage_playstyle_2.png" width="300">
   </details>
 </details>
 
 ### 3. 매니저
 
 <details>
-<summary>매치 상세 페이지</summary>
+  <summary>매치 예약 페이지</summary>
+  <img src="docs/images/manager/manager_match_reservation.gif" width="600">
 </details>
 
 <details>
-<summary>매치 완료 페이지</summary>
+  <summary>매치 완료 페이지</summary>
+  <img src="docs/images/manager/manager_finished_match.gif" width="600">
 </details>
 
 <details>
-<summary>매치 진행 페이지</summary>
+  <summary>매치 진행 페이지</summary>
+  <img src="docs/images/manager/manager_score_input.gif" width="600">
 </details>
 
 ### 4. 체육관 관리자
@@ -327,7 +331,7 @@
 <details>
 <summary>대시보드 페이지</summary>
 
-<img src="docs/images/gym/gym_dashboard.png" width="500">
+<img src="docs/images/gym/gym_dashboard.png" width="600">
 <p>대시보드 페이지</p>
 <img src="docs/images/gym/gym_money.png" height="300" width="300"> 
 <p>돈 인출 모달</p>
