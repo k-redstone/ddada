@@ -48,7 +48,7 @@ export default function MatchPlayerInfo() {
                   {team1Data.player1.gender === 'MALE' ? (
                     <ManIcon />
                   ) : (
-                    <WomanIcon />
+                    <WomanIcon className="rotate-180" />
                   )}
                 </p>
                 <UserTierWithIcon
@@ -75,7 +75,7 @@ export default function MatchPlayerInfo() {
                   {team1Data.player2.gender === 'MALE' ? (
                     <ManIcon />
                   ) : (
-                    <WomanIcon />
+                    <WomanIcon className="rotate-180" />
                   )}
                 </p>
                 <UserTierWithIcon
@@ -104,7 +104,7 @@ export default function MatchPlayerInfo() {
                   {team2Data.player1.gender === 'MALE' ? (
                     <ManIcon />
                   ) : (
-                    <WomanIcon />
+                    <WomanIcon className="rotate-180" />
                   )}
                 </p>
                 <UserTierWithIcon
@@ -130,7 +130,7 @@ export default function MatchPlayerInfo() {
                   {team2Data.player2.gender === 'MALE' ? (
                     <ManIcon />
                   ) : (
-                    <WomanIcon />
+                    <WomanIcon className="rotate-180" />
                   )}
                 </p>
                 <UserTierWithIcon
