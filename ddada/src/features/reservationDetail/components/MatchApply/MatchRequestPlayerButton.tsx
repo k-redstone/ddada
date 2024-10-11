@@ -51,7 +51,7 @@ export default function MatchRequestButton({
       })
 
       checkGenderMatchJoin(matchDetailData, clickedTeam, playerGender.gender)
-      // await requestPayment()
+      await requestPayment()
       await addUserToMatch(matchId, clickedTeam)
       queryClient.invalidateQueries({
         queryKey: ['matchDetail', `${matchId}`],
