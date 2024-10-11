@@ -95,7 +95,10 @@ export default function RankingPage() {
               <p className="text-lg text-theme font-medium">
                 {data[data.length - 1].nickname}
               </p>
-              <RankTier rating={data[data.length - 1].rating} />
+              <RankTier
+                rating={data[data.length - 1].rating}
+                gameCount={data[data.length - 1].playCount}
+              />
             </div>
           </div>
         )}

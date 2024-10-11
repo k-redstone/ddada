@@ -52,7 +52,7 @@ export default function ResultLoading() {
         </button>
       </div>
       <div className="relative rounded-xl">
-        <p className="absolute flex flex-col gap-y-2 justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
+        <p className="absolute w-full px-2 flex flex-col gap-y-2 justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
           <span className="text-sm">내 선호 라켓유형은?</span>
           {/* 여기에 props */}
           <span className="text-[2.5rem] font-bold text-center">
