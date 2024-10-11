@@ -4,7 +4,6 @@ import {
   FetchManagerMatchListType,
   ManagerMatchListPayload,
   MatchReusltStoreType,
-  MatchStatusType,
 } from '@/features/manager/types/MatchDataType.ts'
 
 export async function addJudgeToMatch(matchId: number) {
@@ -29,14 +28,8 @@ export async function fetchManagerMatchList(
   return res.data.result
 }
 
-export async function changeMatchStatus(
-  matchId: number,
-  status: MatchStatusType,
-) {
-  const payload = {
-    status,
-  }
-  await privateAPI.patch(`/manager/matches/${matchId}/status`, payload)
+export async function changeMatchStatus(matchId: number) {
+  await privateAPI.patch(`/manager/matches/${matchId}/status`)
 }
 // todo payload 타입지정
 export async function storeMatchResult(

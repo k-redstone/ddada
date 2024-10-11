@@ -2,13 +2,10 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 import { toast } from 'react-hot-toast'
 
-import {
-  changeMatchStatus,
-  storeMatchResult,
-} from '@/features/manager/api/managerAPI.tsx'
+import { storeMatchResult } from '@/features/manager/api/managerAPI.tsx'
 import BadmintonCourt from '@/features/manager/components/BadmintonCourt/index.tsx'
 import GameUserInfo from '@/features/manager/components/GameUserInfo/index.tsx'
 import useBadmintonStore from '@/features/manager/stores/useBadmintonStore.tsx'
@@ -24,7 +21,6 @@ export default function BadmintonScoreBoard({
 }: BadmintonScoreBoardProps) {
   const router = useRouter()
   const queryClient = useQueryClient()
-  const [isDataStore, setDataStore] = useState<boolean>(false)
   const { badmintonInstance, update } = useBadmintonStore((state) => ({
     badmintonInstance: state.badmintonInstance,
     update: state.update,
@@ -52,14 +48,8 @@ export default function BadmintonScoreBoard({
       sets: filteredSet,
     }
 
-    localStorage.setItem('dataStore', JSON.stringify(true))
-    setDataStore(true)
-
-    await storeMatchResult(badmintonInstance.id as number, payload)
-    await changeMatchStatus(badmintonInstance.id as number, 'FINISHED').then(
+    await storeMatchResult(badmintonInstance.id as number, payload).then(
       async () => {
-        setDataStore(false)
-        localStorage.removeItem('dataStore')
         await queryClient.invalidateQueries({ queryKey: ['managerMatch'] })
         badmintonInstance.finishMatch()
         toast.success('경기가 종료되었습니다. 새로고침 해주세요')
@@ -69,10 +59,6 @@ export default function BadmintonScoreBoard({
   }
 
   useLayoutEffect(() => {
-    const status = localStorage.getItem('dataStore') || false
-    if (typeof status === 'string') {
-      setDataStore(true)
-    }
     if (data.status === 'PLAYING') {
       const initInstance = new BadmintonScoreboardInstance(
         data.id,
@@ -131,12 +117,9 @@ export default function BadmintonScoreBoard({
         <button
           type="button"
           onClick={() => handleMatchEnd()}
-          disabled={isDataStore}
-          className={`flex justify-center items-center h-[4.75rem] ${isDataStore ? 'bg-disabled-dark' : 'bg-theme cursor-pointer'}`}
+          className="flex justify-center items-center h-[4.75rem] bg-theme"
         >
-          <span className="text-white text-xl font-bold ">
-            {isDataStore ? '매칭 저장 중..' : '매치 완료'}
-          </span>
+          <span className="text-white text-xl font-bold ">매치완료</span>
         </button>
       ) : (
         <div className="bg-disabled flex justify-center items-center h-[4.75rem]">
