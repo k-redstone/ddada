@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useLayoutEffect } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { privateAPI } from '@/api/axios.ts'
 import {
   changeMatchStatus,
   storeMatchResult,
@@ -52,10 +51,6 @@ export default function BadmintonScoreBoard({
       sets: filteredSet,
     }
 
-    await privateAPI.post(
-      `/manager/match/analysis/${badmintonInstance.id}`,
-      payload,
-    )
     await storeMatchResult(badmintonInstance.id as number, payload)
     await changeMatchStatus(badmintonInstance.id as number, 'FINISHED').then(
       async () => {
