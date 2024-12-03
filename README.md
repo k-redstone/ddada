@@ -1,4 +1,4 @@
-# 따다 프론트
+# SSAFY A509 DDADA
 
 <img src="docs/images/logo.png" alt="따다" width="350" />
 
@@ -12,10 +12,10 @@
 
 <div align="center">
   
-| [박상우](https://github.com/coolfin) | [전태호](https://github.com/Taehororo) | [최홍석](https://github.com/k-redstone) |
-| :----------------------------------: | :-----------------------------------: | :-----------------------------------: | 
-|<img src="https://avatars.githubusercontent.com/u/56531884?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/145996139?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/79430840?v=4" width="100">|
-|          FE, DESIGN          |                  FE                  |              FE, INFRA              |
+| [박상우](https://github.com/coolfin) | [전태호](https://github.com/Taehororo) | [최홍석](https://github.com/k-redstone) | [정한수](https://github.com/Jung-hansu) | [최성철](https://github.com/CSchoice) |[윤경서](https://github.com/yoonkyungseo) |
+| :----------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | 
+|<img src="https://avatars.githubusercontent.com/u/56531884?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/145996139?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/79430840?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/79430840?v=4" width="100">|<img src="docs/images/profile/choi.png" width="100">|<img src="docs/images/profile/yoon.png" width="100">|
+|          FE, DESIGN          |                  FE                  |              FE, INFRA              |              BE, INFRA              |              BE            |              DATA              |
 
 </div>
 
@@ -67,49 +67,23 @@
 
 ### merge
 
-- 영문은 모두 소**문자**를 사용한다.
+- 영문은 모두 **소문자**를 사용한다.
 - 내용은 템플릿을 사용한다.
 - 생성 예시
   **분야/타입/#이슈번호 기능명 | 간단한 설명**
   - be/feat/i1_backend cicd
   - fe/design/i2\_랜딩페이지
 
-### 🐬 **개발 기술**
-
-**React**
-
-- 컴포넌트화된 구조로 유지보수와 재사용성을 고려해 개발했습니다.
-- 재사용되는 UI 요소(예: 헤더, 푸터, 배너 등)를 컴포넌트로 만들어 리소스를 절약하고 코드 중복을 최소화했습니다.
-
-**Next.js**
-
-- 서버 사이드 렌더링과 정적 사이트 생성(SSG)을 지원하여 SEO 향상과 초기 로딩 속도 개선에 기여했습니다.
-- 페이지 기반 라우팅을 통해 파일 구조만으로 라우팅이 자동으로 설정되어 개발 효율성을 높였습니다.
-- 내장된 API Routes를 활용하여 백엔드와의 통합을 간소화했습니다.
-
-**React Query**
-
-- 서버 상태 관리에 React Query를 사용하여 데이터의 캐싱, 동기화, 업데이트를 효율적으로 처리했습니다.
-- 데이터를 fetching하는 동안 로딩 상태와 오류를 자동으로 관리해 UI의 안정성을 높였습니다.
-- 서버에서 받은 데이터를 캐싱해 재요청을 최소화하여 성능을 개선했습니다.
-
-**Tailwind CSS**
-
-- 유틸리티 클래스 기반 스타일링을 통해 빠르고 간결하게 스타일을 적용했습니다.
-- 필요 시 커스텀 테마를 적용해 일관된 UI 스타일을 유지했습니다.
-- CSS-in-JS 라이브러리 대신 Tailwind CSS를 사용하여 성능을 최적화하고 유지 보수를 단순화했습니다.
-
-**ESLint와 Prettier**
-
-- 코드 품질 관리는 ESLint로, 코드 포맷팅은 Prettier로 처리하여 코드의 일관성과 가독성을 높였습니다.
-- Airbnb 스타일 가이드를 참고해 규칙을 설정했고, 팀원들과 협의해 예외 규칙을 조정했습니다.
-- 협업 시 코드 스타일을 일관되게 유지함으로써 개발 속도를 높였습니다.
-
 ### 👩🏻‍🔧 **기술 스택**
 
 <div align="left">
-  
-  #### 🚀 프레임워크 및 라이브러리
+
+### FE
+
+---
+
+#### 🚀 프레임워크 및 라이브러리
+
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=black" height="35">
   <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&amp;logo=nextdotjs&amp;logoColor=white" height="35">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typeScript&amp;logoColor=white" height="35"> 
@@ -129,87 +103,64 @@
   <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&amp;logo=eslint&amp;logoColor=white" height="35">
   <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&amp;logo=prettier&amp;logoColor=white" height="35">
 
-</div>
+### BE
 
-## 프로젝트 구조
+---
 
-```
-📦src
-┣ 📂api
-┣ 📂app
-┃ ┣ 📂(auth)
-┃ ┃ ┣ 📂login
-┃ ┃ ┣ 📂reset-password
-┃ ┃ ┗ 📂signup
-┃ ┣ 📂(main)
-┃ ┃ ┣ 📂court-reservation
-┃ ┃ ┣ 📂manager-recruit
-┃ ┃ ┣ 📂match-reservation
-┃ ┃ ┃ ┣ 📂detail
-┃ ┃ ┃ ┃ ┗ 📂[matchId]
-┃ ┃ ┣ 📂mypage
-┃ ┃ ┃ ┣ 📂mymatch
-┃ ┃ ┃ ┃ ┗ 📂[matchId]
-┃ ┃ ┃ ┣ 📂password-change
-┃ ┃ ┃ ┣ 📂playstyle
-┃ ┃ ┃ ┗ 📂profile-edit
-┃ ┃ ┣ 📂ranking
-┃ ┣ 📂(manager)
-┃ ┃ ┣ 📂manager
-┃ ┃ ┃ ┣ 📂detail
-┃ ┃ ┃ ┃ ┗ 📂[gameId]
-┃ ┃ ┃ ┣ 📂done
-┃ ┃ ┃ ┃ ┗ 📂[gameId]
-┃ ┃ ┃ ┣ 📂match
-┃ ┃ ┃ ┃ ┗ 📂[gameId]
-┃ ┣ 📂dashboard
-┃ ┣ 📂racket
-┃ ┃ ┗ 📂recommend
-┣ 📂components
-┃ ┣ 📂CommonModal
-┃ ┣ 📂landing
-┃ ┣ 📂MainFooter
-┃ ┣ 📂MainHeader
-┃ ┣ 📂MatchCourtInfo
-┃ ┣ 📂MatchRule
-┃ ┣ 📂MatchTypeTag
-┃ ┗ 📂UserTierWithIcon
-┣ 📂constants
-┃ ┗ 📂day
-┣ 📂features
-┃ ┣ 📂auth
-┃ ┣ 📂court-reservation
-┃ ┣ 📂gym
-┃ ┣ 📂landing
-┃ ┣ 📂manager
-┃ ┃ ┣ 📂api
-┃ ┃ ┣ 📂components
-┃ ┃ ┣ 📂constants
-┃ ┃ ┣ 📂hooks
-┃ ┃ ┣ 📂stores
-┃ ┃ ┣ 📂types
-┃ ┃ ┗ 📂utils
-┃ ┣ 📂match-reservation
-┃ ┣ 📂mypage
-┃ ┣ 📂racketRecommend
-┃ ┣ 📂ranking
-┃ ┗ 📂reservationDetail
-┣ 📂hooks
-┣ 📂providers
-┣ 📂static
-┃ ┣ 📂fonts
-┃ ┗ 📂imgs
-┗ 📂types
-┃ ┗ 📂user
-```
+#### 🚀 프레임워크 및 라이브러리
+
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&amp;logo=springboot&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/spring_security-6DB33F?style=for-the-badge&amp;logo=springsecurity&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&amp;logo=swagger&amp;logoColor=white" height="35">
+
+#### 📂 DB 및 스토리지
+
+<img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&amp;logo=redis&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&amp;logo=elasticsearch&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/aws_s3-569A31?style=for-the-badge&amp;logo=amazons3&amp;logoColor=white" height="35">
+
+#### 🎁 API
+
+<img src="https://img.shields.io/badge/kakao-FFCD00?style=for-the-badge&amp;logo=kakao&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/gmail-EA4335?style=for-the-badge&amp;logo=gmail&amp;logoColor=white" height="35">
+
+### DATA
+
+---
+
+<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&amp;logo=fastapi&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&amp;logo=pandas&amp;logoColor=white" height="35">
+<img src="https://img.shields.io/badge/jupyter-F37626?style=for-the-badge&amp;logo=jupyter&amp;logoColor=white" height="35">
+
+### INFRA
+
+---
+
+#### 🔗 CI/CD
+
+<img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&amp;logo=jenkins&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&amp;logo=docker&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&amp;logo=nginx&amp;logoColor=white" height="35">
+
+#### 💻 모니터링
+
+<img src="https://img.shields.io/badge/prometheus-E6522C?style=for-the-badge&amp;logo=prometheus&amp;logoColor=white" height="35"> 
+<img src="https://img.shields.io/badge/grafana-F46800?style=for-the-badge&amp;logo=grafana&amp;logoColor=white" height="35">
 
 ## 역할 분담
 
 ### 🍊박상우
 
-- **UI**
-  - 페이지 : 전체 와이어프레인 설계 및 전체 디자인
-  - 페이지에 대한 세부 디자인 수정
+- **기획**
+  - JIRA 번다운차트, 스프린트 관리
+  - UT(Usability Test) 가이드 제작
+  - QA(Quality Assuarance) 가이드 제작
+  - gitlab, frontend 코드 컨벤션 제작
+- **DESIGN**
+  - FIGMA 전체 와이어프레인 설계 및 전체 페이지 디자인
+  - TailwindCSS 디자인가이드 제공
+  - 컴포넌트 세부 디자인 코드 수정
 
 <br>
     
@@ -230,6 +181,43 @@
   - 공통 컴포넌트 : 메인 헤더, 모달
 - **기능**
   - 매니저가 배드민턴 점수를 사용자들에게 입력하는 기능, 배트민턴 라켓 추천 기능, 신고 기능, 체육관 관리자의 돈 인출 기능
+
+### 🐱‍🏍정한수
+
+- **BE**
+
+  - 매치 관리 : 체육관, 코트, 매치, 점수 데이터 설계 및 API 관리
+  - 매니저, 체육관 관리자 관리 : 매니저 및 체육관 관리자 로직 관리
+  - 라켓 관리 : ES를 이용한 검색 기능
+
+- **INFRA**
+  - 서버 관리 : 백엔드 dev/prod 서버 관리
+  - CI/CD 관리 : Docker를 사용해 Jenkins 파이프라인 관리
+  - DB 인스턴스 관리 : PostgreSQL, Elasticsearch, Redis Cluster 구축
+  - 모니터링 : Prometheus, Grafana를 통한 모니터링
+
+<br>
+
+### 🏓최성철
+
+- **BE**
+  - 유저관리 : 플레이어 회원관리, 플레이어 프로필, 플레이어 분석 데이터 조회
+  - 인증 : 유저 인증 시스템
+  - 데이터 : 데이터 파트와 API 연결
+
+<br>
+
+### 🎯윤경서
+
+- **DATA**
+  - 데이터 수집 및 전처리: 배드민턴 경기 데이터 라벨링 & 배드민턴 라켓 데이터 크롤링, 각 데이터 전처리 진행
+  - 통계 분석: Shapiro-Wilk 검정으로 데이터 정규성 검정 및 통계분석 진행, EDA를 통한 배드민턴 분석 항목 선정 및 각 항목별 통계 지표 설정
+- **프롬프트 엔지니어링**
+  - GCP의 Vertex AI 기능을 활용하여 Gemini 프롬프트 엔지니어링 진행
+  - 선수의 분석 항목별 점수를 제공하여 해당 점수 조합에 따라 개인별 경기 성향 제공 및 성향에 따라 앞으로의 발전을 위한 방향성 추천
+
+
+<br>
 
 ## 📖 **페이지별 기능**
 
@@ -341,6 +329,11 @@
 
 ### 🍊박상우
 
+기획부터 디자인까지 직접 전담해서 진행했던 프로젝트는 처음이었는데, 잘 분업되어 진행해준 팀원들 덕에 주차별로 문제 없이 기능 별 스프린트를 진행했던 것 같습니다.
+
+아이디어 선정이 오래걸려 와이어프레임이 빈약했던 것이 아쉬웠습니다.
+특히, 프론트 개발경험의 영향을 받아 figma의 auto layout을 공부하여 컴포넌트를 디자인, 배치한 것이 레이아웃 구현 시간을 크게 단축시켰습니다.
+
 <br>
     
 ### 👻전태호
@@ -350,3 +343,26 @@
 <br>
 
 ### 😎최홍석
+
+이번 프로젝트에서는 배드민턴 경기를 기록할 수 있는 인스턴스를 직접 만들었던 것이 기억에 남았습니다. Next도 처음 사용해 보았는데 SSR과 SSG등 차이점과 최적화하는 기법을 학습했습니다.
+
+아쉬운점은 생각보다 프로젝트의 규모가 커져 모든 기능에 에러 핸들링을 하지 못한 점이었습니다. 또한 에러일 경우 페이지가 다운이 되지 않도록 렌더링이 되어야 하는데 안된 부분도 있어 아쉬웠습니다.
+<br>
+
+### 🐱‍🏍정한수
+
+Spring Boot에서 JPA를 사용해 객체간 관계를 설계하는 과정에서 여러 시행착오를 겪으며 많은 것을 배웠습니다. 어노테이션을 이용해 객체 간 제약 조건을 설정하는 방법과 Record 클래스를 이용한 DTO, 각종 Exception Handling 및 디버깅을 위한 로깅 등 백엔드 개발자로써 많이 성장했다는 것이 느껴지는 프로젝트였습니다. 이전 프로젝트에서 사용한 인프라 지식을 활용해 프로젝트 초기부터 CI/CD를 구축해 프로젝트를 초기부터 원활하게 진행할 수 있었던 점과, PostgreSQL, Redis Clustering, ES 등 DB에 대한 도전이 성공적으로 끝마쳤다는 점도 뿌듯했습니다.
+
+<br>
+
+### 🏓최성철
+
+공통 때 처음 사용하였던 스프링부트를 특화에서는 정확히 어떤 구조로 사용되는지 당연하게 사용했던 어노테이션들이 어떤 기능들을 가지고 있는지에 대하여 알아갈 수 있어서 유익한 프로젝트였습니다. 또한 레포지토리에서 쿼리를 직접 사용해보면서 SQL문에 대해서 알 수 있었고, 사용자 인증에만 사용하던 레디스를 다른 부분에서도 도입해보면서 자율에서 레디스를 어떻게 더 사용할 수 있을지 알아갔습니다.
+<br>
+
+### 🎯윤경서
+데이터 방향성을 잡는 것이 오래걸려 아쉬웠습니다. 도메인에 대한 지식이 부족하여 사전 지식 학습 후 데이터 분석에 적용하는 과정에서 시간이 넉넉치 못해 다양하게 데이터를 뜯어보지 못한 것 같은 아쉬움이 있습니다. 그럼에도 배드민턴이 실력을 구분할 수 있는 지표가 명확하지 않아 이를 보여줄 수 있는 분석 결과를 주기 위해 다양한 방식으로 지표를 산정하고자 했던 것은 좋은 경험이었다고 생각합니다.
+데이터 분석을 백엔드, 프론트엔드와 함께 실제 서비스로 연결하는 프로젝트는 이번이 처음이었는데 프로젝트 기한에 따라 데이터 탐색, 분석, 알고리즘 개발, 서비스 연결까지의 계획을 짜고 해당 일정을 명확히 관리하지 못해 데이터 부분의 서비스가 백엔드와 프론트엔드 진행단계에 비해 더뎠던 것 같습니다. 이를 기반으로 다음 프로젝트에 있어서는 계획을 조금 더 명확하게 기한을 정하고 이에 맞춰 데이터 분석을 진행해보려고 합니다. 또한, 백엔드와 데이터가 함께 DB를 쓰다보니 한쪽에서 문제가 생겼을 때 다른 쪽에서 진행이 원활히 되지 않아 진행이 지연된 부분이 있었습니다. 다음 프로젝트에서는 백엔드와 데이터의 DB를 분리해서 의존성을 낮추면 좋을 것 같습니다. 
+CI/CD 부분을 배웠던 점도 좋았습니다. 데이터 서버의 CI/CD를 맡아 인프라 부분을 담당한 팀원에게 배우고, 도움을 받아 직접 파이프라인을 작성해 배포해볼 수 있어서 유익했습니다.
+프론트와 백엔드, 디자인 및 기획, 데이터로 이루어진 명확한 역할 분담으로 데이터 파트만을 온전히 담당해 수집한 데이터에 집중할 수 있었던 점은 좋았습니다. 또한, 팀원간의 원활한 소통으로 문제가 발생했을 때나 디벨롭 사항이 생겼을 때 바로바로 해결이 되었던 점이 좋았습니다. 다음 프로젝트에서는 이번 프로젝트의 아쉬움을 보완할 수 있는 프로젝트가 될 수 있도록 노력하겠습니다.
+<br>
